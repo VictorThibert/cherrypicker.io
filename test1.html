@@ -1,0 +1,172 @@
+<!doctype html>
+
+<html>
+  <title>NBArc</title>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+
+<body>
+<form>
+    <button type="button" onclick="render(0.793650793650794); return false;">ATL</button>
+    <button type="button" id="BC" onclick="render(0.419354838709677); return false;">BOS</button>
+    <button type="button" id="BN" onclick="render(0.403225806451613); return false;">BKN</button>
+    <button type="button" id="CB" onclick="render(0.6); return false;">CHI</button>
+    <button type="button" id="CC" onclick="render(0.621212121212121); return false;">CLE</button>
+    <button type="button" id="CH" onclick="render(0.451612903225806); return false;">CHA</button>
+    <button type="button" id="DM" onclick="render(0.621212121212121); return false;">DAL</button>
+    <button type="button" id="DN" onclick="render(0.359375); return false;">DEN</button>
+    <button type="button" id="DP" onclick="render(0.365079365079365); return false;">DET</button>
+    <button type="button" id="GSW" onclick="render(0.806451612903226); return false;">GSW</button>
+    <button type="button" id="HR" onclick="render(0.682539682539683); return false;">HOU</button>
+    <button type="button" id="IP" onclick="render(0.46031746031746); return false;">IND</button>
+    <button type="button" id="LAC" onclick="render(0.640625); return false;">LAC</button>
+    <button type="button" id="LAL" onclick="render(0.26984126984127); return false;">LAL</button>
+    <button type="button" id="MB" onclick="render(0.523809523809524); return false;">MIL</button>
+    <button type="button" id="MG" onclick="render(0.714285714285714); return false;">MEM</button>
+    <button type="button" id="MH" onclick="render(0.444444444444444); return false;">MIA</button>
+    <button type="button" id="MT" onclick="render(0.225806451612903); return false;">MIN</button>
+    <button type="button" id="NOP" onclick="render(0.553846153846154); return false;">NOP</button>
+    <button type="button" id="NYK" onclick="render(0.19047619047619); return false;">NYK</button>
+    <button type="button" id="OCT" onclick="render(0.555555555555556); return false;">OKC</button>
+    <button type="button" id="OM" onclick="render(0.323076923076923); return false;">ORL</button>
+    <button type="button" id="P76" onclick="render(0.222222222222222); return false;">PHI</button>
+    <button type="button" id="PS" onclick="render(0.507692307692308); return false;">PHX</button>
+    <button type="button" id="PTB" onclick="render(0.672131147540984); return false;">POR</button>
+    <button type="button" id="SAS" onclick="render(0.634920634920635); return false;">SAS</button>
+    <button type="button" id="SK" onclick="render(0.338709677419355); return false;">SAC</button>
+    <button type="button" id="TR" onclick="render(0.59375); return false;">TOR</button>
+    <button type="button" id="UJ" onclick="render(0.428571428571429); return false;">UTA</button>
+    <button type="button" id="WW" onclick="render(0.5625); return false;">WSH</button>
+    <br>
+    <br>
+    <br>
+</form>
+<form>
+    <button type="button" onclick="render2(0.793650793650794); return false;">ATL</button>
+    <button type="button" id="BC" onclick="render2(0.419354838709677); return false;">BOS</button>
+    <button type="button" id="BN" onclick="render2(0.403225806451613); return false;">BKN</button>
+    <button type="button" id="CB" onclick="render2(0.600000000000000); return false;">CHI</button>
+    <button type="button" id="CC" onclick="render2(0.621212121212121); return false;">CLE</button>
+    <button type="button" id="CH" onclick="render2(0.451612903225806); return false;">CHA</button>
+    <button type="button" id="DM" onclick="render2(0.621212121212121); return false;">DAL</button>
+    <button type="button" id="DN" onclick="render2(0.359375000000000); return false;">DEN</button>
+    <button type="button" id="DP" onclick="render2(0.365079365079365); return false;">DET</button>
+    <button type="button" id="GSW" onclick="render2(0.806451612903226); return false;">GSW</button>
+    <button type="button" id="HR" onclick="render2(0.682539682539683); return false;">HOU</button>
+    <button type="button" id="IP" onclick="render2(0.46031746031746); return false;">IND</button>
+    <button type="button" id="LAC" onclick="render2(0.64062500000000); return false;">LAC</button>
+    <button type="button" id="LAL" onclick="render2(0.26984126984127); return false;">LAL</button>
+    <button type="button" id="MB" onclick="render2(0.523809523809524); return false;">MIL</button>
+    <button type="button" id="MG" onclick="render2(0.714285714285714); return false;">MEM</button>
+    <button type="button" id="MH" onclick="render2(0.444444444444444); return false;">MIA</button>
+    <button type="button" id="MT" onclick="render2(0.225806451612903); return false;">MIN</button>
+    <button type="button" id="NOP" onclick="render2(0.553846153846154); return false;">NOP</button>
+    <button type="button" id="NYK" onclick="render2(0.19047619047619); return false;">NYK</button>
+    <button type="button" id="OCT" onclick="render2(0.555555555555556); return false;">OKC</button>
+    <button type="button" id="OM" onclick="render2(0.323076923076923); return false;">ORL</button>
+    <button type="button" id="P76" onclick="render2(0.222222222222222); return false;">PHI</button>
+    <button type="button" id="PS" onclick="render2(0.507692307692308); return false;">PHX</button>
+    <button type="button" id="PTB" onclick="render2(0.672131147540984); return false;">POR</button>
+    <button type="button" id="SAS" onclick="render2(0.634920634920635); return false;">SAS</button>
+    <button type="button" id="SK" onclick="render2(0.338709677419355); return false;">SAC</button>
+    <button type="button" id="TR" onclick="render2(0.59375); return false;">TOR</button>
+    <button type="button" id="UJ" onclick="render2(0.428571428571429); return false;">UTA</button>
+    <button type="button" id="WW" onclick="render2(0.5625); return false;">WSH</button>
+  
+</form>
+
+  <script>
+
+var     width = 200,
+        height = 200,
+        endAngle = 2 * Math.PI,
+        colors = d3.scale.category20();
+        
+var svg = d3.select("body").append("svg")
+        .attr("class", "pie")
+        .attr("height", height)
+        .attr("width", width);
+
+var svgX = d3.select("body").append("svg")
+            .attr("class", "pieX")
+            .attr("height", height)
+            .attr("width", width);
+
+function render(X) {
+
+
+    var data = [
+        {startAngle: 0, endAngle: X * endAngle},
+        {startAngle: X * endAngle, endAngle: endAngle},
+    ];
+
+    var arc = d3.svg.arc().outerRadius(100).innerRadius(50);
+
+    svg.select("g").remove();
+
+    svg.append("g")
+        .attr("transform", "translate(100,100)")
+        .selectAll("path.arc1")
+            .data(data)
+        .enter()
+            .append("path")
+            .attr("class", "arc1")
+            .attr("fill", function (d, i) {
+                return colors(i);
+            })
+            .transition().duration(1000)
+            .attrTween("d", function (d) { 
+                var start = {startAngle: 0, endAngle: 0};
+                var interpolate = d3.interpolate(start, d);
+                return function (t) {
+                    return arc(interpolate(t));
+                };
+            });
+}
+
+render(0)
+
+function render2(X) {
+
+
+    var data = [
+        {startAngle: 0, endAngle: X * endAngle},
+        {startAngle: X * endAngle, endAngle: endAngle},
+    ];
+
+    var arc = d3.svg.arc().outerRadius(100).innerRadius(50);
+
+    svgX.select("g").remove();
+
+    svgX.append("g")
+        .attr("transform", "translate(100,100)")
+        .selectAll("path.arc")
+            .data(data)
+        .enter()
+            .append("path")
+            .attr("class", "arc")
+            .attr("fill", function (d, i) {
+                return colors(i);
+            })
+            .transition().duration(800)
+            .attrTween("d", function (d) { 
+                var start = {startAngle: 0, endAngle: 0};
+                var interpolate = d3.interpolate(start, d);
+                return function (t) {
+                    return arc(interpolate(t));
+                };
+            });
+}
+
+render2(0)
+
+
+  </script>
+
+</body>
+
+</html>
+
+
+
+
+
