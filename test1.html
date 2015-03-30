@@ -6,7 +6,7 @@
 
 <body>
 <form>
-    <button type="button" onclick="render(0.793650793650794); return false;">ATL</button>
+    <button type="button" onclick="render(0.793650793650794), barRender(); return false;">ATL</button>
     <button type="button" id="BC" onclick="render(0.419354838709677); return false;">BOS</button>
     <button type="button" id="BN" onclick="render(0.403225806451613); return false;">BKN</button>
     <button type="button" id="CB" onclick="render(0.6); return false;">CHI</button>
@@ -75,6 +75,10 @@
 </form>
 
   <script>
+var     barWidth = 400,
+        barHeight = 150,
+        barPadding = 15;
+        colors = d3.scale.category20();
 
 var     width = 200,
         height = 200,
@@ -91,6 +95,11 @@ var svgX = d3.select("body").append("svg")
             .attr("height", height)
             .attr("width", width);
 
+var svgB = d3.select("body").append("svg")
+            .attr("class", "bar")
+            .attr("width", barWidth)
+            .attr("height", barHeight);
+            
 function render(X) {
 
 
@@ -159,6 +168,29 @@ function render2(X) {
 
 render2(0)
 
+function barRender(a,b,c,d,e,f,g){
+
+    var data = [102.4, 8.6, 31.8, 40.5, 25.5, 9.0, 4.7, 14.4];
+
+    svgB.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("x", function (d, i){
+            return i * (barWidth / data.length);
+        })
+        .attr("y", function (d){
+            return barHeight - d
+        })
+        .attr("width", barWidth / data.length - barPadding)
+        .attr("height", function (d){
+            return d * 4;
+        })
+        .attr("fill", function (d, i){
+            return colors(i);
+        })
+
+}
 
   </script>
 
