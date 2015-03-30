@@ -1,0 +1,24 @@
+.pie{
+	float: left;
+	margin: 8px;
+	background: #F0F0F0;
+	padding: 10px;
+	border-radius: 10px;	
+}
+
+.pieX{
+	float: right;
+	margin: 8px;
+	background: #F0F0F0;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.bar{
+	float: left;
+	margin: 8px;
+	background: #F0F0F0;
+	padding: 10px;
+	border-radius: 10px;
+
+}
