@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="test-stylesheet.css">
 
 <body>
+<div id = "left-container">
 <form>
     <button type="button" onclick = "render(0.793650793650794), updateBar(102.3,8.7,31.8,40.5,25.6,8.9,4.7,14.4); return false;">ATL</button>
     <button type="button" onclick=" render(0.419354838709677), updateBar(100.7, 11.2, 32.9, 44.1, 24.2, 8.0, 3.7, 13.9); return false;">BOS</button>
@@ -41,9 +42,11 @@
     <br>
     <br>
 </form>
+</div>
+<div id = "right-container">
 <form>
-    <button type="button" onclick="render2(0.793650793650794); return false;">ATL</button>
-    <button type="button" id="BC" onclick="render2(0.419354838709677); return false;">BOS</button>
+    <button type="button" onclick="render2(0.793650793650794), updateBar2(102.3,8.7,31.8,40.5,25.6,8.9,4.7,14.4); return false;">ATL</button>
+    <button type="button" id="BC" onclick="render2(0.419354838709677), updateBar2(100.7, 11.2, 32.9, 44.1, 24.2, 8.0, 3.7, 13.9); return false;">BOS</button>
     <button type="button" id="BN" onclick="render2(0.403225806451613); return false;">BKN</button>
     <button type="button" id="CB" onclick="render2(0.6); return false;">CHI</button>
     <button type="button" id="CC" onclick="render2(0.621212121212121); return false;">CLE</button>
@@ -72,9 +75,8 @@
     <button type="button" id="TR" onclick="render2(0.59375); return false;">TOR</button>
     <button type="button" id="UJ" onclick="render2(0.428571428571429); return false;">UTA</button>
     <button type="button" id="WW" onclick="render2(0.5625); return false;">WSH</button>
-  
 </form>
-
+</div>
   <script>
 
 var     width = 200,
@@ -103,6 +105,11 @@ var svgB = d3.select("body").append("svg")
             .attr("width", barWidth)
             .attr("height", barHeight);
 
+var svgB2 = d3.select("body").append("svg")
+            .attr("class", "bar2")
+            .attr("width", barWidth)
+            .attr("height", barHeight);
+
 function render(X) {
 
 
@@ -113,15 +120,13 @@ function render(X) {
 
     var arc = d3.svg.arc().outerRadius(100).innerRadius(70);
 
-    svg.select("g").remove();
-
     svg.append("g")
         .attr("transform", "translate(100,100)")
-        .selectAll("path.arc1")
+        .selectAll("path.arc")
             .data(data)
         .enter()
             .append("path")
-            .attr("class", "arc1")
+            .attr("class", "arc")
             .attr("fill", function (d, i) {
                 return colors(i);
             })
@@ -219,7 +224,65 @@ function updateBar(a,b,c,d,e,f,g,h){
 
     svgB.selectAll("rect")
         .data(data)
-        .transition()
+        .transition().duration(1000)
+        .attr("y", function (d) {
+            return barHeight - yScale(d);
+        })
+        .attr("height", function (d) {
+            return yScale(d);
+        });
+}
+
+function barRender2(){
+
+var data = [0,0,0,0,0,0,0,0];
+
+var xScale = d3.scale.ordinal()
+            .domain(d3.range(data.length))
+            .rangeRoundBands([0, barWidth], 0.05);
+
+var yScale = d3.scale.linear()
+            .domain([0, d3.max(data)])
+            .range([0, barHeight]);
+
+    svgB2.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .transition().duration(500).ease("linear")
+        .attr("x", function (d, i){
+            return xScale(i);
+        })
+        .attr("y", function (d){
+            return barHeight - yScale(d);
+        })
+        .attr("width", xScale.rangeBand())
+        .attr("height", function (d){
+            return yScale(d);
+        })
+        .attr("fill", function (d, i){
+            return colors(i);
+        })
+
+}
+
+barRender2()
+
+function updateBar2(a,b,c,d,e,f,g,h){
+
+    var data = [a,b,c,d,e,f,g,h];
+
+    var xScale = d3.scale.ordinal()
+            .domain(d3.range(data.length))
+            .rangeRoundBands([0, barWidth], 0.05);
+
+    var yScale = d3.scale.linear()
+            .domain([0, d3.max(data)])
+            .range([0, barHeight]);
+
+    svgB2.selectAll("rect")
+        .data(data)
+        .transition().duration(1000)
         .attr("y", function (d) {
             return barHeight - yScale(d);
         })

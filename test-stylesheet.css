@@ -20,5 +20,12 @@
 	background: #F0F0F0;
 	padding: 10px;
 	border-radius: 10px;
+}
 
+.bar2{
+	float: right;
+	margin: 8px;
+	background: #F0F0F0;
+	padding: 10px;
+	border-radius: 10px;
 }
