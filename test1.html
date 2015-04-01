@@ -7,8 +7,8 @@
 
 <body>
 <form>
-    <button type="button" onclick="render(0.793650793650794), barRender(); return false;">ATL</button>
-    <button type="button" id="BC" onclick="render(0.419354838709677); return false;">BOS</button>
+    <button type="button" onclick = "render(0.793650793650794), barRender(102.4, 8.6, 31.8, 40.5, 25.5, 9.0, 4.7, 14.4); return false;">ATL</button>
+    <button type="button" onclick=" render(0.419354838709677), barRender(100.7, 11.2, 32.9, 44.1, 24.2, 8.0, 3.7, 13.9); return false;">BOS</button>
     <button type="button" id="BN" onclick="render(0.403225806451613); return false;">BKN</button>
     <button type="button" id="CB" onclick="render(0.6); return false;">CHI</button>
     <button type="button" id="CC" onclick="render(0.621212121212121); return false;">CLE</button>
@@ -45,16 +45,16 @@
     <button type="button" onclick="render2(0.793650793650794); return false;">ATL</button>
     <button type="button" id="BC" onclick="render2(0.419354838709677); return false;">BOS</button>
     <button type="button" id="BN" onclick="render2(0.403225806451613); return false;">BKN</button>
-    <button type="button" id="CB" onclick="render2(0.600000000000000); return false;">CHI</button>
+    <button type="button" id="CB" onclick="render2(0.6); return false;">CHI</button>
     <button type="button" id="CC" onclick="render2(0.621212121212121); return false;">CLE</button>
     <button type="button" id="CH" onclick="render2(0.451612903225806); return false;">CHA</button>
     <button type="button" id="DM" onclick="render2(0.621212121212121); return false;">DAL</button>
-    <button type="button" id="DN" onclick="render2(0.359375000000000); return false;">DEN</button>
+    <button type="button" id="DN" onclick="render2(0.359375); return false;">DEN</button>
     <button type="button" id="DP" onclick="render2(0.365079365079365); return false;">DET</button>
     <button type="button" id="GSW" onclick="render2(0.806451612903226); return false;">GSW</button>
     <button type="button" id="HR" onclick="render2(0.682539682539683); return false;">HOU</button>
     <button type="button" id="IP" onclick="render2(0.46031746031746); return false;">IND</button>
-    <button type="button" id="LAC" onclick="render2(0.64062500000000); return false;">LAC</button>
+    <button type="button" id="LAC" onclick="render2(0.640625); return false;">LAC</button>
     <button type="button" id="LAL" onclick="render2(0.26984126984127); return false;">LAL</button>
     <button type="button" id="MB" onclick="render2(0.523809523809524); return false;">MIL</button>
     <button type="button" id="MG" onclick="render2(0.714285714285714); return false;">MEM</button>
@@ -76,15 +76,17 @@
 </form>
 
   <script>
-var     barWidth = 400,
-        barHeight = 150,
-        barPadding = 15;
-        colors = d3.scale.category20();
 
 var     width = 200,
         height = 200,
         endAngle = 2 * Math.PI,
         colors = d3.scale.category20();
+
+var     barWidth = 300,
+        barHeight = 350,
+        barPadding = 20;
+        colors = d3.scale.category20();
+
         
 var svg = d3.select("body").append("svg")
         .attr("class", "pie")
@@ -99,8 +101,8 @@ var svgX = d3.select("body").append("svg")
 var svgB = d3.select("body").append("svg")
             .attr("class", "bar")
             .attr("width", barWidth)
-            .attr("height", barHeight);
-            
+            .attr("height", barHeight)
+
 function render(X) {
 
 
@@ -109,7 +111,7 @@ function render(X) {
         {startAngle: X * endAngle, endAngle: endAngle},
     ];
 
-    var arc = d3.svg.arc().outerRadius(100).innerRadius(50);
+    var arc = d3.svg.arc().outerRadius(100).innerRadius(70);
 
     svg.select("g").remove();
 
@@ -123,7 +125,7 @@ function render(X) {
             .attr("fill", function (d, i) {
                 return colors(i);
             })
-            .transition().duration(1000)
+            .transition().duration(800)
             .attrTween("d", function (d) { 
                 var start = {startAngle: 0, endAngle: 0};
                 var interpolate = d3.interpolate(start, d);
@@ -143,7 +145,7 @@ function render2(X) {
         {startAngle: X * endAngle, endAngle: endAngle},
     ];
 
-    var arc = d3.svg.arc().outerRadius(100).innerRadius(50);
+    var arc = d3.svg.arc().outerRadius(100).innerRadius(70);
 
     svgX.select("g").remove();
 
@@ -169,9 +171,11 @@ function render2(X) {
 
 render2(0)
 
-function barRender(a,b,c,d,e,f,g){
+function barRender(b,c,d,e,f,g,h){
 
-    var data = [102.4, 8.6, 31.8, 40.5, 25.5, 9.0, 4.7, 14.4];
+    var data = [b,c,d,e,f,g,h];
+
+    svgB.selectAll("rect").remove();
 
     svgB.selectAll("rect")
         .data(data)
@@ -181,15 +185,16 @@ function barRender(a,b,c,d,e,f,g){
             return i * (barWidth / data.length);
         })
         .attr("y", function (d){
-            return barHeight - d
+            return barHeight - (d * 3)
         })
         .attr("width", barWidth / data.length - barPadding)
         .attr("height", function (d){
-            return d * 4;
+            return d * 3;
         })
         .attr("fill", function (d, i){
             return colors(i);
         })
+        .transition().duration(500)
 
 }
 
