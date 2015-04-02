@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+    <button onclick = "buttonClick(0.79)">ATL</button>
+    <button onclick = "buttonClick(0.42)">BOS</button>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 400,
+    height = 400,
+    τ = 2 * Math.PI; // http://tauday.com/tau-manifesto
+
+var arc = d3.svg.arc()
+    .innerRadius(100)
+    .outerRadius(70)
+    .startAngle(0);
+
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(100,100)")
+
+var background = svg.append("path")
+    .datum({endAngle: τ})
+    .style("fill", "#ddd")
+    .attr("d", arc);
+
+var foreground = svg.append("path")
+    .datum({endAngle: 0 * τ})
+    .style("fill", "orange")
+    .attr("d", arc);
+
+function buttonClick(X) {
+  foreground.transition()
+      .duration(750)
+      .call(arcTween, X * τ);
+}
+
+
+function arcTween(transition, newAngle) {
+
+  transition.attrTween("d", function(d) {
+    var interpolate = d3.interpolate(d.endAngle, newAngle);
+    return function(t) {
+      d.endAngle = interpolate(t);
+      return arc(d);
+    };
+  });
+}
+
+</script>

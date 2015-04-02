@@ -81,7 +81,7 @@
 
 var     width = 200,
         height = 200,
-        endAngle = 2 * Math.PI,
+        endAngle = 2 * Math.PI;
         colors = d3.scale.category20();
 
 var     barWidth = 300,
@@ -115,11 +115,12 @@ function render(X) {
 
     var data = [
         {startAngle: 0, endAngle: X * endAngle},
-        {startAngle: X * endAngle, endAngle: endAngle},
+        //{startAngle: X * endAngle, endAngle: endAngle},
     ];
 
     var arc = d3.svg.arc().outerRadius(100).innerRadius(70);
 
+    svg.select("g").remove()
     svg.append("g")
         .attr("transform", "translate(100,100)")
         .selectAll("path.arc")
