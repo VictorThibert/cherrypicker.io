@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-    <button onclick = "buttonClick(0.79)">ATL</button>
-    <button onclick = "buttonClick(0.42)">BOS</button>
+    <button onclick = "buttonClick(0.79, 228, 28, 38)">ATL</button>
+    <button onclick = "buttonClick(0.42, 1, 133, 58)">BOS</button>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-var width = 400,
-    height = 400,
+var width = 200,
+    height = 200,
     τ = 2 * Math.PI; // http://tauday.com/tau-manifesto
 
 var arc = d3.svg.arc()
@@ -22,22 +22,26 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(100,100)")
 
-var background = svg.append("path")
-    .datum({endAngle: τ})
+//var background = svg.append("path")
+//    .attr("class", "background")
+//    .datum({endAngle: τ})
+//    .style("fill", "#ddd")
+//    .attr("d", arc);
+
+var foreground = svg.append("path")
+    .attr("class", "foreground")
+    .datum({endAngle: 0 * τ})
     .style("fill", "#ddd")
     .attr("d", arc);
 
-var foreground = svg.append("path")
-    .datum({endAngle: 0 * τ})
-    .style("fill", "orange")
-    .attr("d", arc);
+function buttonClick(X, A, B, C) {
 
-function buttonClick(X) {
-  foreground.transition()
+  svg.select(".foreground")
+      .transition()
       .duration(750)
-      .call(arcTween, X * τ);
+      .call(arcTween, X * τ)
+      .style("fill", "rgb("+ A +", "+ B +", "+ C +")");
 }
-
 
 function arcTween(transition, newAngle) {
 
