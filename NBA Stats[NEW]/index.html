@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+	<title>Atlanta Hawks</title>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+	<head>
+	</head>
+
+	<body>
+		<h1 class = "header">
+		Atlanta Hawks :: 60-22
+		</h1>
+		<img class = "logo" src = "graphics/atl-logo.jpg">
+
+		<div id="topbar"><a>Roster</a>
+		  <div id="tophiddenbar">
+		  	<table id="t01">
+			  <tr>
+			    <th>Point Guard</th>
+			    <th>Shooting Guard</th>		
+			    <th>Small Forward</th>
+			    <th>Power Forward</th>
+			    <th>Center</th>
+			  </tr>
+			  <tr>
+			    <td>Jeff Teague</td>
+			    <td>Kyle Korver</td>		
+			    <td>Demarre Carroll</td>
+			    <td>Paul Millsap</td>
+			    <td>Al Horford</td>
+			  </tr>
+			  <tr>
+			    <td>Dennis Schroeder</td>
+			    <td>Kent Bazemore</td>		
+			    <td>Thabo Sefalosha</td>
+			    <td>Mike Scott</td>
+			    <td>Pero Antic</td>
+			  </tr>
+			  <tr>
+			    <td>Shelvin Mack</td>
+			    <td>John Jenkins</td>		
+			    <td>Austin Daye</td>
+			    <td>Elton Brand</td>
+			    <td>Mike Muscala</td>
+			  </tr>
+			</table>
+		  </div>
+		</div>
+
+		<script>
+		var     width = 200,
+	        	height = 200,
+		        endAngle = 2 * Math.PI;
+		        colors = d3.scale.category20();
+      
+		var svg = d3.select("body").append("svg")
+        			.attr("class", "pie")
+        			.attr("height", height)
+        			.attr("width", width);
+
+		function render(X) {
+
+
+	    var data = [
+	        {startAngle: 0, endAngle: 0.73 * endAngle},
+	        //{startAngle: X * endAngle, endAngle: endAngle},
+	    ];
+
+	    var arc = d3.svg.arc().outerRadius(100).innerRadius(65);
+
+	    svg.select("g").remove()
+	    svg.append("g")
+	        .attr("transform", "translate(100,100)")
+	        .selectAll("path.arc")
+	            .data(data)
+	        .enter()
+	            .append("path")
+	            .attr("class", "arc")
+	            .attr("fill", "rgb(224,30,59)")
+	            .transition().duration(800)
+	            .attrTween("d", function (d) { 
+	                var start = {startAngle: 0, endAngle: 0};
+	                var interpolate = d3.interpolate(start, d);
+	                return function (t) {
+	                    return arc(interpolate(t));
+	                };
+	            })
+			}
+
+		render(0)
+
+		svg.append("circle")
+		   .attr("cx", 100)
+		   .attr("cy", 100)
+		   .attr("r", 65)
+		   .attr("fill", "#fff") ;
+
+		svg.append("text")
+		  .attr("dy", "-0.5em")
+		  .style("text-anchor", "middle")
+		  .attr("class", "inner-circle")
+		  .attr("fill", "#36454f")
+		  .text(function(d) { return 'JavaScript'; });
+
+		svg.append("text")
+		  .attr("dy", "1em")
+		  .style("text-anchor", "middle")
+		  .attr("class", "inner-circle")
+		  .attr("fill", "#36454f")
+		  .text(function(d) { return 'is lots of fun!'; });
+		</script>
+	</body>
+</html>
