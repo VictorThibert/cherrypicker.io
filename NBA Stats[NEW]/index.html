@@ -8,13 +8,14 @@
 	</head>
 
 	<body>
-		<h1 class = "header">
-		Atlanta Hawks :: 60-22
+		<div class = "header">
+		<h1>
+		Atlanta Hawks
 		</h1>
 		<img class = "logo" src = "graphics/atl-logo.jpg">
+		</div>
 
-		<div id="topbar"><a>Roster</a>
-		  <div id="tophiddenbar">
+		<div id="topbar"><a>Roster Depth Chart</a>
 		  	<table id="t01">
 			  <tr>
 			    <th>Point Guard</th>
@@ -24,91 +25,158 @@
 			    <th>Center</th>
 			  </tr>
 			  <tr>
-			    <td>Jeff Teague</td>
-			    <td>Kyle Korver</td>		
-			    <td>Demarre Carroll</td>
-			    <td>Paul Millsap</td>
-			    <td>Al Horford</td>
+			    <td>Jeff Teague - 6'2"</td>
+			    <td>Kyle Korver - 6'7"</td>		
+			    <td>Demarre Carroll - 6'8"</td>
+			    <td>Paul Millsap - 6'8"</td>
+			    <td>Al Horford - 6'10"</td>
 			  </tr>
 			  <tr>
-			    <td>Dennis Schroeder</td>
-			    <td>Kent Bazemore</td>		
-			    <td>Thabo Sefalosha</td>
-			    <td>Mike Scott</td>
-			    <td>Pero Antic</td>
+			    <td>Dennis Schroeder - 6'1"</td>
+			    <td>Kent Bazemore - 6'5"</td>		
+			    <td>Thabo Sefalosha - 6'7"</td>
+			    <td>Mike Scott - 6'8"</td>
+			    <td>Pero Antic - 6'11"</td>
 			  </tr>
 			  <tr>
-			    <td>Shelvin Mack</td>
-			    <td>John Jenkins</td>		
-			    <td>Austin Daye</td>
-			    <td>Elton Brand</td>
-			    <td>Mike Muscala</td>
+			    <td>Shelvin Mack - 6'3"</td>
+			    <td>John Jenkins - 6'4"</td>		
+			    <td>Austin Daye - 6'11"</td>
+			    <td>Elton Brand - 6'9"</td>
+			    <td>Mike Muscala - 6'11"</td>
 			  </tr>
 			</table>
-		  </div>
 		</div>
-
+		<div class="content">
+			<svg id="donut-chart"></svg>
+			<h2> Record: 60 - 22</h2>
+			<h3> 2nd in League</h3>
+			<h3> 1st in Conference</h3>
+			<h3> 1st in Division</h3>
+			<br>
+			<ul class = "stats">
+				<li> PPG: #10</li>
+				<li> RPG: #28</li>
+				<li> APG: #2</li>
+			</ul>
+		</div>
 		<script>
-		var     width = 200,
-	        	height = 200,
-		        endAngle = 2 * Math.PI;
-		        colors = d3.scale.category20();
-      
-		var svg = d3.select("body").append("svg")
-        			.attr("class", "pie")
-        			.attr("height", height)
-        			.attr("width", width);
 
-		function render(X) {
+		var seedData = [{
+		  "label": "",
+		  "value": 60,
+		  "color": "rgb(224,30,59)",
+		}, {
+		  "label": "",
+		  "value": 22,
+		  "color": "rgb(224,140,152)",
+		}];
 
+		// Define size & radius of donut pie chart
+		var width = 250,
+		  height = 250,
+		  radius = 125;
 
-	    var data = [
-	        {startAngle: 0, endAngle: 0.73 * endAngle},
-	        //{startAngle: X * endAngle, endAngle: endAngle},
-	    ];
+		// Define arc colours
+		var colour = d3.scale.category20b();
 
-	    var arc = d3.svg.arc().outerRadius(100).innerRadius(65);
+		// Define arc ranges
+		var arcText = d3.scale.ordinal()
+		        .rangeRoundBands([0, width], .1, .3);
 
-	    svg.select("g").remove()
-	    svg.append("g")
-	        .attr("transform", "translate(100,100)")
-	        .selectAll("path.arc")
-	            .data(data)
-	        .enter()
-	            .append("path")
-	            .attr("class", "arc")
-	            .attr("fill", "rgb(224,30,59)")
-	            .transition().duration(800)
-	            .attrTween("d", function (d) { 
-	                var start = {startAngle: 0, endAngle: 0};
-	                var interpolate = d3.interpolate(start, d);
-	                return function (t) {
-	                    return arc(interpolate(t));
-	                };
-	            })
-			}
+		// Determine size of arcs
+		var arc = d3.svg.arc()
+		  .innerRadius(60)
+		  .outerRadius(100);
 
-		render(0)
+		// Create the donut pie chart layout
+		var pie = d3.layout.pie()
+		    .value(function (d) { return d["value"]; })
+		  .sort(null);
 
+		// Append SVG attributes and append g to the SVG
+		var svg = d3.select("#donut-chart")
+		  .attr("width", width)
+		  .attr("height", height)
+		    .append("g")
+		    .attr("transform", "translate(" + radius + "," + radius + ")");
+
+		// Define inner circle
 		svg.append("circle")
-		   .attr("cx", 100)
-		   .attr("cy", 100)
-		   .attr("r", 65)
-		   .attr("fill", "#fff") ;
+		  .attr("cx", 0)
+		  .attr("cy", 0)
+		  .attr("r", 100)
+		  .attr("fill", "#fff") ;
 
-		svg.append("text")
-		  .attr("dy", "-0.5em")
-		  .style("text-anchor", "middle")
-		  .attr("class", "inner-circle")
-		  .attr("fill", "#36454f")
-		  .text(function(d) { return 'JavaScript'; });
+		// Calculate SVG paths and fill in the colours
+		var g = svg.selectAll(".arc")
+		        .data(pie(seedData))
+		  		.enter().append("g")
+		        .attr("class", "arc")
 
-		svg.append("text")
-		  .attr("dy", "1em")
-		  .style("text-anchor", "middle")
-		  .attr("class", "inner-circle")
-		  .attr("fill", "#36454f")
-		  .text(function(d) { return 'is lots of fun!'; });
+		    // Append the path to each g
+		    g.append("path")
+		    .attr("d", arc)
+		    .attr("fill", function(d, i) {
+		        return seedData[i].color;
+		    });
+
+		    // Append text labels to each arc
+		    g.append("text")
+		    .attr("transform", function(d) {
+		        return "translate(" + arc.centroid(d) + ")";
+		    })
+		    .attr("dy", ".35em")
+		    .style("text-anchor", "middle")
+		    .attr("fill", "#fff")
+		        .text(function(d,i) { return seedData[i].label; })
+		  
+		  g.selectAll(".arc text")
+		        .call(wrap, arcText.rangeBand());
+
+		    // Append text to the inner circle
+		    svg.append("text")
+		      .attr("dy", "-0.5em")
+		      .style("text-anchor", "middle")
+		      .attr("class", "inner-circle")
+		        .attr("fill", "#36454f")
+		      .text(function(d) { return 'Percentage'; });
+
+		    svg.append("text")
+		      .attr("dy", "1.0em")
+		      .style("text-anchor", "middle")
+		      .attr("class", "inner-circle")
+		        .attr("fill", "#36454f")
+		      .text(function(d) { return '0.731'; });
+
+		    // Wrap function to handle labels with longer text
+		  function wrap(text, width) {
+		    text.each(function() {
+		      var text = d3.select(this),
+		          words = text.text().split(/\s+/).reverse(),
+		          word,
+		          line = [],
+		          lineNumber = 0,
+		          lineHeight = 1.1, // ems
+		          y = text.attr("y"),
+		          dy = parseFloat(text.attr("dy")),
+		          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+		        console.log("tspan: " + tspan);
+		      while (word = words.pop()) {
+		        line.push(word);
+		        tspan.text(line.join(" "));
+		        if (tspan.node().getComputedTextLength() > 90) {
+		          line.pop();
+		          tspan.text(line.join(" "));
+		          line = [word];
+		          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+		        }
+		      }
+		    });
+		  }
 		</script>
+		<div class = "container-4">
+
+		</div>
 	</body>
 </html>

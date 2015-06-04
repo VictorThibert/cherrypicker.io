@@ -1,12 +1,23 @@
-h1{
-	font-family: helvetica;
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
+
+* {
+  font-family: Roboto;
+}
+
+.header h1{
 	display: inline-block;
+	padding-left: 10px;
+}
+
+.header{
+	border: solid;
+	border-color: #e01e3b; 
 }
 
 .logo{
-	width: 250px;
-	height: 250px;
-	padding: 20px;
+	width: 70px;
+	height: 70px;
+	padding: 4px;
 	float: left;
 }
 
@@ -35,14 +46,16 @@ table#t01 th	{
 #topbar {
   background: #e01e3b;
   padding: 10px 0 10px 0;
-  text-align: center;
-  height: 30px;
+  width: 100%;
+  height: 121px;
   display: inline-block;
   float: left;
   overflow: visible;
 }
 #topbar a {
   color: #fff;
+  text-align: left;
+  padding-left: 7px;
   font-size:1.3em;
   font-family: helvetica;
   line-height: 1.25em;
@@ -50,19 +63,36 @@ table#t01 th	{
   opacity: 1;
   font-weight: bold;
 }
-#topbar a:hover {
-  opacity: 1;
-}
- 
 
 tr{
-	font-family: helvetica;
+	font-size: small;
 }
 
-.pie{
-	display: inline-block;
+.content{
+	width: 45%;
+	height: 250px;
+	padding-top: 10px;
 	float: left;
-	padding-right: 20px;
-	padding-left: 20px;
-	color: #e01e3b;
+	border: solid;
+	margin-top: 7px;
+	margin: none;
+}
+
+.content h2{
+	margin: 7px;
+}
+
+.content h3{
+	margin: 7px;
+}
+
+ul.stats{
+	list-style-type: none;
+	text-align: left;
+}
+
+#donut-chart {
+	display: inline-block;
+  	float: right;
+  	margin: 0 auto;
 }
