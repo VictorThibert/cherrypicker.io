@@ -8,6 +8,25 @@
 	</head>
 
 	<body>
+		<select>
+		  <option onselect = "change(0)">2014</option>
+		  <option onselect = "change(1)">2013</option>
+		  <option onselect = "change(2)">2012</option>
+		  <option onselect = "change(3)">2011</option>
+		  <option onselect = "change(4)">2010</option>
+		  <option onselect = "change(5)">2009</option>
+		  <option onselect = "change(6)">2008</option>
+		  <option onselect = "change(7)">2007</option>
+		  <option onselect = "change(8)">2006</option>
+		  <option onselect = "change(9)">2005</option>
+		  <option onselect = "change(10)">2004</option>
+		  <option onselect = "change(11)">2003</option>
+		  <option onselect = "change(12)">2002</option>
+		  <option onselect = "change(13)">2001</option>
+		  <option onselect = "change(14)">2000</option>
+		  <option onselect = "change(15)">1999</option>
+		  <option onselect = "change(16)">1998</option>
+		</select>
 		<div class = "header">
 		<h1>
 		Atlanta Hawks
@@ -49,134 +68,47 @@
 		</div>
 		<div class="content">
 			<svg id="donut-chart"></svg>
-			<h2> Record: 60 - 22</h2>
-			<h3> 2nd in League</h3>
-			<h3> 1st in Conference</h3>
-			<h3> 1st in Division</h3>
-			<br>
-			<ul class = "stats">
-				<li> PPG: #10</li>
-				<li> RPG: #28</li>
-				<li> APG: #2</li>
-			</ul>
+			<div class = "rankings">
+				<h2 id = "record"> Record: 60 - 22</h2>
+				<h3> 2nd in League</h3>
+				<h3> 1st in Conference</h3>
+				<h3> 1st in Division</h3>
+				<br>
+				<ul class = "stats">
+					<li> PPG: #10</li>
+					<li> RPG: #28</li>
+					<li> APG: #2</li>
+				</ul>
+			</div>
 		</div>
+		<script src = "pie.js"></script>
+		<div class = "container-4">
+			<h2>
+				Traditional Stats
+			</h2>
+			<svg id = "donut-chart2">hello</svg>
+		</div>
+		<script src = "bars.js"></script>
+		<script src = "pie2.js"></script>
 		<script>
 
-		var seedData = [{
-		  "label": "",
-		  "value": 60,
-		  "color": "rgb(224,30,59)",
-		}, {
-		  "label": "",
-		  "value": 22,
-		  "color": "rgb(224,140,152)",
-		}];
+		var xmlhttp = new XMLHttpRequest();
+		var url = "http://localhost/webserver/php/winloss.php";
 
-		// Define size & radius of donut pie chart
-		var width = 250,
-		  height = 250,
-		  radius = 125;
+		xmlhttp.onreadystatechange=function() {
+		    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		        myFunction(xmlhttp.responseText);
+		    }
+		}
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
 
-		// Define arc colours
-		var colour = d3.scale.category20b();
+		function myFunction(response) {
+		    var arr = JSON.parse(response);
+		}
 
-		// Define arc ranges
-		var arcText = d3.scale.ordinal()
-		        .rangeRoundBands([0, width], .1, .3);
-
-		// Determine size of arcs
-		var arc = d3.svg.arc()
-		  .innerRadius(60)
-		  .outerRadius(100);
-
-		// Create the donut pie chart layout
-		var pie = d3.layout.pie()
-		    .value(function (d) { return d["value"]; })
-		  .sort(null);
-
-		// Append SVG attributes and append g to the SVG
-		var svg = d3.select("#donut-chart")
-		  .attr("width", width)
-		  .attr("height", height)
-		    .append("g")
-		    .attr("transform", "translate(" + radius + "," + radius + ")");
-
-		// Define inner circle
-		svg.append("circle")
-		  .attr("cx", 0)
-		  .attr("cy", 0)
-		  .attr("r", 100)
-		  .attr("fill", "#fff") ;
-
-		// Calculate SVG paths and fill in the colours
-		var g = svg.selectAll(".arc")
-		        .data(pie(seedData))
-		  		.enter().append("g")
-		        .attr("class", "arc")
-
-		    // Append the path to each g
-		    g.append("path")
-		    .attr("d", arc)
-		    .attr("fill", function(d, i) {
-		        return seedData[i].color;
-		    });
-
-		    // Append text labels to each arc
-		    g.append("text")
-		    .attr("transform", function(d) {
-		        return "translate(" + arc.centroid(d) + ")";
-		    })
-		    .attr("dy", ".35em")
-		    .style("text-anchor", "middle")
-		    .attr("fill", "#fff")
-		        .text(function(d,i) { return seedData[i].label; })
-		  
-		  g.selectAll(".arc text")
-		        .call(wrap, arcText.rangeBand());
-
-		    // Append text to the inner circle
-		    svg.append("text")
-		      .attr("dy", "-0.5em")
-		      .style("text-anchor", "middle")
-		      .attr("class", "inner-circle")
-		        .attr("fill", "#36454f")
-		      .text(function(d) { return 'Percentage'; });
-
-		    svg.append("text")
-		      .attr("dy", "1.0em")
-		      .style("text-anchor", "middle")
-		      .attr("class", "inner-circle")
-		        .attr("fill", "#36454f")
-		      .text(function(d) { return '0.731'; });
-
-		    // Wrap function to handle labels with longer text
-		  function wrap(text, width) {
-		    text.each(function() {
-		      var text = d3.select(this),
-		          words = text.text().split(/\s+/).reverse(),
-		          word,
-		          line = [],
-		          lineNumber = 0,
-		          lineHeight = 1.1, // ems
-		          y = text.attr("y"),
-		          dy = parseFloat(text.attr("dy")),
-		          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-		        console.log("tspan: " + tspan);
-		      while (word = words.pop()) {
-		        line.push(word);
-		        tspan.text(line.join(" "));
-		        if (tspan.node().getComputedTextLength() > 90) {
-		          line.pop();
-		          tspan.text(line.join(" "));
-		          line = [word];
-		          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-		        }
-		      }
-		    });
-		  }
+		function change(x) {
+				document.getElementById("record").innerHTML = arr[x].w + " - " + arr[x].l}
 		</script>
-		<div class = "container-4">
-
-		</div>
-	</body>
+		</body>
 </html>
