@@ -1,11 +1,15 @@
 
+		render(60, 22, 0.731)
+
+		function render(a, b, c){
+
 		var seedData = [{
 		  "label": "",
-		  "value": 60,
+		  "value": a,
 		  "color": "rgb(224,30,59)",
 		}, {
 		  "label": "",
-		  "value": 22,
+		  "value": b,
 		  "color": "rgb(224,140,152)",
 		}];
 
@@ -84,7 +88,7 @@
 		      .style("text-anchor", "middle")
 		      .attr("class", "inner-circle")
 		        .attr("fill", "#36454f")
-		      .text(function(d) { return '0.731'; });
+		      .text(function(d) { return c; });
 
 		    // Wrap function to handle labels with longer text
 		  function wrap(text, width) {
@@ -111,3 +115,6 @@
 		      }
 		    });
 		  }
+		}
+
+		
