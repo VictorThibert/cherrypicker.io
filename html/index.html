@@ -8,24 +8,24 @@
 	</head>
 
 	<body>
-		<select>
-		  <option onselect = "change(0)">2014</option>
-		  <option onselect = "change(1)">2013</option>
-		  <option onselect = "change(2)">2012</option>
-		  <option onselect = "change(3)">2011</option>
-		  <option onselect = "change(4)">2010</option>
-		  <option onselect = "change(5)">2009</option>
-		  <option onselect = "change(6)">2008</option>
-		  <option onselect = "change(7)">2007</option>
-		  <option onselect = "change(8)">2006</option>
-		  <option onselect = "change(9)">2005</option>
-		  <option onselect = "change(10)">2004</option>
-		  <option onselect = "change(11)">2003</option>
-		  <option onselect = "change(12)">2002</option>
-		  <option onselect = "change(13)">2001</option>
-		  <option onselect = "change(14)">2000</option>
-		  <option onselect = "change(15)">1999</option>
-		  <option onselect = "change(16)">1998</option>
+		<select onChange = "change(this.value)">
+		  <option value = "0">2014</option>
+		  <option value = "1">2013</option>
+		  <option value = "2">2012</option>
+		  <option value = "3">2011</option>
+		  <option value = "4">2010</option>
+		  <option value = "5">2009</option>
+		  <option value = "6">2008</option>
+		  <option value = "7">2007</option>
+		  <option value = "8">2006</option>
+		  <option value = "9">2005</option>
+		  <option value = "10">2004</option>
+		  <option value = "11">2003</option>
+		  <option value = "12">2002</option>
+		  <option value = "13">2001</option>
+		  <option value = "14">2000</option>
+		  <option value = "15">1999</option>
+		  <option value = "16">1998</option>
 		</select>
 		<div class = "header">
 		<h1>
@@ -86,15 +86,14 @@
 			<h2>
 				Traditional Stats
 			</h2>
-			<svg id = "donut-chart2">hello</svg>
+			<svg id = "donut-chart2"></svg>
 		</div>
 		<script src = "bars.js"></script>
 		<script src = "pie2.js"></script>
 		<script>
-
+		var arr
 		var xmlhttp = new XMLHttpRequest();
-		var url = "http://localhost/webserver/php/winloss.php";
-
+		var url = "winloss.php";
 		xmlhttp.onreadystatechange=function() {
 		    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 		        myFunction(xmlhttp.responseText);
@@ -102,13 +101,15 @@
 		}
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
-
+		
 		function myFunction(response) {
-		    var arr = JSON.parse(response);
+		    arr = JSON.parse(response);
 		}
-
+	
 		function change(x) {
-				document.getElementById("record").innerHTML = arr[x].w + " - " + arr[x].l}
+			document.getElementById("record").innerHTML = arr[x].w + " - " + arr[x].l;
+			render(arr[x].w, arr[x].l, (arr[x].w/(arr[x].w/1 + arr[x].l/1)).toFixed(3));
+		}
 		</script>
 		</body>
 </html>
