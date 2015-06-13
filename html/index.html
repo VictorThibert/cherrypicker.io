@@ -82,6 +82,7 @@
 			</div>
 		</div>
 		<script src = "pie.js"></script>
+<<<<<<< HEAD:html/index.html
 		<div class = "container-4">
 			<h2>
 				Traditional Stats
@@ -90,6 +91,8 @@
 		</div>
 		<script src = "bars.js"></script>
 		<script src = "pie2.js"></script>
+=======
+>>>>>>> origin/master:NBA Stats[NEW]/index.html
 		<script>
 		var arr
 		var xmlhttp = new XMLHttpRequest();
@@ -101,15 +104,39 @@
 		}
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
+<<<<<<< HEAD:html/index.html
+=======
+
+>>>>>>> origin/master:NBA Stats[NEW]/index.html
 		
 		function myFunction(response) {
 		    arr = JSON.parse(response);
 		}
 	
+<<<<<<< HEAD:html/index.html
+=======
+
+>>>>>>> origin/master:NBA Stats[NEW]/index.html
 		function change(x) {
 			document.getElementById("record").innerHTML = arr[x].w + " - " + arr[x].l;
 			render(arr[x].w, arr[x].l, (arr[x].w/(arr[x].w/1 + arr[x].l/1)).toFixed(3));
 		}
+<<<<<<< HEAD:html/index.html
+=======
+
+>>>>>>> origin/master:NBA Stats[NEW]/index.html
 		</script>
+		<div class = "container-4">
+			<h2>
+				Traditional Stats
+			</h2>
+			<svg id = "donut-chart2">hello</svg>
+		</div>
+
+				
+		
+		<script src = "bars.js"></script>
+
+		<script src = "pie2.js"></script>
 		</body>
 </html>
