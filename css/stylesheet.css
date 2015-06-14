@@ -2,155 +2,112 @@
 
 * {
   font-family: Roboto;
+  color: gray;
 }
 
-.header h1{
+body{
+	background: ../graphics/bg.png;
+	width: 100%;
+	height: 100%;
+}
+
+#main-container{
+	background-color: #ededed;
+	position: relative;
+	width: 85%;
+	height: 1000px;
+	padding: 1%;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px #dedede;
+}
+#row1{
 	display: inline-block;
-	padding-left: 10px;
+	width: 100%;
 }
 
-.header{
-	border: solid;
-	border-color: #e01e3b; 
-}
-
-.logo{
-	width: 70px;
-	height: 70px;
-	padding: 4px;
+#column-1{
 	float: left;
+	width: 48%;
+	margin-right: 3%;
 }
 
-table {
-    width:100%;
-}
-table, th, td {
-    border: none;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 5px;
-    text-align: center;
-}
-table#t01 tr:nth-child(even) {
-    background-color: #eee;
-}
-table#t01 tr:nth-child(odd) {
-   background-color:#fff;
-}
-table#t01 th	{
-    background-color: black;
-    color: white;
+#column-2{
+	float: left;
+	width: 48%;
+	margin: 0;
 }
 
-#topbar {
-  background: #e01e3b;
+#sub-container-roster {
+  background: white;
   padding: 10px 0 10px 0;
-  width: 100%;
-  height: 115px;
-  display: inline-block;
-  float: left;
-  overflow: visible;
+  text-align: center;
+  height: 20px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 1px 1px 1px #dedede;
+  -webkit-transition: height 0.5s linear;
+  -moz-transition: height 0.5s linear;
+  transition: height 0.5s linear;
 }
-#topbar a {
+#sub-container-roster a {
   color: #fff;
-  text-align: left;
-  padding-left: 7px;
   font-size:1.3em;
-  font-family: helvetica;
   line-height: 1.25em;
   text-decoration: none;
-  opacity: 1;
+  opacity: 0.5;
   font-weight: bold;
 }
-
-tr{
-	font-size: small;
+#sub-container-roster a:active {
+  opacity: 1;
 }
-
-.content{
-	width: 45%;
-	height: 250px;
-	padding-top: 10px;
-	float: left;
-	border: solid;
-	margin-top: 7px;
-	margin: none;
+ 
+#hiddenbar {
+  display: block;
+  width: 100%;
+  background: white;
+  color: gray;
+  padding: 8px 0; 
+  margin-bottom: 10px;
+  text-align: center;
 }
-
-.content h2{
-	margin: 7px;
+#hiddenbar a {
+  color: #fff;
+  opacity: 0.5;
 }
+#hiddenbar a:active{ opacity: 1; }
+ 
+#sub-container-roster:active{ height: 60px; }
 
-.content h3{
-	margin: 7px;
-}
-
-.rankings{
-	position: relative;
-}
-
-ul.stats{
-	list-style-type: none;
-	text-align: left;
-}
-
-#donut-chart {
+#sub-container-record{
 	display: inline-block;
-  	float: right;
-  	margin: 0 auto;
+	width: 100%;
+	background-color: white;
+	border-radius: 0.5%;
+	padding: 2%;
+	margin-bottom: 1.5%;
+	box-shadow: 1px 1px 1px #dedede;
 }
 
-#donut-chart2 {
+#sub-container-stream{
 	display: inline-block;
-  	float: right;
-  	margin: 0 auto;
+	width: 100%;
+	background-color: white;
+	border-radius: 0.5%;
+	padding: 2%;
+	margin-top: 1.5%;
+	box-shadow: 1px 1px 1px #dedede;
 }
 
-
-.container-4{
-	position: relative;
-	float: left;
-	width: 53%;
-	margin-left: 7px;
-	margin-top: 7px;
-	margin-bottom: 7px;
-	border: solid;
+#sub-container-trad{
+    display: inline-block;
+	width: 100%;
+	background-color: white;
+    border-radius: 0.5%;
+	padding: 2%;
+	box-shadow: 1px 1px 1px #dedede;
 }
 
-.container-4 h2{
-	margin: 7px;
-}
-
-.barA{
-	margin-top: 10px;
-	margin-left: 7px;
-	margin-right: 7px;
-}
-
-.barB{
-	margin-left: 7px;
-	margin-right: 7px;
-}
-.barC{
-	margin-left: 7px;
-	margin-right: 7px;
-}
-.barD{
-	margin-left: 7px;
-	margin-right: 7px;
-}
-.barE{
-	margin-left: 7px;
-	margin-right: 7px;
-}
-.barF{
-	margin-left: 7px;
-	margin-right: 7px;
-}
-
-.labels{
-	width: 92%;
-	position: absolute;
-	bottom: 0;
-}

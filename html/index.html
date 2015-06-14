@@ -1,115 +1,40 @@
 <!DOCTYPE HTML>
 <html>
-	<title>Atlanta Hawks</title>
 	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="stylesheet.css">
+	<link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 
 	<head>
 	</head>
 
 	<body>
-		<select onChange = "change(this.value)">
-		  <option value = "0">2014</option>
-		  <option value = "1">2013</option>
-		  <option value = "2">2012</option>
-		  <option value = "3">2011</option>
-		  <option value = "4">2010</option>
-		  <option value = "5">2009</option>
-		  <option value = "6">2008</option>
-		  <option value = "7">2007</option>
-		  <option value = "8">2006</option>
-		  <option value = "9">2005</option>
-		  <option value = "10">2004</option>
-		  <option value = "11">2003</option>
-		  <option value = "12">2002</option>
-		  <option value = "13">2001</option>
-		  <option value = "14">2000</option>
-		  <option value = "15">1999</option>
-		  <option value = "16">1998</option>
-		</select>
-		<div class = "header">
-		<h1>
-		Atlanta Hawks
-		</h1>
-		<img class = "logo" src = "graphics/atl-logo.jpg">
-		</div>
-
-		<div id="topbar"><a>Roster Depth Chart</a>
-		  	<table id="t01">
-			  <tr>
-			    <th>Point Guard</th>
-			    <th>Shooting Guard</th>		
-			    <th>Small Forward</th>
-			    <th>Power Forward</th>
-			    <th>Center</th>
-			  </tr>
-			  <tr>
-			    <td>Jeff Teague - 6'2"</td>
-			    <td>Kyle Korver - 6'7"</td>		
-			    <td>Demarre Carroll - 6'8"</td>
-			    <td>Paul Millsap - 6'8"</td>
-			    <td>Al Horford - 6'10"</td>
-			  </tr>
-			  <tr>
-			    <td>Dennis Schroeder - 6'1"</td>
-			    <td>Kent Bazemore - 6'5"</td>		
-			    <td>Thabo Sefalosha - 6'7"</td>
-			    <td>Mike Scott - 6'8"</td>
-			    <td>Pero Antic - 6'11"</td>
-			  </tr>
-			  <tr>
-			    <td>Shelvin Mack - 6'3"</td>
-			    <td>John Jenkins - 6'4"</td>		
-			    <td>Austin Daye - 6'11"</td>
-			    <td>Elton Brand - 6'9"</td>
-			    <td>Mike Muscala - 6'11"</td>
-			  </tr>
-			</table>
-		</div>
-		<div class="content">
-			<svg id="donut-chart"></svg>
-			<div class = "rankings">
-				<h2 id = "record"> Record: 60 - 22</h2>
-				<h3> 2nd in League</h3>
-				<h3> 1st in Conference</h3>
-				<h3> 1st in Division</h3>
-				<br>
-				<ul class = "stats">
-					<li> PPG: #10</li>
-					<li> RPG: #28</li>
-					<li> APG: #2</li>
-				</ul>
+		<div id = "main-container">
+			<div id="sub-container-roster">
+				Roster
+				<div id="hiddenbar">
+					Roster
+				 </div>
+			</div>
+				<div id = "row-1">
+					<div id = "column-1">
+						<div id = "sub-container-record">
+							Record
+							<hr>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor.
+						</div>
+						<div id = "sub-container-stream">
+							Streamograph
+							<hr>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Suspendisse auctor justo purus, et molestie est aliquet a. Morbi eu leo vulputate, tincidunt lacus sit amet, tincidunt neque. Donec scelerisque justo sit amet augue finibus, nec bibendum velit euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros.
+						</div>
+					</div>
+					<div id = "column-2">
+						<div id = "sub-container-trad">
+							Traditional Stats
+							<hr>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Suspendisse auctor justo purus, et molestie est aliquet a. Morbi eu leo vulputate, tincidunt lacus sit amet, tincidunt neque. Donec scelerisque justo sit amet augue finibus, nec bibendum velit euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros.
+						</div>
+					</div>
 			</div>
 		</div>
-		<script src = "pie.js"></script>
-		<div class = "container-4">
-			<h2>
-				Traditional Stats
-			</h2>
-			<svg id = "donut-chart2"></svg>
-		</div>
-		<script src = "bars.js"></script>
-		<script src = "pie2.js"></script>
-		<script>
-		var arr
-		var xmlhttp = new XMLHttpRequest();
-		var url = "winloss.php";
-		xmlhttp.onreadystatechange=function() {
-		    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-		        myFunction(xmlhttp.responseText);
-		    }
-		}
-		xmlhttp.open("GET", url, true);
-		xmlhttp.send();
-		
-		function myFunction(response) {
-		    arr = JSON.parse(response);
-		}
-	
-		function change(x) {
-			document.getElementById("record").innerHTML = arr[x].w + " - " + arr[x].l;
-			render(arr[x].w, arr[x].l, (arr[x].w/(arr[x].w/1 + arr[x].l/1)).toFixed(3));
-		}
-		</script>
-		</body>
+	</body>
 </html>
