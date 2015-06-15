@@ -6,7 +6,7 @@ from mysql.connector import errorcode
 
 year1 = "2014"
 year2 = "15"
-playerID = "203488"
+playerID = "201143"
 
 
 shots_url = "http://stats.nba.com/stats/shotchartdetail?CFID=&CFPARAMS=&ContextFilter=&ContextMeasure=FG_PCT&DateFrom=&DateTo=&GameID=&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&Period=0&PlayerID=" + playerID + "&Position=&RookieYear=&Season=" + year1 + "-" + year2 + "&SeasonSegment=&SeasonType=Regular+Season&TeamID=0&VsConference=&VsDivision=&mode=Advanced&showDetails=1&showShots=0&showZones=1"
