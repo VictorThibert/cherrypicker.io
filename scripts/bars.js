@@ -1,273 +1,232 @@
-			var barWidth = 100,
-	        	barHeight = 250,
-	        	barPadding = 20;
-	        	colors = d3.scale.category20();
+var barWidth = 100,
+	barHeight = 250,
+	barPadding = 20,
+	colors = d3.scale.category20();
 
-	        var svgA = d3.select(".container-4").append("svg")
-            	.attr("class", "barA")
-            	.attr("width", barWidth)
-            	.attr("height", barHeight);
+var tipA = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<strong>PPG: </strong><span style='color: white'>" + d + "</span>";
+        })
 
-            var svgB = d3.select(".container-4").append("svg")
-            	.attr("class", "barB")
-            	.attr("width", barWidth)
-            	.attr("height", barHeight);
+var tipB = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<strong>RPG: </strong><span style='color: white'>" + d + "</span>";
+        })
 
-            var svgC = d3.select(".container-4").append("svg")
-            	.attr("class", "barC")
-            	.attr("width", barWidth)
-            	.attr("height", barHeight);
+var tipC = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<strong>APG: </strong><span style='color: white'>" + d + "</span>";
+        })
 
-            var svgD = d3.select(".container-4").append("svg")
-            	.attr("class", "barD")
-            	.attr("width", barWidth)
-            	.attr("height", barHeight);
+var tipD = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<strong>SPG: </strong><span style='color: white'>" + d + "</span>";
+        })
 
-            var svgE = d3.select(".container-4").append("svg")
-            	.attr("class", "barE")
-            	.attr("width", barWidth)
-            	.attr("height", barHeight);
+var tipE = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<strong>BPG: </strong><span style='color: white'>" + d + "</span>";
+        }) 
 
-            var svgF = d3.select(".container-4").append("svg")
-            	.attr("class", "barF")
-            	.attr("width", barWidth)
-            	.attr("height", barHeight);
+var tipF = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<strong>TOPG: </strong><span style='color: white'>" + d + "</span>";
+        })
 
-				var dataA = [102.5,100.1],
-				    dataB = [40.6,43.3],
-				    dataC = [25.7,22.0],
-				    dataD = [9.1,7.7],
-				    dataE = [4.75,4.8],
-				    dataF = [14.23,14.35],
-				    dataScale = [0,120];
+var svgA = d3.select("#container-points").append("svg")
+	.attr("class", "barA")
+	.attr("width", barWidth)
+	.attr("height", barHeight);
 
-				var xScale = d3.scale.ordinal()
-				            .domain(d3.range(dataA.length))
-				            .rangeRoundBands([0, barWidth], 0.05);
+var svgB = d3.select("#container-rebounds").append("svg")
+	.attr("class", "barB")
+	.attr("width", barWidth)
+	.attr("height", barHeight);
 
-				var yScale = d3.scale.linear()
-				            .domain([0, d3.max(dataScale)])
-				            .range([0, barHeight]);
+var svgC = d3.select("#container-assists").append("svg")
+	.attr("class", "barC")
+	.attr("width", barWidth)
+	.attr("height", barHeight);
 
-				var xAxis = d3.svg.axis()
-                  			.scale(xScale)
-                  			.orient("bottom");           
+var svgD = d3.select("#container-steals").append("svg")
+	.attr("class", "barD")
+	.attr("width", barWidth)
+	.attr("height", barHeight);
 
-				    svgA.selectAll("rect")
-				        .data(dataA)
-				        .enter()
-				        .append("rect")
-				        .transition().duration(500).ease("linear")
-				        .attr("x", function (d, i){
-				            return xScale(i);
-				        })
-				        .attr("y", function (d){
-				            return barHeight - yScale(d);
-				        })
-				        .attr("width", xScale.rangeBand())
-				        .attr("height", function (d){
-				            return yScale(d);
-				        })
-				        .attr("fill", function (d, i){
-				            return colors(i);
-				        })
+var svgE = d3.select("#container-blocks").append("svg")
+	.attr("class", "barE")
+	.attr("width", barWidth)
+	.attr("height", barHeight);
 
-				    svgB.selectAll("rect")
-				        .data(dataB)
-				        .enter()
-				        .append("rect")
-				        .transition().duration(500).ease("linear")
-				        .attr("x", function (d, i){
-				            return xScale(i);
-				        })
-				        .attr("y", function (d){
-				            return barHeight - yScale(d);
-				        })
-				        .attr("width", xScale.rangeBand())
-				        .attr("height", function (d){
-				            return yScale(d);
-				        })
-				        .attr("fill", function (d, i){
-				            return colors(i);
-				        })
+var svgF = d3.select("#container-turn").append("svg")
+	.attr("class", "barF")
+	.attr("width", barWidth)
+	.attr("height", barHeight);
 
-				    svgC.selectAll("rect")
-				        .data(dataC)
-				        .enter()
-				        .append("rect")
-				        .transition().duration(500).ease("linear")
-				        .attr("x", function (d, i){
-				            return xScale(i);
-				        })
-				        .attr("y", function (d){
-				            return barHeight - yScale(d);
-				        })
-				        .attr("width", xScale.rangeBand())
-				        .attr("height", function (d){
-				            return yScale(d);
-				        })
-				        .attr("fill", function (d, i){
-				            return colors(i);
-				        })
+	var dataA = [102.5,100.1],
+	    dataB = [40.6,43.3],
+	    dataC = [25.7,22.0],
+	    dataD = [9.1,7.7],
+	    dataE = [4.75,4.8],
+	    dataF = [14.23,14.35],
+	    dataScale = [0,120];
 
-				        svgD.selectAll("rect")
-				        .data(dataD)
-				        .enter()
-				        .append("rect")
-				        .transition().duration(500).ease("linear")
-				        .attr("x", function (d, i){
-				            return xScale(i);
-				        })
-				        .attr("y", function (d){
-				            return barHeight - yScale(d);
-				        })
-				        .attr("width", xScale.rangeBand())
-				        .attr("height", function (d){
-				            return yScale(d);
-				        })
-				        .attr("fill", function (d, i){
-				            return colors(i);
-				        })
+	var xScale = d3.scale.ordinal()
+	            .domain(d3.range(dataA.length))
+	            .rangeRoundBands([0, barWidth], 0.05);
 
-				        svgE.selectAll("rect")
-				        .data(dataE)
-				        .enter()
-				        .append("rect")
-				        .transition().duration(500).ease("linear")
-				        .attr("x", function (d, i){
-				            return xScale(i);
-				        })
-				        .attr("y", function (d){
-				            return barHeight - yScale(d);
-				        })
-				        .attr("width", xScale.rangeBand())
-				        .attr("height", function (d){
-				            return yScale(d);
-				        })
-				        .attr("fill", function (d, i){
-				            return colors(i);
-				        })
+	var yScale = d3.scale.linear()
+	            .domain([0, d3.max(dataScale)])
+	            .range([0, barHeight]);
 
-				        svgF.selectAll("rect")
-				        .data(dataF)
-				        .enter()
-				        .append("rect")
-				        .transition().duration(500).ease("linear")
-				        .attr("x", function (d, i){
-				            return xScale(i);
-				        })
-				        .attr("y", function (d){
-				            return barHeight - yScale(d);
-				        })
-				        .attr("width", xScale.rangeBand())
-				        .attr("height", function (d){
-				            return yScale(d);
-				        })
-				        .attr("fill", function (d, i){
-				            return colors(i);
-				        })
+	var xAxis = d3.svg.axis()
+      			.scale(xScale)
+      			.orient("bottom");           
 
-				    	svgA.selectAll("text")
-						   .data(dataA)
-						   .enter()
-						   .append("text")	
-						   .text(function (d){
-						   	return d;
-						   })
-						   .attr("x", function (d, i) {
-        					return i * (barWidth / dataA.length) + 13;
-						   })
-						   .attr("y", function (d) {
-						        return barHeight - (d) - 113;
-						   })
-						   .attr("font-size", "9")
-						   .attr("fill", "black");	
+	    svgA.selectAll("rect")
+	        .data(dataA)
+	        .enter()
+	        .append("rect")
+	        .attr("x", function (d, i){
+	            return xScale(i);
+	        })
+	        .attr("y", function (d){
+	            return barHeight - yScale(d);
+	        })
+	        .attr("width", xScale.rangeBand())
+	        .attr("height", function (d){
+	            return yScale(d);
+	        })
+	        .attr("fill", function (d, i){
+	            return colors(i);
+	        })
+	        .on('mouseover', tipA.show)
+        	.on('mouseout', tipA.hide)
 
-						svgB.selectAll("text")
-						   .data(dataB)
-						   .enter()
-						   .append("text")	
-						   .text(function (d){
-						   	return d;
-						   })
-						   .attr("x", function (d, i) {
-        					return i * (barWidth / dataC.length) + 17;
-						   })
-						   .attr("y", function (d) {
-						        return barHeight - (d) - 50;
-						   })
-						   .attr("font-size", "9")
-						   .attr("fill", "black");
+	    svgB.selectAll("rect")
+	        .data(dataB)
+	        .enter()
+	        .append("rect")
+	        .attr("x", function (d, i){
+	            return xScale(i);
+	        })
+	        .attr("y", function (d){
+	            return barHeight - yScale(d);
+	        })
+	        .attr("width", xScale.rangeBand())
+	        .attr("height", function (d){
+	            return yScale(d);
+	        })
+	        .attr("fill", function (d, i){
+	            return colors(i);
+	        })
+	        .on('mouseover', tipB.show)
+        	.on('mouseout', tipB.hide)
 
-						svgC.selectAll("text")
-						   .data(dataC)
-						   .enter()
-						   .append("text")	
-						   .text(function (d){
-						   	return d;
-						   })
-						   .attr("x", function (d, i) {
-        					return i * (barWidth / dataC.length) + 17;
-						   })
-						   .attr("y", function (d) {
-						        return barHeight - (d) - 30;
-						   })
-						   .attr("font-size", "9")
-						   .attr("fill", "black");
+	    svgC.selectAll("rect")
+	        .data(dataC)
+	        .enter()
+	        .append("rect")
+	        .attr("x", function (d, i){
+	            return xScale(i);
+	        })
+	        .attr("y", function (d){
+	            return barHeight - yScale(d);
+	        })
+	        .attr("width", xScale.rangeBand())
+	        .attr("height", function (d){
+	            return yScale(d);
+	        })
+	        .attr("fill", function (d, i){
+	            return colors(i);
+	        })
+	        .on('mouseover', tipC.show)
+        	.on('mouseout', tipC.hide)
 
-						svgD.selectAll("text")
-						   .data(dataD)
-						   .enter()
-						   .append("text")	
-						   .text(function (d){
-						   	return d;
-						   })
-						   .attr("x", function (d, i) {
-        					return i * (barWidth / dataD.length) + 19;
-						   })
-						   .attr("y", function (d) {
-						        return barHeight - (d) - 12;
-						   })
-						   .attr("font-size", "9")
-						   .attr("fill", "black");	
+	        svgD.selectAll("rect")
+	        .data(dataD)
+	        .enter()
+	        .append("rect")
+	        .attr("x", function (d, i){
+	            return xScale(i);
+	        })
+	        .attr("y", function (d){
+	            return barHeight - yScale(d);
+	        })
+	        .attr("width", xScale.rangeBand())
+	        .attr("height", function (d){
+	            return yScale(d);
+	        })
+	        .attr("fill", function (d, i){
+	            return colors(i);
+	        })
+	        .on('mouseover', tipD.show)
+        	.on('mouseout', tipD.hide)
 
-						svgE.selectAll("text")
-						   .data(dataE)
-						   .enter()
-						   .append("text")	
-						   .text(function (d){
-						   	return d;
-						   })
-						   .attr("x", function (d, i) {
-        					return i * (barWidth / dataE.length) + 18;
-						   })
-						   .attr("y", function (d) {
-						        return barHeight - (d) - 8;
-						   })
-						   .attr("font-size", "9")
-						   .attr("fill", "black");	
+	        svgE.selectAll("rect")
+	        .data(dataE)
+	        .enter()
+	        .append("rect")
+	        .attr("x", function (d, i){
+	            return xScale(i);
+	        })
+	        .attr("y", function (d){
+	            return barHeight - yScale(d);
+	        })
+	        .attr("width", xScale.rangeBand())
+	        .attr("height", function (d){
+	            return yScale(d);
+	        })
+	        .attr("fill", function (d, i){
+	            return colors(i);
+	        })
+	        .on('mouseover', tipE.show)
+        	.on('mouseout', tipE.hide)
 
-						svgF.selectAll("text")
-						   .data(dataF)
-						   .enter()
-						   .append("text")	
-						   .text(function (d){
-						   	return d;
-						   })
-						   .attr("x", function (d, i) {
-        					return i * (barWidth / dataF.length) + 14;
-						   })
-						   .attr("y", function (d) {
-						        return barHeight - (d) - 18;
-						   })
-						   .attr("font-size", "9")
-						   .attr("fill", "black"); 
+	        svgF.selectAll("rect")
+	        .data(dataF)
+	        .enter()
+	        .append("rect")
+	        .attr("x", function (d, i){
+	            return xScale(i);
+	        })
+	        .attr("y", function (d){
+	            return barHeight - yScale(d);
+	        })
+	        .attr("width", xScale.rangeBand())
+	        .attr("height", function (d){
+	            return yScale(d);
+	        })
+	        .attr("fill", function (d, i){
+	            return colors(i);
+	        })
+	        .on('mouseover', tipF.show)
+        	.on('mouseout', tipF.hide) 
 
-						svgA.append("text")
-						    .attr("class", "xLabel")
-						    .attr("text-anchor", "middle")
-						    .text("PPG"); 
+			svgA.append("text")
+			    .attr("class", "xLabel")
+			    .attr("text-anchor", "middle")
+			    .text("PPG"); 
 
-						svgA.append("g")
-							.attr("transform", "translate(0," + barHeight + ")")
-						    .call(xAxis);     
+			svgA.append("g")
+				.attr("transform", "translate(0," + barHeight + ")")
+			    .call(xAxis);   
+  
+			svgA.call(tipA);
+			svgB.call(tipB);
+			svgC.call(tipC);
+			svgD.call(tipD);
+			svgE.call(tipE);
+			svgF.call(tipF);

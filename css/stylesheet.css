@@ -6,15 +6,20 @@
 }
 
 body{
-	background: ../graphics/bg.png;
+	background: "../graphics/bg.png";
 	width: 100%;
 	height: 100%;
+}
+
+.bar{
+	float: left;
 }
 
 #main-container{
 	background-color: #ededed;
 	position: relative;
 	width: 85%;
+	min-width: 1000px;
 	height: 1000px;
 	padding: 1%;
 	margin-top: 50px;
@@ -23,14 +28,20 @@ body{
 	border-radius: 3px;
 	box-shadow: 1px 1px 1px #dedede;
 }
+
 #row1{
 	display: inline-block;
 	width: 100%;
 }
 
+#row2{
+	display: inline-block;
+	width: 98%;
+}
+
 #column-1{
 	float: left;
-	width: 48%;
+	width: 47%;
 	margin-right: 3%;
 }
 
@@ -88,7 +99,7 @@ body{
 	background-color: white;
 	border-radius: 0.5%;
 	padding: 2%;
-	margin-bottom: 1.5%;
+	margin-bottom: 1%;
 	box-shadow: 1px 1px 1px #dedede;
 }
 
@@ -98,11 +109,11 @@ body{
 	background-color: white;
 	border-radius: 0.5%;
 	padding: 2%;
-	margin-top: 1.5%;
+	margin-top: 1%;
 	box-shadow: 1px 1px 1px #dedede;
 }
 
-#sub-container-trad{
+#sub-container-shot{
     display: inline-block;
 	width: 100%;
 	background-color: white;
@@ -111,3 +122,74 @@ body{
 	box-shadow: 1px 1px 1px #dedede;
 }
 
+#sub-container-sliders{
+    display: inline-block;
+	width: 100%;
+	background-color: white;
+    border-radius: 0.5%;
+	padding: 2%;
+	margin-top: 2%;
+	box-shadow: 1px 1px 1px #dedede;
+}
+
+#sub-container-trad{
+    display: inline-block;
+	width: 100%;
+	background-color: white;
+    border-radius: 0.5%;
+	padding: 1%;
+	margin-top: 1%;
+	box-shadow: 1px 1px 1px #dedede;
+}
+
+#container-points{
+	display: inline-block;
+	margin-right: 1%
+}
+#container-rebounds{
+	display: inline-block;
+	margin-right: 1%
+}
+#container-assists{
+	display: inline-block;
+	margin-right: 1%
+}
+#container-steals{
+	display: inline-block;
+	margin-right: 1%
+}
+#container-blocks{
+	display: inline-block;
+	margin-right: 1%
+}
+#container-turn{
+	display: inline-block;
+	margin-right: 1%
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
