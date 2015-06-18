@@ -230,3 +230,4 @@ var svgF = d3.select("#container-turn").append("svg")
 			svgD.call(tipD);
 			svgE.call(tipE);
 			svgF.call(tipF);
+

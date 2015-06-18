@@ -167,6 +167,43 @@ body{
 	margin-right: 1%
 }
 
+#container-points-label{
+	display: inline-block;
+	margin-right: 1%;
+	width: 100px;
+ 	text-align: center;
+}
+#container-rebounds-label{
+	display: inline-block;
+	margin-right: 1%;
+	width: 100px;
+	text-align: center;
+}
+#container-assists-label{
+	display: inline-block;
+	margin-right: 1%;
+	width: 100px;
+	text-align: center;
+}
+#container-steals-label{
+	display: inline-block;
+	margin-right: 1%;
+	width: 100px;
+	text-align: center;
+}
+#container-blocks-label{
+	display: inline-block;
+	margin-right: 1%;
+	width: 100px;
+	text-align: center;
+}
+#container-turn-label{
+	display: inline-block;
+	margin-right: 1%;
+	width: 100px;
+	text-align: center;
+}
+
 .d3-tip {
   line-height: 1;
   font-weight: bold;
