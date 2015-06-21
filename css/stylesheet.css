@@ -148,7 +148,10 @@ body{
 }
 #container-rebounds{
 	display: inline-block;
-	margin-right: 1%
+	margin-right: 1%;
+	-ms-transform: rotate(180deg); /* IE 9 */
+	-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+	transform: rotate(180deg);
 }
 #container-assists{
 	display: inline-block;

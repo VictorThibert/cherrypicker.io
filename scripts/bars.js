@@ -50,11 +50,6 @@ var svgA = d3.select("#container-points").append("svg")
 	.attr("width", barWidth)
 	.attr("height", barHeight);
 
-var svgB = d3.select("#container-rebounds").append("svg")
-	.attr("class", "barB")
-	.attr("width", barWidth)
-	.attr("height", barHeight);
-
 var svgC = d3.select("#container-assists").append("svg")
 	.attr("class", "barC")
 	.attr("width", barWidth)
@@ -76,7 +71,6 @@ var svgF = d3.select("#container-turn").append("svg")
 	.attr("height", barHeight);
 
 	var dataA = [102.5,100.1],
-	    dataB = [40.6,43.3],
 	    dataC = [25.7,22.0],
 	    dataD = [9.1,7.7],
 	    dataE = [4.75,4.8],
@@ -114,26 +108,6 @@ var svgF = d3.select("#container-turn").append("svg")
 	        })
 	        .on('mouseover', tipA.show)
         	.on('mouseout', tipA.hide)
-
-	    svgB.selectAll("rect")
-	        .data(dataB)
-	        .enter()
-	        .append("rect")
-	        .attr("x", function (d, i){
-	            return xScale(i);
-	        })
-	        .attr("y", function (d){
-	            return barHeight - yScale(d);
-	        })
-	        .attr("width", xScale.rangeBand())
-	        .attr("height", function (d){
-	            return yScale(d);
-	        })
-	        .attr("fill", function (d, i){
-	            return colors(i);
-	        })
-	        .on('mouseover', tipB.show)
-        	.on('mouseout', tipB.hide)
 
 	    svgC.selectAll("rect")
 	        .data(dataC)
