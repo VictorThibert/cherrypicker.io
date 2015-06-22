@@ -10,13 +10,6 @@ var tipA = d3.tip()
           return "<strong>PPG: </strong><span style='color: white'>" + d + "</span>";
         })
 
-var tipB = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .html(function(d) {
-          return "<strong>RPG: </strong><span style='color: white'>" + d + "</span>";
-        })
-
 var tipC = d3.tip()
         .attr('class', 'd3-tip')
         .offset([-10, 0])
@@ -199,7 +192,6 @@ var svgF = d3.select("#container-turn").append("svg")
 			    .call(xAxis);   
   
 			svgA.call(tipA);
-			svgB.call(tipB);
 			svgC.call(tipC);
 			svgD.call(tipD);
 			svgE.call(tipE);

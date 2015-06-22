@@ -149,9 +149,10 @@ body{
 #container-rebounds{
 	display: inline-block;
 	margin-right: 1%;
+	/*padding-top: 0.5%;
 	-ms-transform: rotate(180deg); /* IE 9 */
-	-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-	transform: rotate(180deg);
+	/*-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+	/*transform: rotate(180deg);*/
 }
 #container-assists{
 	display: inline-block;
@@ -205,6 +206,10 @@ body{
 	margin-right: 1%;
 	width: 100px;
 	text-align: center;
+}
+
+rect:hover {
+  fill: #d1d1d1;
 }
 
 .d3-tip {
