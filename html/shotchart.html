@@ -35,11 +35,33 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 		<script src="../scripts/hexbin.js"></script>
 		<script>
-			var arr = [];
 			var arr2 = [];
+			var arr4 = [];
+			var xmlhttp2 = new XMLHttpRequest();
+			var url = "http://localhost/webserver/php/playershotsleague.php?";
+			xmlhttp2.onreadystatechange=function() {
+			    if (xmlhttp2.readyState == 4 && xmlhttp2.status == 200) {
+			        myFunction2(xmlhttp2.responseText);
+			    }}
+			xmlhttp2.open("GET", url, true);
+			xmlhttp2.send();
+
+			function myFunction2(response) {
+			    arr2 = JSON.parse(response); 
+			    tempReassign2();
+			}
+
+			function tempReassign2(){
+				for (var i = 0; i < arr2.length; i++) {
+					arr4.push([parseInt(arr2[i]["LOC_X"]) + 250, parseInt(arr2[i]["LOC_Y"]) + 50,  arr2[i]["PERCENTAGE"] ] );	
+				} //ADD TAKEN AND MADE!!!--------------
+			}
+
+
+			var arr = [];
 			var arr3 = [];
 			var xmlhttp = new XMLHttpRequest();
-			var url = "http://localhost/webserver/php/playershotsAll.php?"; //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
+			var url = "http://localhost/webserver/php/playershots.php?playerID=200794"; //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
 			xmlhttp.onreadystatechange=function() {
 			    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			        myFunction(xmlhttp.responseText);
@@ -54,29 +76,32 @@
 			
 			function tempReassign(){
 				for (var i = 0; i < arr.length; i++) {
-					//arr2[i] = [parseInt(arr[i]["LOC_X"]), parseInt(arr[i]["LOC_Y"])];
-					//arr2.push([parseInt(arr[i]["LOC_X"]) + 250, parseInt(arr[i]["LOC_Y"]) + 50]);
-					arr3.push([2*(parseInt(arr[i]["LOC_X"]) + 250), parseInt(2*(arr[i]["LOC_Y"]) + 50), parseInt(arr[i]["SHOT_MADE_FLAG"])]);
+					arr3.push([parseInt(arr[i]["LOC_X"]) + 250, parseInt(arr[i]["LOC_Y"]) + 50, parseInt(arr[i]["SHOT_MADE_FLAG"])]);
 				}
-				render();
+				//render(); ADD DELAY
+				setTimeout(render, 50);
+
 			}
 		</script>
 		<script>
 			function render(){
+		
+
+				var customRadius = 5;
 
 				var margin = {top: 20, right: 20, bottom: 30, left: 40}, //MARGIN
 				    width = 2000 - margin.left - margin.right,
 				    height = 1200 - margin.top - margin.bottom; 
 
-				var radiusScale = d3.scale.pow().exponent(0.2)  //RADIUS SCALE QUANTIZE
-				    .domain([0,40000])
-				    .range([0.5,4]); 
+				var radiusScale = d3.scale.pow().exponent(0.8)  //RADIUS SCALE QUANTIZE
+				    .domain([0,0,2,100])
+				    .range([0,0.5,3,5.3]); 
 
 				var points = arr3;
 
 				var colorScale = d3.scale.linear() //GENERATE COLOUR SCALE
-				    .domain([0, 0.5, 1])
-				    .range(["yellow", "red", "DarkRed"])
+				    .domain([-0.09, 0.09])
+				    .range(["purple",  "red"])
 				    .interpolate(d3.interpolateLab); //Interpolating function for colours
 
 				var x = d3.scale.identity() //AXIS STUFF
@@ -96,7 +121,8 @@
 
 				var hexbin = d3.hexbin()
 				    .size([width, height])
-				    .radius(2.6);			    
+				    .radius(customRadius);		
+
 
 				var svg = d3.select("body").append("svg") //FIRST SVG CANVAS
 				    .attr("width", width + margin.left + margin.right)
@@ -119,7 +145,7 @@
 				    .attr("class", "hexagon")
 				   // .attr("d", hexbin.hexagon())
 				    .attr("d", function(d) { 
-					    return hexbin.hexagon(radiusScale(d.length), 10)["dpoints"];})  //d data element is the data contained in hexagon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
+					    return hexbin.hexagon(radiusScale(d.length), 0)["dpoints"];})  //d data element is the data contained in hexagon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				    .on("mouseover", function(d) {
 				       d3.select(this)
@@ -129,13 +155,18 @@
 				      d3.select(this)
 				      	.transition()
      					.duration(250)
-				     	.style("fill", function(d) {return colorScale(d.totalMade/d.totalShot); });
+				     	.style("fill", function(d) {return colorScale(d.totalMade/d.totalShot - arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); });
 					})
-				    .style("fill", function(d) {return colorScale(d.totalMade/d.totalShot); })
+				    .style("fill", function(d) {return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); })
 				    .append("title")
-				    .text(function(d) {
-				         return d.totalMade+"/"+d.totalShot;
+				    .text(function(d) { 
+				    	var percentage = 0.0;
+
+				    	percentage = arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2];
+				    	
+				        return d.totalMade / d.totalShot + "\n" + percentage + "\n" + (d.totalMade / d.totalShot - percentage);
 				    });
+				   
 
 
 				// svg.append("g") //APPEND X AXIS
