@@ -7,7 +7,10 @@ var tipA = d3.tip()
         .attr('class', 'd3-tip')
         .offset([-10, 0])
         .html(function(d) {
-          return "<strong>PPG: </strong><span style='color: white'>" + d + "</span>";
+        	if(d.x == 1) {
+        		return "<strong>League Average: </strong><span style='color: white'>" + d.y + "</span>"}
+          	else {
+          		return "<strong>PPG: </strong><span style='color: white'>" + d.y + "</span>"};
         })
 
 var tipC = d3.tip()
@@ -63,19 +66,28 @@ var svgF = d3.select("#container-turn").append("svg")
 	.attr("width", barWidth)
 	.attr("height", barHeight);
 
-	var dataA = [102.5,100.1],
-	    dataC = [25.7,22.0],
+	var dataA = [
+				{x:0, y:102.5},
+			 	{x:1, y:100.1}
+			 	],
+
+	    dataC = [25.7,20.5],
 	    dataD = [9.1,7.7],
 	    dataE = [4.75,4.8],
 	    dataF = [14.23,14.35],
-	    dataScale = [0,120];
+	    dataScale = [80,120],
+	    scaleCount = [0,35];
 
 	var xScale = d3.scale.ordinal()
 	            .domain(d3.range(dataA.length))
 	            .rangeRoundBands([0, barWidth], 0.05);
 
 	var yScale = d3.scale.linear()
-	            .domain([0, d3.max(dataScale)])
+	            .domain([d3.min(dataScale), d3.max(dataScale)])
+	            .range([0, barHeight]);
+
+	var countScale = d3.scale.linear()
+	            .domain([0, d3.max(scaleCount)])
 	            .range([0, barHeight]);
 
 	var xAxis = d3.svg.axis()
@@ -90,11 +102,11 @@ var svgF = d3.select("#container-turn").append("svg")
 	            return xScale(i);
 	        })
 	        .attr("y", function (d){
-	            return barHeight - yScale(d);
+	            return barHeight - yScale(d.y) * 1.5;
 	        })
 	        .attr("width", xScale.rangeBand())
 	        .attr("height", function (d){
-	            return yScale(d);
+	            return yScale(d.y) * 1.5;
 	        })
 	        .attr("fill", function (d, i){
 	            return colors(i);
@@ -110,11 +122,11 @@ var svgF = d3.select("#container-turn").append("svg")
 	            return xScale(i);
 	        })
 	        .attr("y", function (d){
-	            return barHeight - yScale(d);
+	            return barHeight - countScale(d);
 	        })
 	        .attr("width", xScale.rangeBand())
 	        .attr("height", function (d){
-	            return yScale(d);
+	            return countScale(d);
 	        })
 	        .attr("fill", function (d, i){
 	            return colors(i);
@@ -130,11 +142,11 @@ var svgF = d3.select("#container-turn").append("svg")
 	            return xScale(i);
 	        })
 	        .attr("y", function (d){
-	            return barHeight - yScale(d);
+	            return barHeight - countScale(d);
 	        })
 	        .attr("width", xScale.rangeBand())
 	        .attr("height", function (d){
-	            return yScale(d);
+	            return countScale(d);
 	        })
 	        .attr("fill", function (d, i){
 	            return colors(i);
@@ -150,11 +162,11 @@ var svgF = d3.select("#container-turn").append("svg")
 	            return xScale(i);
 	        })
 	        .attr("y", function (d){
-	            return barHeight - yScale(d);
+	            return barHeight - countScale(d);
 	        })
 	        .attr("width", xScale.rangeBand())
 	        .attr("height", function (d){
-	            return yScale(d);
+	            return countScale(d);
 	        })
 	        .attr("fill", function (d, i){
 	            return colors(i);
@@ -170,11 +182,11 @@ var svgF = d3.select("#container-turn").append("svg")
 	            return xScale(i);
 	        })
 	        .attr("y", function (d){
-	            return barHeight - yScale(d);
+	            return barHeight - countScale(d);
 	        })
 	        .attr("width", xScale.rangeBand())
 	        .attr("height", function (d){
-	            return yScale(d);
+	            return countScale(d);
 	        })
 	        .attr("fill", function (d, i){
 	            return colors(i);
