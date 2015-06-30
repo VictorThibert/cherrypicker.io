@@ -1,55 +1,22 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<title>Sankey</title>
-<style>
-
-.node rect {
-  cursor: move;
-  fill-opacity: .9;
-  shape-rendering: crispEdges;
-}
-
-.node text {
-  pointer-events: none;
-  text-shadow: 0 1px 0 #fff;
-}
-
-.link {
-  fill: none;
-  stroke: #000;
-  stroke-opacity: .2;
-}
-
-.link:hover {
-  stroke-opacity: .5;
-}
-
-</style>
-<body>
- 
-<p id="chart">
- 
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="sankey.js"></script>
-<script>
-	
 var units = "Widgets";
 
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
-    width = 700 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    width = 1000 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
-var formatNumber = d3.format(",.0f"),
+var formatNumber = d3.format(",.0f"),    // zero decimal places
     format = function(d) { return formatNumber(d) + " " + units; },
     color = d3.scale.category20();
 
-var svg = d3.select("#../html/sub-container-sank").append("svg")
+// append the svg canvas to the page
+var svg = d3.select("#sub-container-sank").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 
+// Set the sankey diagram properties
 var sankey = d3.sankey()
     .nodeWidth(36)
     .nodePadding(40)
@@ -57,13 +24,15 @@ var sankey = d3.sankey()
 
 var path = sankey.link();
 
-d3.json("sankey-formatted.json", function(error, graph) {
+// load the data
+d3.json("../sankey/sankey-formatted.json", function(error, graph) {
 
   sankey
       .nodes(graph.nodes)
       .links(graph.links)
       .layout(32);
 
+// add in the links
   var link = svg.append("g").selectAll(".link")
       .data(graph.links)
     .enter().append("path")
@@ -125,8 +94,3 @@ d3.json("sankey-formatted.json", function(error, graph) {
     link.attr("d", path);
   }
 });
-
-</script>
- 
-</body>
-</html>
