@@ -24,7 +24,7 @@ d3.divgrid = function(config) {
 
 
     selection.selectAll(".header .cell")
-      .text(function(d) {return d; })
+      .text(function(d) {return data3[d]; })
       .on("click", function(k){resort(k);});
 
     function resort(k){
@@ -67,7 +67,7 @@ d3.divgrid = function(config) {
       cells.exit().remove();
 
     selection.selectAll(".cell")
-      .text(function(d) { return d; });
+      .text(function(d,i) { if( i <= 10) {return data3[d]} else {return d;} }); //
 
     return dg;
   };

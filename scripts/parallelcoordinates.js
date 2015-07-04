@@ -1,24 +1,3 @@
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="../scripts/d3.parcoords.js"></script>
-<script src="../scripts/sylvester.js"></script>
-<script src="../scripts/divgrid.js"></script>
-<link rel="stylesheet" type="text/css" href="../css/d3.parcoords.css">
-
-<style type="text/css">
-    html, body { background: #f7f7f7; height: 100%; margin: 10; padding: 10; color: #111; font-family: Ubuntu, Helvetica, sans-serif; font-size: 12px; line-height: 1.35em;}
-    a { color: #6be; text-decoration: none; }
-    .row, .header, .cell { height: 18px; }
-    .row, .header { clear: left; }
-    .header { font-weight: bold; }
-    .cell { float: left; overflow: hidden; white-space: nowrap; width: 115px; }
-    .col-0 { width: 115px; }
-</style>
-<div id="example" class="parcoords" style="width:1200px;height:300px">
-
-</div> 
-<div id="grid"><input type="range" min="0" max="0.25" value="0.0" step="0.01" id="smoothness"/></div>
-
-<script>
 //data stored in 2d array. inner arrays represent path lines
 var data = [];
 
@@ -97,7 +76,3 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=1610612737", functi
       });
    });   
 });
-
-
-</script>
-

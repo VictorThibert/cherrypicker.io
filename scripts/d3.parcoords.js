@@ -564,7 +564,7 @@ pc.createAxes = function() {
         "x": 0,
         "class": "label"
       })
-      .text(dimensionLabels)
+      .text(function(d){return data3[d];})
       .on("dblclick", flipAxisAndUpdatePCP)
       .on("wheel", rotateLabels);
 
