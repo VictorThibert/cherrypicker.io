@@ -44,6 +44,11 @@ body{
 	width: 98%;
 }
 
+#row4{
+	display: inline-block;
+	width: 98%;
+}
+
 #column-1{
 	float: left;
 	width: 47%;
@@ -148,6 +153,16 @@ body{
 }
 
 #sub-container-sank{
+    display: inline-block;
+	width: 100%;
+	background-color: white;
+    border-radius: 0.5%;
+	padding: 1%;
+	margin-top: 1%;
+	box-shadow: 1px 1px 1px #dedede;
+}
+
+#sub-container-para{
     display: inline-block;
 	width: 100%;
 	background-color: white;
