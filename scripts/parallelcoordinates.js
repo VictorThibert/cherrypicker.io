@@ -25,7 +25,7 @@ function render() {
   pc.ctx.foreground.globalCompositeOperation = "darken";
 
   pc
-    .smoothness(0)
+    .smoothness(0.1)
     .alpha(0.3)
     .composite("darken")
     .rate(60)
@@ -76,3 +76,5 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=1610612737", functi
       });
    });   
 });
+
+

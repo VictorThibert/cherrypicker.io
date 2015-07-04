@@ -1,4 +1,4 @@
-var arr2 = [];
+function localshotchart(){var arr2 = [];
 			var arr4 = [];
 			var xmlhttp2 = new XMLHttpRequest();
 			var url = "http://cherrypicker.io/php/playershotsleague.php?";
@@ -126,3 +126,5 @@ var arr2 = [];
 				        return d.totalMade / d.totalShot + "\n" + percentage + "\n" + (d.totalMade / d.totalShot - percentage);
 				    });
 			}
+		}
+		localshotchart();
