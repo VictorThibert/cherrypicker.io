@@ -5,27 +5,25 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=1610612737", functi
   for(i = 0; i < raw.length; i += 1){
     dataB[i] = [
           raw[i].PLAYER_NAME, //                                              [0]
-          (raw[i].FGA - raw[i].FG3A - (raw[i].FGM - raw[i].FG3M)) / raw[i].GP,//[1]
-          (raw[i].FGM - raw[i].FG3M) / raw[i].GP, //2 pointers made           [2]
-          (raw[i].FG3A - raw[i].FG3M) / raw[i].GP, //                         [3]
-          raw[i].FG3M/ raw[i].GP, //                                          [4]
-          (raw[i].FTA - raw[i].FTM)/ raw[i].GP,  //                           [5]
-          raw[i].FTM/ raw[i].GP, //                                           [6]
-          raw[i].AST/ raw[i].GP,  //                                          [7]
-          raw[i].TOV/ raw[i].GP, //                                           [8]
-          (parseInt(raw[i].FGA) + +raw[i].FTA + +raw[i].AST + +raw[i].TOV)/ raw[i].GP]//   [9]
+          raw[i].FGA / raw[i].GP, //                                          [1]
+          (raw[i].FTA * 0.44)/ raw[i].GP,  //                                 [2]
+          raw[i].AST/ raw[i].GP,  //                                          [3]
+          raw[i].TOV/ raw[i].GP, //                                           [4]
+          (parseInt(raw[i].FGA) + +raw[i].FTA  * 0.44 + +raw[i].AST + +raw[i].TOV)/ raw[i].GP]//   [5]
           .map(function(d){
             if(!isNaN(d)){ 
               return parseFloat(d).toFixed(2);
               } else{return d;}
             }); 
     }
+    
+
     sankeyFormat(dataB);
 });
 
 function sankeyFormat(dataC){
   dataC.sort(function(a,b){
-          return b[9] - +a[9];
+          return b[5] - +a[5];
         });
   var sankeyData = {"nodes":[{}], "links":[]};
       sankeyData.nodes[0].node = 0;
@@ -34,60 +32,44 @@ function sankeyFormat(dataC){
         sankeyData.nodes.push({"node": i + 1, "name":dataC[i][0]});
       }
       sankeyData.nodes.push({"node": 7, "name":"Other"});
-      sankeyData.nodes.push({"node": 8, "name":"2PT FG Missed"});
-      sankeyData.nodes.push({"node": 9, "name":"2PT FG Made"});
-      sankeyData.nodes.push({"node": 10, "name":"3PT FG Missed"});
-      sankeyData.nodes.push({"node": 11, "name":"3PT FG Made"});
-      sankeyData.nodes.push({"node": 12, "name":"FT Missed"});
-      sankeyData.nodes.push({"node": 7, "name":"FT Made"});
-      sankeyData.nodes.push({"node": 7, "name":"Assists"});
-      sankeyData.nodes.push({"node": 7, "name":"Turnovers"});
+      sankeyData.nodes.push({"node": 8, "name":"Shot"});
+      sankeyData.nodes.push({"node": 9, "name":"Assist"});
+      sankeyData.nodes.push({"node": 10, "name":"Fouled"});
+      sankeyData.nodes.push({"node": 11, "name":"Turnover"});
 
       for (var i = 0; i < 6; i += 1){
-        sankeyData.links.push({"source": 0, "target": i + 1, "value":dataC[i][9]});
+        sankeyData.links.push({"source": 0, "target": i + 1, "value":dataC[i][5]});
     
       }
 
       var otherPONR = 0;
-      var other2PMissed = 0;
-      var other2PMade = 0;
-      var other3PMissed = 0;
-      var other3PMade = 0;
-      var otherFTMissed = 0;
-      var otherFTMade = 0;
-      var otherAssists = 0;
-      var otherTOV = 0;
+      var otherShot = 0;
+      var otherAssist = 0;
+      var otherFouled = 0;
+      var otherTurnover = 0;
 
       for (var i = 6; i < dataC.length; i += 1){
-        otherPONR += +dataC[i][9];
-        other2PMissed += +dataC[i][1];
-        other2PMade += +dataC[i][2];
-        other3PMissed += +dataC[i][3];
-        other3PMade += +dataC[i][4];
-        otherFTMissed += +dataC[i][5];
-        otherFTMade += +dataC[i][6];
-        otherAssists += +dataC[i][7];
-        otherTOV += +dataC[i][8];
-
+        otherPONR += +dataC[i][5];
+        otherShot += +dataC[i][1];
+        otherAssist += +dataC[i][2];
+        otherFouled += +dataC[i][3];
+        otherTurnover += +dataC[i][4];
       }
       sankeyData.links.push({"source": 0, "target": 7, "value":otherPONR});
 
       for (var i = 0; i < 6; i += 1){
-        for (var j = 0; j < 8; j += 1){
+        for (var j = 0; j < 4; j += 1){
           sankeyData.links.push({"source": i + 1, "target": j + 8, "value": dataC[i][j + 1]});
         }           
       }
 
-      sankeyData.links.push({"source": 7, "target": 8, "value":other2PMissed});
-      sankeyData.links.push({"source": 7, "target": 9, "value":other2PMade});
-      sankeyData.links.push({"source": 7, "target": 10, "value":other3PMissed});
-      sankeyData.links.push({"source": 7, "target": 11, "value":other3PMade});
-      sankeyData.links.push({"source": 7, "target": 12, "value":otherFTMissed});
-      sankeyData.links.push({"source": 7, "target": 13, "value":otherFTMade});
-      sankeyData.links.push({"source": 7, "target": 14, "value":otherAssists});
-      sankeyData.links.push({"source": 7, "target": 15, "value":otherTOV});
+      sankeyData.links.push({"source": 7, "target": 8, "value":otherShot});
+      sankeyData.links.push({"source": 7, "target": 9, "value":otherAssist});
+      sankeyData.links.push({"source": 7, "target": 10, "value":otherFouled});
+      sankeyData.links.push({"source": 7, "target": 11, "value":otherTurnover});
+ 
+      console.log(sankeyData)
 
-      console.log(sankeyData);
       renderSankey(sankeyData);
 
   function renderSankey(x){
@@ -100,8 +82,8 @@ function sankeyFormat(dataC){
 
     var formatNumber = d3.format(",.0f"),    // zero decimal places
         format = function(d) { return formatNumber(d) + " " + units; },
-        color = d3.scale.category20();
-
+        color = d3.scale.linear().domain([0,70])
+          .range(["red", "blue"])
     // append the svg canvas to the page
     var svg = d3.select("#sub-container-sank").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -158,10 +140,9 @@ function sankeyFormat(dataC){
       node.append("rect")
           .attr("height", function(d) { return d.dy; })
           .attr("width", sankey.nodeWidth())
-          .style("fill", function(d) { 
-          return d.color = color(d.name.replace(/ .*/, "")); })
-          .style("stroke", function(d) { 
-          return d3.rgb(d.color).darker(2); })
+          .attr("opacity", 0.7)
+          .style("fill", function(d) { console.log([d, "OK"]);
+          return d.color = color(d.dy); })
         .append("title")
           .text(function(d) { 
           return d.name + "\n" + format(d.value); });
