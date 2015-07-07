@@ -6,6 +6,7 @@
 
 	<script src="https://fb.me/react-0.13.3.js"></script>
 	<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 	<script src="../scripts/d3.parcoords.js"></script>
 	<script src="../scripts/sylvester.js"></script>
@@ -29,11 +30,11 @@
 		<div id = "main-container">
 			<div id="sub-container-roster">
 				Roster
-				<div id="hiddenbar">
-					Roster
-				 </div>
 			</div>
-				<div id = "row-1">
+			<div id="hiddenbar">
+				Roster
+			</div>
+				<div id = "row1">
 					<div id = "column-1">
 						<div id = "sub-container-record">
 						</div>
@@ -122,6 +123,14 @@
 		<script src = "../scripts/hexbin.js"></script>
 		<script src = "../scripts/shotchart.js"></script>
 		<script src = "../scripts/sankey-chart.js"></script>
+<<<<<<< HEAD
+		<script> 
+		$(document).ready(function(){
+		    $("#sub-container-roster").click(function(){
+		        $("#hiddenbar").slideToggle("slow");
+		    });
+		});
+=======
 		<script>
 			function dropdown(id){
 				var e = document.getElementById(id);
@@ -130,7 +139,8 @@
        			else
           		e.style.display = 'block';
     			}
-			}
+			
+>>>>>>> origin/master
 		</script>
 	</body>
 </html>
