@@ -4,6 +4,9 @@
   	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
   	<script src="../sankey/sankey.js"></script>
 
+	<script src="https://fb.me/react-0.13.3.js"></script>
+	<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+
 	<script src="../scripts/d3.parcoords.js"></script>
 	<script src="../scripts/sylvester.js"></script>
 	<script src="../scripts/divgrid.js"></script>
@@ -33,10 +36,31 @@
 				<div id = "row-1">
 					<div id = "column-1">
 						<div id = "sub-container-record">
-							Record
-							<hr>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Nam at porttitor orci, sagittis ultrices arcu. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor. Praesent a rhoncus urna, consequat varius eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et molestie tortor.
 						</div>
+								<script type = "text/jsx">
+								var LikeButton = React.createClass({
+								  getInitialState: function() {
+								    return {liked: false};
+								  },
+								  handleClick: function(event) {
+								    this.setState({liked: !this.state.liked});
+								  },
+								  render: function() {
+								    var text = this.state.liked ? 'per game' : 'total';
+								    var points = this.state.liked ? '102.5' : '8409'
+								    return (
+								      <p onClick={this.handleClick}>
+								        You are viewing {text} stats. Click to toggle. Points {text}: {points}
+								      </p>
+								    );
+								  }
+								});
+
+								React.render(
+								  <LikeButton />,
+								  document.getElementById('example')
+								);
+								</script>
 						<div id = "sub-container-stream">
 							Streamograph
 							<hr>
@@ -98,5 +122,15 @@
 		<script src = "../scripts/hexbin.js"></script>
 		<script src = "../scripts/shotchart.js"></script>
 		<script src = "../scripts/sankey-chart.js"></script>
+		<script>
+			function dropdown(id){
+				var e = document.getElementById(id);
+				if(e.style.display == 'block')
+          		e.style.display = 'none';
+       			else
+          		e.style.display = 'block';
+    			}
+			}
+		</script>
 	</body>
 </html>
