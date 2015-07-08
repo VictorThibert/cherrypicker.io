@@ -5,9 +5,9 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=1610612737", functi
   for(i = 0; i < raw.length; i += 1){
     dataB[i] = [
           raw[i].PLAYER_NAME, //                                              [0]
-          raw[i].FGA / raw[i].GP, //                                          [1]
-          (raw[i].FTA * 0.44)/ raw[i].GP,  //                                 [2]
-          raw[i].AST/ raw[i].GP,  //                                          [3]
+          raw[i].FGA / raw[i].GP, //  shot                                    [1]
+          raw[i].AST/ raw[i].GP, //   fouled                                  [2]
+          (raw[i].FTA * 0.44)/ raw[i].GP, //                                  [3]
           raw[i].TOV/ raw[i].GP, //                                           [4]
           (parseInt(raw[i].FGA) + +raw[i].FTA  * 0.44 + +raw[i].AST + +raw[i].TOV)/ raw[i].GP]//   [5]
           .map(function(d){
@@ -15,6 +15,8 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=1610612737", functi
               return parseFloat(d).toFixed(2);
               } else{return d;}
             }); 
+          console.log([raw[i].PLAYER_NAME, raw[i].FGA / raw[i].GP])
+
     }
     
 
@@ -95,7 +97,7 @@ function sankeyFormat(dataC){
     // Set the sankey diagram properties
     var sankey = d3.sankey()
         .nodeWidth(36)
-        .nodePadding(20)
+        .nodePadding(10)
         .size([width, height]);
 
     var path = sankey.link();
@@ -141,7 +143,7 @@ function sankeyFormat(dataC){
           .attr("height", function(d) { return d.dy; })
           .attr("width", sankey.nodeWidth())
           .attr("opacity", 0.7)
-          .style("fill", function(d) { console.log([d, "OK"]);
+          .style("fill", function(d) {
           return d.color = color(d.dy); })
         .append("title")
           .text(function(d) { 
