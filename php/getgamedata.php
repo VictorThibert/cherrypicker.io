@@ -28,6 +28,11 @@
 
 	}
 
+	if( $teamString == "ALLTEAMS"){
+		$query = "SELECT `GAMECODE`, `GAME_ID`, `GAME_DATE_EST`, `TEAM_ID`, `TEAM_ABBREVIATION`, `WIN`, `PTS`, `FG_PCT`, `FT_PCT`, `FG3_PCT`, `AST`, `REB`, `STL`, `BLK`, 
+		`TOV`, `PLUS_MINUS` FROM `2014-2015gamedata` ";
+	}
+
 	if ( ! $query ) {
 		echo mysql_error();
 		die;

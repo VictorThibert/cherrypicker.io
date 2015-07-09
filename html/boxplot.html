@@ -2,63 +2,130 @@
 <meta charset="utf-8">
 <style>
 
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
 
-.box {
-  font: 10px sans-serif;
-}
-.box line,
-.box rect,
-.box circle {
-  fill: white;
-  stroke: #000;
-  stroke-width: 1px;
-}
+  .box {
+    font: 10px sans-serif;
+  }
+  .box line,
+  .box rect,
+  .box circle {
+    fill: white;
+    stroke: #000;
+    stroke-width: 1px;
+  }
 
-.box .center {
-  stroke-dasharray: 3,3;
-}
+  .box .center {
+    stroke-dasharray: 3,3;
+  }
 
-.box .outlier {
-  fill: none;
-  stroke: #000;
-}
+  .box .outlier {
+    fill: none;
+    stroke: #000;
+  }
 
-.axis {
-  font: 12px sans-serif;
-}
- 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
- 
-.x.axis path { 
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
+  .axis {
+    font: 12px sans-serif;
+  }
+   
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+   
+  .x.axis path { 
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
 </style>
+
 <body>
-<script src="d3/d3.v3.min.js"></script>
-<script src="d3/box.js"></script>
+<script src="../scripts/libs/d3/d3.v3.min.js"></script>
+<script src="../scripts/box.js"></script>
 <script>
+
+renderBox("body", "PTS");
+renderBox("body", "AST");
+renderBox("body", "REB");
+renderBox("body", "STL");
+renderBox("body", "BLK");
+renderBox("body", "TOV");
+renderBox("body", "FG_PCT");
+renderBox("body", "FG3_PCT");
+renderBox("body", "FT_PCT");
+
+function renderBox(container, metric){
+
+var divID = container;
+
+
 var labels = true; // show the text labels beside individual boxplots?
 
 var margin = {top: 30, right: 50, bottom: 70, left: 50};
-var  width = 800 - margin.left - margin.right;
+var  width = 400 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
   
 var min = Infinity,
     max = -Infinity;
   
 // parse in the data  
-d3.json("http://cherrypicker.io/php/playershots.php?playerID=1882", function(error, raw) {
+
+var data = [];
+  data[0] = [];
+  data[1] = [];
+ 
+  // add more rows if your csv file has more columns
+
+  // add here the header of the csv file
+  data[0][0] = metric;
+  data[1][0] = "League " + metric;
+  
+  // add more rows if your csv file has more columns
+
+  data[0][1] = [];
+  data[1][1] = [];
+
+
+d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1600000000", function(error2, raw2) {
+
+    raw2.forEach(function(x) {
+      if(metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT"){
+        var v2 = x[metric];
+
+        var rowMax2 = v2;
+        var rowMin2 = v2;
+
+        data[1][1].push(v2);     
+         // add more rows if your csv file has more columns
+         
+        if (rowMax2 > max) max = rowMax2;
+        if (rowMin2 < min) min = rowMin2; 
+
+      }else{
+        var v2 = Math.floor(x[metric]);
+
+        var rowMax2 = v2;
+        var rowMin2 = v2;
+
+        data[1][1].push(v2);     
+         // add more rows if your csv file has more columns
+         
+        if (rowMax2 > max) max = rowMax2;
+        if (rowMin2 < min) min = rowMin2; 
+      }
+    });
+
+    next();
+
+  });
+
+function next() {
+d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw) {
 
 //raw is entire array of all the objects
   // using an array of arrays with
@@ -68,54 +135,55 @@ d3.json("http://cherrypicker.io/php/playershots.php?playerID=1882", function(err
   // data[i][1] = array of values of ith column
   // data : [[name, [a,b,c,d]] , [name, [a,b,c,d]] , [] []]
 
-
-
-  var data = [];
-  data[0] = [];
-  data[1] = [];
-  // data[2] = [];
-  // data[3] = [];
-  // add more rows if your csv file has more columns
-
-  // add here the header of the csv file
-  data[0][0] = "LOC_X";
-  data[1][0] = "LOC_Y";
-  // data[2][0] = "Q3";
-  // data[3][0] = "Q4";
-  // add more rows if your csv file has more columns
-
-  data[0][1] = [];
-  data[1][1] = [];
-  // data[2][1] = [];
-  // data[3][1] = [];
+  
   
   raw.forEach(function(x) {
-    var v1 = Math.floor(x.LOC_X),
-      v2 = Math.floor(x.LOC_Y);
-      // v3 = Math.floor(x.Q3),
-      // v4 = Math.floor(x.Q4);
-      // add more variables if your csv file has more columns
-      
-    var rowMax = Math.max(v1, v2);
-    var rowMin = Math.min(v1, v2);
 
-    data[0][1].push(v1);
-    data[1][1].push(v2);
-    // data[2][1].push(v3);
-    // data[3][1].push(v4);
-     // add more rows if your csv file has more columns
+    if(metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT"){
+      var v0 = x[metric];
+
+        //v1 = Math.floor(x.AST);
+
+        // add more variables if your csv file has more columns
+        
+      var rowMax = Math.max(v0);
+      var rowMin = Math.min(v0);
+
+      data[0][1].push(v0);
+      //data[1][1].push(v1);
      
-    if (rowMax > max) max = rowMax;
-    if (rowMin < min) min = rowMin; 
+       // add more rows if your csv file has more columns
+       
+      if (rowMax > max) max = rowMax;
+      if (rowMin < min) min = rowMin; 
+
+
+    }else{
+      var v0 = Math.floor(x[metric]);
+        //v1 = Math.floor(x.AST);
+
+        // add more variables if your csv file has more columns
+        
+      var rowMax = Math.max(v0);
+      var rowMin = Math.min(v0);
+
+      data[0][1].push(v0);
+      //data[1][1].push(v1);
+     
+       // add more rows if your csv file has more columns
+       
+      if (rowMax > max) max = rowMax;
+      if (rowMin < min) min = rowMin; 
+    }
   });
   
   var chart = d3.box()
-    .whiskers(iqr(5))
+    .whiskers(iqr(50))
     .height(height) 
     .domain([min, max])
     .showLabels(labels);
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select(divID).append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .attr("class", "box")    
@@ -124,7 +192,7 @@ d3.json("http://cherrypicker.io/php/playershots.php?playerID=1882", function(err
   
   // the x-axis
   var x = d3.scale.ordinal()     
-    .domain( data.map(function(d) { console.log(d); return d[0] } ) )     
+    .domain( data.map(function(d) {return d[0] } ) )     
     .rangeRoundBands([0 , width], 0.7, 0.3);    
 
   var xAxis = d3.svg.axis()
@@ -155,7 +223,7 @@ d3.json("http://cherrypicker.io/php/playershots.php?playerID=1882", function(err
         .attr("text-anchor", "middle")  
         .style("font-size", "18px") 
         //.style("text-decoration", "underline")  
-        .text("Revenue 2012");
+        .text(metric);
  
    // draw y axis
   svg.append("g")
@@ -167,7 +235,7 @@ d3.json("http://cherrypicker.io/php/playershots.php?playerID=1882", function(err
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .style("font-size", "16px") 
-      .text("Revenue in €");    
+      .text(metric);    
   
   // draw x axis  
   svg.append("g")
@@ -180,8 +248,9 @@ d3.json("http://cherrypicker.io/php/playershots.php?playerID=1882", function(err
     .attr("dy", ".71em")
         .style("text-anchor", "middle")
     .style("font-size", "16px") 
-        .text("Quarter"); 
+        .text("X-Axis"); 
 });
+}
 
 // Returns a function to compute the interquartile range.
 function iqr(k) {
@@ -191,10 +260,14 @@ function iqr(k) {
         iqr = (q3 - q1) * k,
         i = -1,
         j = d.length;
+        
     while (d[++i] < q1 - iqr);
     while (d[--j] > q3 + iqr);
+    console.log([k, i,j, q1, q3]);
     return [i, j];
   };
 }
+}
+
 
 </script>
