@@ -12,6 +12,9 @@
 	<script src="../scripts/sylvester.js"></script>
 	<script src="../scripts/divgrid.js"></script>
 
+	<script src="../scripts/box.js"></script>
+	<script src="../scripts/boxplot.js"></script>
+
 
 	<link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 	<link rel="stylesheet" type="text/css" href="../css/d3.parcoords.css">
@@ -23,6 +26,44 @@
 		    .header { font-weight: bold; }
 		    .cell { float: left; overflow: hidden; white-space: nowrap; width: 115px; }
 		    .col-0 { width: 115px; }
+		    .trad {display: inline-block;}
+
+		      .box {
+			    font: 10px sans-serif;
+			  }
+			  .box line,
+			  .box rect,
+			  .box circle {
+			    fill: white;
+			    stroke: #000;
+			    stroke-width: 1px;
+			  }
+
+			  .box .center {
+			    stroke-dasharray: 3,3;
+			  }
+
+			  .box .outlier {
+			    fill: none;
+			    stroke: #000;
+			  }
+
+			  .axis {
+			    font: 12px sans-serif;
+			  }
+			   
+			  .axis path,
+			  .axis line {
+			    fill: none;
+			    stroke: #000;
+			    shape-rendering: crispEdges;
+			  }
+			   
+			  .x.axis path { 
+			    fill: none;
+			    stroke: #000;
+			    shape-rendering: crispEdges;
+			  }
 	</style>
 	</head>
 
@@ -86,15 +127,15 @@
 			    		Traditional Stats
 			    		<hr>
 			    		<div id = "sub-container-trad-row1">
-				    		<div id = "container-PTS"></div>
-				    		<div id = "container-AST"></div>
-				    		<div id = "container-REB"></div>
-				    		<div id = "container-STL"></div>
-				    		<div id = "container-BLK"></div>
-				    		<div id = "container-TOV"></div>
-				    		<div id = "container-FG_PCT"></div>
-				    		<div id = "container-FG3_PCT"></div>
-				    		<div id = "container-FT_PCT"></div>
+				    		<div class = "trad" id = "container-PTS"></div>
+				    		<div class = "trad" id = "container-AST"></div>
+				    		<div class = "trad" id = "container-REB"></div>
+				    		<div class = "trad" id = "container-STL"></div>
+				    		<div class = "trad" id = "container-BLK"></div>
+				    		<div class = "trad" id = "container-TOV"></div>
+				    		<div class = "trad" id = "container-FG_PCT"></div>
+				    		<div class = "trad" id = "container-FG3_PCT"></div>
+				    		<div class = "trad" id = "container-FT_PCT"></div>
 				    	</div>
 			    	
 			    	</div>
