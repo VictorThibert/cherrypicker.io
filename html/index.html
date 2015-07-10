@@ -75,9 +75,13 @@
 			<div id="hiddenbar">
 				Roster
 			</div>
-				<div id = "row1">
+				<div id = "row1"> 
 					<div id = "column-1">
 						<div id = "sub-container-record">
+							<select>
+							  <option value="atlanta">Atlanta</option>
+							  <option value="boston">Boston</option>
+							</select>
 						</div>
 								<script type = "text/jsx">
 								var LikeButton = React.createClass({
@@ -160,6 +164,7 @@
 		<script src = "../scripts/hexbin.js"></script>
 		<script src = "../scripts/shotchart.js"></script>
 		<script src = "../scripts/sankey-chart.js"></script>
+		<script src = "../scripts/sankey-chart-bos.js"></script>
 		<script> 
 		$(document).ready(function(){
 		    $("#sub-container-roster").click(function(){
