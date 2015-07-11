@@ -166,25 +166,43 @@ function renderCalendar(container, year1, year2){
   rect.append("title")
       .text(function(d) { return d; });
 
-  svg.selectAll(".month")
-      .data(function(d) { return d3.time.months(new Date(d, 10, 1), new Date(d + 1, 4, 32)); })
-    .enter().append("path")
-      .attr("class", "month")
-     // .attr("d", monthPath);
+  // svg.selectAll(".month")
+  //     .data(function(d) { return d3.time.months(new Date(d, 10, 1), new Date(d + 1, 4, 32)); })
+  //   .enter().append("path")
+  //     .attr("class", "month")
+  //     .attr("d", monthPath);
 
   // d3.csv("dji.csv", function(error, csv) {
   //   if (error) throw error;
 
   //   var data = d3.nest()
-  //     .key(function(d) { return d.Date; })
+  //     .key(function(d) { return d.Date; }) //grouped by date [{"key": "2014-05" "values":[{},{}]}]
   //     .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
-  //     .map(csv);
+  //     .map(csv);  //assume each element of data [,,] is a {2014-04-13: -.056} object
 
   //   rect.filter(function(d) { return d in data; })
   //       .attr("class", function(d) { return "day " + color(data[d]); })
   //     .select("title")
   //       .text(function(d) { return d + ": " + percent(data[d]); });
   // });
+
+  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw){
+    if (error){
+      throw error;
+    }
+
+    var data = d3.nest()
+      .key(function(d) { return d.GAME_DATE_EST;})
+      .rollup(function(d) {return d[0].WIN;})
+      .map(raw);
+
+      console.log(data);
+
+    rect.filter(function(d) { return d in data; })
+      .attr("class", function(d){return "day " + color(data[d]); })
+     .select("title")
+      .text(function(d) { return d + ": " + data[d];});
+  });
 
   function monthPath(t0) { //called once per month //t0 is the date of the first day of the month
     var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
