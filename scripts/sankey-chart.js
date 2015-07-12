@@ -1,6 +1,9 @@
-var dataB = [];
+function sankeyRender(team){
 
-d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=1610612737", function(error, raw){
+var dataB = [];
+var id = team;
+
+d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, function(error, raw){
   var i = 0;
   for(i = 0; i < raw.length; i += 1){
     dataB[i] = [
@@ -173,4 +176,5 @@ function sankeyFormat(dataC){
     };
   }
 
+}
 }
