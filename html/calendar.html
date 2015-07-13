@@ -14,7 +14,7 @@ body {
 }
 
 .fillerday {
-  fill: #DDD;
+  fill: #EEE;
 }
 
 
@@ -192,13 +192,15 @@ function renderCalendar(container, year1, year2){
     }
 
     var data = d3.nest()
-      .key(function(d) { return d.GAME_DATE_EST;})
+      .key(function(d) { 
+        var e = d.GAME_DATE_EST; 
+        return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
       .rollup(function(d) {return d[0].WIN;})
       .map(raw);
 
       console.log(data);
 
-    rect.filter(function(d) { return d in data; })
+    rect.filter(function(d) { return d in data; }) //returns the days in the div for that month
       .attr("class", function(d){return "day " + color(data[d]); })
      .select("title")
       .text(function(d) { return d + ": " + data[d];});
