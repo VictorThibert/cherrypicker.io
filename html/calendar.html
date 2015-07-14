@@ -19,17 +19,6 @@ body {
 
 
 
-.RdYlGn .q0-11{fill:rgb(165,0,38)}
-.RdYlGn .q1-11{fill:rgb(215,48,39)}
-.RdYlGn .q2-11{fill:rgb(244,109,67)}
-.RdYlGn .q3-11{fill:rgb(253,174,97)}
-.RdYlGn .q4-11{fill:rgb(254,224,139)}
-.RdYlGn .q5-11{fill:rgb(255,255,191)}
-.RdYlGn .q6-11{fill:rgb(217,239,139)}
-.RdYlGn .q7-11{fill:rgb(166,217,106)}
-.RdYlGn .q8-11{fill:rgb(102,189,99)}
-.RdYlGn .q9-11{fill:rgb(26,152,80)}
-.RdYlGn .q10-11{fill:rgb(0,104,55)}
 
 </style>
 <body>
@@ -49,7 +38,7 @@ body {
   <div class = "month" id = "m5"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="../scripts/libs/d3/d3.v3.min.js"></script>
 
 <script>
 
@@ -95,9 +84,10 @@ function renderCalendar(container, year1, year2){
   var percent = d3.format(".1%"),
       format = d3.time.format("%Y-%m-%d");
 
-  var color = d3.scale.quantize()
-      .domain([-.05, .05])
-      .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
+  var color = d3.scale.linear()
+    .domain([-60,60])
+    .range(["red", "green"]);
+
 
   var svg = d3.select(monthDiv).selectAll("svg")
       .data(d3.range(year1, year2))
@@ -166,58 +156,102 @@ function renderCalendar(container, year1, year2){
   rect.append("title")
       .text(function(d) { return d; });
 
-  // svg.selectAll(".month")
-  //     .data(function(d) { return d3.time.months(new Date(d, 10, 1), new Date(d + 1, 4, 32)); })
-  //   .enter().append("path")
-  //     .attr("class", "month")
-  //     .attr("d", monthPath);
-
-  // d3.csv("dji.csv", function(error, csv) {
-  //   if (error) throw error;
-
-  //   var data = d3.nest()
-  //     .key(function(d) { return d.Date; }) //grouped by date [{"key": "2014-05" "values":[{},{}]}]
-  //     .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
-  //     .map(csv);  //assume each element of data [,,] is a {2014-04-13: -.056} object
-
-  //   rect.filter(function(d) { return d in data; })
-  //       .attr("class", function(d) { return "day " + color(data[d]); })
-  //     .select("title")
-  //       .text(function(d) { return d + ": " + percent(data[d]); });
-  // });
+  var plusminus = 0;
+  var count = 0;
 
   d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw){
     if (error){
       throw error;
     }
 
-    var data = d3.nest()
-      .key(function(d) { 
-        var e = d.GAME_DATE_EST; 
-        return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
-      .rollup(function(d) {return d[0].WIN;})
-      .map(raw);
+    if (count == 0){
+      var firstGame = raw[0].GAME_DATE_EST;
+      firstGame = new Date(firstGame.slice(0,4), firstGame.slice(4,6) - 1, firstGame.slice(6,8));
+      var lastGame = raw[raw.length - 1].GAME_DATE_EST;
+      lastGame = new Date(lastGame.slice(0,4), lastGame.slice(4,6) - 1, lastGame.slice(6,8));
+      
+      var regularSeason = d3.time.days(firstGame, lastGame);
 
-      console.log(data);
 
-    rect.filter(function(d) { return d in data; }) //returns the days in the div for that month
-      .attr("class", function(d){return "day " + color(data[d]); })
-     .select("title")
-      .text(function(d) { return d + ": " + data[d];});
+      function merge_options(obj1,obj2){
+          var obj3 = {};
+          for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+          for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+          return obj3;
+      }
+
+      var data2= {};
+
+      for (var i = 0; i < regularSeason.length; i += 1) {
+        var x = regularSeason[i];
+        x = new Date(x);
+        //console.log(x.getMonth() + 1 + "  0" + x.getDay());
+        key = x.getFullYear() + "-" + ("0" + (x.getMonth() + 1)).slice(-2) + "-" + ("0" + x.getDate()).slice(-2);
+        data2[key] = 0;
+      }
+      
+
+
+      
+
+
+      var data = d3.nest()
+        .key(function(d) { 
+          var e = d.GAME_DATE_EST; 
+          return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
+        .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].WIN * 2 - 1);})
+        .map(raw);
+
+
+      var data3 = merge_options(data2, data);
+
+      var corresponding = [0];
+
+      cCount = 1;
+      for (var x in data3) {
+        var value = data3[x];
+        corresponding[cCount] =  corresponding[cCount - 1] +parseInt(value);
+        cCount += 1;
+        console.log(corresponding[cCount -1])
+        data3[x] = corresponding[cCount -1];
+      }
+
+
+      
+
+      //console.log(data2);
+      console.log(data3)
+
+      rect.filter(function(d) { return d in data3; }) //returns the days in the div for that month
+        .style("fill", function(d){return color(data3[d]); })
+       .select("title")
+        .text(function(d) { return d + ": " + data3[d];}); 
+
+        count +=1;
+
+      
+    }
+
+   
+
+
+      //console.log(data);
+
+    
   });
 
-  function monthPath(t0) { //called once per month //t0 is the date of the first day of the month
-    var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
-        d0 = t0.getDay(), w0 = (d3.time.weekOfYear(t0) - 43 + 52) % 52,
-        d1 = t1.getDay(), w1 = (d3.time.weekOfYear(t1) - 43 + 52) % 52;
+  // function monthPath(t0) { //called once per month //t0 is the date of the first day of the month
+  //   var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
+  //       d0 = t0.getDay(), w0 = (d3.time.weekOfYear(t0) - 43 + 52) % 52,
+  //       d1 = t1.getDay(), w1 = (d3.time.weekOfYear(t1) - 43 + 52) % 52;
 
 
-    return "M" + (w0 + 1) * cellSize + "," + d0 * cellSize
-        + "H" + w0 * cellSize + "V" + 7 * cellSize
-        + "H" + w1 * cellSize + "V" + (d1 + 1) * cellSize
-        + "H" + (w1 + 1) * cellSize + "V" + 0
-        + "H" + (w0 + 1) * cellSize + "Z";
-  }
+  //   return "M" + (w0 + 1) * cellSize + "," + d0 * cellSize
+  //       + "H" + w0 * cellSize + "V" + 7 * cellSize
+  //       + "H" + w1 * cellSize + "V" + (d1 + 1) * cellSize
+  //       + "H" + (w1 + 1) * cellSize + "V" + 0
+  //       + "H" + (w0 + 1) * cellSize + "Z";
+  // }
 
   d3.select(self.frameElement).style("height", "2910px");
 }
