@@ -79,6 +79,8 @@ function sankeyFormat(dataC){
 
   function renderSankey(x){
 
+    d3.select("#sub-container-sank").selectAll("svg").remove();
+
     var units = "Possessions PONR";
 
     var margin = {top: 10, right: 10, bottom: 10, left: 10},
