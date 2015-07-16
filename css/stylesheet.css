@@ -163,9 +163,9 @@ body{
 	box-shadow: 1px 1px 1px #dedede;
 }
 
-#example{
+/*#example{
 	display: inline-block;
-}
+}*/
 
 #container-points{
 	display: inline-block;
@@ -284,3 +284,47 @@ rect:hover {
 .link:hover {
   stroke-opacity: .5;
 }
+
+.row, .header, .cell { height: 18px; }
+.row, .header { clear: left; }
+.header { font-weight: bold; }
+.cell { float: left; overflow: hidden; white-space: nowrap; width: 115px; }
+.col-0 { width: 115px; }
+.trad {display: inline-block;}
+
+  .box {
+    font: 10px sans-serif;
+  }
+  .box line,
+  .box rect,
+  .box circle {
+    fill: white;
+    stroke: #000;
+    stroke-width: 1px;
+  }
+
+  .box .center {
+    stroke-dasharray: 3,3;
+  }
+
+  .box .outlier {
+    fill: none;
+    stroke: #000;
+  }
+
+  .axis {
+    font: 12px sans-serif;
+  }
+   
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+   
+  .x.axis path { 
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }

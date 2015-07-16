@@ -1,4 +1,5 @@
 d3.divgrid = function(config) {
+  var data3 = config;
   var columns = [];
   var ascending = [];
 

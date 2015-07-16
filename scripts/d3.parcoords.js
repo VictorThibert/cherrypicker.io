@@ -1,3 +1,7 @@
+function renderPara2(x){
+
+var data3 = x;
+
 d3.parcoords = function(config) {
   var __ = {
     data: [],
@@ -1561,3 +1565,4 @@ d3.renderQueue = (function(func) {
 
   return rq;
 });
+}
