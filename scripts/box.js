@@ -2,6 +2,11 @@
 
 // Inspired by http://informationandvisualization.de/blog/box-plot
 d3.box = function() {
+
+  var color = d3.scale.linear()
+    .domain([60, 150])
+    .range(["green", "red"])
+
   var width = 1,
       height = 1,
       duration = 500,
@@ -66,6 +71,7 @@ d3.box = function() {
       var center = g.selectAll("line.center")
           .data(whiskerData ? [whiskerData] : []);
 
+
    //vertical line
       center.enter().insert("line", "rect")
           .attr("class", "center")
@@ -73,10 +79,12 @@ d3.box = function() {
           .attr("y1", function(d) { return x0(d[0]); })
           .attr("x2", width / 2)
           .attr("y2", function(d) { return x0(d[1]); })
+          .style("stroke", function(d){return color(x1(d[0]))})
           .style("opacity", 1e-6)
         .transition()
           .duration(duration)
           .style("opacity", 1)
+          .style("stroke", function(d){console.log(d) ;return color(x1(d[0]))})
           .attr("y1", function(d) { return x1(d[0]); })
           .attr("y2", function(d) { return x1(d[1]); });
 
@@ -103,10 +111,12 @@ d3.box = function() {
           .attr("y", function(d) { return x0(d[2]); })
           .attr("width", width)
           .attr("height", function(d) { return x0(d[0]) - x0(d[2]); })
+          .style("stroke", "red")
         .transition()
           .duration(duration)
           .attr("y", function(d) { return x1(d[2]); })
-          .attr("height", function(d) { return x1(d[0]) - x1(d[2]); });
+          .attr("height", function(d) { return x1(d[0]) - x1(d[2]); })
+         ;
 
       box.transition()
           .duration(duration)
@@ -301,6 +311,12 @@ d3.box = function() {
     quartiles = x;
     return box;
   };
+
+  box.colors = function(x) {
+    if (!arguments.length) return colors;
+    colors = x;
+    return box;
+  }
 
   return box;
 };
