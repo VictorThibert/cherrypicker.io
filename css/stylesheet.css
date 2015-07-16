@@ -163,6 +163,10 @@ body{
 	box-shadow: 1px 1px 1px #dedede;
 }
 
+#example{
+	display: inline-block;
+}
+
 #container-points{
 	display: inline-block;
 	margin-right: 1%

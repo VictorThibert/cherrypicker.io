@@ -78,8 +78,12 @@
 				<div id = "row1"> 
 					<div id = "column-1">
 						<div id = "sub-container-record">
-							<button onclick = "sankeyRender(37)">Atlanta</button>
-							<button onclick = "sankeyRender(38)">Boston</button>
+							<button onclick = "sankeyRender(37); parallelRender(37)">Atlanta</button>
+							<button onclick = "sankeyRender(38); parallelRender(38)">Boston</button>
+							<button onclick = "sankeyRender(51); parallelRender(51)">Brooklyn</button>
+							<button onclick = "sankeyRender(40); parallelRender(40)">Charlotte</button>
+							<button onclick = "sankeyRender(41); parallelRender(41)">Chicago</button>
+							<button onclick = "sankeyRender(42); parallelRender(42)">Dallas</button>
 						</div>
 								<script type = "text/jsx">
 								var LikeButton = React.createClass({
@@ -162,7 +166,6 @@
 		<script src = "../scripts/hexbin.js"></script>
 		<script src = "../scripts/shotchart.js"></script>
 		<script src = "../scripts/sankey-chart.js"></script>
-		<script src = "../scripts/sankey-chart-bos.js"></script>
 		<script> 
 		$(document).ready(function(){
 		    $("#sub-container-roster").click(function(){

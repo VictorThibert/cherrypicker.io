@@ -1,5 +1,3 @@
-
-
 renderBox("container-PTS", "PTS");
 renderBox("container-AST", "AST");
 renderBox("container-REB", "REB");
@@ -24,7 +22,7 @@ var height = 250 - margin.top - margin.bottom;
 var min = Infinity,
     max = -Infinity;
   
-// parse in the data  
+// parse in the data 
 
 var data = [];
   data[0] = [];
