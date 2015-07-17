@@ -84,7 +84,7 @@ d3.box = function() {
         .transition()
           .duration(duration)
           .style("opacity", 1)
-          .style("stroke", function(d){console.log(d) ;return color(x1(d[0]))})
+          .style("stroke", function(d){/*console.log(d) */;return color(x1(d[0]))}) //reactive console.log
           .attr("y1", function(d) { return x1(d[0]); })
           .attr("y2", function(d) { return x1(d[1]); });
 

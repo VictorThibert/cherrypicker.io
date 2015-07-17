@@ -18,7 +18,7 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, fun
               return parseFloat(d).toFixed(2);
               } else{return d;}
             }); 
-          console.log([raw[i].PLAYER_NAME, raw[i].FGA / raw[i].GP])
+          //console.log([raw[i].PLAYER_NAME, raw[i].FGA / raw[i].GP])
 
     }
     
@@ -73,7 +73,7 @@ function sankeyFormat(dataC){
       sankeyData.links.push({"source": 7, "target": 10, "value":otherFouled});
       sankeyData.links.push({"source": 7, "target": 11, "value":otherTurnover});
  
-      console.log(sankeyData)
+      //console.log(sankeyData)
 
       renderSankey(sankeyData);
 
