@@ -79,7 +79,7 @@ d3.box = function() {
           .attr("y1", function(d) { return x0(d[0]); })
           .attr("x2", width / 2)
           .attr("y2", function(d) { return x0(d[1]); })
-          .style("stroke", function(d){return color(x1(d[0]))})
+          .style("stroke", function(d){return color(x1(d[0]))}) //add gradient stroke
           .style("opacity", 1e-6)
         .transition()
           .duration(duration)
