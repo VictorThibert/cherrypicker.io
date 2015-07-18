@@ -17,10 +17,9 @@ body{
 
 #main-container{
 	background-color: #ededed;
-	position: relative;
 	width: 85%;
 	min-width: 1000px;
-	height: 3000px;
+	height: 2000px;
 	padding: 1%;
 	margin-top: 50px;
 	margin-left: auto;

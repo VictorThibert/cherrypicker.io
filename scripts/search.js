@@ -32,7 +32,7 @@ keys = [
           {"Team":"Utah Jazz"},
           {"Team":"Washington Wizard"}
         ];
-        
+
 start();
 
 function onSelect(d) {
@@ -40,10 +40,10 @@ function onSelect(d) {
 }
 
 function start() {
-    var mc = autocomplete(document.getElementById('test'))
+    var mc = autocomplete(document.getElementById('search'))
             .keys(keys)
             .dataField("Team")
-            .placeHolder("Search Teams- Start typing here")
+            .placeHolder("Search Teams")
             .width(960)
             .height(500)
             .onSelected(onSelect)
