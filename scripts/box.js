@@ -6,6 +6,7 @@ d3.box = function() {
   var color = d3.scale.linear()
     .domain([60, 150])
     .range(["green", "red"])
+  var color2 = d3.interpolateLab("#008000", "#c83a22");
 
   var width = 1,
       height = 1,
@@ -79,12 +80,12 @@ d3.box = function() {
           .attr("y1", function(d) { return x0(d[0]); })
           .attr("x2", width / 2)
           .attr("y2", function(d) { return x0(d[1]); })
-          .style("stroke", function(d){return color(x1(d[0]))}) //add gradient stroke
+          //.style("stroke", function(d){return color(x1(d[0]))}) //add gradient stroke
           .style("opacity", 1e-6)
         .transition()
           .duration(duration)
           .style("opacity", 1)
-          .style("stroke", function(d){/*console.log(d) */;return color(x1(d[0]))}) //reactive console.log
+          //.style("stroke", function(d){/*console.log(d) */;return color(x1(d[0]))}) //reactive console.log
           .attr("y1", function(d) { return x1(d[0]); })
           .attr("y2", function(d) { return x1(d[1]); });
 
@@ -111,7 +112,7 @@ d3.box = function() {
           .attr("y", function(d) { return x0(d[2]); })
           .attr("width", width)
           .attr("height", function(d) { return x0(d[0]) - x0(d[2]); })
-          .style("stroke", "red")
+          //.style("stroke", "red")
         .transition()
           .duration(duration)
           .attr("y", function(d) { return x1(d[2]); })

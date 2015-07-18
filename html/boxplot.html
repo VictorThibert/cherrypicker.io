@@ -9,8 +9,17 @@
   .box {
     font: 10px sans-serif;
   }
-  .box line,
-  .box rect,
+  .box line {
+    fill: none;                 
+    stroke: url(#line-gradient);    
+    stroke-width: 2px;      
+  }
+  .box rect
+  {
+    fill: white;                 
+    stroke: url(#line-gradient);    
+    stroke-width: 1px;      
+  }
   .box circle {
     fill: white;
     stroke: #000;
@@ -189,6 +198,10 @@ d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function
     .attr("class", "box")    
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+ 
+
   
   // the x-axis
   var x = d3.scale.ordinal()     
@@ -207,6 +220,22 @@ d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
+
+
+     svg.append("linearGradient") //gradient
+      .attr("id", "line-gradient")
+      .attr("gradientUnits", "userSpaceOnUse")
+      .attr("x1", 0).attr("y1", 70)
+      .attr("x2", 0).attr("y2", 140)
+      .selectAll("stop")
+      .data([
+      {offset: "0%", color: "green"},
+      {offset: "100%", color: "red"}   
+      ])
+      .enter().append("stop")
+      .attr("offset", function(d) { return d.offset; })
+      .attr("stop-color", function(d) { return d.color; });
+
 
   // draw the boxplots  
   svg.selectAll(".box")    
@@ -263,7 +292,7 @@ function iqr(k) {
         
     while (d[++i] < q1 - iqr);
     while (d[--j] > q3 + iqr);
-    console.log([k, i,j, q1, q3]);
+    //console.log([k, i,j, q1, q3]);
     return [i, j];
   };
 }

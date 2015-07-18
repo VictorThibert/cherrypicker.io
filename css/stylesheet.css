@@ -328,3 +328,10 @@ rect:hover {
     stroke: #000;
     shape-rendering: crispEdges;
   }
+
+
+ .line {                         
+    fill: none;                 
+    stroke: url(#line-gradient);    
+    stroke-width: 2px;          
+}
