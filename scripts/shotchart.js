@@ -50,7 +50,7 @@ function localshotchart(){
 
 
 
-				var lastPosition = [0, 0];
+				var lastPosition = [[0, 0],[0,0]];
 				var brushConditions = [1, lastPosition];
 
 				var bottomPCT = 0;
@@ -59,7 +59,7 @@ function localshotchart(){
 				var slider = document.getElementById("sub-container-shot");
 
 					noUiSlider.create(slider, {
-						start: [0.1, 0.9],
+						start: [0.0, 1.0],
 						connect: true,
 						range: {
 							'min': 0,
@@ -162,9 +162,7 @@ function localshotchart(){
 				 //    .append("title")
 				 //    .text(function(d) { 
 				 //    	var percentage = 0.0;
-
 				 //    	percentage = arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2];
-				    	
 				 //        return d.totalMade / d.totalShot + "\n" + percentage + "\n" + (d.totalMade / d.totalShot - percentage);
 				 //    });
 
@@ -172,53 +170,58 @@ function localshotchart(){
 		
 					brushing(brushConditions);
 
-					function brushing(xa) {
-						
-					 	var extent = xa[1];
-					 	var selectedNothing = xa[0];
+					function brushing(conditions) {
 
-					 	console.log(xa[1][0])
-
+						var selectedNothing = conditions[0]; //1 0 FLAG FOR SELECTED NOTHING
+					 	var extent = conditions[1]; //LAST POSITION
+		
 					    var brush = svg.append("g")
-					      .attr("class", function(){
-					      	hexagon.classed("selected", true);
-					      	return "brush";
-					      })
-					      .call(d3.svg.brush()
-					      	.extent(xa[1])
+					      .attr("class", "brush")
+					      .call(
+					      	d3.svg.brush()
+
+
 					        .x(d3.scale.identity().domain([0, width]))
 					        .y(d3.scale.identity().domain([0, height]))
 					        .on("brushend", function() {
+					        
 					        	if (selectedNothing) {
-					        	
 					        		hexagon.classed("selected", true);
 					        	}
 					        })
 					        .on("brush",  function() {       
 					          extent = d3.event.target.extent();
 					          lastPosition = extent;
+					          brushConditions[1] = lastPosition; 
 					  
-					          if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED NOTHING SO THAT IT REAPPEARS COLORED
+					          if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED SOMETHING
 					          	selectedNothing = 0;
-					          } else {
+					          	brushConditions[0] = selectedNothing;
+					          } else { //SELECTED SOMETHING
 					          	selectedNothing = 1;
+					          	brushConditions[0] = selectedNothing;
 					          }
 					          			
-					          hexagon.classed("selected", function(d) { 
+					          hexagon.classed("selected", function(d) {
 					            return extent[0][0] <= d.x && d.x < extent[1][0]
 					                && extent[0][1] <= d.y && d.y < extent[1][1];
 					          });
-   
 					        })
-					        //.extent(extent)
+					        .extent(extent)
 					        
-					        );
- 							if(xa[0]){hexagon.classed("selected", function(d) { 
-					            return extent[0][0] <= d.x && d.x < extent[1][0]
-					                && extent[0][1] <= d.y && d.y < extent[1][1];
+					      );
+							
+
+
+ 							if(1){hexagon.classed("selected", function(d) { 
+ 								if(selectedNothing){
+ 									return true;
+ 								}else{
+ 									return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1];}
 					          });}
 
-					      brushConditions = [+ selectedNothing, lastPosition]; 
+ 						
+					     
 				  }
 			}
 		}
