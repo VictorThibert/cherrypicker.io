@@ -1,7 +1,29 @@
 <!DOCTYPE HTML>
 <meta charset="utf-8">
 <html>
+	<style>
+
+
+
+	.hexagon {
+	  opacity:  0.1;
+	}
+
+	.hexagon.selected {
+		opacity: 1;
+	}
+
+	.brush .extent {
+	  fill-opacity: .1;
+	  shape-rendering: crispEdges;
+	}
+
+	</style>
+
 	<body>
+		<div id = "sub-container-shot">
+				
+		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 		<script src="../scripts/hexbin.js"></script>
 		<script src="../scripts/shotchart.js"></script>

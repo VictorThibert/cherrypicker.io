@@ -1,4 +1,5 @@
-function localshotchart(){var arr2 = [];
+function localshotchart(){
+			var arr2 = [];
 			var arr4 = [];
 			var xmlhttp2 = new XMLHttpRequest();
 			var url = "http://cherrypicker.io/php/playershotsleague.php?";
@@ -40,10 +41,11 @@ function localshotchart(){var arr2 = [];
 				for (var i = 0; i < arr.length; i++) {
 					arr3.push([parseInt(arr[i]["LOC_X"]) + 250, parseInt(arr[i]["LOC_Y"]) + 50, parseInt(arr[i]["SHOT_MADE_FLAG"])]);
 				}
-				//render(); ADD DELAY
+				
 				setTimeout(render, 50);
 
 			}
+
 			function render(){
 
 				var customRadius = 5;
@@ -64,8 +66,7 @@ function localshotchart(){var arr2 = [];
 				    .interpolate(d3.interpolateLab); //Interpolating function for colours
 
 				var x = d3.scale.identity() //AXIS STUFF
-				    .domain([0, width])
-				    ; 
+				    .domain([0, width]); 
 				var y = d3.scale.linear()
 				    .domain([0, height])
 				    .range([height, 0]);
@@ -95,8 +96,9 @@ function localshotchart(){var arr2 = [];
 				    .attr("class", "mesh")
 				    .attr("width", width)
 				    .attr("height", height);
-				svg.append("g") //ADDING THE HEXAGONS
-				    .attr("clip-path", "url(#clip)") //Does nothing ?
+
+				var hexagon = svg.append("g") //ADDING THE HEXAGONS
+				    //.attr("clip-path", "url(#clip)") //Does nothing ?
 				  .selectAll(".hexagon")
 				    .data(hexbin(points))
 				 	.enter()
@@ -117,14 +119,41 @@ function localshotchart(){var arr2 = [];
 				     	.style("fill", function(d) {return colorScale(d.totalMade/d.totalShot - arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); });
 					})
 				    .style("fill", function(d) {return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); })
-				    .append("title")
-				    .text(function(d) { 
-				    	var percentage = 0.0;
+				 //    .append("title")
+				 //    .text(function(d) { 
+				 //    	var percentage = 0.0;
 
-				    	percentage = arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2];
+				 //    	percentage = arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2];
 				    	
-				        return d.totalMade / d.totalShot + "\n" + percentage + "\n" + (d.totalMade / d.totalShot - percentage);
-				    });
+				 //        return d.totalMade / d.totalShot + "\n" + percentage + "\n" + (d.totalMade / d.totalShot - percentage);
+				 //    });
+
+					var brushCell; 
+					var selectedNothing = true;
+				    var brush = svg.append("g")
+				      .attr("class", function(){hexagon.classed("selected", true);return "brush";})
+				      .call(d3.svg.brush()
+				        .x(d3.scale.identity().domain([0, width]))
+				        .y(d3.scale.identity().domain([0, height]))
+				        .on("brushend", function() {
+				        	if (selectedNothing) {
+				        		hexagon.classed("selected", true);
+				        	}
+				        })
+				        .on("brush", function() {       
+				          var extent = d3.event.target.extent();
+				          if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED NOTHING SO THAT IT REAPPEARS COLORED
+				          	selectedNothing = false;
+				          } else {
+				          	selectedNothing = true;
+				          }
+				          hexagon.classed("selected", function(d) { 
+				            return extent[0][0] <= d.x && d.x < extent[1][0]
+				                && extent[0][1] <= d.y && d.y < extent[1][1];
+				          });
+				        })
+				        
+				        );
 			}
 		}
 		localshotchart();
