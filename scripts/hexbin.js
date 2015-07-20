@@ -7,6 +7,7 @@ d3.hexbin = function() {
       x = function(d) { return d[0]; },
       y = function(d) { return d[1]; },
       made = function(d) { return d[2]; }, //added function for third var
+      distance = function(d) { return d[3]; }, //added function for distance var
       dx,
       dy,
       d3_hexbinAngles = d3.range(0, 2 * Math.PI, Math.PI / 3);
@@ -20,6 +21,7 @@ d3.hexbin = function() {
           px = x.call(hexbin, point) / dx - (pj & 1 ? .5 : 0), 
           pi = Math.round(px),
           pmade = parseInt(made.call(hexbin, point)),///fix this
+          pdistance = parseInt(distance.call(hexbin, point)),
           py1 = py - pj;
 
       if (Math.abs(py1) * 3 > 1) { //Setting the boundary conditions
@@ -37,6 +39,7 @@ d3.hexbin = function() {
         bin.push(point);
         bin.totalShot++;
         bin.totalMade = bin.totalMade + pmade;
+        bin.distance = pdistance; //NEED TO AVERAGE OUT ALL THE DISTANCES INSTEAD OF USING MOST RECENT
       } else { //if bin didn't exist already, create new one //set bin properties
         bin = binsById[id] = [point];
         bin.i = pi;
@@ -45,6 +48,7 @@ d3.hexbin = function() {
         bin.y = pj * dy;
         bin.totalMade = pmade;
         bin.totalShot = 1;
+        bin.distance = pdistance; //SAME HERE
       }
     });
 

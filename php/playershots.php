@@ -13,7 +13,7 @@
 	    die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$query = "SELECT `PLAYER_ID`, `LOC_X`, `LOC_Y`, `SHOT_MADE_FLAG` FROM `playershots` WHERE `PLAYER_ID` IN (" . implode(',', $playerIDs) .") ";
+	$query = "SELECT `PLAYER_ID`, `LOC_X`, `LOC_Y`, `SHOT_MADE_FLAG`, `SHOT_DISTANCE` FROM `playershots` WHERE `PLAYER_ID` IN (" . implode(',', $playerIDs) .") ";
 
 	if ( ! $query ) {
 		echo mysql_error();

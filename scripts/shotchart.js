@@ -1,6 +1,6 @@
 function localshotchart(){
 
-			var arr2 = [];
+			var arr2 = []; //FOR LEAGUE AVERAGES
 			var arr4 = [];
 			var xmlhttp2 = new XMLHttpRequest();
 			var url = "http://cherrypicker.io/php/playershotsleague.php?";
@@ -40,7 +40,7 @@ function localshotchart(){
 			
 			function tempReassign(){
 				for (var i = 0; i < arr.length; i++) {
-					arr3.push([parseInt(arr[i]["LOC_X"]) + 250, parseInt(arr[i]["LOC_Y"]) + 50, parseInt(arr[i]["SHOT_MADE_FLAG"])]);
+					arr3.push([parseInt(arr[i]["LOC_X"]) + 250, parseInt(arr[i]["LOC_Y"]) + 50, parseInt(arr[i]["SHOT_MADE_FLAG"]), arr[i]["SHOT_DISTANCE"]]);
 				}
 				
 				setTimeout(render, 50);
@@ -56,7 +56,8 @@ function localshotchart(){
 				var bottomPCT = 0;
 				var topPCT = 1;
 
-				var slider = document.getElementById("sub-container-shot");
+
+				var slider = document.getElementById("sub-container-shot1");
 
 					noUiSlider.create(slider, {
 						start: [0.0, 1.0],
@@ -71,6 +72,53 @@ function localshotchart(){
 					var sliderCoordinates = slider.noUiSlider.get();
 					bottomPCT = sliderCoordinates[0];
 					topPCT = sliderCoordinates[1];
+					d3.selectAll("svg").remove();
+					render();
+				})
+
+
+				//SHOT ATTEMPT SLIDER
+				var sliderShotAttempts =  document.getElementById("sub-container-shot2");
+					noUiSlider.create(sliderShotAttempts, {
+							start: [0.0, 15.0],
+							connect: true,
+							range: {
+								'min': 0,
+								'max': 20
+							}
+						});
+
+				var bottomAttempts = 0;
+				var topAttempts = 100;
+
+				sliderShotAttempts.noUiSlider.on('slide', function(){
+					var sliderCoordinates2 = sliderShotAttempts.noUiSlider.get();
+					bottomAttempts = sliderCoordinates2[0];
+					topAttempts = sliderCoordinates2[1];
+					if (topAttempts == 20){topAttempts = 100;};
+					d3.selectAll("svg").remove();
+					render();
+				})
+
+				//SHOT DISTANCE SLIDER
+				var sliderShotDistance =  document.getElementById("sub-container-shot3");
+					noUiSlider.create(sliderShotDistance, {
+							start: [0.0, 20.0],
+							connect: true,
+							range: {
+								'min': 0,
+								'max': 25
+							}
+						});
+
+				var bottomDistance = 0;
+				var topDistance = 25;
+
+				sliderShotDistance.noUiSlider.on('slide', function(){
+					var sliderCoordinates3 = sliderShotDistance.noUiSlider.get();
+					bottomDistance = sliderCoordinates3[0];
+					topDistance = parseInt(sliderCoordinates3[1]);
+					
 					d3.selectAll("svg").remove();
 					render();
 				})
@@ -142,7 +190,12 @@ function localshotchart(){
 				    .attr("val", function(d) {return d.totalMade/d.totalShot;})
 				   // .attr("d", hexbin.hexagon())
 				    .attr("d", function(d) { 
-				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT) { //CHECK IF BETWEEN SLIDER VALUES
+				    	console.log([d.distance, topDistance])
+				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && 
+				    		d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+				    		d.distance >= bottomDistance && d.distance <= topDistance) 
+				    	{
+				    	 //CHECK IF BETWEEN SLIDER VALUES
 				    		return hexbin.hexagon(radiusScale(d.length), 0)["dpoints"];
 				    	} else {
 				    	    return hexbin.hexagon(0,0)["dpoints"]; //RETURN NOTHING
@@ -219,10 +272,7 @@ function localshotchart(){
  								}else{
  									return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1];}
 					          });}
-
- 						
-					     
-				  }
+ 					}
 			}
 		}
 		localshotchart();
