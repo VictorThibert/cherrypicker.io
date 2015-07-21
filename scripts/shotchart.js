@@ -49,6 +49,26 @@ function localshotchart(){
 
 
 
+				var customRadius = 5;
+
+				var margin = {top: 0, right: 10, bottom: 10, left: 10}, //MARGIN
+				    width = 550 - margin.left - margin.right,
+				    height = 350 - margin.top - margin.bottom; 
+
+
+				var hexbin = d3.hexbin() //INITIALIZE HEXBIN
+				    .size([width, height])
+				    .radius(customRadius);	
+
+				    console.log(hexbin)	
+
+				var points = arr3; //SAVE TIME
+				var hpoints = hexbin(points);
+				console.log(hpoints);
+
+
+
+
 
 				var lastPosition = [[0, 0],[0,0]];
 				var brushConditions = [1, lastPosition];
@@ -61,6 +81,7 @@ function localshotchart(){
 
 					noUiSlider.create(slider, {
 						start: [0.0, 1.0],
+						step: 0.01,
 						connect: true,
 						range: {
 							'min': 0,
@@ -81,6 +102,7 @@ function localshotchart(){
 				var sliderShotAttempts =  document.getElementById("sub-container-shot2");
 					noUiSlider.create(sliderShotAttempts, {
 							start: [0.0, 15.0],
+							step: 1,
 							connect: true,
 							range: {
 								'min': 0,
@@ -104,6 +126,9 @@ function localshotchart(){
 				var sliderShotDistance =  document.getElementById("sub-container-shot3");
 					noUiSlider.create(sliderShotDistance, {
 							start: [0.0, 20.0],
+							step: 1,
+							behaviour: "drag-tap",
+
 							connect: true,
 							range: {
 								'min': 0,
@@ -123,6 +148,8 @@ function localshotchart(){
 					render();
 				})
 
+
+
 				
 	
 
@@ -130,18 +157,11 @@ function localshotchart(){
 			function render(){
 
 
-
-				var customRadius = 5;
-
-				var margin = {top: 0, right: 10, bottom: 10, left: 10}, //MARGIN
-				    width = 550 - margin.left - margin.right,
-				    height = 350 - margin.top - margin.bottom; 
-
 				var radiusScale = d3.scale.pow().exponent(0.8)  //RADIUS SCALE QUANTIZE
 				    .domain([0,0,2,100])
 				    .range([0,0.5,3,5.3]); 
 
-				var points = arr3;
+		
 
 				var colorScale = d3.scale.linear() //GENERATE COLOUR SCALE
 				    .domain([-0.09, 0.09])
@@ -162,9 +182,7 @@ function localshotchart(){
 				    .orient("left")
 				    .tickSize(6, -width);
 
-				var hexbin = d3.hexbin() //INITIALIZE HEXBIN
-				    .size([width, height])
-				    .radius(customRadius);		
+				
 
 
 				var svg = d3.select("#sub-container-shot").append("svg") //FIRST SVG CANVAS
@@ -190,7 +208,7 @@ function localshotchart(){
 				    .attr("val", function(d) {return d.totalMade/d.totalShot;})
 				   // .attr("d", hexbin.hexagon())
 				    .attr("d", function(d) { 
-				    	console.log([d.distance, topDistance])
+				    
 				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && 
 				    		d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 				    		d.distance >= bottomDistance && d.distance <= topDistance) 
