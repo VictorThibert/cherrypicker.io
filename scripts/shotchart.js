@@ -37,15 +37,19 @@ function localshotchart(){
 			    arr = JSON.parse(response); 
 			    tempReassign();
 			}
-			
+			var hpoints;
 			function tempReassign(){
 				for (var i = 0; i < arr.length; i++) {
 					arr3.push([parseInt(arr[i]["LOC_X"]) + 250, parseInt(arr[i]["LOC_Y"]) + 50, parseInt(arr[i]["SHOT_MADE_FLAG"]), arr[i]["SHOT_DISTANCE"]]);
 				}
+				hpoints = hexbin(arr3);
+
 				
 				setTimeout(render, 50);
 
 			}
+
+
 
 
 
@@ -59,13 +63,6 @@ function localshotchart(){
 				var hexbin = d3.hexbin() //INITIALIZE HEXBIN
 				    .size([width, height])
 				    .radius(customRadius);	
-
-				    console.log(hexbin)	
-
-				var points = arr3; //SAVE TIME
-				var hpoints = hexbin(points);
-				console.log(hpoints);
-
 
 
 
@@ -164,9 +161,8 @@ function localshotchart(){
 		
 
 				var colorScale = d3.scale.linear() //GENERATE COLOUR SCALE
-				    .domain([-0.09, 0.09])
-				    .range(["purple",  "red"])
-				    .interpolate(d3.interpolateLab); //Interpolating function for colours
+				    .domain([-0.4, 0.4]) //change range for +- above average
+				    .range(["steelblue",  "red"]); //Interpolating function for colours
 
 				var x = d3.scale.identity() //AXIS STUFF
 				    .domain([0, width]); 
@@ -198,10 +194,11 @@ function localshotchart(){
 				    .attr("width", width)
 				    .attr("height", height);
 
+
 				var hexagon = svg.append("g") //ADDING THE HEXAGONS
 				    //.attr("clip-path", "url(#clip)") //Does nothing ?
 				  .selectAll(".hexagon")
-				    .data(hexbin(points))
+				    .data(hpoints)
 				 	.enter()
 				  	.append("path")
 				    .attr("class", "hexagon")
