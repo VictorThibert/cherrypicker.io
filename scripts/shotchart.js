@@ -53,18 +53,18 @@ function localshotchart(){
 
 					for(y in hpoints){
 						if(hpoints[x].i == hpoints[y].i && hpoints[x].j == hpoints[y].j){
-							hpoints[x].totalMade += hpoints[y].totalMade * 0.6;
-							hpoints[x].totalShot += hpoints[y].totalShot * 0.6;
-						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4 ){
+							hpoints[x].totalMade += tempTotalMade * 0.6;
+							hpoints[x].totalShot += tempTotalShot * 0.6;
+						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4 ){ //30% radius
 							hpoints[x].totalMade += hpoints[y].totalMade * 0.3;
 							hpoints[x].totalShot += hpoints[y].totalShot * 0.3;
-						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4){
+						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 6){ //10% radius
 							hpoints[x].totalMade += hpoints[y].totalMade * 0.1;
 							hpoints[x].totalShot += hpoints[y].totalShot * 0.1;
 						}
 					}
-
-				}
+			
+			}
 
 				
 				setTimeout(render, 50);
@@ -117,20 +117,20 @@ function localshotchart(){
 				})
 
 
-				//SHOT ATTEMPT SLIDER
+				//SHOT ATTEMPT SLIDER  //MAKE LOGARITHMIC IF NECESSARY
 				var sliderShotAttempts =  document.getElementById("sub-container-shot2");
 					noUiSlider.create(sliderShotAttempts, {
-							start: [0.0, 400.0],
+							start: [0.0, 10000.0],
 							step: 1,
 							connect: true,
 							range: {
 								'min': 0,
-								'max': 400
+								'max': 10000
 							}
 						});
 
 				var bottomAttempts = 0;
-				var topAttempts = 100;
+				var topAttempts = 10000;
 
 				sliderShotAttempts.noUiSlider.on('slide', function(){
 					var sliderCoordinates2 = sliderShotAttempts.noUiSlider.get();
@@ -177,8 +177,8 @@ function localshotchart(){
 
 
 				var radiusScale = d3.scale.pow().exponent(0.8)  //RADIUS SCALE QUANTIZE
-				    .domain([0,0,2,100])
-				    .range([0,0.5,3,5.3]); 
+				    .domain([0,0,1,2,50])
+				    .range([0,0.5,3,5.1,5.1]); 
 
 				var colorScale = d3.scale.linear() //GENERATE COLOUR SCALE
 				    .domain([-0.4, 0.4]) //change range for +- above average
@@ -215,7 +215,7 @@ function localshotchart(){
 				var hexagon = svg.append("g") //ADDING THE HEXAGONS
 				    //.attr("clip-path", "url(#clip)") //Does nothing ?
 				  .selectAll(".hexagon")
-				    .data(hpoints)
+				    .data(hpoints) //hpoints means smoothed
 				 	.enter()
 				  	.append("path")
 				    .attr("class", "hexagon")
@@ -259,40 +259,59 @@ function localshotchart(){
 
 						var selectedNothing = conditions[0]; //1 0 FLAG FOR SELECTED NOTHING
 					 	var extent = conditions[1]; //LAST POSITION
+//--------------
+					 	var brushInfo = d3.select('body')
+                    .append('p')
+                    .html('<i>Select a region</i>');
 		
 					    var brush = svg.append("g")
 					      .attr("class", "brush")
 					      .call(
 					      	d3.svg.brush()
+						        .x(d3.scale.identity().domain([0, width]))
+						        .y(d3.scale.identity().domain([0, height]))
+						        .on("brushend", function() {
+						        
+							        	if (selectedNothing) {
+							        		hexagon.classed("selected", true);
+							        	}
+							        }
+							    )
+						        .on("brush",  function() {       
+						        		var t = [];
+						        		var selectedPercentage;
+						        		var selectedMade = 0;
+						        		var selectedTotal = 0;
 
+										extent = d3.event.target.extent();
+										lastPosition = extent;
+										brushConditions[1] = lastPosition; 
 
-					        .x(d3.scale.identity().domain([0, width]))
-					        .y(d3.scale.identity().domain([0, height]))
-					        .on("brushend", function() {
-					        
-					        	if (selectedNothing) {
-					        		hexagon.classed("selected", true);
-					        	}
-					        })
-					        .on("brush",  function() {       
-					          extent = d3.event.target.extent();
-					          lastPosition = extent;
-					          brushConditions[1] = lastPosition; 
-					  
-					          if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED SOMETHING
-					          	selectedNothing = 0;
-					          	brushConditions[0] = selectedNothing;
-					          } else { //SELECTED SOMETHING
-					          	selectedNothing = 1;
-					          	brushConditions[0] = selectedNothing;
-					          }
-					          			
-					          hexagon.classed("selected", function(d) {
-					            return extent[0][0] <= d.x && d.x < extent[1][0]
-					                && extent[0][1] <= d.y && d.y < extent[1][1];
-					          });
-					        })
-					        .extent(extent)
+										if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED SOMETHING
+											selectedNothing = 0;
+											brushConditions[0] = selectedNothing;
+										} else { //SELECTED SOMETHING
+											selectedNothing = 1;
+											brushConditions[0] = selectedNothing;
+										}
+													
+										hexagon.classed("selected", function(d) {
+
+											if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]) {
+												selectedMade += d.totalMade;
+											
+												selectedTotal += d.totalShot;
+											};
+											return extent[0][0] <= d.x && d.x < extent[1][0]
+											    && extent[0][1] <= d.y && d.y < extent[1][1];
+										});
+
+										selectedPercentage = selectedMade/selectedTotal;
+
+										brushInfo.html('<b>Selected %:</b> ' + selectedPercentage);
+							        }
+						        )
+						        .extent(extent)
 					        
 					      );
 							
