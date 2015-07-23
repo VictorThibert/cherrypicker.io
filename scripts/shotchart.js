@@ -39,10 +39,32 @@ function localshotchart(){
 			}
 			var hpoints;
 			function tempReassign(){
-				for (var i = 0; i < arr.length; i++) {
+				for (var i = 0; i < arr.length; i++) { //arr3 contains alls the shots
 					arr3.push([parseInt(arr[i]["LOC_X"]) + 250, parseInt(arr[i]["LOC_Y"]) + 50, parseInt(arr[i]["SHOT_MADE_FLAG"]), arr[i]["SHOT_DISTANCE"]]);
 				}
 				hpoints = hexbin(arr3);
+				unSmoothedHexpoints = hexbin(arr3);
+
+				for(x in hpoints){
+					var tempTotalShot = hpoints[x].totalShot;
+					var tempTotalMade = hpoints[x].totalMade;
+					hpoints[x].totalShot = 0.000001;
+					hpoints[x].totalMade = 0;
+
+					for(y in hpoints){
+						if(hpoints[x].i == hpoints[y].i && hpoints[x].j == hpoints[y].j){
+							hpoints[x].totalMade += hpoints[y].totalMade * 0.6;
+							hpoints[x].totalShot += hpoints[y].totalShot * 0.6;
+						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4 ){
+							hpoints[x].totalMade += hpoints[y].totalMade * 0.3;
+							hpoints[x].totalShot += hpoints[y].totalShot * 0.3;
+						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4){
+							hpoints[x].totalMade += hpoints[y].totalMade * 0.1;
+							hpoints[x].totalShot += hpoints[y].totalShot * 0.1;
+						}
+					}
+
+				}
 
 				
 				setTimeout(render, 50);
@@ -98,12 +120,12 @@ function localshotchart(){
 				//SHOT ATTEMPT SLIDER
 				var sliderShotAttempts =  document.getElementById("sub-container-shot2");
 					noUiSlider.create(sliderShotAttempts, {
-							start: [0.0, 15.0],
+							start: [0.0, 400.0],
 							step: 1,
 							connect: true,
 							range: {
 								'min': 0,
-								'max': 20
+								'max': 400
 							}
 						});
 
@@ -158,11 +180,9 @@ function localshotchart(){
 				    .domain([0,0,2,100])
 				    .range([0,0.5,3,5.3]); 
 
-		
-
 				var colorScale = d3.scale.linear() //GENERATE COLOUR SCALE
 				    .domain([-0.4, 0.4]) //change range for +- above average
-				    .range(["steelblue",  "red"]); //Interpolating function for colours
+				    .range(["blue",  "red"]); //Interpolating function for colours
 
 				var x = d3.scale.identity() //AXIS STUFF
 				    .domain([0, width]); 
@@ -177,9 +197,6 @@ function localshotchart(){
 				    .scale(y)
 				    .orient("left")
 				    .tickSize(6, -width);
-
-				
-
 
 				var svg = d3.select("#sub-container-shot").append("svg") //FIRST SVG CANVAS
 				    .attr("width", width + margin.left + margin.right)
