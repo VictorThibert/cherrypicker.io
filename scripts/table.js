@@ -1,19 +1,27 @@
 var dataPlayers = [];
 
 d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=1610612737", function(error, raw){
-  var i = 0;
-  for(i = 0; i < raw.length; i += 1){
-    for (j = i; j < raw.length; j +=1){
-      for (k = i + 1; k < raw.length; k += 1){
-    dataPlayers[i] = [
-    [raw[i].PLAYER_NAME],
-    [raw[j].PLAYER_NAME],
-    [raw[k].PLAYER_NAME]];
-        }  
-      }   
+
+var dataPlayers = new Array(5);
+for (var i = 0; i < 5; i++) {
+    dataPlayers[i] = new Array(5);
+    for (var j = 0; j < 5; j++) {
+        if(i == 0){
+            dataPlayers[i][j] = raw[j].PLAYER_NAME;
+        }
+        else if(i == 1){
+            dataPlayers[i][j] = raw[j+5].PLAYER_NAME;
+        }
+        else if(i == 2){
+            dataPlayers[i][j] = raw[j+10].PLAYER_NAME;
+        }
+        else{
+            dataPlayers[i][j] = raw[raw.length - 1].PLAYER_NAME;
+        }
     }
-    console.log(dataPlayers);
-    printTable(dataPlayers);
+}
+console.log(dataPlayers);
+printTable(dataPlayers);
 });
 
 //function sortPlayers(players){
@@ -52,7 +60,7 @@ function printTable(players) {
     }
 
     //TABLE ROWS
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 4; i++) {
         var tr = document.createElement('TR');
         for (j = 0; j < 5; j++) {
             var td = document.createElement('TD')
