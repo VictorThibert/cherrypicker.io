@@ -90,7 +90,7 @@ function localshotchart(){
 
 
 				var lastPosition = [[0, 0],[0,0]];
-				var brushConditions = [1, lastPosition];
+				var brushConditions = [1, lastPosition, 0];
 
 				var bottomPCT = 0;
 				var topPCT = 1;
@@ -257,17 +257,23 @@ function localshotchart(){
 
 					function brushing(conditions) {
 
+
+
+
 						var selectedNothing = conditions[0]; //1 0 FLAG FOR SELECTED NOTHING
 					 	var extent = conditions[1]; //LAST POSITION
+					 	var lastPercentage = conditions[2];
+					 	var selectedPercentage = lastPercentage;
+
+					 	d3.selectAll(".pBox").remove();
 //--------------
 					 	var brushInfo = d3.select('body')
-                    .append('p')
-                    .html('<i>Select a region</i>');
-		
-					    var brush = svg.append("g")
-					      .attr("class", "brush")
-					      .call(
-					      	d3.svg.brush()
+		                    .append('p')
+		                    .attr("class", "pBox")
+		                    .html('<b>Selected %:</b> ' + selectedPercentage);
+
+		                    var dare = d3.svg.brush()
+
 						        .x(d3.scale.identity().domain([0, width]))
 						        .y(d3.scale.identity().domain([0, height]))
 						        .on("brushend", function() {
@@ -279,7 +285,7 @@ function localshotchart(){
 							    )
 						        .on("brush",  function() {       
 						        		var t = [];
-						        		var selectedPercentage;
+						        		
 						        		var selectedMade = 0;
 						        		var selectedTotal = 0;
 
@@ -297,7 +303,9 @@ function localshotchart(){
 													
 										hexagon.classed("selected", function(d) {
 
-											if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]) {
+
+											if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
+												d3.select(this).attr("d") != "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z") {//very important structure
 												selectedMade += d.totalMade;
 											
 												selectedTotal += d.totalShot;
@@ -307,13 +315,22 @@ function localshotchart(){
 										});
 
 										selectedPercentage = selectedMade/selectedTotal;
+										brushConditions[2] = selectedPercentage;
 
 										brushInfo.html('<b>Selected %:</b> ' + selectedPercentage);
-							        }
-						        )
-						        .extent(extent)
+							        }) .extent(extent);
+		
+					    var brush = svg.append("g")
+					      .attr("class", "brush")
+					      .call(
+					      	dare
+
+						        )					       
+						        
 					        
-					      );
+					      ; //endcall
+brush.call(dare.event)
+						
 							
 
 
