@@ -269,18 +269,20 @@ function localshotchart(){
 				    .on("mouseout", function(d) {d3.select(this)
          				 .style("fill", function(d){ return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) })
 
-				hexagon.on("mouseenter", function(){ //Allow dragging from a hexagon start point
+				hexagon.on("mousedown", function(){ //Allow dragging from a hexagon start point
+					console.log("ENT")
 						brushCanvas.moveToFront();
 
 						if(d3.select(this).attr("class") != "hexagon selected"){
-							console.log(d3.select(this).attr("class"))
-							brush_elm = svg.select(".brush").node();
+						
+							brush_elm = svg.select(".brush").node()
 							new_click_event = new Event('mousedown');
 							new_click_event.pageX = d3.event.pageX;
 							new_click_event.clientX = d3.event.clientX;
 							new_click_event.pageY = d3.event.pageY;
 							new_click_event.clientY = d3.event.clientY;
 							brush_elm.dispatchEvent(new_click_event);
+							
 						}
 						
 						
