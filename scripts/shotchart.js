@@ -171,6 +171,22 @@ function localshotchart(){
 
 			function render(){
 
+				d3.selection.prototype.moveToFront = function() {
+				  return this.each(function(){
+				    this.parentNode.appendChild(this);
+				  });
+				};
+
+
+				d3.selection.prototype.moveToBack = function() { 
+				    return this.each(function() { 
+				        var firstChild = this.parentNode.firstChild; 
+				        if (firstChild) { 
+				            this.parentNode.insertBefore(this, firstChild); 
+				        } 
+				    }); 
+				};
+
 
 				var radiusScale = d3.scale.pow().exponent(0.8)  //Create radius scale for the hexagons
 				    .domain([0,0,1,2,50])
@@ -245,40 +261,33 @@ function localshotchart(){
 				    	    return hexbin.hexagon(0,0)["dpoints"]; //RETURN NOTHING
 				    	    };})  //d data element is the data contained in hexagon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-				    .attr("toDragFrom", "yes")
 				    .style("fill", function(d) {return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); })
-				  
+				    .on("mouseover",function(d) { //REMOVE
+				       d3.select(this)
+         				 .style("fill", "orange");
+				    })
+				    .on("mouseout", function(d) {d3.select(this)
+         				 .style("fill", function(d){ return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) })
 
+				hexagon.on("mouseenter", function(){ //Allow dragging from a hexagon start point
+						brushCanvas.moveToFront();
 
-				    
-
-		hexagon.on("mouseover", function(d){
-			if(d3.select(this).attr("class") == "hexagon selected"){
-				d3.select(this).attr("toDragFrom", "no");
-			}
-
-			if(d3.select(this).attr("toDragFrom") == "yes"){
-				hexagon.on("mousedown", function(){ //Allow dragging from a hexagon start point
-					console.log("GOT")
-					brush_elm = svg.select(".brush").node();
-					new_click_event = new Event('mousedown');
-					new_click_event.pageX = d3.event.pageX;
-					new_click_event.clientX = d3.event.clientX;
-					new_click_event.pageY = d3.event.pageY;
-					new_click_event.clientY = d3.event.clientY;
-					brush_elm.dispatchEvent(new_click_event);
-				});
-			}
-		}
-		);
-
-		hexagon.on("mouseout", function(d){
-			d3.select(this).attr("toDragFrom", "yes");
-
-			
-		}
-		)	;		
-
+						if(d3.select(this).attr("class") != "hexagon selected"){
+							console.log(d3.select(this).attr("class"))
+							brush_elm = svg.select(".brush").node();
+							new_click_event = new Event('mousedown');
+							new_click_event.pageX = d3.event.pageX;
+							new_click_event.clientX = d3.event.clientX;
+							new_click_event.pageY = d3.event.pageY;
+							new_click_event.clientY = d3.event.clientY;
+							brush_elm.dispatchEvent(new_click_event);
+						}
+						
+						
+					}
+					
+					
+				);
 
 
 				
@@ -335,6 +344,7 @@ function localshotchart(){
 		        	if (selectedNothing) {
 		        		hexagon.classed("selected", true);
 		        	}
+		        	brushCanvas.moveToBack();
 		        }
 
 				brushCanvas.call(brushObject.event) //Triggers artificial brush to refresh the selected %
