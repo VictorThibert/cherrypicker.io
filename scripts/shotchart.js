@@ -45,7 +45,7 @@ function localshotchart(){
 				hpoints = hexbin(arr3);
 				unSmoothedHexpoints = hexbin(arr3);
 
-				for(x in hpoints){
+				for(x in hpoints){ //For each point in the array
 					var tempTotalShot = hpoints[x].totalShot;
 					var tempTotalMade = hpoints[x].totalMade;
 					hpoints[x].totalShot = 0.000001;
