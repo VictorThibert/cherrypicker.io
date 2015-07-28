@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<link rel="stylesheet" href="../css/stylesheet.css">
+		<script src="../scripts/jquery.js"></script>
+		<script src="../scripts/selectize.js"></script>
+		<script src="../scripts/index.js"></script>
+	</head>
+    <body>
+		<div id="wrapper">
+			<div class="control-group" id="select-car-group">
+				<input type="text" id="select-car" placeholder="Find a team...">
+			</div>
+			<script>
+				$("#select-car").selectize({
+					options: [
+						{id: 'atlanta', make: 'east', model: 'Atanta Hawks'},
+						{id: 'boston', make: 'east', model: 'Boston Celtics'},
+						{id: 'brooklyn', make: 'east', model: 'Brooklyn Nets'},
+						{id: 'charlotte', make: 'east', model: 'Charlotte Hornets'},
+						{id: 'chicago', make: 'east', model: 'Chicago Bulls'},
+						{id: 'cleveland', make: 'east', model: 'Cleveland Cavaliers'},
+						{id: 'detroit', make: 'east', model: 'Detroit Pistons'},
+						{id: 'indiana', make: 'east', model: 'Indiana Pacers'},
+						{id: 'miami', make: 'east', model: 'Miami Heat'},
+						{id: 'milwaukee', make: 'east', model: 'Milwaukee Bucks'},
+						{id: 'new-york', make: 'east', model: 'New York Knicks'},
+						{id: 'orlando', make: 'east', model: 'Orlando Magic'},
+						{id: 'philadelphia', make: 'east', model: 'Philadelphia 76ers'},
+						{id: 'toronto', make: 'east', model: 'Toronto Raptors'},
+						{id: 'washington', make: 'east', model: 'Washington Wizards'},
+						{id: 'dallas', make: 'west', model: 'Dallas Mavericks'},
+						{id: 'denver', make: 'west', model: 'Denver Nuggets'},
+						{id: 'golden-state', make: 'west', model: 'Golden State Warriors'},
+						{id: 'houston', make: 'west', model: 'Houston Rockets'},
+						{id: 'la-clippers', make: 'west', model: 'LA Clippers'},
+						{id: 'la-lakers', make: 'west', model: 'LA Lakers'},
+						{id: 'memphis', make: 'west', model: 'Memphis Grizzlies'},
+						{id: 'minnesota', make: 'west', model: 'Minnesota Timberwolves'},
+						{id: 'new-orleans', make: 'west', model: 'New Orleans Pelicans'},
+						{id: 'okc', make: 'west', model: 'Oklahoma City Thunder'},
+						{id: 'phoenix', make: 'west', model: 'Phoenix Suns'},
+						{id: 'portland', make: 'west', model: 'Portland TrailBlazer'},
+						{id: 'sacramento', make: 'west', model: 'Sacramento Kings'},
+						{id: 'san-antonio', make: 'west', model: 'San Antonio Spurs'},
+						{id: 'utah', make: 'west', model: 'Utah Jazz'},
+					],
+					optgroups: [
+						{$order: 3, id: 'dodge', name: 'Dodge'},
+						{$order: 2, id: 'west', name: 'West'},
+						{$order: 1, id: 'east', name: 'East'}
+					],
+					labelField: 'model',
+					valueField: 'id',
+					optgroupField: 'make',
+					optgroupLabelField: 'name',
+					optgroupValueField: 'id',
+					lockOptgroupOrder: true,
+					searchField: ['model'],
+					plugins: ['optgroup_columns'],
+					openOnFocus: false
+				});
+			</script>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<link rel="stylesheet" href="css/stylesheet.css">
+		<script src="jquery.js"></script>
+		<script src="selectize.js"></script>
+		<script src="index.js"></script>
+		<style type="text/css">
+		.demo-animals .scientific {
+			font-weight: normal;
+			opacity: 0.3;
+			margin: 0 0 0 2px;
+		}
+		.demo-animals .scientific::before {
+			content: '(';
+		}
+		.demo-animals .scientific::after {
+			content: ')';
+		}
+		</style>
+	</head>
+    <body>
+		<div id="wrapper">
+
+			<div class="demo">
+				<div class="control-group">
+					<label for="select-animal">Animal:</label>
+					<select id="select-animal" class="demo-animals" placeholder="Select animal..."></select>
+				</div>
+				<script>
+				$('#select-animal').selectize({
+					options: [
+						{class: 'mammal', value: "dog", name: "Dog" },
+						{class: 'mammal', value: "cat", name: "Cat" },
+						{class: 'mammal', value: "horse", name: "Horse" },
+						{class: 'mammal', value: "kangaroo", name: "Kangaroo" },
+						{class: 'bird', value: 'duck', name: 'Duck'},
+						{class: 'bird', value: 'chicken', name: 'Chicken'},
+						{class: 'bird', value: 'ostrich', name: 'Ostrich'},
+						{class: 'bird', value: 'seagull', name: 'Seagull'},
+						{class: 'reptile', value: 'snake', name: 'Snake'},
+						{class: 'reptile', value: 'lizard', name: 'Lizard'},
+						{class: 'reptile', value: 'alligator', name: 'Alligator'},
+						{class: 'reptile', value: 'turtle', name: 'Turtle'}
+					],
+					optgroups: [
+						{value: 'mammal', label: 'Mammal', label_scientific: 'Mammalia'},
+						{value: 'bird', label: 'Bird', label_scientific: 'Aves'},
+						{value: 'reptile', label: 'Reptile', label_scientific: 'Reptilia'}
+					],
+					optgroupField: 'class',
+					labelField: 'name',
+					searchField: ['name'],
+					render: {
+						optgroup_header: function(data, escape) {
+							return '<div class="optgroup-header">' + escape(data.label) + ' <span class="scientific">' + escape(data.label_scientific) + '</span></div>';
+						}
+					}
+				});
+				</script>
+			</div>
+		</div>
+	</body>
+</html>

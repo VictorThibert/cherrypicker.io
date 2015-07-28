@@ -83,7 +83,7 @@ function autocomplete(parent) {
 
                 if (!(e.which == 38 || e.which == 40 || e.which == 13)) {
                     if (!_searchTerm || _searchTerm == "") {
-                        showSearching("No results");
+                        showSearching("");
                     }
                     else if (isNewSearchNeeded(_searchTerm,_lastSearchTerm)) {
                         _lastSearchTerm=_searchTerm;
@@ -122,6 +122,7 @@ function autocomplete(parent) {
                         return d[_dataField].replace(re, "<span class='bp-autocomplete-highlight'>" + strPart + "</span>");
                     });
 
+
                 results.exit().remove();
 
                 //Update results
@@ -136,6 +137,14 @@ function autocomplete(parent) {
                         }
 
                     });
+
+                window.addEventListener('mouseup', function(event){
+                    var box = document.getElementsByClassName("bp-autocomplete-dropdown");
+                    if(event.target != box){
+                    box.style.display = 'none';
+                    }
+                })
+                
 
 
             }
