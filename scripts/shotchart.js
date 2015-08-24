@@ -178,7 +178,7 @@ function localshotchart(){
 				};
 
 
-				d3.selection.prototype.moveToBack = function() { 
+				d3.selection.prototype.moveToBack = function() {
 				    return this.each(function() { 
 				        var firstChild = this.parentNode.firstChild; 
 				        if (firstChild) { 
@@ -262,15 +262,19 @@ function localshotchart(){
 				    	    };})  //d data element is the data contained in hexagon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				    .style("fill", function(d) {return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); })
-				    .on("mouseover",function(d) { //REMOVE
+				    .on("mouseover", function(d) { //REMOVE
+
 				       d3.select(this)
          				 .style("fill", "orange");
 				    })
-				    .on("mouseout", function(d) {d3.select(this)
-         				 .style("fill", function(d){ return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) })
+				    .on("mouseout", function(d) {
+				    	d3.select(this)
+         				 .style("fill", function(d){ 
+         				 	return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) 
+         				})
 
 				hexagon.on("mousedown", function(){ //Allow dragging from a hexagon start point
-					console.log("ENT")
+				
 						brushCanvas.moveToFront();
 
 						if(d3.select(this).attr("class") != "hexagon selected"){
