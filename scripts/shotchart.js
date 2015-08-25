@@ -244,7 +244,7 @@ function localshotchart(){
 			      .call(brushObject); 
 
 
-				var hexagon = svg.append("g") //Adding the hexagons // Hexagon variable contains all hexagons (e.g. array of 428 paths)
+				var hexagon = brushCanvas.append("g") //Adding the hexagons // Hexagon variable contains all hexagons (e.g. array of 428 paths)
 				    //.attr("clip-path", "url(#clip)") //Does nothing ?
 				  .selectAll(".hexagon")
 				    .data(hpoints) //hpoints means smoothed
@@ -262,19 +262,38 @@ function localshotchart(){
 				    	    };})  //d data element is the data contained in hexagon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				    .style("fill", function(d) {return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); })
-
 				    .on("mouseover", function(d) { //REMOVE
 
 				       d3.select(this)
          				 .style("fill", "orange");
 				    })
-
 				    .on("mouseout", function(d) {
 				    	d3.select(this)
          				 .style("fill", function(d){ 
          				 	return colorScale(d.totalMade/d.totalShot- arr4[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) 
          				})
-brushCanvas.moveToFront();
+
+				hexagon.on("mousedown", function(){ //Allow dragging from a hexagon start point
+				
+						brushCanvas.moveToFront();
+
+						if(d3.select(this).attr("class") != "hexagon selected"){
+						
+							brush_elm = svg.select(".brush").node()
+							new_click_event = new Event('mousedown');
+							new_click_event.pageX = d3.event.pageX;
+							new_click_event.clientX = d3.event.clientX;
+							new_click_event.pageY = d3.event.pageY;
+							new_click_event.clientY = d3.event.clientY;
+							brush_elm.dispatchEvent(new_click_event);
+							
+						}
+						
+						
+					}
+					
+					
+				);
 
 
 				
@@ -331,7 +350,7 @@ brushCanvas.moveToFront();
 		        	if (selectedNothing) {
 		        		hexagon.classed("selected", true);
 		        	}
-		    
+		        	brushCanvas.moveToBack();
 		        }
 
 				brushCanvas.call(brushObject.event) //Triggers artificial brush to refresh the selected %
