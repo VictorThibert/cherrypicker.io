@@ -4,11 +4,53 @@
     <meta charset="utf-8">
     <title>Select2 Practice</title>
 
-    <script src="script.js"></script>
+    <script src="../scripts/jquery.js"></script>
+    <script src="../scripts/libs/select2/select2.js"></script>
+    <link rel="stylesheet" href="../scripts/libs/select2/select2.css">
+
   </head>
+
+
   <body>
+
+  	 <script>
+    $(document).ready(function(){
+      // turn the element to select2 select style
+      $('#select2box').select2()
+      .on("change", function(e){console.log(e.val)});
+    });
+
+  
+
+
+   
+
+
+
+  </script>
+
+  	<p>select2 select box:</p>
+  <p>
+    <select id="select2box" style="width:300px">
+      <optgroup label="Alaskan/Hawaiian Time Zone">
+        <option value="AK">Alaska</option>
+        <option value="HI">Hawaii</option>
+      </optgroup>
+      <optgroup label="Pacific Time Zone">
+        <option value="CA">California</option>
+        <option value="NV">Nevada</option>
+      </optgroup>
+      <optgroup label="Mountain Time Zone">
+        <option value="AZ">Arizona</option>
+        <option value="CO">Colorado</option>
+        <option value="ID">Idaho</option>
+      </optgroup>
+    
+  
+    </select>
+  </p>
 
     <!-- page content -->
   </body>
-  
+
 </html>
