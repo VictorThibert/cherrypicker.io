@@ -29,7 +29,7 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
     overflow: hidden;
     position: relative;
 
-    border: 1px solid #aaa;
+    border: 0px solid #aaa;
     white-space: nowrap;
     line-height: 26px;
     color: #444; /*text colour */
@@ -144,7 +144,7 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
 
     background: rgba(255,255,255,0.3);
     color: #000;
-    border: 1px solid #aaa;
+    border: 0px solid #aaa;
     border-top: 0;
 
     border-radius: 0 0 4px 4px;
@@ -165,16 +165,16 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
 }
 
 .select2-drop-active {
-    border: 1px solid #5897fb;
+    border: 0px solid #5897fb;
     border-top: none;
 }
 
 .select2-drop.select2-drop-above.select2-drop-active {
-    border-top: 1px solid #5897fb;
+    border-top: 0px solid #5897fb;
 }
 
 .select2-drop-auto-width {
-    border-top: 1px solid #aaa;
+    border-top: 0px solid #aaa;
     width: auto;
 }
 
@@ -186,7 +186,7 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
     right: 0;
     top: 0;
 
-    border-left: 1px solid #aaa;
+    border-left: 0px solid #aaa;
     border-radius: 0 4px 4px 0;
 
     background-clip: padding-box;
@@ -204,7 +204,7 @@ html[dir="rtl"] .select2-container .select2-choice .select2-arrow {
     right: auto;
 
     border-left: none;
-    border-right: 1px solid #aaa;
+    border-right: 0px solid #aaa;
     border-radius: 4px 0 0 4px;
 }
 
@@ -243,8 +243,8 @@ html[dir="rtl"] .select2-container .select2-choice .select2-arrow b {
     font-family: sans-serif;
     font-size: 1em;
 
-    border: 1px solid #aaa; /*border box around typing area*/
-    border-radius: 0;
+    border: 0px solid #aaa; /*border box around typing area*/
+    border-radius: 3px;
 
     -webkit-box-shadow: none;
             box-shadow: none;
@@ -276,7 +276,7 @@ html[dir="rtl"] .select2-search input {
 
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
-    border: 1px solid #5897fb;
+    border: 0px solid #5897fb;
     outline: none;
 
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .3);
@@ -285,8 +285,8 @@ html[dir="rtl"] .select2-search input {
 
 .select2-dropdown-open .select2-choice {
     border-bottom-color: transparent;
-    -webkit-box-shadow: 0 1px 0 #fff inset;
-            box-shadow: 0 1px 0 #fff inset;
+    -webkit-box-shadow: 0 0px 0 #fff inset;
+            box-shadow: 0 0px 0 #fff inset;
 
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -301,7 +301,7 @@ html[dir="rtl"] .select2-search input {
 
 .select2-dropdown-open.select2-drop-above .select2-choice,
 .select2-dropdown-open.select2-drop-above .select2-choices {
-    border: 1px solid #5897fb;
+    border: 0px solid #5897fb;
     border-top-color: transparent;
 
 /*    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.5, #eee));
@@ -457,7 +457,7 @@ disabled look for disabled choices in the results dropdown
 .select2-container.select2-container-disabled .select2-choice {
     background-color: #f4f4f4;
     background-image: none;
-    border: 1px solid #ddd;
+    border: 0px solid #ddd;
     cursor: default;
 }
 
@@ -481,7 +481,7 @@ disabled look for disabled choices in the results dropdown
     padding: 0 5px 0 0;
     position: relative;
 
-    border: 1px solid #aaa;
+    border: 0px solid #aaa;
     cursor: text;
     overflow: hidden;
 
@@ -505,7 +505,7 @@ html[dir="rtl"] .select2-container-multi .select2-choices {
 }
 
 .select2-container-multi.select2-container-active .select2-choices {
-    border: 1px solid #5897fb;
+    border: 0px solid #5897fb;
     outline: none;
 
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .3);
@@ -555,7 +555,7 @@ html[dir="rtl"] .select2-container-multi .select2-choices li
     line-height: 13px;
     color: #333;
     cursor: default;
-    border: 1px solid #aaaaaa;
+    border: 0px solid #aaaaaa;
 
     border-radius: 3px;
 
@@ -626,13 +626,13 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 .select2-container-multi.select2-container-disabled .select2-choices {
     background-color: #f4f4f4;
     background-image: none;
-    border: 1px solid #ddd;
+    border: 0px solid #ddd;
     cursor: default;
 }
 
 .select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice {
     padding: 3px 5px 3px 5px;
-    border: 1px solid #ddd;
+    border: 0px solid #ddd;
     background-image: none;
     background-color: #f4f4f4;
 }
