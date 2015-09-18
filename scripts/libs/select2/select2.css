@@ -1,8 +1,8 @@
 /*
 Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
 */
-.select2-container {
-    margin: 0;
+.select2-container { /*nothing*/
+    margin: 0; 
     position: relative;
     display: inline-block;
     vertical-align: middle;
@@ -22,7 +22,7 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
           box-sizing: border-box; /* css3 */
 }
 
-.select2-container .select2-choice {
+.select2-container .select2-choice { /*appearance of bar*/
     display: block;
     height: 26px;
     padding: 0 0 0 8px;
@@ -32,7 +32,7 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
     border: 1px solid #aaa;
     white-space: nowrap;
     line-height: 26px;
-    color: #444;
+    color: #444; /*text colour */
     text-decoration: none;
 
     border-radius: 3px;
@@ -45,8 +45,9 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
           -ms-user-select: none;
               user-select: none;
 
-    background-color: #fff;
-  /*  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.5, #fff));
+    background-color: rgba(255,255,255,0.3);
+
+    /*background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.5, #fff));
     background-image: -webkit-linear-gradient(center bottom, #eee 0%, #fff 50%);
     background-image: -moz-linear-gradient(center bottom, #eee 0%, #fff 50%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#eeeeee', GradientType = 0);
