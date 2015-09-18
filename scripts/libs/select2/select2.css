@@ -29,7 +29,7 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
     overflow: hidden;
     position: relative;
 
-    border: 1px solid #aaa;
+    border: 0px solid #aaa;
     white-space: nowrap;
     line-height: 26px;
     color: #444; /*text colour */
@@ -393,8 +393,8 @@ html[dir="rtl"] .select2-results {
 .select2-results-dept-7 .select2-result-label { padding-left: 120px }
 
 .select2-results .select2-highlighted {
-/*    background: #3875d7;
-    color: #fff;*/
+    background: rgba(0,0,0,0.2);
+    /*color: #fff;*/
 }
 
 .select2-results li em {
@@ -555,7 +555,7 @@ html[dir="rtl"] .select2-container-multi .select2-choices li
     line-height: 13px;
     color: #333;
     cursor: default;
-    border: 1px solid #aaaaaa;
+    border: 10px solid #aaaaaa;
 
     border-radius: 3px;
 
