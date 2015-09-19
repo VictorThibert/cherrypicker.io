@@ -44,21 +44,49 @@
 
 		<div id="search">
 			<select id="select2box" style="width:300px">
-		      <optgroup label="Alaskan/Hawaiian Time Zone">
-		        <option value="AK">Alaska</option>
-		        <option value="HI">Hawaii</option>
+		      <optgroup label="Atlantic Division">
+		        <option value=2>Boston Celtics</option>
+		        <option value=3>Brooklyn Nets</option>
+		        <option value=20>New York Knicks</option>
+		        <option value=23>Philadelphia 76ers</option>
+		        <option value=28>Toronto Raptors</option>
 		      </optgroup>
-		      <optgroup label="Pacific Time Zone">
-		        <option value="CA">California</option>
-		        <option value="NV">Nevada</option>
+		      <optgroup label="Central Division">
+		        <option value=5>Chicago Bulls</option>
+		        <option value=6>Cleveland Cavaliers</option>
+		        <option value=9>Detroit Pistons</option>
+		        <option value=12>Indiana Pacers</option>
+		        <option value=16>Milwaukee Bucks</option>
 		      </optgroup>
-		      <optgroup label="Mountain Time Zone">
-		        <option value="AZ">Arizona</option>
-		        <option value="CO">Colorado</option>
-		        <option value="ID">Idaho</option>
+		      <optgroup label="Southeast Division">
+		        <option value=1>Atlanta Hawks</option>
+		        <option value=4>Charlotte Hornets</option>
+		        <option value=17>Miami Heat</option>
+		        <option value=22>Orlando Magic</option>
+		        <option value=30>Washington Wizards</option>
+		      </optgroup>
+		      <optgroup label="Northwest Division">
+		        <option value=8>Denver Nuggets</option>
+		        <option value=18>Minnesota Timberwolves</option>
+		        <option value=21>Oklahoma City Thunder</option>
+		        <option value=25>Portland Trailblazers</option>
+		        <option value=29>Utah Jazz</option>
+		      </optgroup>
+		      <optgroup label="Pacific Division">
+		        <option value=10>Golden State Warriors</option>
+		        <option value=13>LA Clippers</option>
+		        <option value=14>LA Lakers</option>
+		        <option value=24>Phoenix Suns</option>
+		        <option value=26>Sacramento Kings</option>
+		      </optgroup>
+		      <optgroup label="Southwest Division">
+		        <option value=7>Dallas Mavericks</option>
+		        <option value=11>Houston Rockets</option>
+		        <option value=15>Memphis Grizzlies</option>
+		        <option value=19>New Orleans Pelicans</option>
+		        <option value=27>San Antonio Spurs</option>
 		      </optgroup>
 		    </select>
-
 		</div>
 	
 
@@ -73,7 +101,9 @@
 						<div id = "sub-container-record">
 						</div>
 								<script>
-									document.body.onload = function() {sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));}
+									document.body.onload = function() {
+										sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));
+									}
 									window.onhashchange = function() {sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));}
 								</script>
 
@@ -135,7 +165,7 @@
 		    $(document).ready(function(){
 		      // turn the element to select2 select style
 		      $('#select2box').select2()
-		      .on("change", function(e){console.log(e.val)});
+		      .on("change", function(e){ChangeUrl("A", 'index.html#37')});
 		    });
 		</script>
 
@@ -151,11 +181,11 @@
 		</script>
 	
 		<script> 
-		$(document).ready(function(){
-		    $("#sub-container-roster").click(function(){
-		        $("#hiddenbar").slideToggle("slow");
-		    });
-		});
+			$(document).ready(function(){
+			    $("#sub-container-roster").click(function(){
+			        $("#hiddenbar").slideToggle("slow");
+			    });
+			});
 		</script>
 	</body>
 </html>
