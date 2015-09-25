@@ -45,7 +45,7 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
           -ms-user-select: none;
               user-select: none;
 
-    background-color: rgba(255,255,255,0.3);
+    background-color: rgba(205,255,255,0.3);
 
     /*background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.5, #fff));
     background-image: -webkit-linear-gradient(center bottom, #eee 0%, #fff 50%);
@@ -135,8 +135,12 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
     filter: alpha(opacity=0);
 }
 
+<<<<<<< HEAD
 
 .select2-drop {
+=======
+.select2-drop { /*dropdown*/
+>>>>>>> origin/master
     width: 100%;
     margin-top: 0px;
     position: absolute;
@@ -461,7 +465,7 @@ disabled look for disabled choices in the results dropdown
     cursor: default;
 }
 
-.select2-container.select2-container-disabled .select2-choice .select2-arrow {
+.select2-container.select2-container-disabled .select2-choice .select2-arrow { /*NI*/
     background-color: rgba(255,255,255,0.3);
     background-image: none;
     border-left: 0;
@@ -474,7 +478,7 @@ disabled look for disabled choices in the results dropdown
 
 /* multiselect */
 
-.select2-container-multi .select2-choices {
+.select2-container-multi .select2-choices { /*NI*/
     height: auto !important;
     height: 1%;
     margin: 0;
