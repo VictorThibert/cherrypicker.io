@@ -143,7 +143,7 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
     z-index: 9999;
     top: 100%;
 
-    background: rgba(255,255,255,0.3);
+    background: rgba(242,242,242,1);
     color: #000;
     border: 1px solid #aaa;
     border-top: 0;

@@ -2,7 +2,6 @@
 
 * {
   font-family: Roboto;
-  color: gray;
 }
 
 body{
@@ -23,6 +22,7 @@ body{
 #top-bar{
 	width: 85%;
 	padding: 10px;
+	padding-top: 20px;
 	min-width: 1000px;
 	margin-left: auto;
 	margin-right: auto;
