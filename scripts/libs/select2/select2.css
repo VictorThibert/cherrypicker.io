@@ -280,6 +280,7 @@ html[dir="rtl"] .select2-search input {
 .select2-container-active .select2-choices {
     border: 0px solid #5897fb; /*blue stroke glow*/
     outline: none;
+    background: rgba(242,242,242,1);
     border-radius: 4px 4px 0 0;
 
 }
