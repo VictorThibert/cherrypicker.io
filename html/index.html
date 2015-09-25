@@ -45,46 +45,46 @@
 		<div id="search">
 			<select id="select2box" style="width:300px">
 		      <optgroup label="Atlantic Division">
-		        <option value=38>Boston Celtics</option>
-		        <option value=51>Brooklyn Nets</option>
-		        <option value=52>New York Knicks</option>
-		        <option value=55>Philadelphia 76ers</option>
-		        <option value=61>Toronto Raptors</option>
+		        <option value=2>Boston Celtics</option>
+		        <option value=3>Brooklyn Nets</option>
+		        <option value=20>New York Knicks</option>
+		        <option value=23>Philadelphia 76ers</option>
+		        <option value=28>Toronto Raptors</option>
 		      </optgroup>
 		      <optgroup label="Central Division">
-		        <option value=41>Chicago Bulls</option>
-		        <option value=39>Cleveland Cavaliers</option>
-		        <option value=65>Detroit Pistons</option>
-		        <option value=54>Indiana Pacers</option>
-		        <option value=49>Milwaukee Bucks</option>
+		        <option value=5>Chicago Bulls</option>
+		        <option value=6>Cleveland Cavaliers</option>
+		        <option value=9>Detroit Pistons</option>
+		        <option value=12>Indiana Pacers</option>
+		        <option value=16>Milwaukee Bucks</option>
 		      </optgroup>
 		      <optgroup label="Southeast Division">
-		        <option value=37>Atlanta Hawks</option>
-		        <option value=66>Charlotte Hornets</option>
-		        <option value=48>Miami Heat</option>
-		        <option value=53>Orlando Magic</option>
-		        <option value=64>Washington Wizards</option>
+		        <option value=1>Atlanta Hawks</option>
+		        <option value=4>Charlotte Hornets</option>
+		        <option value=17>Miami Heat</option>
+		        <option value=22>Orlando Magic</option>
+		        <option value=30>Washington Wizards</option>
 		      </optgroup>
 		      <optgroup label="Northwest Division">
-		        <option value=43>Denver Nuggets</option>
-		        <option value=50>Minnesota Timberwolves</option>
-		        <option value=60>Oklahoma City Thunder</option>
-		        <option value=57>Portland Trailblazers</option>
-		        <option value=62>Utah Jazz</option>
+		        <option value=8>Denver Nuggets</option>
+		        <option value=18>Minnesota Timberwolves</option>
+		        <option value=21>Oklahoma City Thunder</option>
+		        <option value=25>Portland Trailblazers</option>
+		        <option value=29>Utah Jazz</option>
 		      </optgroup>
 		      <optgroup label="Pacific Division">
-		        <option value=44>Golden State Warriors</option>
-		        <option value=46>LA Clippers</option>
-		        <option value=47>LA Lakers</option>
-		        <option value=56>Phoenix Suns</option>
-		        <option value=58>Sacramento Kings</option>
+		        <option value=10>Golden State Warriors</option>
+		        <option value=13>LA Clippers</option>
+		        <option value=14>LA Lakers</option>
+		        <option value=24>Phoenix Suns</option>
+		        <option value=26>Sacramento Kings</option>
 		      </optgroup>
 		      <optgroup label="Southwest Division">
-		        <option value=42>Dallas Mavericks</option>
-		        <option value=45>Houston Rockets</option>
-		        <option value=63>Memphis Grizzlies</option>
-		        <option value=40>New Orleans Pelicans</option>
-		        <option value=59>San Antonio Spurs</option>
+		        <option value=7>Dallas Mavericks</option>
+		        <option value=11>Houston Rockets</option>
+		        <option value=15>Memphis Grizzlies</option>
+		        <option value=19>New Orleans Pelicans</option>
+		        <option value=27>San Antonio Spurs</option>
 		      </optgroup>
 		    </select>
 		</div>
@@ -101,11 +101,6 @@
 						<div id = "sub-container-record">
 						</div>
 								<script>
-								function rerender(){
-									sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));
-									sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));
-
-								}
 									document.body.onload = function() {
 										sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));
 									}
@@ -170,16 +165,15 @@
 		    $(document).ready(function(){
 		      // turn the element to select2 select style
 		      $('#select2box').select2()
-		      .on("change", function(e){ChangeUrl('#' + e.val)});
+		      .on("change", function(e){ChangeUrl("A", 'index.html#37')});
 		    });
 		</script>
 
 		<script>  
-			function ChangeUrl(url) {
+			function ChangeUrl(title, url) {
 			    if (typeof (history.pushState) != "undefined") {
-			        var obj = { Title: url, Url: url };
-			        history.pushState(obj, null, obj.Url);
-			        rerender();
+			        var obj = { Title: title, Url: url };
+			        history.pushState(obj, obj.Title, obj.Url);
 			    } else {
 			        alert("Browser does not support HTML5.");
 			    }
