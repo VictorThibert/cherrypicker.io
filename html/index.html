@@ -42,22 +42,25 @@
 
 	<style type="text/css">
 
-
+		#cont {
+			overflow: hidden;
+			
+		}
 
 		.background {
-			height: 200%;
-			  overflow: hidden;
-			  background-image: url('http://www.liveloveoakland.com/wp-content/uploads/2015/06/6873650-golden-state-warriors-wallpaper1.jpg');
-			  background-size: cover;
-			  display: block;
-			  filter: blur(50px);
+			transform: scale(12);
+			  /*overflow: hidden;*/
+			/*  background-image: url('http://www.liveloveoakland.com/wp-content/uploads/2015/06/6873650-golden-state-warriors-wallpaper1.jpg');
+			  background-size: cover;*/
+			  /*display: block;*/
+			  /*filter: blur(50px);*/
 			  -webkit-filter: blur(50px);
 			  
-			  left: 0;
+			  /*left: 0;*/
 			  position: fixed;
-			  right: 0;
+			  /*right: 0;*/
 			  z-index: -1;
-			  margin: -100px -100px -100px -100px;
+			  /*margin: -100px -100px -100px -100px;*/
 			}
 
 		.over {
@@ -68,8 +71,9 @@
 	</style> <!-- temp -->
 
 	<body>
-
-		<div class="background"></div>
+		<div id="cont">
+		<img class="background" src="http://3.bp.blogspot.com/_IY7CmWJmPL4/R8K5bFaKXpI/AAAAAAAABO0/fH7E6kPibuM/S1600-R/random.jpg">
+		</div>
 		<div class="over">
 		<div id="top-bar">
 			<div id="search">
