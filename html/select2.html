@@ -11,7 +11,7 @@
   </head>
 
 
-  <body background = "http://www.bespokesoftware.com/wp-content/uploads/2013/02/Blurred-Background1.jpg">
+  <body background = "https://leitingfankay.files.wordpress.com/2015/05/screen-shot-2015-05-26-at-1-08-01-pm.png">
 
   	 <script>
     $(document).ready(function(){
@@ -20,6 +20,51 @@
       .on("change", function(e){console.log(e.val)});
     });
 
+
+    $(document).ready(function () {
+        frost = function () {
+            var w = $('#main-view').width();
+            html2canvas(document.body, {
+                onrendered: function (canvas) {
+                    document.body.appendChild(canvas);
+                    $('canvas').wrap('<div id="contain" />');
+                },
+                width: w,
+                height: 30
+            });
+            $('canvas, #partial-overlay, #cover').hide();
+            $('#cover').fadeIn('fast', function () {
+                $('#partial-overlay').fadeIn('fast');
+            });
+        };
+
+        $('body').append('<div id="cover"></div><svg id="svg-image-blur"><filter id="blur-effect-1"><feGaussianBlur stdDeviation="2"/></filter></svg>');
+
+        $('#main-view').click(function () {
+            frost();
+            $('#partial-overlay').addClass('vis');
+            $(window).resize(function () {
+                $('canvas, #partial-overlay, #cover').hide();
+            });
+
+            function onResize() {
+                if ($('#partial-overlay').hasClass('vis')) {
+                    frost();
+                }
+            }
+            var timer;
+            $(window).bind('resize', function () {
+                timer && clearTimeout(timer);
+                timer = setTimeout(onResize, 0);
+            });
+
+        });
+
+        $('#partial-overlay').click(function () {
+            $('#partial-overlay').removeClass('vis');
+            $('canvas, #partial-overlay, #cover').hide();
+        });
+    });
   
 
 
@@ -31,6 +76,11 @@
 
  
   <p>
+    <div id="main-view" width="100%">
+    <div style="width: 10%; height: 50%; background: #f00; float: left"></div>To my left is a red box
+    <br>Now there is just text
+    <br>Text that goes on for a few pixels
+    <br>or even more</div>
     <select id="select2box" style="width:300px">
       <optgroup label="Alaskan/Hawaiian Time Zone">
         <option value="AK">Alaska</option>
