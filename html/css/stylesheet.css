@@ -29,10 +29,10 @@ body{
 	min-width: 1000px;
 	height: 2000px;
 	padding: 1%;
-	margin-top: 4px;
+	margin-top: 0px;
 	margin-left: auto;
 	margin-right: auto;
-	border-radius: 3px;
+	border-radius: 0px 0px 5px 5px;
 	box-shadow: 1px 1px 1px #dedede;
 }
 
@@ -69,7 +69,18 @@ body{
 	margin: 0;
 }
 
-
+#logo-container{
+	background-color: #fff;
+	width: 85%;
+	min-width: 1000px;
+	height: 250px;
+	padding: 1%;
+	margin-top: 4px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 8px 8px 0px 0px;
+	box-shadow: 1px 1px 1px #dedede;
+}
 
 #sub-container-head {
   background: white;
