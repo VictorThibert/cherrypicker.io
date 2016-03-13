@@ -2,6 +2,7 @@ function localshotchart(){
 
 			var arr2 = []; //FOR LEAGUE AVERAGES
 			var arr4 = [];
+	
 			var xmlhttp2 = new XMLHttpRequest();
 			var url = "http://cherrypicker.io/php/playershotsleague.php?";
 			xmlhttp2.onreadystatechange=function() {
@@ -303,7 +304,7 @@ function localshotchart(){
 			 	var brushInfo = d3.select('body')
                     .append('p')
                     .attr("class", "pBox")
-                    .html('<b>Selected %:</b> ' + selectedPercentage);
+                    .html('<b>Selected s  %:</b> ' + selectedPercentage);
 
                
 	
@@ -342,7 +343,7 @@ function localshotchart(){
 					selectedPercentage = selectedMade/selectedTotal;
 					brushConditions[2] = selectedPercentage;
 
-					brushInfo.html('<b>Selected %:</b> ' + selectedPercentage);
+					brushInfo.html('<b>Selectedk %:</b> ' + selectedPercentage);
 
 			    }
 
@@ -369,4 +370,3 @@ function localshotchart(){
 		}
 
 
-localshotchart(); //CALL
