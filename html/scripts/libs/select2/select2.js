@@ -3175,6 +3175,7 @@ the specific language governing permissions and limitations under the Apache Lic
         onSelect: function (data, options) {
 
             if (!this.triggerSelect(data) || data.text === "") { return; }
+         
 
             this.addSelectedChoice(data);
 
