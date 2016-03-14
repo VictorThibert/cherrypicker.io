@@ -76,20 +76,45 @@ img{
 
 .container-card{
 	background-color: #fff;
-	margin: 1%;
-	border: 10px;
+	margin-right: 1%;
+	margin-left: 1%;
+	margin-bottom: 0.5%;
+	padding: 1%;
 	border-radius: 5px;
 	display: inline-block;
 	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.03);
+	position: relative;
+}
+.card-elem{
+		font-family: Roboto;
 }
 
 #card1{
-	width: 98%;
-	height: 80px;
+	width: 96%;
+	height: 40px;
+	margin-top: 1%;
 }
 
+#team{
+	position: absolute;
+  top: 50%;
+	font-size: 15pt;
+  color: #444;
+	margin-left: 1%;
+	display: inline-block;	
+	-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
 
-
+#yearSearch{
+	float: right;
+	position: relative;
+  top: 50%;
+	-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
 
 /*  #sub-container-shot{
     display: inline-block;
