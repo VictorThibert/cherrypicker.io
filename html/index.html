@@ -73,8 +73,8 @@
 			<img src="../graphics/logo-small.png" style="width:50px;height:50x;">
 			<img id="title" src="../graphics/Title1.png"  style="height:35px;" hspace="5">
 			
-				<div id="search">
-					<select id="select2box" style="width:250px">
+			<div id="search">
+					<select id="teamBox" style="width:250px">
 			      <optgroup label="Atlantic Division">
 			        <option value=38>Boston Celtics</option>
 			        <option value=51>Brooklyn Nets</option>
@@ -121,114 +121,120 @@
 			</div>
 			
 		</div>
-		<div class = "main-container">
+		
+		<div id = "main-container">
 			
-			<div class="container-card" id ="card1">
+			
+			<div class="container-card" id ="row0">
 				<img id ="teamlogo" src="../graphics/logos/38.jpg" style="width:40px;height:40x">
 				<div class="card-elem" id = "team">
 					Boston Celtics
 				</div>
+				
 				<div id="yearSearch">
 					<select id="yearBox" style="width:130px">
-			        <option value=38>2014-2015</option>
-			        <option value=51>2013-2014</option>
-			        <option value=52>2012-2013</option>
-		
+			        <option value=2015>2014-2015</option>
+			        <option value=2014>2013-2014</option>
+			        <option value=2013>2012-2013</option>
+							<option value=2012>2011-2012</option>
 			    </select>
-			</div>
+				</div>
 				
 			</div>
 			
-			<div class= "container-card" id = "sub-container-shot"></div>
-			<div class= "container-card" id = "sub-container-shot1"></div>
+			<div id= "row1">
+				<div class= "container-card" id = "sub-container-shot">
+				</div>
+<!-- 			<div class= "container-card" id = "sub-container-shot1"></div>
 			<div class= "container-card" id = "sub-container-shot2"></div>
-			<div class= "container-card" id = "sub-container-shot3"></div>
-
+			<div class= "container-card" id = "sub-container-shot3"></div> -->
+			
+				<div class= "container-card" id = "roster"></div>
+			</div>
+			
+			
+			
+			
 		</div>
 		
 		
 		
 		<script>
-			
-			
-			function rerender(){
+						
+			//PAGE LOAD FUNCTION
+			document.body.onload = function() {
+				hashChange();
+			}
 				
-// 				sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));
-// 				sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));
+			//HASH CHANGE FUNCTION
+			window.onhashchange = function() {
+				hashChange();	
 			}
 			
-				document.body.onload = function() {
-					$("#select2box").select2("val", location.hash.slice(1,3));
-					changeTeamName();
-					
-// 					sankeyRender(parseInt(location.hash.slice(1,3))); renderPara(parseInt(location.hash.slice(1,3)));
-				}
-				
-				window.onhashchange = function() {
-					changeTeamName(location.hash.slice(1,3));
-// 					sankeyRender(parseInt(location.hash.slice(1,3))); 
-// 					renderPara(parseInt(location.hash.slice(1,3)));
-				}
+			function hashChange(){
+				var currentTeamID = location.hash.slice(1,3);
+				var currentYear = location.hash.slice(4,8);
+				console.log(currentYear);
+				$("#teamBox").select2("val", currentTeamID);
+				$("#yearBox").select3("val", currentYear);
+				changeTeamName();
+				changeTeamLogo(currentTeamID);
+			}
 			
-			//SELECT2 Stuff
-		    $(document).ready(function(){
-		      // turn the element to select2 select style
-					var $example = $('#select2box').select2(); //OVERRIDE DEFAULT CSS
-					var $yearSelect = $('#yearBox').select3();
-					
-					 $yearSelect
+			//SELECT2 BOXES
+			$(document).ready(function(){
+				var $teamSelect = $('#teamBox').select2(); //CREATE BOXES
+				var $yearSelect = $('#yearBox').select3();
 				
-		     		.on("change", function(e){ChangeUrl('#' + e.val);})
-//  		    .on("change", function(e){ChangeTeam('team-name')})
-						.on("select2-close", function () {
-						
-							setTimeout(function() {
-									$('.select2-container-active').removeClass('select2-container-active');
-									$(':focus').blur();
-							}, 1); //BLUR ON DESELECT
+				$yearSelect
+					.on("change", function(e){
+						changeURL('#' + location.hash.slice(1,3) + "y" + e.val);
+						hashChange();
 					});
+	
 				
-
-		      $example
-						.on("select2-open", function(e){ $(".select2-container .select2-choice > .select2-chosen").css({"font-weight":"400", "color":"#888"}); })
-		     		.on("change", function(e){ChangeUrl('#' + e.val);})
-						.on("change", function(e){changeTeamName(e.val); setTeam()})
-//  		    .on("change", function(e){ChangeTeam('team-name')})
-						.on("select2-close", function () {
-							$(".select2-chosen").css({"font-weight":"300", "color":"#f0f0f0"}); 
-							setTimeout(function() {
-									$('.select2-container-active').removeClass('select2-container-active');
-									$(':focus').blur();
-							}, 1); //BLUR ON DESELECT
+				$teamSelect
+					.on("select2-open", function(e){ //CHANGE FONT TO BLACK ON OPEN
+						$(".select2-container .select2-choice > .select2-chosen").css({"font-weight":"400", "color":"#888"}); 
+					})
+					.on("change", function(e){
+						changeURL('#' + e.val + 'y' + location.hash.slice(4,8)); 
+						hashChange()
+					})
+					.on("select2-close", function () {
+						$(".select2-chosen").css({"font-weight":"300", "color":"#f0f0f0"}); //CHANGE FONT TO WHITE ON CLOSE
+						setTimeout(function() {
+								$('.select2-container-active').removeClass('select2-container-active');
+								$(':focus').blur();
+						}, 1); //BLUR ON DESELECT
 					});
-		  });
+			});
 			
-
 			
 		function changeTeamName(team){ //FIX THIS
-			 $('#team').html($('#select2box').find(":selected").text());
+			 $('#team').html($('#teamBox').find(":selected").text()); //use .html(team) with dictionary later
 		}
-
-		function setTeam() {
-    	var img = document.getElementById("teamlogo");
-    	img.src = "../graphics/logos/" + this.value + ".jpg";
-    	return false;
+			
+		function changeTeamLogo(team) {
+			var img = document.getElementById("teamlogo");
+			img.src = "../graphics/logos/" + team + ".jpg";
 		}
-		document.getElementById("select2box").onchange = setTeam;
 			
-	
-			localshotchart();
-			
-			function ChangeUrl(url) {
-			    if (typeof (history.pushState) != "undefined") {
-			        var obj = { Title: url, Url: url };
-			        history.pushState(obj, null, obj.Url);
-			     
-			    } else {
-			        alert("Browser does not support HTML5.");
-			    }
-			}
 
+			
+		//CHANGE URL FUNCTION 
+		//(DOESN'T TRIGGER A HASH CHANGE)
+		function changeURL(url) {
+				if (typeof (history.pushState) != "undefined") {
+						var obj = { Title: url, Url: url };
+						history.pushState(obj, null, obj.Url);
+				} else {
+						alert("Browser does not support HTML5.");
+				}
+		}
+			
+		localshotchart();
+			
 		</script>
 	</body>
 </html>

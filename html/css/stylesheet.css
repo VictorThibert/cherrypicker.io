@@ -1,6 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
-@import url(https://fonts.googleapis.com/css?family=Quattrocento+Sans|Dosis|Varela+Round);
-@import url(https://fonts.googleapis.com/css?family=Quicksand:400);
 
 p {
   font-family: 'Roboto', sans-serif;
@@ -23,22 +21,6 @@ body{
 	height: 100%;
 }
 
-#title{
-	vertical-align: bottom;
-	
-}
-
-#search{
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	display: inline-block;
-}
-
-.bar{
-	float: left;
-}
-
 #topbar{
 	width: 85%;
 	border-top: 20px;
@@ -51,8 +33,17 @@ body{
 	position: relative;
 
 }
+#title{
+	vertical-align: bottom;
+}
+#search{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	display: inline-block;
+}
 
-.main-container{
+#main-container{
 	background-color: #f6f6f6;
 	width: 85%;
 	min-width: 1000px;
@@ -62,9 +53,28 @@ body{
 	border-radius: 5px;
 	box-shadow: 0px 15px 24px 0px rgba(0,0,0,0.2);
 }
+#row0{
+	width: 96%;
+	height: 40px;
+	margin-top: 1%;
+}
+#roster { 
+	margin-left: -8px;
+	height: 350px;
+}
+
+#row1 {
+
+}
+
+
+
+
+
+
+
 
 #title{
-
 	font-size: 20pt;
 	display: inline-block;
 	height: 60px;
@@ -76,24 +86,20 @@ img{
 
 .container-card{
 	background-color: #fff;
-	margin-right: 1%;
-	margin-left: 1%;
-	margin-bottom: 0.5%;
+	margin-right: 13px;
+	margin-left: 13px;
+	margin-bottom: 10px;
 	padding: 1%;
 	border-radius: 5px;
 	display: inline-block;
 	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.03);
-	position: relative;
+	
 }
 .card-elem{
 		font-family: Roboto;
 }
 
-#card1{
-	width: 96%;
-	height: 40px;
-	margin-top: 1%;
-}
+
 
 #team{
 	position: absolute;
@@ -116,124 +122,14 @@ img{
   transform: translateY(-50%);
 }
 
-/*  #sub-container-shot{
-    display: inline-block;
-	width: 100%;
-	background-color: white;
-    border-radius: 0.5%;
-	padding: 2%;
-	box-shadow: 1px 1px 1px #dedede;
-}  */
+ #sub-container-shot{
+  display: inline-block;
+	width: 550px;
 
-#sub-container-sliders{
-    display: inline-block;
-	width: 100%;
-	background-color: white;
-    border-radius: 0.5%;
-	padding: 2%;
-	margin-top: 2%;
-	box-shadow: 1px 1px 1px #dedede;
-}
+} 
 
-#sub-container-trad{
-    display: inline-block;
-	width: 100%;
-	background-color: white;
-    border-radius: 0.5%;
-	padding: 1%;
-	margin-top: 1%;
-	box-shadow: 1px 1px 1px #dedede;
-}
 
-#sub-container-sank{
-    display: inline-block;
-	width: 100%;
-	background-color: white;
-    border-radius: 0.5%;
-	padding: 1%;
-	margin-top: 1%;
-	box-shadow: 1px 1px 1px #dedede;
-}
 
-#sub-container-para{
-    display: inline-block;
-	width: 100%;
-	background-color: white;
-    border-radius: 0.5%;
-	padding: 1%;
-	margin-top: 1%;
-	box-shadow: 1px 1px 1px #dedede;
-}
-
-/*#example{
-	display: inline-block;
-}*/
-
-#container-points{
-	display: inline-block;
-	margin-right: 1%
-}
-#container-rebounds{
-	display: inline-block;
-	margin-right: 1%;
-	/*padding-top: 0.5%;
-	-ms-transform: rotate(180deg); /* IE 9 */
-	/*-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-	/*transform: rotate(180deg);*/
-}
-#container-assists{
-	display: inline-block;
-	margin-right: 1%
-}
-#container-steals{
-	display: inline-block;
-	margin-right: 1%
-}
-#container-blocks{
-	display: inline-block;
-	margin-right: 1%
-}
-#container-turn{
-	display: inline-block;
-	margin-right: 1%
-}
-
-#container-points-label{
-	display: inline-block;
-	margin-right: 1%;
-	width: 100px;
- 	text-align: center;
-}
-#container-rebounds-label{
-	display: inline-block;
-	margin-right: 1%;
-	width: 100px;
-	text-align: center;
-}
-#container-assists-label{
-	display: inline-block;
-	margin-right: 1%;
-	width: 100px;
-	text-align: center;
-}
-#container-steals-label{
-	display: inline-block;
-	margin-right: 1%;
-	width: 100px;
-	text-align: center;
-}
-#container-blocks-label{
-	display: inline-block;
-	margin-right: 1%;
-	width: 100px;
-	text-align: center;
-}
-#container-turn-label{
-	display: inline-block;
-	margin-right: 1%;
-	width: 100px;
-	text-align: center;
-}
 
 rect:hover {
   fill: #d1d1d1;
