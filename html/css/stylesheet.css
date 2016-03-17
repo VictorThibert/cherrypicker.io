@@ -1,11 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
+@import url(https://fonts.googleapis.com/css?family=Oxygen:400,700);
+@import url(https://fonts.googleapis.com/css?family=Asap);
 
 p {
   font-family: 'Roboto', sans-serif;
 	color: #222222;
 	font-size: 20px;
 }
-
 body{
 /* 	background-image: url(../other/background.png) ; */
 	/*Temporary background*/
@@ -17,8 +18,62 @@ body{
   background: -ms-linear-gradient(top, rgba(51,189,178,1) 0%, rgba(32,153,133,1) 100%);
   background: linear-gradient(to bottom, rgba(51,189,178,1) 0%, rgba(32,153,133,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33bdb2', endColorstr='#209985', GradientType=0 );
-	width: 100%;
+	width: 99%;
 	height: 100%;
+}
+img{
+	display: inline-block;
+}
+
+a.neutral {
+		fill: #33bdb1;
+    background: #FFF;
+ 	  cursor: pointer;
+		border-radius: 5px;
+    border-top: solid 1px #33bdb1;
+    border-left: solid 1px #33bdb1;
+    border-bottom: solid 1px #33bdb1;
+    border-right: solid 1px #33bdb1;
+    padding: 10px 12px 5px;    /* TOP L/R BOTTOM */
+		font-size: 14px;
+}
+
+
+a.down {
+
+    background: #FFF;
+		border-radius: 5px;
+    border-top: solid 1px #cdcdcd;
+    border-left: solid 1px #cdcdcd;
+    border-bottom:solid 1px  #cdcdcd;
+    border-right: solid 1px #cdcdcd;
+		fill: #cdcdcd;
+}
+
+a.hover {
+    background: #33bdb1;
+		border-radius: 5px;
+    border-top: solid 1px  #33bdb1;
+    border-left: solid 1px  #33bdb1;
+    border-bottom:solid 1px  #33bdb1;
+    border-right: solid 1px #33bdb1;
+		fill: #FFF;
+		
+}
+
+/* text{
+	fill: #33bdb1;
+}
+
+text.down{
+	fill: #cdcdcd;
+} */
+
+
+
+h1{
+	margin: 0;
+	margin-left:8px;
 }
 
 #topbar{
@@ -27,13 +82,16 @@ body{
 	border-bottom: 20px;
 	margin-top:20px;
 	margin-bottom: 20px;
-	min-width: 1000px;
+	min-width: 1100px;
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
 
 }
 #title{
+	font-size: 20pt;
+	display: inline-block;
+	height: 60px;
 	vertical-align: bottom;
 }
 #search{
@@ -46,73 +104,29 @@ body{
 #main-container{
 	background-color: #f6f6f6;
 	width: 85%;
-	min-width: 1000px;
+	min-width: 1100px;
 	height: 2000px;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 5px;
 	box-shadow: 0px 15px 24px 0px rgba(0,0,0,0.2);
 }
+
 #row0{
-	width: 96%;
+	top: 13px;
+	position: relative;
 	height: 40px;
-	margin-top: 1%;
 }
-#roster { 
-	margin-left: -8px;
-	height: 350px;
-}
-
-#row1 {
-
-}
-
-
-
-
-
-
-
-
-#title{
-	font-size: 20pt;
-	display: inline-block;
-	height: 60px;
-}
-
-img{
-	display: inline-block;
-}
-
-.container-card{
-	background-color: #fff;
-	margin-right: 13px;
-	margin-left: 13px;
-	margin-bottom: 10px;
-	padding: 1%;
-	border-radius: 5px;
-	display: inline-block;
-	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.03);
-	
-}
-.card-elem{
-		font-family: Roboto;
-}
-
-
-
-#team{
+#teamName{
 	position: absolute;
-  top: 50%;
+	top: 50%;
+	transform: translate(40px,-50%);
+
 	font-size: 15pt;
   color: #444;
-	margin-left: 1%;
-	display: inline-block;	
-	-webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
+	margin-left: 0.8%;
 
+}
 #yearSearch{
 	float: right;
 	position: relative;
@@ -122,11 +136,83 @@ img{
   transform: translateY(-50%);
 }
 
- #sub-container-shot{
-  display: inline-block;
-	width: 550px;
+#row1 {
+	top: 13px;
+	position: relative;
 
+}
+#sub-container-shot{
+  height: 350px;
+	width: 550px;
+	float: left;
 } 
+#roster { 
+	height: 350px;
+	width: auto;
+	overflow:hidden;
+}
+#rosterText {
+	padding-bottom: 10px;
+	font-size: 16px;
+	font-family: 'Asap', sans-serif;
+	color: #888;
+}
+
+
+#rosterTable{
+	width: 100%;
+	font-family: 'Asap', sans-serif;
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
+
+table{
+	border-style: hidden;
+}
+
+td{
+  padding: 10px 0 10px 5px;
+	text-align: center;
+	white-space: nowrap;
+}
+
+
+#row2 {
+	top: 13px;
+	position: relative;
+}
+#test{
+	height:200px;
+}
+
+
+
+.container-card{
+	background-color: #fff;
+
+	
+	margin-right: 12px;
+	margin-left: 12px;
+	margin-bottom: 10px;
+	padding: 1%;
+	border-radius: 5px;
+
+	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.03);
+	
+}
+.card-elem{
+		font-family: Roboto;
+}
+
+
+
+
+
+
+
+
 
 
 

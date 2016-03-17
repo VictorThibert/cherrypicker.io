@@ -37,12 +37,12 @@
 		
 		<link rel="stylesheet" href="../scripts/libs/select2/select2.css">
 		<link rel="stylesheet" href="../scripts/libs/select2/select3.css">
-		<link rel="stylesheet" href="../css/select2-skins.css">
+	
 		
-		<link rel="stylesheet" href="../css/optgroups.css">
+<!-- 		<link rel="stylesheet" href="../css/optgroups.css"> -->
 		<link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 		<link rel="stylesheet" type="text/css" href="../css/d3.parcoords.css">
-		<link rel="stylesheet" type="text/css" href="../css/search-style.css">
+
 		<link rel="stylesheet" type="text/css" href="../css/nouislider.css">
 		
 			<style>
@@ -126,8 +126,8 @@
 			
 			
 			<div class="container-card" id ="row0">
-				<img id ="teamlogo" src="../graphics/logos/38.jpg" style="width:40px;height:40x">
-				<div class="card-elem" id = "team">
+				<img id ="teamlogo" src="../graphics/logos/38.jpg" style="width:40px;height:40px">
+				<div class="card-elem" id = "teamName">
 					Boston Celtics
 				</div>
 				
@@ -146,12 +146,128 @@
 				<div class= "container-card" id = "sub-container-shot">
 				</div>
 <!-- 			<div class= "container-card" id = "sub-container-shot1"></div>
-			<div class= "container-card" id = "sub-container-shot2"></div>
-			<div class= "container-card" id = "sub-container-shot3"></div> -->
-			
-				<div class= "container-card" id = "roster"></div>
+					<div class= "container-card" id = "sub-container-shot2"></div>
+					<div class= "container-card" id = "sub-container-shot3"></div> -->
+				<div class= "container-card" id = "roster">
+					<h1 id="rosterText">
+						ROSTER
+					</h1>
+					
+						<table id = "rosterTable">
+						<tr>
+							<td>PG</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text  alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"  >Isaiah Thomas</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"  >Marcus Smart</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Phil Pressy</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td>SG</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td>SF</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td>PF</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td>C</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Tyler Zeller</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >Kelly Olynyk</text>
+									</svg>
+								</a>
+							</td>
+							<td><a class="neutral" id="button" title="button">
+									<svg height="15" width="80%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >TESTBOX</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 			
+			<div id = "row2">
+				<div class="container-card" id = "test">
+					
+				</div>
+			</div>
 			
 			
 			
@@ -184,7 +300,7 @@
 			//SELECT2 BOXES
 			$(document).ready(function(){
 				var $teamSelect = $('#teamBox').select2(); //CREATE BOXES
-				var $yearSelect = $('#yearBox').select3();
+				var $yearSelect = $('#yearBox').select3(/*{minimumResultsForSearch: Infinity}*/); /*Uncomment to turn off search*/
 				
 				$yearSelect
 					.on("change", function(e){
@@ -208,19 +324,34 @@
 								$(':focus').blur();
 						}, 1); //BLUR ON DESELECT
 					});
+				
+				
+				//BUTTONS FOR ROSTER SELECTION
+				$('a#button').click(function(){
+        	$(this).toggleClass("down")
+					$(this).mouseleave(); //TRIGGER MOUSELAVE ON CLICK
+   			});
+				$('a#button').mouseenter(function(){
+					if( $(this).attr('class') != "neutral down"){ //NO GREY HOVER
+						$(this).toggleClass("hover", true);
+					}
+					
+        	
+   			}).mouseleave(function(){
+        	$(this).toggleClass("hover", false);
+   			});
+				
 			});
 			
 			
 		function changeTeamName(team){ //FIX THIS
-			 $('#team').html($('#teamBox').find(":selected").text()); //use .html(team) with dictionary later
+			 $('#teamName').html($('#teamBox').find(":selected").text()); //use .html(team) with dictionary later
 		}
 			
 		function changeTeamLogo(team) {
 			var img = document.getElementById("teamlogo");
 			img.src = "../graphics/logos/" + team + ".jpg";
 		}
-			
-
 			
 		//CHANGE URL FUNCTION 
 		//(DOESN'T TRIGGER A HASH CHANGE)
