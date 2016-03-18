@@ -34,7 +34,7 @@ a.neutral {
     border-left: solid 1px #33bdb1;
     border-bottom: solid 1px #33bdb1;
     border-right: solid 1px #33bdb1;
-    padding: 10px 12px 5px;    /* TOP L/R BOTTOM */
+    padding: 10px 6px 5px;    /* TOP L/R BOTTOM */
 		font-size: 14px;
 }
 
