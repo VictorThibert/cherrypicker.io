@@ -61,6 +61,8 @@ a.hover {
 		
 }
 
+
+
 /* text{
 	fill: #33bdb1;
 }
@@ -208,18 +210,17 @@ td{
 
 
 
-
-
-
-
-
-
-
-
-
-rect:hover {
-  fill: #d1d1d1;
+rect.day:hover{
+	stroke-width: 2;
+	stroke: #92e0da;
 }
+
+
+
+
+
+
+
 
 .d3-tip {
   line-height: 1;

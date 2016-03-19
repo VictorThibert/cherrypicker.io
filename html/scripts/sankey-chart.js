@@ -1,7 +1,7 @@
-function sankeyRender(team){
+function sankeyRender(){
 
 var dataB = [];
-var id = team;
+var id = 37;
 
 d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, function(error, raw){
   var i = 0;
@@ -79,7 +79,7 @@ function sankeyFormat(dataC){
 
   function renderSankey(x){
 
-    d3.select("#sub-container-sank").selectAll("svg").remove();
+    d3.select("#test").selectAll("svg").remove();
 
     var units = "Possessions PONR";
 
@@ -92,7 +92,7 @@ function sankeyFormat(dataC){
         color = d3.scale.linear().domain([0,70])
           .range(["red", "blue"])
     // append the svg canvas to the page
-    var svg = d3.select("#sub-container-sank").append("svg")
+    var svg = d3.select("#test").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")

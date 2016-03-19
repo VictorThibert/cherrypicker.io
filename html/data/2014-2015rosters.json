@@ -1,0 +1,57 @@
+{"teams":[
+   {"teamID":"37", "roster":[
+      {"playerName":"Jeff Teague", "playerID":"201952", "playerCellNumber":"1"},
+      {"playerName":"Dennis Schroder", "playerID":"203471", "playerCellNumber":"2"},
+      {"playerName":"Shelvin Mack", "playerID":"202714", "playerCellNumber":"3"},
+      {"playerName":"Kyle Korver", "playerID":"2594", "playerCellNumber":"4"},
+      {"playerName":"Thabo Sefalosha", "playerID":"200757", "playerCellNumber":"5"},
+      {"playerName":"John Jenkins", "playerID":"203098", "playerCellNumber":"6"},
+      {"playerName":"Demarre Carrol", "playerID":"201960", "playerCellNumber":"7"},
+      {"playerName":"Mike Scott", "playerID":"203118", "playerCellNumber":"8"},
+      {"playerName":"Kent Bazemore", "playerID":"203145", "playerCellNumber":"9"},
+      {"playerName":"Paul Millsap", "playerID":"200794",  "playerCellNumber":"11"},
+      {"playerName":"Mike Muscala", "playerID":"203488", "playerCellNumber":"12"},
+      {"playerName":"Austin Daye", "playerID":"201948", "playerCellNumber":"10"},
+      {"playerName":"Al Horford", "playerID":"201143", "playerCellNumber":"13"},
+      {"playerName":"Pero Antic", "playerID":"203544", "playerCellNumber":"14"},
+      {"playerName":"Elton Brand", "playerID":"1882", "playerCellNumber":"15"}
+    ]},
+  
+    {"teamID":"38", "roster":[
+      {"playerName":"Isaiah Thomas", "playerID":"000", "playerCellNumber":"1"},
+      {"playerName":"Marcus Smart", "playerID":"000", "playerCellNumber":"2"},
+      {"playerName":"Phil Pressey", "playerID":"000", "playerCellNumber":"3"},
+      {"playerName":"Isaiah Thomas", "playerID":"000", "playerCellNumber":"4"},
+      {"playerName":"Marcus Smart", "playerID":"000", "playerCellNumber":"5"},
+      {"playerName":"Kenneth Farouche", "playerID":"000",  "playerCellNumber":"6"},
+      {"playerName":"Isaiah Thomas", "playerID":"000", "playerCellNumber":"7"},
+      {"playerName":"Marcus Smart", "playerID":"000", "playerCellNumber":"8"},
+      {"playerName":"Phil Pressey", "playerID":"000", "playerCellNumber":"9"},
+      {"playerName":"John Johnson", "playerID":"000",  "playerCellNumber":"10"},
+      {"playerName":"Isaiah Thomas", "playerID":"000", "playerCellNumber":"11"},
+      {"playerName":"Marcus Smarcus", "playerID":"000", "playerCellNumber":"12"},
+      {"playerName":"Phil Pushy", "playerID":"000", "playerCellNumber":"13"},
+      {"playerName":"Phil Pressey", "playerID":"000", "playerCellNumber":"14"},
+      {"playerName":"N/A", "playerID":"000", "playerCellNumber":"15"}
+    ]},  
+  
+    {"teamID":"39", "roster":[
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"1"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"2"},
+      {"playerName":"'Lebron James'", "playerID":"000", "playerCellNumber":"3"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"4"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"5"},
+      {"playerName":"Kenneth Farouche", "playerID":"000",  "playerCellNumber":"6"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"7"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"8"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"9"},
+      {"playerName":"Lebron James", "playerID":"000",  "playerCellNumber":"10"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"11"},
+      {"playerName":"N/A", "playerID":"000", "playerCellNumber":"12"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"13"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"14"},
+      {"playerName":"Lebron James", "playerID":"000", "playerCellNumber":"15"}
+    ]},
+   
+    {"teamID":"40", "roster":[]}
+]}

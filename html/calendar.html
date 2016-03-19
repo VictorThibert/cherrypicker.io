@@ -10,32 +10,24 @@ body {
 }
 
 .day {
-  fill: #AAA;
+  fill: #FFF;
 }
 
 .fillerday {
-  fill: #EEE;
+  fill: #FFF;
 }
-
-
 
 
 </style>
 <body>
 
 <div id = "calendar">
-  <div class = "month" id = "m6"></div>
-  <div class = "month" id = "m7"></div>
-  <div class = "month" id = "m8"></div>
-  <div class = "month" id = "m9"></div>
   <div class = "month" id = "m10"></div>
   <div class = "month" id = "m11"></div>
   <div class = "month" id = "m0"></div>
   <div class = "month" id = "m1"></div>
   <div class = "month" id = "m2"></div>
   <div class = "month" id = "m3"></div>
-  <div class = "month" id = "m4"></div>
-  <div class = "month" id = "m5"></div>
 </div>
 
 <script src="../scripts/libs/d3/d3.v3.min.js"></script>
@@ -86,7 +78,7 @@ function renderCalendar(container, year1, year2){
 
   var color = d3.scale.linear()
     .domain([-60,0,60])
-    .range(["red", "beige", "green"]);
+    .range(["red", "#EEE", "#00cc7a"]);
 
 
   var svg = d3.select(monthDiv).selectAll("svg")
@@ -189,17 +181,12 @@ function renderCalendar(container, year1, year2){
         key = x.getFullYear() + "-" + ("0" + (x.getMonth() + 1)).slice(-2) + "-" + ("0" + x.getDate()).slice(-2);
         data2[key] = 0;
       }
-      
-
-
-      
-
 
       var data = d3.nest()
         .key(function(d) { 
           var e = d.GAME_DATE_EST; 
           return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
-        .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].WIN * 2 - 1);})
+        .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].PLUS_MINUS);})
         .map(raw);
 
 
@@ -207,14 +194,14 @@ function renderCalendar(container, year1, year2){
 
       var corresponding = [0];
 
-      cCount = 1;
-      for (var x in data3) {
-        var value = data3[x];
-        corresponding[cCount] =  corresponding[cCount - 1] +parseInt(value);
-        cCount += 1;
-        console.log(corresponding[cCount -1])
-        data3[x] = corresponding[cCount -1];
-      }
+      //cCount = 1;
+      //for (var x in data3) {
+      //  var value = data3[x];
+      //  corresponding[cCount] =  corresponding[cCount - 1] +parseInt(value);
+      //  cCount += 1;
+      //  console.log(corresponding[cCount -1])
+      //  data3[x] = corresponding[cCount -1];
+      //}
 
 
       
