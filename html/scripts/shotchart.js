@@ -1,4 +1,4 @@
-function localshotchart(){
+function localshotchart(playerArray){
 
 			var jsonLeague = []; //FOR LEAGUE AVERAGES
 			var leagueShotArray = [];
@@ -26,7 +26,8 @@ function localshotchart(){
 			var jsonPlayer = [];
 			var playerShotArray = [];
 			var xmlPlayerRequest = new XMLHttpRequest();
-			var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=200794"; //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
+			var playerURL = 201143;
+			var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + playerURL; //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
 			xmlPlayerRequest.onreadystatechange=function() {
 			    if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
 			        reassignPlayer(xmlPlayerRequest.responseText);
@@ -195,8 +196,8 @@ function localshotchart(){
 				    .range([0,0.5,3,5.1,5.1]); 
 
 				var colorScale = d3.scale.linear() //Create color scale for the hexons
-				    .domain([-0.4, 0.4]) //Range for +- above average
-				    .range(["blue",  "red"]); 
+				    .domain([-0.4, 0, 0.4]) //Range for +- above average
+				    .range(["#2eb4a6", "#eeeaea", "#f76b6b"]); 
 
 				var x = d3.scale.identity() 
 				    .domain([0, width]); 
@@ -244,10 +245,11 @@ function localshotchart(){
 
 				var brushCanvas = svg.append("g") //Creates canvas for brush as <g> tag
 			      .attr("class", "brush")
+
 			      .call(brushObject); 
 
-
-				var hexagon = brushCanvas.append("g") //Adding the hexons // Hexon variable contains all hexons (e.g. array of 428 paths)
+				//Instead of SVG can put brushCanvs
+				var hexagon = svg.append("g") //Adding the hexons // Hexon variable contains all hexons (e.g. array of 428 paths)
 				    //.attr("clip-path", "url(#clip)") //Does nothing ?
 				  .selectAll(".hexagon")
 				    .data(hpoints) //hpoints means smoothed
@@ -265,38 +267,41 @@ function localshotchart(){
 				    	    };})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				    .style("fill", function(d) {return colorScale(d.totalMade/d.totalShot- leagueShotArray[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); })
-				    .on("mouseover", function(d) { //REMOVE
+				  
+// 					.on("mouseover", function(d) { //REMOVE
 
-				       d3.select(this)
-         				 .style("fill", "orange");
-				    })
-				    .on("mouseout", function(d) {
-				    	d3.select(this)
-         				 .style("fill", function(d){ 
-         				 	return colorScale(d.totalMade/d.totalShot- leagueShotArray[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) 
-         				})
+// 				       d3.select(this)
+//          				 .style("fill", "orange");
+// 				    })
+// 					.on("mouseout", function(d) {
+// 				    	d3.select(this)
+//          				 .style("fill", function(d){ 
+//          				 	return colorScale(d.totalMade/d.totalShot- leagueShotArray[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) 
+// 							})
 
-				hexagon.on("mousedown", function(){ //Allow dragging from a hexon start point
+				brushCanvas.moveToFront();
 				
-						brushCanvas.moveToFront();
+// 				hexagon.on("mousedown", function(){ //Allow dragging from a hexon start point
+				
+// 						brushCanvas.moveToFront();
 
-						if(d3.select(this).attr("class") != "hexagon selected"){
+// 						if(d3.select(this).attr("class") != "hexagon selected"){
 						
-							brush_elm = svg.select(".brush").node()
-							new_click_event = new Event('mousedown');
-							new_click_event.pageX = d3.event.pageX;
-							new_click_event.clientX = d3.event.clientX;
-							new_click_event.pageY = d3.event.pageY;
-							new_click_event.clientY = d3.event.clientY;
-							brush_elm.dispatchEvent(new_click_event);
+// 							brush_elm = svg.select(".brush").node()
+// 							new_click_event = new Event('mousedown');
+// 							new_click_event.pageX = d3.event.pageX;
+// 							new_click_event.clientX = d3.event.clientX;
+// 							new_click_event.pageY = d3.event.pageY;
+// 							new_click_event.clientY = d3.event.clientY;
+// 							brush_elm.dispatchEvent(new_click_event);
 							
-						}
+// 						}
 						
 						
-					}
+// 					}
 					
 					
-				);
+// 				);
 
 
 				
