@@ -22,6 +22,13 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
     
     for(i = 0; i <= 14; i+=1){
       var $parent = $( "#Roster" + (i + 1) );	
+      
+      if(teamJSON.roster[i].playerName == "N/A"){
+        $parent.hide(); //slide for the haha
+        continue;
+      } else {  
+        $parent.show(); 
+      }//REMOVE CELL FROM ROW
       var $text = $parent.find('text');//SELECTS THE td ELEMENT
       $text.text( "" + teamJSON.roster[i].playerName); //FILLS ALL TEXT REGARDLESS OF GIVEN PLAYER
       $parent.find('a.neutral').toggleClass("down", false);
@@ -49,7 +56,7 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
 
       var $parent = $( "#Roster" + (i + 1) );	//SELECTS THE td ELEMENT
 
-      if(teamJSON.roster[i] === undefined || teamJSON.roster[i].playerName == "N/A"){
+      if(teamJSON.roster[i].playerName == "N/A"){
         $parent.hide(); //slide for the haha
         continue;
       } else {  
