@@ -1249,7 +1249,7 @@ pc.brushMode = function(mode) {
       .attr("id", "strum-events")
       .attr("x", __.margin.left)
       .attr("y", __.margin.top)
-      .attr("width", w())
+      .attr("width", w()-100)
       .attr("height", h() + 2)
       .style("opacity", 0)
       .call(drag);
@@ -1275,7 +1275,7 @@ pc.brushMode = function(mode) {
 
 (function() {
   if (typeof d3.svg.multibrush !== 'function') {
-	  console.log("multibrush requires d3.svg.multibrush");
+	  //console.log("multibrush requires d3.svg.multibrush");
 	  return;
   }
   var brushes = {};

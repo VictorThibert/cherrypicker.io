@@ -13,6 +13,10 @@
 -moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+.noUi-ltr{
+	width: 100%;
+}
+
 .noUi-target {
 	position: relative;
 	direction: ltr;
@@ -51,21 +55,24 @@
  * Browsers can paint handles in their own layer.
  */
 .noUi-base {
+	height: 6px;
+	top: 2px;
 	-webkit-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
 
 /* Slider size and handle placement;
  */
+
 .noUi-horizontal {
-	height: 18px;
-	margin: 20px;
+	height: 12px;
+	margin: 7px;
 }
 .noUi-horizontal .noUi-handle {
-	width: 34px;
-	height: 28px;
+	width: 25px;
+	height: 18px;
 	left: -17px;
-	top: -6px;
+	top: -7px;
 }
 .noUi-vertical {
 	width: 18px;
@@ -74,7 +81,7 @@
 	width: 28px;
 	height: 34px;
 	left: -6px;
-	top: -17px;
+	top: -16px;
 }
 
 /* Styling;
@@ -126,30 +133,7 @@
 
 /* Handle stripes;
  */
-.noUi-handle:before,
-.noUi-handle:after {
-	content: "";
-	display: block;
-	position: absolute;
-	height: 14px;
-	width: 1px;
-	background: #E8E7E6;
-	left: 14px;
-	top: 6px;
-}
-.noUi-handle:after {
-	left: 17px;
-}
-.noUi-vertical .noUi-handle:before,
-.noUi-vertical .noUi-handle:after {
-	width: 14px;
-	height: 1px;
-	left: 6px;
-	top: 14px;
-}
-.noUi-vertical .noUi-handle:after {
-	top: 17px;
-}
+
 
 /* Disabled state;
  */

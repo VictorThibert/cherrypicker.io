@@ -7,6 +7,13 @@ p {
 	color: #222222;
 	font-size: 20px;
 }
+
+p.percentage {
+	 font-family: 'Asap', sans-serif;
+	color: #33bdb1;
+	font-size: 14px;
+	
+}
 body{
 /* 	background-image: url(../other/background.png) ; */
 	/*Temporary background*/
@@ -80,6 +87,7 @@ h1{
 
 #topbar{
 	width: 85%;
+	max-width: 1100px;
 	border-top: 20px;
 	border-bottom: 20px;
 	margin-top:20px;
@@ -107,7 +115,9 @@ h1{
 	background-color: #f6f6f6;
 	width: 85%;
 	min-width: 1100px;
-	height: 2000px;
+	max-width: 1100px;
+	height: 1000px;
+	margin-bottom: 100px;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 5px;
@@ -144,12 +154,37 @@ h1{
 
 }
 #sub-container-shot{
-  height: 350px;
+	position: relative;
+  height: 360px;
 	width: 550px;
 	float: left;
 } 
+#sub-container-percentage{
+	position: absolute;
+	top: 280px;
+	left: 15px;
+}
+#sub-container-sliders{
+	position: absolute;
+	width: 78%;
+	margin-right: 20px;
+	margin-bottom: 8px;
+	bottom: 0;
+	right: 0;
+}
+
+#sub-container-labels{
+	font-family: 'Asap';
+	font-size: 10pt;
+	position: absolute;
+	width: 20%;
+	margin: 15px;
+	bottom: 0;
+	left: 0;
+}
+
 #roster { 
-	height: 350px;
+	height: 360px;
 	width: auto;
 	overflow:hidden;
 }
@@ -169,7 +204,6 @@ h1{
 	
 }
 
-
 table{
 	border-style: hidden;
 }
@@ -185,6 +219,12 @@ td{
 	top: 13px;
 	position: relative;
 }
+
+
+#month-title{
+	font-family: 'Asap';
+}
+
 #test{
 	height:200px;
 }

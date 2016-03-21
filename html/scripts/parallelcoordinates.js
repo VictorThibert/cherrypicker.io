@@ -2,13 +2,13 @@
 function renderPara(x){
 
   // window.history.pushState(“object or string”, “Title”, “/atlanta”);
-  var data3 = ["Player name", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG", "TOV"];
+  var data3 = ["Player name", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"]; //ADD TOV
   renderPara2(data3);
   var data = [],
       id = x
   d3.select("#example").selectAll("svg").remove();
 
-d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, function(error, raw){
+d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(error, raw){
   var i = 0;
   for(i = 0; i < raw.length; i += 1){
     data[i] = [raw[i].PLAYER_NAME,
@@ -19,9 +19,8 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, fun
                 raw[i].PTS/ raw[i].GP,
                 raw[i].AST/ raw[i].GP,
                 raw[i].REB/ raw[i].GP,
-                raw[i].STL/ raw[i].GP,
-                raw[i].BLK/ raw[i].GP,
-                raw[i].TOV/ raw[i].GP].map(function(d){
+                raw[i].STL/ raw[i].GP, //ADD TOV
+                raw[i].BLK/ raw[i].GP].map(function(d){
                                             if(!isNaN(d)){ 
                                               return parseFloat(d).toFixed(2);
                                             }
@@ -42,7 +41,7 @@ function render() {
  
   .createAxes();
 
-  pc.ctx.foreground.lineWidth = 1.5;
+  pc.ctx.foreground.lineWidth = 2;
   pc.ctx.foreground.globalCompositeOperation = "darken";
 
   pc
@@ -66,34 +65,34 @@ function render() {
 
 
 
-var grid = d3.divgrid(data3);
-var data2 = [];
+// var grid = d3.divgrid(data3);
+// var data2 = [];
 
-d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, function(error, raw){
+// d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, function(error, raw){
   
 
-  var i = 0;
-  for(i = 0; i < raw.length; i += 1){
-    data2[i] = [raw[i].PLAYER_NAME, raw[i].MIN / raw[i].GP, raw[i].FG_PCT, raw[i].FG3_PCT, raw[i].FT_PCT, raw[i].PTS/ raw[i].GP, raw[i].AST/ raw[i].GP, raw[i].REB/ raw[i].GP, raw[i].STL/ raw[i].GP, raw[i].BLK/ raw[i].GP, raw[i].TOV/ raw[i].GP].map(function(d){if(!isNaN(d)){ return parseFloat(d).toFixed(2);}else{return d;}})
-  }
-  d3.select('#grid')
-    .datum(data2)
-    .call(grid)
-    .selectAll(".row")
-    .on({
-      "mouseover": function(d) { pc.highlight([d]) },
-      "mouseout": pc.unhighlight
-    });
+//   var i = 0;
+//   for(i = 0; i < raw.length; i += 1){
+//     data2[i] = [raw[i].PLAYER_NAME, raw[i].MIN / raw[i].GP, raw[i].FG_PCT, raw[i].FG3_PCT, raw[i].FT_PCT, raw[i].PTS/ raw[i].GP, raw[i].AST/ raw[i].GP, raw[i].REB/ raw[i].GP, raw[i].STL/ raw[i].GP, raw[i].BLK/ raw[i].GP, raw[i].TOV/ raw[i].GP].map(function(d){if(!isNaN(d)){ return parseFloat(d).toFixed(2);}else{return d;}})
+//   }
+//   d3.select('#grid')
+//     .datum(data2)
+//     .call(grid)
+//     .selectAll(".row")
+//     .on({
+//       "mouseover": function(d) { pc.highlight([d]) },
+//       "mouseout": pc.unhighlight
+//     });
 
-    pc.on("brush", function(d) {
-    d3.select("#grid")
-      .datum(d)
-      .call(grid)
-      .selectAll(".row")
-      .on({
-        "mouseover": function(d) { pc.highlight([d]) },
-        "mouseout": pc.unhighlight
-      });
-   });   
-});
+//     pc.on("brush", function(d) {
+//     d3.select("#grid")
+//       .datum(d)
+//       .call(grid)
+//       .selectAll(".row")
+//       .on({
+//         "mouseover": function(d) { pc.highlight([d]) },
+//         "mouseout": pc.unhighlight
+//       });
+//    });   
+// });
 }

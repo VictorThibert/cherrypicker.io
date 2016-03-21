@@ -1,6 +1,7 @@
 .parcoords > svg, .parcoords > canvas { 
   font: 14px sans-serif;
   position: absolute;
+
 }
 .parcoords > canvas {
   pointer-events: none;
@@ -14,18 +15,18 @@
   fill: transparent;
 }
 .parcoords rect.background:hover {
-  fill: rgba(120,120,120,0.2);
+ fill: rgba(0,0,0, 0.1);
 }
 .parcoords .resize rect {
-  fill: rgba(0,0,0,0.1);
+  fill: rgba(0,0,0, 0);
 }
 .parcoords rect.extent {
-  fill: rgba(255,255,255,0.25);
-  stroke: rgba(0,0,0,0.6);
+  fill: rgba(0,0,0, 1);
+  stroke: rgba(0,0,0,0.0);
 }
 .parcoords .axis line, .parcoords .axis path {
   fill: none;
-  stroke: #222;
+  stroke: #AAA;
   shape-rendering: crispEdges;
 }
 .parcoords canvas {

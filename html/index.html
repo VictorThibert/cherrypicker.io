@@ -14,13 +14,15 @@
 		
 		<script src="../scripts/calendar.js"></script>
 		
-<!-- 		<script src="../scripts/sankey.js"></script>
-		<script src = "../scripts/sankey-chart.js"></script>
-		
 		<script src="../scripts/parallelcoordinates.js"></script>
 		<script src="../scripts/d3.parcoords.js"></script>
 		<script src="../scripts/sylvester.js"></script>
 		<script src="../scripts/divgrid.js"></script>
+		
+<!-- 		<script src="../scripts/sankey.js"></script>
+		<script src = "../scripts/sankey-chart.js"></script>
+		
+		
 		
 		<script src="../scripts/box.js"></script>
 		<script src="../scripts/boxplot.js"></script>
@@ -55,7 +57,7 @@
 			<style>
 
 			.hexagon {
-	  opacity:  0.1;
+	  opacity:  0.2;
 				shape-rendering: optimizeSpeed;
 			
 			}
@@ -167,18 +169,25 @@
 			<div id= "row1">
 				
 				<div class= "container-card" id = "sub-container-shot">
-				
-				<div class= "container-card" id = "sub-container-shot1"></div>
-				<div class= "container-card" id = "sub-container-shot2"></div>
-				<div class= "container-card" id = "sub-container-shot3"></div>
-				
+				<div id = "sub-container-percentage"></div>
+					
+				<div id = "sub-container-sliders">
+					<div id = "sub-container-shot1"></div>
+					<div id = "sub-container-shot2"></div>
+					<div id = "sub-container-shot3"></div>
+				</div>
+				<div id = "sub-container-labels">
+					<div id = "sub-container-label1">PERCENTAGE</div>
+					<div id = "sub-container-label2">VOLUME</div>
+					<div id = "sub-container-label3">DISTANCE</div>
+				</div>
 				</div>
 				
 				
 				<div class= "container-card" id = "roster">
-					<h1 id="rosterText">
+<!-- 					<h1 id="rosterText">
 						ROSTER
-					</h1>
+					</h1> -->
 					
 <!-- 					 -->
 						<table id = "rosterTable">
@@ -289,24 +298,38 @@
 							
 						</tr>
 					</table>
+										<div id = "calendar">
+						<h1 id="rosterText">
+					</h1>
+						<div class = "month" id = "m10">
+						</div>
+						<div class = "month" id = "m11">
+						</div>
+						<div class = "month" id = "m0">
+						</div>
+						<div class = "month" id = "m1">
+						</div>
+						<div class = "month" id = "m2">
+						</div>
+						<div class = "month" id = "m3">
+						</div>
+				</div>
 				</div>
 			</div>
 			
 			<div id = "row2">
-				<div class="container-card" id = "test">
-					
-					<div id = "calendar">
-						<div class = "month" id = "m10"></div>
-						<div class = "month" id = "m11"></div>
-						<div class = "month" id = "m0"></div>
-						<div class = "month" id = "m1"></div>
-						<div class = "month" id = "m2"></div>
-						<div class = "month" id = "m3"></div>
+				
+				<div class ="container-card">
+					<div class="parcoords" id = "example" style="width:1100px;height:320px;">
+						
 				</div>
+				
+					
+				
 					
 				</div>
 			</div>
-			
+		
 			
 			
 		</div>
@@ -315,12 +338,23 @@
 		
 		<script>
 			
+			window.alert("Website under construction! Things may be a little breaky at the moment! ")
+			if(window.location.href== "http://cherrypicker.io/"){
+				window.location.replace("http://cherrypicker.io/#37y2015p2594+201143");
+			}
+			
+			
 			//GLOBAL FIX THIS						
 			var selectedPlayers = []; 
+			var count;
+			
+	
 
 			//PAGE LOAD FUNCTION
 			document.body.onload = function() {
 				selectedPlayers = [];
+				count = 0; //FOR SHOTCHART
+				renderPara(1610612737); //1610612737 HAWKS
 				hashChange(true, true);	
 			}
 				
@@ -363,7 +397,12 @@
 					changeTeamLogo(currentTeamID);
 					changeURL('#' + location.hash.slice(1,8) + "p" + selectedPlayers.join("+")); 
 				}
+		
+	
+					localshotchart(count);
+					count += 1;
 				
+					
 			
 				
 				
@@ -372,6 +411,9 @@
 			
 			//ON READY
 			$(document).ready(function(){
+				
+				//SHOTCHART
+				
 				
 				//SELECT2 BOXES
 				var $teamSelect = $('#teamBox').select2(); //CREATE BOXES
@@ -427,7 +469,7 @@
    			});
 				
 		
-
+				renderCalendar("9", 2014, 2015);
 				renderCalendar("10", 2014, 2015);
 				renderCalendar("11", 2014, 2015);
 				renderCalendar("0", 2015, 2016);
@@ -460,7 +502,7 @@
 				}
 		}
 			
-		localshotchart(selectedPlayers);
+		
 			
 		</script>
 	</body>

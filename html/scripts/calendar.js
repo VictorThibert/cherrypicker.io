@@ -1,5 +1,3 @@
-
-
 function renderCalendar(container, year1, year2){
 //   console.log(container, year1, year2)
 

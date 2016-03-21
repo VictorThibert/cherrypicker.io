@@ -1,4 +1,4 @@
-function localshotchart(playerArray){
+function localshotchart(count){
 
 			var jsonLeague = []; //FOR LEAGUE AVERAGES
 			var leagueShotArray = [];
@@ -16,25 +16,30 @@ function localshotchart(playerArray){
 
 			function reassignLeague(response) {
 			    jsonLeague = JSON.parse(response); 
+			
 			    for (var i = 0; i < jsonLeague.length; i+=1) {
-					leagueShotArray.push([parseInt(jsonLeague[i].LOC_X) + 250, parseInt(jsonLeague[i].LOC_Y) + 50,  jsonLeague[i].PERCENTAGE ] );	
-				} 
+						leagueShotArray.push([parseInt(jsonLeague[i].LOC_X) + 250, parseInt(jsonLeague[i].LOC_Y) + 50,  jsonLeague[i].PERCENTAGE ] );
+					} 
+				
 			}
 
+	
+	
+	
 
 			//SECTION FOR A GIVEN PLAYER(S)
 			var jsonPlayer = [];
 			var playerShotArray = [];
 			var xmlPlayerRequest = new XMLHttpRequest();
-			var playerURL = 201143;
-			var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + playerURL; //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
+			var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
+	
 			xmlPlayerRequest.onreadystatechange=function() {
 			    if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
+		
 			        reassignPlayer(xmlPlayerRequest.responseText);
 			    }}
 			xmlPlayerRequest.open("GET", urlPlayer, true);
 			xmlPlayerRequest.send();
-
 		
 			var hpoints;
 			var unSmoothedHexpoints;
@@ -48,36 +53,42 @@ function localshotchart(playerArray){
 				hpoints = hexbin(playerShotArray);
 				unSmoothedHexpoints = hexbin(playerShotArray);
 
-				for(var x in hpoints){ //For each point in the array
-// 					console.log(hpoints[x])//~0-427 bins in hpoints
-					var tempTotalShot = hpoints[x].totalShot;
-					var tempTotalMade = hpoints[x].totalMade;
-					hpoints[x].totalShot = 0.000001;
-					hpoints[x].totalMade = 0;
+// 				for(var x in hpoints){ //For each point in the array
+// // 					console.log(hpoints[x])//~0-427 bins in hpoints
+// // 					var tempTotalShot = hpoints[x].totalShot;
+// // 					var tempTotalMade = hpoints[x].totalMade;
+	
+					
+					
+// 					//SMOOTH EVERYTHING HERE
+// 					//HERE IS WHERE THE SMOOTHING HAPPENS
+// // 					hpoints[x].totalShot = 0.000001;
+// // 					hpoints[x].totalMade = 0;
 
-					for(var y in hpoints){
-						if(hpoints[x].i == hpoints[y].i && hpoints[x].j == hpoints[y].j){
-							hpoints[x].totalMade += tempTotalMade * 0.6; 
-							hpoints[x].totalShot += tempTotalShot * 0.6;
-						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4 ){ //30% radius
-							hpoints[x].totalMade += hpoints[y].totalMade * 0.3;
-							hpoints[x].totalShot += hpoints[y].totalShot * 0.3;
-						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 6){ //10% radius
-							hpoints[x].totalMade += hpoints[y].totalMade * 0.1;
-							hpoints[x].totalShot += hpoints[y].totalShot * 0.1;
-						}
-					}
-				}
+// // 					for(var y in hpoints){
+// // 						if(hpoints[x].i == hpoints[y].i && hpoints[x].j == hpoints[y].j){
+// // 							hpoints[x].totalMade += tempTotalMade * 0.6; 
+// // 							hpoints[x].totalShot += tempTotalShot * 0.6;
+// // 						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4 ){ //30% radius
+// // 							hpoints[x].totalMade += hpoints[y].totalMade * 0.3;
+// // 							hpoints[x].totalShot += hpoints[y].totalShot * 0.3;
+// // 						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 6){ //10% radius
+// // 							hpoints[x].totalMade += hpoints[y].totalMade * 0.1;
+// // 							hpoints[x].totalShot += hpoints[y].totalShot * 0.1;
+// // 						}
+// // 					}
+// 				}
 
 				
-				setTimeout(render, 20);
+					d3.selectAll(".shotChartCanvas").remove();
+					render();
 
 			}
 
 
 				var customRadius = 5;
 
-				var margin = {top: 0, right: 10, bottom: 10, left: 10}, //MARGIN
+				var margin = {top: -15, right: 20, bottom: 45, left: 20}, //MARGIN
 				    width = 550 - margin.left - margin.right,
 				    height = 350 - margin.top - margin.bottom; 
 
@@ -86,16 +97,28 @@ function localshotchart(playerArray){
 				    .size([width, height])
 				    .radius(customRadius);	
 
-//SLIDER STUFF
-			{
+
+	
+	//SLIDER CONTENT
+	
+		
 				var lastPosition = [[0, 0],[0,0]];
 				var brushConditions = [1, lastPosition, 0];
 
 				var bottomPCT = 0;
 				var topPCT = 1;
+	
+				
 
 
 				var slider = document.getElementById("sub-container-shot1");
+	
+				if(count !== 0){ //ALL RELOADS AFTER FIRST
+					slider.noUiSlider.destroy();
+				}
+	
+	
+					//PERCENTAGE
 
 					noUiSlider.create(slider, {
 						start: [0.0, 1.0],
@@ -106,7 +129,7 @@ function localshotchart(playerArray){
 							'max': 1
 						}
 					});
-
+	
 				slider.noUiSlider.on('slide', function(){
 					var sliderCoordinates = slider.noUiSlider.get();
 					bottomPCT = sliderCoordinates[0];
@@ -114,16 +137,31 @@ function localshotchart(playerArray){
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
 				})
+				
+				
 
 
 				//SHOT ATTEMPT SLIDER  //MAKE LOGARITHMIC IF NECESSARY
 				var sliderShotAttempts =  document.getElementById("sub-container-shot2");
+	
+				if(count !== 0){
+					sliderShotAttempts.noUiSlider.destroy();
+				}
 					noUiSlider.create(sliderShotAttempts, {
-							start: [0.0, 10000.0],
-							step: 2,
+							start: [0.0, 10000],
+							snap: true,
 							connect: true,
 							range: {
 								'min': 0,
+								'10%': 1,
+								'20%': 2,
+								'30%': 4,
+								'40%': 6,
+								'50%': 10,
+								'60%': 20,
+								'70%': 30,
+								'80%': 50,
+								'90%': 200,
 								'max': 10000
 							}
 						});
@@ -135,15 +173,19 @@ function localshotchart(playerArray){
 					var sliderCoordinates2 = sliderShotAttempts.noUiSlider.get();
 					bottomAttempts = sliderCoordinates2[0];
 					topAttempts = sliderCoordinates2[1];
-					if (topAttempts == 20){topAttempts = 100;};
+		
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
 				})
 
 				//SHOT DISTANCE SLIDER
 				var sliderShotDistance =  document.getElementById("sub-container-shot3");
+	
+				if(count !== 0){
+					sliderShotDistance.noUiSlider.destroy();
+				} //NOT TO INITIALIZE OVER
 					noUiSlider.create(sliderShotDistance, {
-							start: [0.0, 20.0],
+							start: [0.0, 25.0],
 							step: 1,
 							behaviour: "drag-tap",
 
@@ -165,7 +207,8 @@ function localshotchart(playerArray){
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
 				})
-			}
+			
+			
 
 
 				
@@ -173,6 +216,7 @@ function localshotchart(playerArray){
 
 
 			function render(){
+	
 
 				d3.selection.prototype.moveToFront = function() {
 				  return this.each(function(){
@@ -197,7 +241,7 @@ function localshotchart(playerArray){
 
 				var colorScale = d3.scale.linear() //Create color scale for the hexons
 				    .domain([-0.4, 0, 0.4]) //Range for +- above average
-				    .range(["#2eb4a6", "#eeeaea", "#f76b6b"]); 
+				    .range(["#2eb4a6", "#eeeaea", "#f58b8b"]); 
 
 				var x = d3.scale.identity() 
 				    .domain([0, width]); 
@@ -261,23 +305,27 @@ function localshotchart(playerArray){
 				    .attr("d", function(d) {  //Draws the path
 				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
-				    		return hexbin.hexagon(radiusScale(d.length), 0)["dpoints"];
+				    		return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
 				    	} else {
-				    	    return hexbin.hexagon(0,0)["dpoints"]; //RETURN NOTHING
-				    	    };})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
+				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+				    	    }
+						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-				    .style("fill", function(d) {return colorScale(d.totalMade/d.totalShot- leagueShotArray[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]); })
+				    .style("fill", function(d) {
+						
+							return colorScale(d.totalMade/d.totalShot- leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
+						})
 				  
 // 					.on("mouseover", function(d) { //REMOVE
 
 // 				       d3.select(this)
 //          				 .style("fill", "orange");
 // 				    })
-// 					.on("mouseout", function(d) {
+// 				    .on("mouseout", function(d) {
 // 				    	d3.select(this)
 //          				 .style("fill", function(d){ 
 //          				 	return colorScale(d.totalMade/d.totalShot- leagueShotArray[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) 
-// 							})
+//          				})
 
 				brushCanvas.moveToFront();
 				
@@ -306,17 +354,7 @@ function localshotchart(playerArray){
 
 				
 
-			 	d3.selectAll(".pBox").remove();
-
-				
-				//PERCENTAGE BOX
-			 	var brushInfo = d3.select('body')
-                    .append('p')
-                    .attr("class", "pBox")
-                    .html('<b>Selected s  %:</b> ' + selectedPercentage);
-
-               
-	
+			
 			    
 
 			    function brushMove() {
@@ -352,7 +390,7 @@ function localshotchart(playerArray){
 					selectedPercentage = selectedMade/selectedTotal;
 					brushConditions[2] = selectedPercentage;
 
-					brushInfo.html('<b>Selectedk %:</b> ' + selectedPercentage);
+					$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
 
 			    }
 
