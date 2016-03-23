@@ -5,26 +5,28 @@ function renderCalendar(container, year1, year2){
   var firstDay = new Date(year1, parseInt(container), 1);
   var weekOfLastDay = d3.time.weekOfYear(lastDay) - d3.time.weekOfYear(firstDay);
 
-  var width = 110;
+  var width = 110; //width
+  var height = 136;
+  var cellSize = 15; // cell size
+  var baselineWidth = 60;
+
 
   switch(weekOfLastDay){
     case 3:
-      width = 70;
+      width = baselineWidth;
       break;
     case 4:
-      width = 87;
+      width = baselineWidth + cellSize;
       break;
     case 5:
-      width = 104;
+      width = baselineWidth + 2 * cellSize;
       break;
   }
 
   var monthDiv = "#m" + container;
 
 
-  var height = 136,
-      cellSize = 17; // cell size
-
+  
   var percent = d3.format(".1%"),
       format = d3.time.format("%Y-%m-%d");
 
@@ -59,6 +61,19 @@ function renderCalendar(container, year1, year2){
       .attr("height", cellSize - 2)
       .attr("x", function(d) { return ((d3.time.weekOfYear(d) - d3.time.weekOfYear(d3.time.day(new Date(year1, parseInt(container), 1))) + 52) % 52 * cellSize); }) // week shift
       .attr("y", function(d) { return d.getDay() * cellSize + 1.5; })
+      .on("mouseover", function(d) {		
+            div.transition()		
+                .duration(200)		
+                .style("opacity", .9);		
+            div	.html("ANYTHING"+ "<br/>"  + d.close)	
+                .style("left", (d3.event.pageX) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");	
+            })					
+        .on("mouseout", function(d) {		
+            div.transition()		
+                .duration(500)		
+                .style("opacity", 0);	
+        })
       .datum(format);
 
       var temp = [];
@@ -92,7 +107,12 @@ function renderCalendar(container, year1, year2){
       .attr("height", cellSize - 2)
       .attr("x", function(d) { return ((d3.time.weekOfYear(d) - d3.time.weekOfYear(d3.time.day(new Date(year1, parseInt(container), 1))) + 52) % 52 * cellSize); }) //1.2 spacing
       .attr("y", function(d) { return d.getDay() * cellSize + 1.5; })
+      
       .datum(format);
+  
+  var div = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
 
 
 

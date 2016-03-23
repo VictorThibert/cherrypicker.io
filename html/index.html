@@ -2,8 +2,6 @@
 <html>
 	<head>
 		
-		
-
 		<meta charset="UTF-8">
 		<meta HTTP-EQUIV="X-UA-COMPATIBLE" CONTENT="IE=EmulateIE9" >
 		
@@ -13,6 +11,7 @@
 		<script src="../scripts/libs/d3/d3.v3.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="../scripts/jquery.js"></script>
+		
 		<script src="../scripts/roster.js"></script> 
 <!-- 		 keep roster.js high up for asyn loading of json-->
 		
@@ -41,10 +40,7 @@
 		<script src = "../scripts/hexbin.js"></script>
 		<script src = "../scripts/shotchart.js"></script>
 		
-		
-	
-		
-		
+
 		<script src="../scripts/libs/select2/select2.js"></script>
 		<script src="../scripts/libs/select2/select3.js"></script>
     <script src="../scripts/autocomplete.js"></script>
@@ -81,9 +77,6 @@
 
 			 .month {display: inline-block;}
 
-
-
-
 				.day {
 					fill: #FFF;
 				}
@@ -91,6 +84,21 @@
 				.fillerday {
 					fill: #FFF;
 				}
+				
+				
+				div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 60px;					
+    height: 28px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+} 
+/* 				 REMOVE THIS */
 
 		</style>
 
@@ -304,8 +312,7 @@
 						</tr>
 					</table>
 										<div id = "calendar">
-						<h1 id="rosterText">
-					</h1>
+				
 						<div class = "month" id = "m10">
 						</div>
 						<div class = "month" id = "m11">
@@ -343,7 +350,7 @@
 		
 		<script>
 			
-			window.alert("Website under construction! Things may be a little breaky at the moment! ")
+// 			window.alert("Website under construction! Things may be a little breaky at the moment! ")
 			if(window.location.href== "http://cherrypicker.io/"){
 				window.location.replace("http://cherrypicker.io/#37y2015p2594+201143");
 			}
