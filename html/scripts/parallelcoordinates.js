@@ -31,8 +31,8 @@ var pc;
 
 function render() {
 
-  var color = d3.scale.linear().domain([0,40])
-    .range(["red", "blue"])
+  var color = d3.scale.linear().domain([10,20])
+    .range(["#2eb4a6", "blue"])
 
   pc = d3.parcoords()("#example")
   
@@ -45,11 +45,11 @@ function render() {
   pc.ctx.foreground.globalCompositeOperation = "darken";
 
   pc
-    .smoothness(0.1)
+    .smoothness(0.0) //REIMPLEMENT CURVATURE
     .alpha(0.3)
     .composite("darken")
     .rate(60)
-    .margin({ top: 24, left: 20, bottom: 12, right: 0 })
+    .margin({ top: 24, left: 60, bottom: 12, right: 0 })
     .autoscale()
     .color(function(d) {return color(d[1]);})
     .render()

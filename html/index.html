@@ -89,13 +89,13 @@
 				div.tooltip {	
 					position: absolute;			
 					text-align: center;			
-					width: 60px;					
+					width: 65px;					
 					height: 28px;					
-					padding: 2px;				
+					padding: 6px;				
 					font: 12px sans-serif;		
-					background: lightsteelblue;	
+					background: grey;	
 					border: 0px;		
-					border-radius: 5px;			
+					border-radius: 3px;			
 					pointer-events: none;			
 			} 
 
@@ -198,11 +198,11 @@
 				
 				
 				<div class= "container-card" id = "roster">
-<!-- 					<h1 id="rosterText">
+					<h1 id="rosterText">
 						ROSTER
-					</h1> -->
+					</h1>
 					
-<!-- 					 -->
+	
 						<table id = "rosterTable">
 						<tr>
 							<td>PG</td>
@@ -311,20 +311,23 @@
 							
 						</tr>
 					</table>
-										<div id = "calendar">
-				
-						<div class = "month" id = "m10">
-						</div>
-						<div class = "month" id = "m11">
-						</div>
-						<div class = "month" id = "m0">
-						</div>
-						<div class = "month" id = "m1">
-						</div>
-						<div class = "month" id = "m2">
-						</div>
-						<div class = "month" id = "m3">
-						</div>
+						<div id = "calendar" width="500px">
+											
+							<div class = "month" id = "m9">
+							</div>
+
+							<div class = "month" id = "m10">
+							</div>
+							<div class = "month" id = "m11">
+							</div>
+							<div class = "month" id = "m0">
+							</div>
+							<div class = "month" id = "m1">
+							</div>
+							<div class = "month" id = "m2">
+							</div>
+							<div class = "month" id = "m3">
+							</div>
 				</div>
 				</div>
 			</div>
@@ -366,7 +369,8 @@
 			document.body.onload = function() {
 				selectedPlayers = [];
 				count = 0; //FOR SHOTCHART
-				renderPara(1610612737); //1610612737 HAWKS
+				
+				//1610612737 HAWKS
 				hashChange(true, true);	
 			}
 				
@@ -396,13 +400,30 @@
 					$("#yearBox").select3("val", currentYear);
 					changeTeamName();
 					changeTeamLogo(currentTeamID);
+					// 					renderCalendar("9", 2014, 2015, 1610612700 + parseInt(currentTeamID)); //ADD SHORTENED OCTOBER LATER
+					renderCalendar("10", 2014, 2015, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("11", 2014, 2015, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("0", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("1", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("2", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("3", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					renderPara(1610612700 + parseInt(currentTeamID)); 
 				}
 
 	//REMEMBER/ DONT UPDATE TEAM IF CALLED FROM PLAYER CHANGE i.e. YEAR or TEAM CHANGE
 					//NEW TEAM
 				if(!isPlayerChange){
+
 					changeURL('#' + location.hash.slice(1,3) + "y" + location.hash.slice(4,8) + "p")
 					loadRoster(currentTeamID, currentYear, true);
+					// 					renderCalendar("9", 2014, 2015, 1610612700 + parseInt(currentTeamID)); ADD SHORTENED OCTOBER LATER
+					renderCalendar("10", 2014, 2015, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("11", 2014, 2015, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("0", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("1", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("2", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					renderCalendar("3", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					renderPara(1610612700 + parseInt(currentTeamID)); 
 					$("#teamBox").select2("val", currentTeamID);
 					$("#yearBox").select3("val", currentYear);
 					changeTeamName();
@@ -481,13 +502,7 @@
    			});
 				
 		
-				renderCalendar("9", 2014, 2015);
-				renderCalendar("10", 2014, 2015);
-				renderCalendar("11", 2014, 2015);
-				renderCalendar("0", 2015, 2016);
-				renderCalendar("1", 2015, 2016);
-				renderCalendar("2", 2015, 2016);
-				renderCalendar("3", 2015, 2016);
+				
 		
 
 				

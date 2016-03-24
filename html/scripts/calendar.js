@@ -1,5 +1,5 @@
-function renderCalendar(container, year1, year2){
-//   console.log(container, year1, year2)
+function renderCalendar(container, year1, year2, teamID){
+
 
   var lastDay = new Date(year1, parseInt(container) + 1, 0);
   var firstDay = new Date(year1, parseInt(container), 1);
@@ -8,7 +8,7 @@ function renderCalendar(container, year1, year2){
   var width = 110; //width
   var height = 136;
   var cellSize = 15; // cell size
-  var baselineWidth = 60;
+  var baselineWidth = 59;
 
 
   switch(weekOfLastDay){
@@ -24,6 +24,7 @@ function renderCalendar(container, year1, year2){
   }
 
   var monthDiv = "#m" + container;
+   d3.select(monthDiv).select("svg").remove();
 
 
   
@@ -45,36 +46,11 @@ function renderCalendar(container, year1, year2){
       .attr("transform", "translate(" + 0 + "," + (height - cellSize * 7 - 1) + ")");
 
 
-
   svg.append("text")
       .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
       .style("text-anchor", "middle")
       .text(function(d) { return d; });
-
-
-  var rect = svg.selectAll(".day")
-      .data(function(d) { 
-        return d3.time.days(new Date(d, parseInt(container), 1), new Date(d, parseInt(container) + 1, 1)); }) //notice 1 less
-    .enter().append("rect")
-      .attr("class", "day")
-      .attr("width", cellSize - 2)
-      .attr("height", cellSize - 2)
-      .attr("x", function(d) { return ((d3.time.weekOfYear(d) - d3.time.weekOfYear(d3.time.day(new Date(year1, parseInt(container), 1))) + 52) % 52 * cellSize); }) // week shift
-      .attr("y", function(d) { return d.getDay() * cellSize + 1.5; })
-      .on("mouseover", function(d) {		
-            div.transition()		
-                .duration(200)		
-                .style("opacity", .9);		
-            div	.html("ANYTHING"+ "<br/>"  + d.close)	
-                .style("left", (d3.event.pageX) + "px")		
-                .style("top", (d3.event.pageY - 28) + "px");	
-            })					
-        .on("mouseout", function(d) {		
-            div.transition()		
-                .duration(500)		
-                .style("opacity", 0);	
-        })
-      .datum(format);
+ 
 
       var temp = [];
 
@@ -87,6 +63,7 @@ function renderCalendar(container, year1, year2){
     var daysOfMonth = d3.time.days(new Date(year, month, 1), new Date(year, month + 1, 1));
 
     var first = daysOfMonth[0];
+   
     var last = daysOfMonth[daysOfMonth.length - 1];
 
     for (var i = 0; i < first.getDay(); i += 1){
@@ -99,16 +76,16 @@ function renderCalendar(container, year1, year2){
       count += 1;
     }
   }
-  var fillerrect = svg.selectAll(".fillerday")
-      .data(temp)
-    .enter().append("rect")
-      .attr("class", "fillerday")
-      .attr("width", cellSize - 2)
-      .attr("height", cellSize - 2)
-      .attr("x", function(d) { return ((d3.time.weekOfYear(d) - d3.time.weekOfYear(d3.time.day(new Date(year1, parseInt(container), 1))) + 52) % 52 * cellSize); }) //1.2 spacing
-      .attr("y", function(d) { return d.getDay() * cellSize + 1.5; })
+//   var fillerrect = svg.selectAll(".fillerday")
+//       .data(temp)
+//     .enter().append("rect")
+//       .attr("class", "fillerday")
+//       .attr("width", cellSize - 2)
+//       .attr("height", cellSize - 2)
+//       .attr("x", function(d) { return ((d3.time.weekOfYear(d) - d3.time.weekOfYear(d3.time.day(new Date(year1, parseInt(container), 1))) + 52) % 52 * cellSize); }) //1.2 spacing
+//       .attr("y", function(d) { return d.getDay() * cellSize + 1.5; })
       
-      .datum(format);
+//       .datum(format);
   
   var div = d3.select("body").append("div")	
     .attr("class", "tooltip")				
@@ -116,14 +93,16 @@ function renderCalendar(container, year1, year2){
 
 
 
-
-  rect.append("title")
-      .text(function(d) { return d; });
+// TITLE
+//   rect.append("title")
+//       .text(function(d) { return d; });
 
   var plusminus = 0;
   var count = 0;
+  var teamURL = teamID;
 
-  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw){
+  
+  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=" + teamURL, function(error, raw){
     if (error){
       throw error;
     }
@@ -162,7 +141,36 @@ function renderCalendar(container, year1, year2){
         .map(raw);
 
 
-      var data3 = merge_options(data2, data);
+      var data3 = [];
+          data3=merge_options(data2, data);
+
+      
+    
+    
+      //ADDING THE INDIVIDUAL DAY SQUARES
+       var rect = svg.selectAll(".day")
+      .data(function(d) { 
+        return d3.time.days(new Date(d, parseInt(container), 1), new Date(d, parseInt(container) + 1, 1)); }) //notice 1 less
+    .enter().append("rect")
+      .attr("class", "day")
+      .attr("width", cellSize - 2)
+      .attr("height", cellSize - 2)
+      .attr("x", function(d) { return ((d3.time.weekOfYear(d) - d3.time.weekOfYear(d3.time.day(new Date(year1, parseInt(container), 1))) + 52) % 52 * cellSize); }) // week shift
+      .attr("y", function(d) { return d.getDay() * cellSize + 1.5; })
+      .on("mouseover", function(d) {		
+            div.transition()		
+                .duration(200)		
+                .style("opacity", .7);		
+            div	.html(d + "</br>" + data3[d])	//TEXT IN BOX HERE
+                .style("left", (d3.event.pageX) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");	
+            })					
+        .on("mouseout", function(d) {		
+            div.transition()		
+                .duration(400)		
+                .style("opacity", 0);	
+        })
+      .datum(format);
 
       var corresponding = [0];
 
