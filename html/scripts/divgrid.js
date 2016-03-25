@@ -20,7 +20,7 @@ d3.divgrid = function(config) {
       .data(columns);
 
     header.enter().append("div")
-      .attr("class", function(d,i) { return i; })
+      .attr("class", function(d,i) { if(i == 0){return "col-0"} else {return i}; }) //HERE TO CHANGE WIDTH OF HEADERS
       .classed("cell", true)
 
 
