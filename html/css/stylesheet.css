@@ -318,9 +318,9 @@ width: 1100px}
 	font-family: Asap, sans-serif;
 }
 .row, .header, .cell { height: 20px;  }
-.row, .header { clear: left; }
+.row, .header { clear: left; width: 1000px;}
 .header { font-weight: bold;}
-.cell { float: left; overflow: hidden; white-space: nowrap; width: 100px; color: #666 }
+.cell { float: left; overflow: hidden; white-space: nowrap; width: 90px; color: #666 }
 .col-0 { width: 140px; }
 .trad {display: inline-block;}
 

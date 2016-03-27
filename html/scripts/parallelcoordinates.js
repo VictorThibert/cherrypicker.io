@@ -82,8 +82,14 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(er
     .call(grid)
     .selectAll(".row")
     .on({
-      "mouseover": function(d) { pc.highlight([d]) },
-      "mouseout": pc.unhighlight
+      "mouseover": function(d) { 
+        this.style.backgroundColor = "#EEE";
+        pc.highlight([d]); 
+      },
+      "mouseout": function(d) { 
+        pc.unhighlight;
+        this.style.backgroundColor = null;
+      }
     });
 
     pc.on("brush", function(d) {

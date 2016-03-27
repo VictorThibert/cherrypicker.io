@@ -4,7 +4,7 @@ d3.divgrid = function(config) {
   var ascending = [];
 
   var dg = function(selection) {
-    if (columns.length == 0) {
+    if (columns.length === 0) {
       columns = d3.keys(selection.data()[0][0]);
       ascending = columns.map(function(i) {return false;});
     }
@@ -20,7 +20,7 @@ d3.divgrid = function(config) {
       .data(columns);
 
     header.enter().append("div")
-      .attr("class", function(d,i) { if(i == 0){return "col-0"} else {return i}; }) //HERE TO CHANGE WIDTH OF HEADERS
+      .attr("class", function(d,i) { if(i === 0){return "col-0"} else {return i} }) //HERE TO CHANGE WIDTH OF HEADERS
       .classed("cell", true)
 
 
