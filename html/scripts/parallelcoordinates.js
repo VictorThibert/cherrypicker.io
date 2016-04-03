@@ -4,7 +4,7 @@ function renderPara(x){
   // window.history.pushState(“object or string”, “Title”, “/atlanta”);
   var data3 = ["Player name", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"]; //ADD TOV
   renderPara2(data3);
-  var data = [],
+  var data = [], 
       id = x
   d3.select("#example").selectAll("svg").remove();
 
