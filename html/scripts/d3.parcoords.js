@@ -569,8 +569,8 @@ pc.createAxes = function() {
         "class": "label"
       })
       .text(function(d){return data3[d];})
-      .on("dblclick", flipAxisAndUpdatePCP)
-      .on("wheel", rotateLabels);
+      .on("dblclick", flipAxisAndUpdatePCP);
+//       .on("wheel", rotateLabels);
 
   flags.axes= true;
   return this;
@@ -603,7 +603,7 @@ pc.updateAxes = function() {
       })
       .text(dimensionLabels)
       .on("dblclick", flipAxisAndUpdatePCP)
-      .on("wheel", rotateLabels);
+//       .on("wheel", rotateLabels);
 
   // Update
   g_data.attr("opacity", 0);
