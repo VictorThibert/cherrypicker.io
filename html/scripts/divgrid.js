@@ -1,5 +1,6 @@
 d3.divgrid = function(config) {
-  var data3 = config;
+  var headers = config;
+  console.log(headers)
   var columns = [];
   var ascending = [];
 
@@ -25,7 +26,7 @@ d3.divgrid = function(config) {
 
 
     selection.selectAll(".header .cell")
-      .text(function(d) {return data3[d]; })
+      .text(function(d) {return headers[d]; })
       .on("click", function(k){resort(k);});
 
     function resort(k){
@@ -68,7 +69,7 @@ d3.divgrid = function(config) {
       cells.exit().remove();
 
     selection.selectAll(".cell")
-      .text(function(d,i) { if( i <= 10) {return data3[d]} else {return d;} }); //
+      .text(function(d,i) { if( i <= 9) {return headers[d]} else {return d;} }); //HARDOCODED 9 / HOW MANY PARAMETERS, PPG, SPG, RPG etc headers
 
     return dg;
   };
