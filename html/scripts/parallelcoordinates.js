@@ -11,6 +11,7 @@ function renderPara(x){
 d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(error, raw){
   var i = 0;
   for(i = 0; i < raw.length; i += 1){
+    console.log(raw[i].MIN );
     data[i] = [raw[i].PLAYER_NAME,
                 raw[i].MIN / raw[i].GP,
                 raw[i].FG_PCT,
