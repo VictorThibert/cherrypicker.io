@@ -4,10 +4,14 @@ import requests
 import mysql.connector
 from mysql.connector import errorcode
 
-year1 = "2014"
-year2 = "15"
+year1 = "2013"
+year2 = "14"
 playerID = "0"
 MeasureType = "Base"
+
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
+
+
 
 shots_url = "http://stats.nba.com/stats/leaguedashplayerstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00" \
             "&Location=&MeasureType=" + MeasureType + "&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience" \
@@ -15,20 +19,20 @@ shots_url = "http://stats.nba.com/stats/leaguedashplayerstats?Conference=&DateFr
             "&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0" \
             "&VsConference=&VsDivision="
 
-print(shots_url)
-response = requests.get("http://stats.nba.com/stats/leaguedashplayerstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2014-15&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&VsConference=&VsDivision=")
+# print(shots_url) #CHANGE NEXT URL hardcoded
+response = requests.get(shots_url, headers=headers)
 response.raise_for_status()
 
 shots = response.json()
 
 try:
-    cnx = mysql.connector.connect(user='all', password='all', host='localhost', database='2014-2015')
+    cnx = mysql.connector.connect(user='all', password='all', host='localhost', database='2013-2014')
     cursor = cnx.cursor()
     for item in shots["resultSets"][0]["rowSet"]:
 
         print(item)
 
-        add_shots = ("INSERT INTO `2014-2015leagueplayerbase` (PLAYER_ID, PLAYER_NAME, TEAM_ID, TEAM_ABBREVIATION, AGE, "
+        add_shots = ("INSERT INTO `2013-2014leagueplayerbase` (PLAYER_ID, PLAYER_NAME, TEAM_ID, TEAM_ABBREVIATION, AGE, "
                      "GP, W, L, W_PCT, MIN, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT, FTM, FTA, FT_PCT, OREB, "
                      "DREB, REB, AST, TOV, STL, BLK, BLKA, PF, PFD, PTS, PLUS_MINUS, DD2, TD3) VALUES "
                      "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s )"
