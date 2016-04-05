@@ -11,7 +11,6 @@ function renderPara(x){
 d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(error, raw){
   var i = 0;
   for(i = 0; i < raw.length; i += 1){
-    console.log(raw[i].MIN );
     data[i] = [raw[i].PLAYER_NAME,
                 raw[i].MIN / raw[i].GP,
                 raw[i].FG_PCT,
@@ -88,9 +87,9 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(er
         pc.highlight([d]); 
       },
       "mouseout": function(d) { 
-        pc.unhighlight;
-        this.style.backgroundColor = null;
-      }
+        pc.unhighlight([d]);
+       this.style.backgroundColor = null;}
+    
     });
 
     pc.on("brush", function(d) {
@@ -99,9 +98,14 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(er
       .call(grid)
       .selectAll(".row")
       .on({
-        "mouseover": function(d) { pc.highlight([d]) },
-        "mouseout": pc.unhighlight
-      });
+        "mouseover": function(d) {
+        this.style.backgroundColor = "#EEE";
+        pc.highlight([d]);  },
+        "mouseout": function(d) { 
+        pc.unhighlight([d]);
+       this.style.backgroundColor = null;}
+    
+    });
    });   
 });
 }
