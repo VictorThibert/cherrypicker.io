@@ -11,12 +11,14 @@ MeasureType = "Base"
 
 shots_url = "http://stats.nba.com/stats/leaguedashplayerstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00" \
             "&Location=&MeasureType=" + MeasureType + "&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience" \
-            "=&PlayerPosition=&PlusMinus=N&Rank=N&Season="+ year1 + "-" + year2 + \
+            "=&PlayerPosition=&Plus"+"Minus=N&Rank=N&Season="+ year1 + "-" + year2 + \
             "&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0" \
             "&VsConference=&VsDivision="
 
-response = requests.get(shots_url)
+print(shots_url)
+response = requests.get("http://stats.nba.com/stats/leaguedashplayerstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2014-15&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&VsConference=&VsDivision=")
 response.raise_for_status()
+
 shots = response.json()
 
 try:
