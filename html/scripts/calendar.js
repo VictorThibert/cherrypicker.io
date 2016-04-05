@@ -87,7 +87,7 @@ function renderCalendar(container, year1, year2, teamID){
       
 //       .datum(format);
   
-  var div = d3.select("body").append("div")	
+  var div = d3.select("#main-container").append("div")	
     .attr("class", "tooltip")				
     .style("opacity", 0);
 
