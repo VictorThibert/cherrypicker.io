@@ -100,14 +100,16 @@ function renderCalendar(container, year1, year2, teamID){
   var plusminus = 0;
   var count = 0;
   var teamURL = teamID;
-
+  
+  
+ 
   
   d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=" + teamURL, function(error, raw){
     if (error){
       throw error;
     }
 
-    if (count == 0){
+    if (count === 0){
       var firstGame = raw[0].GAME_DATE_EST;
       firstGame = new Date(firstGame.slice(0,4), firstGame.slice(4,6) - 1, firstGame.slice(6,8));
       var lastGame = raw[raw.length - 1].GAME_DATE_EST;
@@ -117,13 +119,15 @@ function renderCalendar(container, year1, year2, teamID){
 
 
       function merge_options(obj1,obj2){
-          var obj3 = {};
-          for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
-          for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
-          return obj3;
+          var obj4 = {};
+          for (var attrname in obj1) { obj4[attrname] = obj1[attrname]; }
+          for (var attrname in obj2) { obj4[attrname] = obj2[attrname]; }
+  
+          return obj4;
       }
 
       var data2= {};
+      
 
       for (var i = 0; i < regularSeason.length; i += 1) {
         var x = regularSeason[i];
@@ -136,17 +140,32 @@ function renderCalendar(container, year1, year2, teamID){
       var data = d3.nest()
         .key(function(d) { 
           var e = d.GAME_DATE_EST; 
+          
+//           var gameID = d.GAME_ID;
+//           console.log(gameID);
+          
           return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
         .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].PLUS_MINUS);})
         .map(raw);
+      
+      var dataGameIDs = d3.nest()
+        .key(function(d) { 
+          var e = d.GAME_DATE_EST; 
+          
+//           var gameID = d.GAME_ID;
+//           console.log(gameID);
+          
+          return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
+        .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].GAME_ID);})
+        .map(raw);
 
-
-      var data3 = [];
+//DATA CONTAINS THE DIFFERENTIALS PAIRED WITH THE DATES
+//DATA2 CONTAINS ALL DATES AT 0
+      var data3 = {}; //DATA 3 CONTAINS ALL THE DIFFERENTIALS PAIRED WITH THE DATES
           data3=merge_options(data2, data);
 
       
-    
-    
+
       //ADDING THE INDIVIDUAL DAY SQUARES
        var rect = svg.selectAll(".day")
       .data(function(d) { 
@@ -157,7 +176,7 @@ function renderCalendar(container, year1, year2, teamID){
       .attr("height", cellSize - 2)
       .attr("x", function(d) { return ((d3.time.weekOfYear(d) - d3.time.weekOfYear(d3.time.day(new Date(year1, parseInt(container), 1))) + 52) % 52 * cellSize); }) // week shift
       .attr("y", function(d) { return d.getDay() * cellSize + 1.5; })
-      .on("mouseover", function(d) {		
+      .on("mouseover", function(d) {	
             div.transition()		
                 .duration(200)		
                 .style("opacity", .7);		
@@ -171,13 +190,18 @@ function renderCalendar(container, year1, year2, teamID){
                 .style("opacity", 0);	
         })
       .datum(format);
-
+      
+     console.log(data3); 
+      
       var corresponding = [0];
 
       rect.filter(function(d) { return d in data3; }) //returns the days in the div for that month
         .style("fill", function(d){return color(data3[d]); })
        .select("title")
-        .text(function(d) { return d + ": " + data3[d];}); 
+        .text(function(d) { 
+  
+        return d + ": " + data3[d];
+      }); 
 
         count +=1;
 
