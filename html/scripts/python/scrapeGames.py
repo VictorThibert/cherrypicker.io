@@ -4,7 +4,7 @@ import requests
 import mysql.connector
 from mysql.connector import errorcode
 
-
+# 1231 Being number of games that given year
 for i in range (1, 1231):
   i = "000" + str(i)
   i = i[-4:]
