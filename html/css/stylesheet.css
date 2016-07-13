@@ -15,8 +15,9 @@ p.percentage {
 	
 }
 body{
-/* 	background-image: url(../other/background.png) ; */
-	/*Temporary background*/
+	background-image: url(../other/background.jpeg);
+	/*
+	Temporary background
 	background: rgba(51,189,178,1);
   background: -moz-linear-gradient(top, rgba(51,189,178,1) 0%, rgba(32,153,133,1) 120%);
   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(51,189,178,1)), color-stop(120%, rgba(32,153,133,1)));
@@ -27,6 +28,7 @@ body{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33bdb2', endColorstr='#209985', GradientType=0 );
 	width: 99%;
 	height: 150%;
+	*/
 }
 img{
 	display: inline-block; 
@@ -255,13 +257,6 @@ rect.day:hover{
 	stroke: #92e0da;
 }
 
-
-
-
-
-
-
-
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -314,56 +309,5 @@ rect.day:hover{
 margin-left: 30px;
 width: 1100px}
 
-.cell {
-	font-family: Asap, sans-serif;
-}
-.row, .header, .cell { height: 20px;  }
-.row, .header { clear: left; width: 1000px;}
-.header { font-weight: bold;}
-.cell { float: left; overflow: hidden; white-space: nowrap; width: 90px; color: #666 }
-.col-0 { width: 140px; }
-.trad {display: inline-block;}
-
-  .box {
-    font: 10px sans-serif;
-  }
-  .box line,
-  .box rect,
-  .box circle {
-    fill: white;
-    stroke: #000;
-    stroke-width: 1px;
-  }
-
-  .box .center {
-    stroke-dasharray: 3,3;
-  }
-
-  .box .outlier {
-    fill: none;
-    stroke: #000;
-  }
-
-  .axis {
-    font: 12px sans-serif;
-  }
-   
-  .axis path,
-  .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
-   
-  .x.axis path { 
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
 
 
- .line {                         
-    fill: none;                 
-    stroke: url(#line-gradient);    
-    stroke-width: 2px;          
-}
