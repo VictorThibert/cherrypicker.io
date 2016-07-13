@@ -1,3 +1,5 @@
+/* CSS for main page */
+
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
 @import url(https://fonts.googleapis.com/css?family=Oxygen:400,700);
 @import url(https://fonts.googleapis.com/css?family=Asap);
@@ -14,22 +16,17 @@ p.percentage {
 	font-size: 14px;
 	
 }
+
+
 body{
-	background-image: url(../other/background.jpeg);
-	/*
-	Temporary background
-	background: rgba(51,189,178,1);
-  background: -moz-linear-gradient(top, rgba(51,189,178,1) 0%, rgba(32,153,133,1) 120%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(51,189,178,1)), color-stop(120%, rgba(32,153,133,1)));
-  background: -webkit-linear-gradient(top, rgba(51,189,178,1) 0%, rgba(32,153,133,1) 120%);
-  background: -o-linear-gradient(top, rgba(51,189,178,1) 0%, rgba(32,153,133,1) 120%);
-  background: -ms-linear-gradient(top, rgba(51,189,178,1) 0%, rgba(32,153,133,1) 120%);
-  background: linear-gradient(to bottom, rgba(51,189,178,1) 0%, rgba(32,153,133,1) 120%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33bdb2', endColorstr='#209985', GradientType=0 );
-	width: 99%;
-	height: 150%;
-	*/
+	background-image: url(../other/background.jpg);
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+	
 }
+
 img{
 	display: inline-block; 
 }
@@ -114,7 +111,7 @@ h1{
 }
 
 #main-container{
-	background-color: #f6f6f6;
+	background-color: rgba(245,245,245, 0.7);
 	width: 85%;
 	min-width: 1100px;
 	max-width: 1100px;
@@ -123,7 +120,7 @@ h1{
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 5px;
-	box-shadow: 0px 15px 24px 0px rgba(0,0,0,0.2);
+	box-shadow: 0px 10px 15px 0px rgba(0,0,0,0.1);
 }
 
 #row0{
@@ -283,7 +280,7 @@ rect.day:hover{
   top: 100%;
   left: 0;
 }
-
+/* 
 .node rect {
   cursor: move;
   fill-opacity: .9;
@@ -309,5 +306,5 @@ rect.day:hover{
 margin-left: 30px;
 width: 1100px}
 
-
+ */
 
