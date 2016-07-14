@@ -1,7 +1,6 @@
 /* CSS for parallel coordinates */
 
 .parcoords > svg, .parcoords > canvas { 
-  font: 14px sans-serif;
   position: absolute;
 
 }

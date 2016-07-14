@@ -11,27 +11,18 @@
 		<!-- LIBRARIES-->
 		<script src="../scripts/libs/d3/d3.v3.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="../scripts/jquery.js"></script>
+		<script src="../scripts/libs/jquery.js"></script>
 		<script src="../scripts/libs/select2/select2.js"></script>
 		<script src="../scripts/libs/select2/select3.js"></script>
     <script src="../scripts/autocomplete.js"></script>
+		<script src="../scripts/sylvester.js"></script>
 		
 		<!-- SCRIPTS-->
 		<script src="../scripts/roster.js"></script>  <!--keep roster.js high up for asyn loading of json-->
 		<script src="../scripts/calendar.js"></script>
 		<script src="../scripts/parallelcoordinates.js"></script>
 		<script src="../scripts/d3.parcoords.js"></script>
-		<script src="../scripts/sylvester.js"></script>
 		<script src="../scripts/divgrid.js"></script>
-		<!--
-		<script src="../scripts/sankey.js"></script>
-		<script src = "../scripts/sankey-chart.js"></script>
-		<script src="../scripts/box.js"></script>
-		<script src="../scripts/boxplot.js"></script>
-		<script src="../scripts/index.js"></script>
-		<script src = "../scripts/search.js"></script>
-		<script src = "../scripts/table.js"></script> 
-		-->
 		<script src = "../scripts/nouislider.js"></script>
 		<script src = "../scripts/hexbin.js"></script>
 		<script src = "../scripts/shotchart.js"></script>
@@ -39,68 +30,20 @@
 		<!-- STYLESHEETS-->
 		<link rel="stylesheet" type="text/css" href="../scripts/libs/select2/select2.css">
 		<link rel="stylesheet" type="text/css" href="../scripts/libs/select2/select3.css">
-		<!--<link rel="stylesheet" href="../css/optgroups.css">-->
-		<link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="../css/mainpage.css">
 		<link rel="stylesheet" type="text/css" href="../css/boxplot.css">
 		<link rel="stylesheet" type="text/css" href="../css/table.css">
+		<link rel="stylesheet" type="text/css" href="../css/shotchart.css">
+		<link rel="stylesheet" type="text/css" href="../css/calendar.css">
 		<link rel="stylesheet" type="text/css" href="../css/d3.parcoords.css">
 		<link rel="stylesheet" type="text/css" href="../css/nouislider.css">
-		<style>
-
-			.hexagon {
-	  opacity:  0.2;
-				shape-rendering: optimizeSpeed;
-			
-			}
-			.hexagon.selected:active {
-				color:  #FFF;
-			}
-
-			.hexagon.selected {
-				opacity: 1;
-			}
-
-			.brush .extent {
-				fill-opacity: .1;
-				shape-rendering: crispEdges;
-			}
-
-			 .month {display: inline-block;}
-
-				.day {
-					fill: #FFF;
-				}
-
-				.fillerday {
-					fill: #FFF;
-				}
-				
-	/* 				 TOOL TIP FOR CALENDAR */			
-				div.tooltip {	
-					position: absolute;			
-					text-align: center;			
-					width: 65px;					
-					height: 28px;					
-					padding: 6px;				
-					font: 12px sans-serif;		
-					background: grey;	
-					border: 0px;		
-					border-radius: 3px;			
-					pointer-events: none;			
-			} 
-
-
-		</style>
 
 	</head>
 	<body>
-	
-		 
-	
+		
 		<div id ="topbar">
 			<img src="../graphics/logo-small.png" style="width:50px;height:50x;">
 			<img id="title" src="../graphics/Title1.png"  style="height:35px;" hspace="5">
-			
 			<div id="search">
 					<select id="teamBox" style="width:250px">
 			      <optgroup label="Atlantic Division">
@@ -147,19 +90,14 @@
 			      </optgroup>
 			    </select>
 			</div>
-			
 		</div>
-		
-		
+	
 		<div id = "main-container">
-			
-			
 			<div class="container-card" id ="row0">
 				<img id ="teamlogo" src="../graphics/logos/38.jpg" style="width:40px;height:40px">
 				<div class="card-elem" id = "teamName">
 					Boston Celtics
 				</div>
-				
 				<div id="yearSearch">
 					<select id="yearBox" style="width:130px">
 			        <option value=2015>2014-2015</option>
@@ -168,14 +106,11 @@
 							<option value=2012>2011-2012</option>
 			    </select>
 				</div>
-				
 			</div>
 			
 			<div id= "row1">
-				
 				<div class= "container-card" id = "sub-container-shot">
 				<div id = "sub-container-percentage"></div>
-					
 				<div id = "sub-container-sliders">
 					<div id = "sub-container-shot1"></div>
 					<div id = "sub-container-shot2"></div>
@@ -188,13 +123,8 @@
 				</div>
 				</div>
 				
-				
 				<div class= "container-card" id = "roster">
-					<h1 id="rosterText">
-						ROSTER
-					</h1>
-					
-	
+					<h1 id="rosterText">ROSTER</h1>
 						<table id = "rosterTable">
 						<tr>
 							<td>PG</td>
@@ -304,22 +234,13 @@
 						</tr>
 					</table>
 						<div id = "calendar" width="500px">
-											
-							<div class = "month" id = "m9">
-							</div>
-
-							<div class = "month" id = "m10">
-							</div>
-							<div class = "month" id = "m11">
-							</div>
-							<div class = "month" id = "m0">
-							</div>
-							<div class = "month" id = "m1">
-							</div>
-							<div class = "month" id = "m2">
-							</div>
-							<div class = "month" id = "m3">
-							</div>
+							<div class = "month" id = "m9"></div>
+							<div class = "month" id = "m10"></div>
+							<div class = "month" id = "m11"></div>
+							<div class = "month" id = "m0"></div>
+							<div class = "month" id = "m1"></div>
+							<div class = "month" id = "m2"></div>
+							<div class = "month" id = "m3"></div>
 				</div>
 				</div>
 			</div>
@@ -332,42 +253,28 @@
 					<div id = "grid">
 						
 					</div>
-				
-					
-				
-					
 				</div>
 			</div>
-		
-			
-			
 		</div>
 		
-		
-		
 		<script>
-			
-			//window.alert("Website under construction! Things may be a little breaky at the moment! ");
+
 			if(window.location.href== "http://cherrypicker.io/"){
 				window.location.replace("http://cherrypicker.io/#37y2015p2594+201143");
 			}
-			
 			
 			//GLOBAL FIX THIS						
 			var selectedPlayers = []; 
 			var count;
 			
-	
-
 			//PAGE LOAD FUNCTION
 			document.body.onload = function() {
 				selectedPlayers = [];
 				count = 0; //FOR SHOTCHART
 				
-				//1610612737 HAWKS
 				hashChange(true, true);	
 			}
-				
+			
 			//HASH CHANGE FUNCTION (MANUAL BACK AND URL CHANGES)
 			window.onhashchange = function() {//IMPLICIT
 				selectedPlayers = []; //CLEAR STORED PLAYERS
@@ -378,15 +285,14 @@
 			//Stuff here gets executed all the time
 				var currentTeamID = location.hash.slice(1,3);
 				var currentYear = location.hash.slice(4,8);
-// 				selectedPlayers  = location.hash.slice(9).split("+");
+				//selectedPlayers  = location.hash.slice(9).split("+");
 				
-// 				console.log("TEAM: " + currentTeamID + " YEAR: " + currentYear + " PLAYERS: " + selectedPlayers);
+			
 				
 				//NOT NEW TEAM (GIVEN A TEAM)
 				if(isPlayerChange){
 					loadRoster(currentTeamID, currentYear, false);
 					selectedPlayers  = location.hash.slice(9).split("+");
-					
 				}
 				
 				if(newPageLoad){
@@ -394,29 +300,20 @@
 					$("#yearBox").select3("val", currentYear);
 					changeTeamName();
 					changeTeamLogo(currentTeamID);
-					// 					renderCalendar("9", 2014, 2015, 1610612700 + parseInt(currentTeamID)); //ADD SHORTENED OCTOBER LATER
-					renderCalendar("10", 2014, 2015, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("11", 2014, 2015, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("0", 2015, 2016, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("1", 2015, 2016, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("2", 2015, 2016, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("3", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+					
+					renderCalendar(2014, 2015, currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
 				}
 
-	//REMEMBER/ DONT UPDATE TEAM IF CALLED FROM PLAYER CHANGE i.e. YEAR or TEAM CHANGE
-					//NEW TEAM
+				//REMEMBER/ DONT UPDATE TEAM IF CALLED FROM PLAYER CHANGE i.e. YEAR or TEAM CHANGE
+				//NEW TEAM
 				if(!isPlayerChange){
 
 					changeURL('#' + location.hash.slice(1,3) + "y" + location.hash.slice(4,8) + "p")
 					loadRoster(currentTeamID, currentYear, true);
-					// 					renderCalendar("9", 2014, 2015, 1610612700 + parseInt(currentTeamID)); ADD SHORTENED OCTOBER LATER
-					renderCalendar("10", 2014, 2015, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("11", 2014, 2015, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("0", 2015, 2016, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("1", 2015, 2016, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("2", 2015, 2016, 1610612700 + parseInt(currentTeamID));
-					renderCalendar("3", 2015, 2016, 1610612700 + parseInt(currentTeamID));
+				
+					
+					renderCalendar(2014, 2015, currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
 					$("#teamBox").select2("val", currentTeamID);
 					$("#yearBox").select3("val", currentYear);
@@ -424,34 +321,28 @@
 					changeTeamLogo(currentTeamID);
 					changeURL('#' + location.hash.slice(1,8) + "p" + selectedPlayers.join("+")); 
 				}
-		
-	
 					localshotchart(count);
 					count += 1;
-				
-					
-			
-				
-				
-				
 			}
+			
 			
 			//ON READY
 			$(document).ready(function(){
 				
 				//SHOTCHART
 				
-				
 				//SELECT2 BOXES
 				var $teamSelect = $('#teamBox').select2(); //CREATE BOXES
-				var $yearSelect = $('#yearBox').select3(/*{minimumResultsForSearch: Infinity}*/); /*Uncomment to turn off search*/
+				var $yearSelect = $('#yearBox').select3(); /*Uncomment to turn off search*/
 				
-				{$yearSelect
+				
+				$yearSelect
 					.on("change", function(e){
 						changeURL('#' + location.hash.slice(1,3) + "y" + e.val);
 						selectedPlayers = [];
 						hashChange(false);
-					});	
+				});	
+				
 				$teamSelect
 					.on("select2-open", function(e){ //CHANGE FONT TO BLACK ON OPEN
 						$(".select2-container .select2-choice > .select2-chosen").css({"font-weight":"400", "color":"#888"}); 
@@ -468,7 +359,7 @@
 								$(':focus').blur();
 						}, 1); //BLUR ON DESELECT
 					});
-				}
+				
 
 				//" data-player="0"S FOR ROSTER SELECTION
 				$('a.neutral').click(function(){
@@ -493,20 +384,15 @@
    			})
 					.mouseleave(function(){
         	$(this).toggleClass("hover", false);
-   			});
-				
-		
-				
-		
-
-				
-				
+   			});				
 			});
+			
 			
 			
 		function changeTeamName(team){ //FIX THIS
 			 $('#teamName').html($('#teamBox').find(":selected").text()); //use .html(team) with dictionary later
 		}	
+			
 		function changeTeamLogo(team) {
 			var img = document.getElementById("teamlogo");
 			img.src = "../graphics/logos/" + team + ".jpg";
@@ -522,9 +408,6 @@
 						alert("Browser does not support HTML5.");
 				}
 		}
-			
-		
-			
 		</script>
 	</body>
 </html>

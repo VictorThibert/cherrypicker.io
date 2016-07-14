@@ -1,0 +1,28 @@
+/* CSS for calendar */
+
+div.tooltip {	
+  position: absolute;			
+  text-align: center;			
+  width: 65px;					
+  height: 28px;					
+  padding: 6px;				
+  font: 12px sans-serif;		
+  background: grey;	
+  border: 0px;		
+  border-radius: 3px;			
+  pointer-events: none;			
+} 
+
+
+.month {
+  display: inline-block;
+}
+
+.day {
+  fill: #FFF;
+}
+
+.fillerday {
+  fill: #FFF;
+}
+

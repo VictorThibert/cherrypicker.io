@@ -1,5 +1,15 @@
-function renderCalendar(container, year1, year2, teamID){
+function renderCalendar(year1, year2, teamID){
+  //renderCalendar("9", 2014, 2015, 1610612700 + parseInt(teamID)); //ADD SHORTENED OCTOBER LATER
+  renderCalendarMonth("10", year1, year2, 1610612700 + parseInt(teamID));
+  renderCalendarMonth("11", year1, year2, 1610612700 + parseInt(teamID));
+  renderCalendarMonth("0", year1 + 1, year2 + 1, 1610612700 + parseInt(teamID));
+  renderCalendarMonth("1", year1 + 1, year2 + 1, 1610612700 + parseInt(teamID));
+  renderCalendarMonth("2", year1 + 1, year2 + 1, 1610612700 + parseInt(teamID));
+  renderCalendarMonth("3", year1 + 1, year2 + 1, 1610612700 + parseInt(teamID));
 
+}
+
+function renderCalendarMonth(container, year1, year2, teamID){
 
   var lastDay = new Date(year1, parseInt(container) + 1, 0);
   var firstDay = new Date(year1, parseInt(container), 1);
@@ -26,8 +36,6 @@ function renderCalendar(container, year1, year2, teamID){
   var monthDiv = "#m" + container;
    d3.select(monthDiv).select("svg").remove();
 
-
-  
   var percent = d3.format(".1%"),
       format = d3.time.format("%Y-%m-%d");
 
@@ -50,7 +58,6 @@ function renderCalendar(container, year1, year2, teamID){
       .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
       .style("text-anchor", "middle")
       .text(function(d) { return d; });
- 
 
       var temp = [];
 
@@ -100,10 +107,7 @@ function renderCalendar(container, year1, year2, teamID){
   var plusminus = 0;
   var count = 0;
   var teamURL = teamID;
-  
-  
- 
-  
+
   d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=" + teamURL, function(error, raw){
     if (error){
       throw error;
@@ -164,7 +168,6 @@ function renderCalendar(container, year1, year2, teamID){
       var data3 = {}; //DATA 3 CONTAINS ALL THE DIFFERENTIALS PAIRED WITH THE DATES
           data3=merge_options(data2, data);
 
-      
 
       //ADDING THE INDIVIDUAL DAY SQUARES
        var rect = svg.selectAll(".day")
@@ -179,7 +182,7 @@ function renderCalendar(container, year1, year2, teamID){
       .on("mouseover", function(d) {	
             div.transition()		
                 .duration(200)		
-                .style("opacity", .7);		
+                .style("opacity", 0.7);		
             div	.html(d + "</br>" + data3[d])	//TEXT IN BOX HERE
                 .style("left", (d3.event.pageX) + "px")		
                 .style("top", (d3.event.pageY - 28) + "px");	
@@ -190,8 +193,6 @@ function renderCalendar(container, year1, year2, teamID){
                 .style("opacity", 0);	
         })
       .datum(format);
-      
-     console.log(data3); 
       
       var corresponding = [0];
 
@@ -204,14 +205,8 @@ function renderCalendar(container, year1, year2, teamID){
       }); 
 
         count +=1;
-
-      
     }
-
-   
   });
-
-
 
   d3.select(self.frameElement).style("height", "2910px");
 }

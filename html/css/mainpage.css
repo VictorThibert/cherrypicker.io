@@ -1,0 +1,233 @@
+/* CSS for main page */
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
+@import url(https://fonts.googleapis.com/css?family=Oxygen:400,700);
+@import url(https://fonts.googleapis.com/css?family=Asap);
+
+p {
+  font-family: 'Roboto', sans-serif;
+	color: #222222;
+	font-size: 20px;
+}
+
+p.percentage {
+	 font-family: 'Asap', sans-serif;
+	color: #33bdb1;
+	font-size: 14px;
+	
+}
+
+
+body{
+	background-image: url(../graphics/background.jpg);
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+	
+}
+
+img{
+	display: inline-block; 
+}
+
+/* Player buttons */
+a.neutral {
+		fill: #33bdb1;
+    background: #FFF;
+ 	  cursor: pointer;
+		border-radius: 5px;
+    border: solid 1px #33bdb1;
+    padding: 10px 6px 5px;    /* TOP L/R BOTTOM */
+		font-size: 14px;
+}
+
+
+a.down {
+    background: #FFF;
+		border-radius: 5px;
+    border: solid 1px #cdcdcd;
+		fill: #cdcdcd;
+}
+
+a.hover {
+    background: #33bdb1;
+		border-radius: 5px;
+    border: solid 1px  #33bdb1;
+		fill: #FFF;	
+}
+
+h1 {
+	margin: 0;
+	margin-left:8px;
+}
+
+#topbar{
+	width: 85%;
+	max-width: 1100px;
+	border-top: 20px;
+	border-bottom: 20px;
+	margin-top:20px;
+	margin-bottom: 20px;
+	min-width: 1100px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+
+}
+
+#title{
+	font-size: 20pt;
+	display: inline-block;
+	height: 60px;
+	vertical-align: bottom;
+}
+
+#search{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	display: inline-block;
+}
+
+#main-container{
+	background-color: rgba(245,245,245, 0.7);
+	width: 85%;
+	min-width: 1100px;
+	max-width: 1100px;
+	height: 1300px;
+	margin-bottom: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 5px;
+	box-shadow: 0px 10px 15px 0px rgba(0,0,0,0.1);
+}
+
+#row0{
+	top: 13px;
+	position: relative;
+	height: 40px;
+}
+
+#teamName{
+	position: absolute;
+	top: 50%;
+	transform: translate(40px,-50%);
+	font-size: 15pt;
+  color: #444;
+	margin-left: 0.8%;
+}
+
+#yearSearch{
+	float: right;
+	position: relative;
+  top: 50%;
+	-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#row1 {
+	top: 13px;
+	position: relative;
+}
+
+#sub-container-shot {
+	position: relative;
+  height: 370px;
+	width: 550px;
+	float: left;
+} 
+
+#sub-container-percentage {
+	position: absolute;
+	top: 280px;
+	left: 15px;
+}
+
+#sub-container-sliders {
+	position: absolute;
+	width: 78%;
+	margin-right: 20px;
+	margin-bottom: 8px;
+	bottom: 0;
+	right: 0;
+}
+
+#sub-container-labels {
+	font-family: 'Asap';
+	font-size: 10pt;
+	position: absolute;
+	width: 20%;
+	margin: 15px;
+	bottom: 0;
+	left: 0;
+}
+
+#roster { 
+	height: 370px;
+	width: auto;
+	overflow:hidden;
+}
+
+#rosterText {
+	padding-bottom: 10px;
+	font-size: 16px;
+	font-family: 'Asap', sans-serif;
+	color: #888;
+}
+
+#rosterTable {
+	width: 100%;
+	font-family: 'Asap', sans-serif;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table {
+	border-style: hidden;
+}
+
+td {
+  padding: 10px 0 10px 5px;
+	text-align: center;
+	white-space: nowrap;
+}
+
+
+#row2 {
+	top: 13px;
+	position: relative;
+}
+
+
+#month-title{
+	font-family: 'Asap';
+}
+
+#test{
+	height:200px;
+}
+
+.container-card{
+	background-color: #fff;
+	margin-right: 12px;
+	margin-left: 12px;
+	margin-bottom: 10px;
+	padding: 1%;
+	border-radius: 5px;
+	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.03);
+	
+}
+
+.card-elem{
+		font-family: Roboto;
+}
+
+/* Calendar hover */
+rect.day:hover{
+	stroke-width: 2;
+	stroke: #92e0da;
+}
+
+
