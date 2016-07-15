@@ -28,20 +28,26 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(er
   render()
 });
 var pc;
+  
 function render() {
   
   var color = d3.scale.linear().domain([10,20])
     .range(["#2eb4a6", "blue"])
   
-  console.log(data);
-  
+ 
   var dimensions = {
-    1:
-        {
-            orient: 'right',
-            tickPadding: 0,
-            innerTickSize: 100
-        }
+     "PPG":
+    {
+      ticks: 20
+      
+    },
+   
+    "AST":
+    {
+      ticks: 20
+      
+    }
+    
   };
 
   pc = d3.parcoords()("#example")
@@ -54,25 +60,17 @@ function render() {
   pc.ctx.foreground.globalCompositeOperation = "darken";
   
   pc
-    .smoothness(0.0) //REIMPLEMENT CURVATURE
+    .smoothness(0.1) //REIMPLEMENT CURVATURE
     .alpha(0.3)
+  
     .composite("darken")
     .rate(60)
     .margin({ top: 24, left: 65, bottom: 36, right: 65 })
     .autoscale()
     .color(function(d) {return color(d[1]);})
-    .render()
     .dimensions(dimensions)
     .brushMode("1D-axes")
     .render()
-  //pc.dimensions(dimensions);
-  console.log(pc.dimensions());
-
-//     d3.select("#smoothness").on("change", function() {
-//     d3.select("#smooth").text(this.value);
-//     pc.smoothness(this.value).render();
-  //}
- // );
 
 }
 

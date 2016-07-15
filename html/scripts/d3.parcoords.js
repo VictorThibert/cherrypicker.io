@@ -87,21 +87,21 @@ var side_effects = d3.dispatch.apply(this,d3.keys(__))
     xscale.domain(__.dimensions);
     if (flags.interactive){pc.render().updateAxes();}
   })
-  .on("bundleDimension", function(d) {
-	  if (!__.dimensions.length) pc.detectDimensions();
-	  if (!(__.dimensions[0] in yscale)) pc.autoscale();
-	  if (typeof d.value === "number") {
-		  if (d.value < __.dimensions.length) {
-			  __.bundleDimension = __.dimensions[d.value];
-		  } else if (d.value < __.hideAxis.length) {
-			  __.bundleDimension = __.hideAxis[d.value];
-		  }
-	  } else {
-		  __.bundleDimension = d.value;
-	  }
+//   .on("bundleDimension", function(d) {
+// 	  if (!__.dimensions.length) pc.detectDimensions();
+// 	  if (!(__.dimensions[0] in yscale)) pc.autoscale();
+// 	  if (typeof d.value === "number") {
+// 		  if (d.value < __.dimensions.length) {
+// 			  __.bundleDimension = __.dimensions[d.value];
+// 		  } else if (d.value < __.hideAxis.length) {
+// 			  __.bundleDimension = __.hideAxis[d.value];
+// 		  }
+// 	  } else {
+// 		  __.bundleDimension = d.value;
+// 	  }
 
-	  __.clusterCentroids = compute_cluster_centroids(__.bundleDimension);
-  })
+// 	  __.clusterCentroids = compute_cluster_centroids(__.bundleDimension);
+//   })
   .on("hideAxis", function(d) {
 	  if (!__.dimensions.length) pc.detectDimensions();
 	  pc.dimensions(without(__.dimensions, d.value));
@@ -144,7 +144,7 @@ function without(arr, item) {
   return arr.filter(function(elem) { return item.indexOf(elem) === -1; })
 };
 pc.autoscale = function() {
-  // yscale
+
   var defaultScales = {
     "date": function(k) {
       var extent = d3.extent(__.data, function(d) {
@@ -162,15 +162,48 @@ pc.autoscale = function() {
         .domain(extent)
         .range([h()+1, 1]);
     },
+		//HERE IS WHERE YOU FIX SCALE
     "number": function(k) {
+	
       var extent = d3.extent(__.data, function(d) { return +d[k]; });
 
       // special case if single value
       if (extent[0] === extent[1]) {
+				
         return d3.scale.ordinal()
           .domain([extent[0]])
           .rangePoints([h()+1, 1]);
       }
+			
+			//specific basketball stats imp
+			if (k == 1){
+				extent[0] = 0;
+				extent[1] = 40;
+			} else if (k == 2) {
+				extent[0] = 0;
+				extent[1] = 1;	
+			} else if (k == 3) {
+				extent[0] = 0;
+				extent[1] = 1;	
+			} else if (k == 4) {
+				extent[0] = 0;
+				extent[1] = 1;	
+			} else if (k == 5) {
+				extent[0] = 0;
+				extent[1] = 35;	
+			} else if (k == 6) {
+				extent[0] = 0;
+				extent[1] = 12;	
+			} else if (k == 7) {
+				extent[0] = 0;
+				extent[1] = 15;	
+			} else if (k == 8) {
+				extent[0] = 0;
+				extent[1] = 2.5;	
+			} else if (k == 9) {
+				extent[0] = 0;
+				extent[1] = 2.5;	
+			}
 
       return d3.scale.linear()
         .domain(extent)
@@ -199,8 +232,11 @@ pc.autoscale = function() {
         .rangePoints([h()+1, 1]);
     }
   };
+	
+	//imp
 
   __.dimensions.forEach(function(k) {
+		
     yscale[k] = defaultScales[__.types[k]](k);
   });
 
@@ -230,19 +266,16 @@ pc.autoscale = function() {
 };
 
 pc.scale = function(d, domain) {
+	console.log("A");
 	yscale[d].domain(domain);
 
 	return this;
 };
 
-pc.flip = function(d) {
-	//yscale[d].domain().reverse();					// does not work
-	yscale[d].domain(yscale[d].domain().reverse()); // works
 
-	return this;
-};
 
 pc.commonScale = function(global, type) {
+		console.log("A");
 	var t = type || "number";
 	if (typeof global === 'undefined') {
 		global = true;
@@ -262,6 +295,7 @@ pc.commonScale = function(global, type) {
 
 		scales.forEach(function(d) {
 			yscale[d].domain(extent);
+			console.log(yscale[d].domain(extent));
 		});
 
 	} else {
@@ -280,6 +314,7 @@ pc.commonScale = function(global, type) {
 pc.detectDimensions = function() {
   pc.types(pc.detectDimensionTypes(__.data));
   pc.dimensions(d3.keys(pc.types()));
+
   return this;
 };
 
@@ -298,6 +333,7 @@ pc.toTypeCoerceNumbers = function(v) {
 
 // attempt to determine types of each dimension based on first row of data
 pc.detectDimensionTypes = function(data) {
+	
   var types = {};
   d3.keys(data[0])
     .forEach(function(col) {
@@ -519,7 +555,7 @@ d3.rebind(pc, axis, "ticks", "orient", "tickValues", "tickSubdivide", "tickSize"
 function flipAxisAndUpdatePCP(dimension) {
   var g = pc.svg.selectAll(".dimension");
 
-  pc.flip(dimension);
+//   pc.flip(dimension);
 
   d3.select(this.parentElement)
     .transition()
@@ -550,16 +586,19 @@ pc.createAxes = function() {
 
   // Add a group element for each dimension.
   g = pc.svg.selectAll(".dimension")
-      .data(__.dimensions, function(d) { return d; })
+      .data(__.dimensions, function(d) {return d; })
     .enter().append("svg:g")
       .attr("class", "dimension")
       .attr("transform", function(d) { return "translate(" + xscale(d) + ")"; });
 
   // Add an axis and title.
+	//
+	//
+	//HERE
   g.append("svg:g")
       .attr("class", "axis")
       .attr("transform", "translate(0,0)")
-      .each(function(d) { d3.select(this).call(axis.scale(yscale[d])); })
+      .each(function(d) {d3.select(this).call(axis.scale(yscale[d])); })
     .append("svg:text")
       .attr({
         "text-anchor": "middle",
@@ -569,8 +608,8 @@ pc.createAxes = function() {
         "class": "label"
       })
       .text(function(d){return data3[d];})
-      .on("dblclick", flipAxisAndUpdatePCP);
-//       .on("wheel", rotateLabels);
+//       .on("dblclick", flipAxisAndUpdatePCP);
+// //       .on("wheel", rotateLabels);
 
   flags.axes= true;
   return this;
