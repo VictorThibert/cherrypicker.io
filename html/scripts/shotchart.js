@@ -241,7 +241,7 @@ function localshotchart(count){
 
 				var colorScale = d3.scale.linear() //Create color scale for the hexons
 				    .domain([-0.4, 0, 0.4]) //Range for +- above average
-				    .range(["#2eb4a6", "#eeeaea", "#f58b8b"]); 
+				    .range(["#35a4b1", "#eeeaea", "#ff8566"]); 
 
 				var x = d3.scale.identity() 
 				    .domain([0, width]); 

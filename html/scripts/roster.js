@@ -77,31 +77,33 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
 
     }  
   } 
-  drawTooltips();
+  //drawTooltips();
 }
 
-function drawTooltips(){
-  console.log("bjhbd");
-  for(i = 0; i < rosterArrayCount; i++){
-    console.log(rosterArray[i]);
-    var playerName = teamJSON.roster[i].playerName;
+var _tooltip = function(){
+  
+  this.create = function(){
+    for(i = 0; i < rosterArrayCount; i++){
+      console.log(rosterArray[i]);
+      var playerName = teamJSON.roster[i].playerName;
 
-   rosterArray[i].mouseenter(function(){
-          rosterArray[i].append('<div id="tooltip' + i + '">Hello</div>');  
-          rosterTooltip = $('#tooltip' + i);
-          rosterTooltip
-            .css("width", "100")
-            .css("height", "300")
-            .css("position", "absolute")
-            .css("top", rosterArray[i].position().top + 20 + "px")
-            .css("left", rosterArray[i].position().left + 20 + "px")
-            .css("background-color", "red")
-            .css("z-index", "10000")
-            .text(playerName)
-          ;
-        })
-        .mouseleave(function(){
-          rosterTooltip.remove();
-        });
+     rosterArray[i].mouseenter(function(){
+            rosterArray[i].append('<div id="tooltip' + i + '">Hello</div>');  
+            rosterTooltip = $('#tooltip' + i);
+            rosterTooltip
+              .css("width", "100")
+              .css("height", "300")
+              .css("position", "absolute")
+              .css("top", rosterArray[i].position().top + 20 + "px")
+              .css("left", rosterArray[i].position().left + 20 + "px")
+              .css("background-color", "red")
+              .css("z-index", "10000")
+              .text(playerName)
+            ;
+          })
+          .mouseleave(function(){
+            rosterTooltip.remove();
+          });
+    }
   }
 }

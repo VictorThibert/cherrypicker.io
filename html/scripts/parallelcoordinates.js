@@ -32,7 +32,7 @@ var pc;
 function render() {
   
   var color = d3.scale.linear().domain([10,20])
-    .range(["#2eb4a6", "blue"])
+    .range(["red", "blue"])
   
  
   var dimensions = {
