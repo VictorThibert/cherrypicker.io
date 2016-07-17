@@ -1,4 +1,5 @@
 //data stored in 2d array. inner arrays represent path lines
+
 function renderPara(x){
 
   // window.history.pushState(“object or string”, “Title”, “/atlanta”);
@@ -27,26 +28,15 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(er
                                             else{return d;}}) }
   render()
 });
-var pc;
+
   
 function render() {
   
-  var color = d3.scale.linear().domain([10,20])
+  var colorScale = d3.scale.linear().domain([10,20])
     .range(["red", "blue"])
   
  
   var dimensions = {
-     "PPG":
-    {
-      ticks: 20
-      
-    },
-   
-    "AST":
-    {
-      ticks: 20
-      
-    }
     
   };
 
@@ -65,9 +55,9 @@ function render() {
   
     .composite("darken")
     .rate(60)
-    .margin({ top: 24, left: 65, bottom: 36, right: 65 })
+    .margin({ top: 25, left: 70, bottom: 10, right: 40})
     .autoscale()
-    .color(function(d) {return color(d[1]);})
+    .color(function(d) {return colorScale(d[1]);})
     .dimensions(dimensions)
     .brushMode("1D-axes")
     .render()
@@ -75,17 +65,17 @@ function render() {
 }
 
 
-
+//divgrid stuff happens here
 var grid = d3.divgrid(data3);
 var data2 = [];
 
 d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(error, raw){
-  
 
   var i = 0;
   for(i = 0; i < raw.length; i += 1){
     data2[i] = [raw[i].PLAYER_NAME, raw[i].MIN / raw[i].GP, raw[i].FG_PCT, raw[i].FG3_PCT, raw[i].FT_PCT, raw[i].PTS/ raw[i].GP, raw[i].AST/ raw[i].GP, raw[i].REB/ raw[i].GP, raw[i].STL/ raw[i].GP, raw[i].BLK/ raw[i].GP].map(function(d){if(!isNaN(d)){ return parseFloat(d).toFixed(2);}else{return d;}})
   } //ADD TOV
+  
   d3.select('#grid')
     .datum(data2)
     .call(grid)
@@ -97,9 +87,12 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + id, function(er
       },
       "mouseout": function(d) { 
         pc.unhighlight([d]);
-       this.style.backgroundColor = null;}
+        this.style.backgroundColor = null;},     
+ 
     
     });
+  
+  
 
     pc.on("brush", function(d) {
     d3.select("#grid")

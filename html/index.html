@@ -262,6 +262,7 @@
 			
 			
 			//redirects cherrypicker.io to a sample team
+		
 			if(window.location.href== "http://cherrypicker.io/"){
 				window.location.replace("http://cherrypicker.io/#37y2015p2594+201143");
 			}
@@ -271,6 +272,9 @@
 			var count;
 			var selectedTeam;
 			var selectedYear;
+			var currentTeamID;
+			var currentYear;
+			var pc; //parallel coordinates
 			
 			//document onload (gets called immediately after page has been loaded)
 			$(document).ready(function(){
@@ -344,8 +348,8 @@
 			function hashChange(isPlayerChange, newPageLoad){
 			//stuff here gets executed each time
 				
-				var currentTeamID = location.hash.slice(1,3);
-				var currentYear = location.hash.slice(4,8);
+				currentTeamID = location.hash.slice(1,3);
+				currentYear = location.hash.slice(4,8);
 				//selectedPlayers  = location.hash.slice(9).split("+");
 				
 				//NOT NEW TEAM (GIVEN A TEAM)

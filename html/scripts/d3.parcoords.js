@@ -256,10 +256,10 @@ pc.autoscale = function() {
 
   // default styles, needs to be set when canvas width changes
   ctx.foreground.strokeStyle = __.color;
-  ctx.foreground.lineWidth = 1.4;
+  ctx.foreground.lineWidth = 1.8;
   ctx.foreground.globalCompositeOperation = __.composite;
   ctx.foreground.globalAlpha = __.alpha;
-  ctx.highlight.lineWidth = 3;
+  ctx.highlight.lineWidth = 3; //to change line width on hover
   ctx.shadows.strokeStyle = "#dadada";
 
   return this;

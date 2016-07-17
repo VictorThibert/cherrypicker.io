@@ -1,5 +1,10 @@
 /* CSS for parallel coordinates */
 
+#example {
+	padding-top: 10px;
+	padding-left: 2px;
+}
+
 .parcoords > svg, .parcoords > canvas { 
   position: absolute;
 
@@ -16,7 +21,7 @@
   fill: transparent;
 }
 .parcoords rect.background:hover {
- fill: rgba(0,0,0, 0.1);
+ fill: rgba(0,0,0, 0.2);
 }
 .parcoords .resize rect {
   fill: rgba(0,0,0, 0);
