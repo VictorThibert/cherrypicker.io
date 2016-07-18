@@ -16,7 +16,6 @@ p.percentage {
 	
 }
 
-
 body{
 	background-image: url(../graphics/background.jpg);
 	-webkit-background-size: cover;
@@ -94,7 +93,7 @@ h1 {
 	width: 85%;
 	min-width: 1100px;
 	max-width: 1100px;
-	height: 1300px;
+	height: 1500px;
 	margin-bottom: 100px;
 	margin-left: auto;
 	margin-right: auto;
@@ -157,21 +156,23 @@ h1 {
 
 #sub-container-sliders {
 	position: absolute;
+
 	width: 78%;
-	margin-right: 20px;
-	margin-bottom: 8px;
+	margin-right: 25px;
+	padding-bottom: 2px;
+	margin-bottom: 5px;
 	bottom: 0;
 	right: 0;
 }
 
 #sub-container-labels {
 	font-family: 'Asap';
-	font-size: 10pt;
+	font-size: 11pt;
 	position: absolute;
 	width: 20%;
-	margin: 15px;
-	bottom: 0;
-	left: 0;
+	color: #555;
+	bottom: 16px;
+	left: 15px;
 }
 
 #roster { 

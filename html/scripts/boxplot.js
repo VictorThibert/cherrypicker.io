@@ -1,14 +1,15 @@
-renderBox("container-PTS", "PTS");
-renderBox("container-AST", "AST");
-renderBox("container-REB", "REB");
-renderBox("container-STL", "STL");
-renderBox("container-BLK", "BLK");
-renderBox("container-TOV", "TOV");
-renderBox("container-FG_PCT", "FG_PCT");
-renderBox("container-FG3_PCT", "FG3_PCT");
-renderBox("container-FT_PCT", "FT_PCT");
+renderBox("boxplotID", "PTS");
+// renderBox("container-AST", "AST");
+// renderBox("container-REB", "REB");
+// renderBox("container-STL", "STL");
+// renderBox("container-BLK", "BLK");
+// renderBox("container-TOV", "TOV");
+// renderBox("container-FG_PCT", "FG_PCT");
+// renderBox("container-FG3_PCT", "FG3_PCT");
+// renderBox("container-FT_PCT", "FT_PCT");
 
 function renderBox(container, metric){
+
 
   var divID = "#" + container;
 
@@ -16,7 +17,7 @@ function renderBox(container, metric){
   var labels = true; // show the text labels beside individual boxplots?
 
   var margin = {top: 30, right: 30, bottom: 70, left: 30};
-  var  width = 200 - margin.left - margin.right;
+  var width = 200 - margin.left - margin.right;
   var height = 250 - margin.top - margin.bottom;
     
   var min = Infinity,
@@ -156,6 +157,20 @@ function renderBox(container, metric){
       var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left");
+      
+      svg.append("linearGradient") //gradient
+        .attr("id", "line-gradient")
+        .attr("gradientUnits", "userSpaceOnUse")
+        .attr("x1", 0).attr("y1", 70)
+        .attr("x2", 0).attr("y2", 140)
+        .selectAll("stop")
+        .data([
+        {offset: "0%", color: "green"},
+        {offset: "100%", color: "red"}   
+        ])
+        .enter().append("stop")
+        .attr("offset", function(d) { return d.offset; })
+        .attr("stop-color", function(d) { return d.color; });
 
       // draw the boxplots  
       svg.selectAll(".box")    
