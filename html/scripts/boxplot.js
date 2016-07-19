@@ -10,21 +10,18 @@ renderBox("boxplotID", "PTS");
 
 function renderBox(container, metric){
 
-
   var divID = "#" + container;
-
 
   var labels = true; // show the text labels beside individual boxplots?
 
   var margin = {top: 30, right: 30, bottom: 70, left: 30};
-  var width = 200 - margin.left - margin.right;
-  var height = 250 - margin.top - margin.bottom;
+  var width = 300 - margin.left - margin.right;
+  var height = 400 - margin.top - margin.bottom;
     
   var min = Infinity,
       max = -Infinity;
     
   // parse in the data 
-
   var data = [];
     data[0] = [];
     data[1] = [];
@@ -41,7 +38,7 @@ function renderBox(container, metric){
     data[1][1] = [];
 
 
-  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1600000000", function(error2, raw2) {
+  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610000000", function(error2, raw2) { //Put 2nd team or league average team here
 
       raw2.forEach(function(x) {
         if(metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT"){
@@ -75,7 +72,7 @@ function renderBox(container, metric){
     });
 
   function next() {
-    d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw) {
+    d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612738", function(error, raw) {
 
     //raw is entire array of all the objects
       // using an array of arrays with
@@ -127,10 +124,13 @@ function renderBox(container, metric){
         }
       });
       
+      var boxpadding = 10;
+      
+      
       var chart = d3.box()
-        .whiskers(iqr(50))
+        .whiskers(iqr(10)) //set to 1 to see outliers
         .height(height) 
-        .domain([min, max])
+        .domain([min - boxpadding, max + boxpadding])
         .showLabels(labels);
 
       var svg = d3.select(divID).append("svg")
@@ -143,7 +143,7 @@ function renderBox(container, metric){
       // the x-axis
       var x = d3.scale.ordinal()     
         .domain( data.map(function(d) {return d[0] } ) )     
-        .rangeRoundBands([0 , width], 0.7, 0.3);    
+        .rangeRoundBands([0 , width], 0.5,0.5);    
 
       var xAxis = d3.svg.axis()
         .scale(x)
@@ -151,7 +151,7 @@ function renderBox(container, metric){
 
       // the y-axis
       var y = d3.scale.linear()
-        .domain([min, max])
+        .domain([min - boxpadding, max + boxpadding])
         .range([height + margin.top, 0 + margin.top]);
       
       var yAxis = d3.svg.axis()

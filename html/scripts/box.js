@@ -15,9 +15,9 @@ d3.box = function() {
       value = Number,
       whiskers = boxWhiskers,
       quartiles = boxQuartiles,
-    showLabels = true, // whether or not to show text labels
-    numBars = 4,
-    curBar = 1,
+      showLabels = true, // whether or not to show text labels
+      numBars = 4,
+      curBar = 1,
       tickFormat = null;
 
   // For each small multiple…
@@ -81,7 +81,7 @@ d3.box = function() {
           .attr("x2", width / 2)
           .attr("y2", function(d) { return x0(d[1]); })
           //.style("stroke", function(d){return color(x1(d[0]))}) //add gradient stroke
-          .style("opacity", 1e-6)
+          .style("opacity", 1)
         .transition()
           .duration(duration)
           .style("opacity", 1)
@@ -89,11 +89,11 @@ d3.box = function() {
           .attr("y1", function(d) { return x1(d[0]); })
           .attr("y2", function(d) { return x1(d[1]); });
 
-      center.transition()
-          .duration(duration)
-          .style("opacity", 1)
-          .attr("y1", function(d) { return x1(d[0]); })
-          .attr("y2", function(d) { return x1(d[1]); });
+//       center.transition()
+//           .duration(duration)
+//           .style("opacity", 1)
+//           .attr("y1", function(d) { return x1(d[0]); })
+//           .attr("y2", function(d) { return x1(d[1]); }); //seemingly not needed? repeat of above
 
       center.exit().transition()
           .duration(duration)
