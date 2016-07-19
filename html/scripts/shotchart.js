@@ -1,6 +1,8 @@
 function localshotchart(count){
-
-			var jsonLeague = []; //FOR LEAGUE AVERAGES
+			//////////////////
+			//LEAGUE AVERAGE
+			//////////////////
+			var jsonLeague = [];
 			var leagueShotArray = [];
 	
 			var xmlLeagueRequest = new XMLHttpRequest();
@@ -18,11 +20,13 @@ function localshotchart(count){
 			    jsonLeague = JSON.parse(response); 
 			
 			    for (var i = 0; i < jsonLeague.length; i+=1) {
-						leagueShotArray.push([parseInt(jsonLeague[i].LOC_X) + 250, parseInt(jsonLeague[i].LOC_Y) + 50,  jsonLeague[i].PERCENTAGE ] );
+						leagueShotArray.push([parseInt(jsonLeague[i].LOC_X) + 250, parseInt(jsonLeague[i].LOC_Y) + 50,  jsonLeague[i].PERCENTAGE ]);
 					} 
-				
 			}
-			//SECTION FOR A GIVEN PLAYER(S)
+	
+			//////////////////
+			//SPECIFIC PLAYERS
+			//////////////////
 			var jsonPlayer = [];
 			var playerShotArray = [];
 			var xmlPlayerRequest = new XMLHttpRequest();
@@ -30,7 +34,6 @@ function localshotchart(count){
 	
 			xmlPlayerRequest.onreadystatechange=function() {
 			    if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
-		
 			        reassignPlayer(xmlPlayerRequest.responseText);
 			    }}
 			xmlPlayerRequest.open("GET", urlPlayer, true);
@@ -38,79 +41,76 @@ function localshotchart(count){
 		
 			var hpoints;
 			var unSmoothedHexpoints;
+			var customRadius = 5;
+
+			var margin = {top: -15, right: 20, bottom: 45, left: 20}, //MARGIN
+				  width = 550 - margin.left - margin.right,
+				  height = 350 - margin.top - margin.bottom; 
+	
+			var hexbin = d3.hexbin().size([width, height]).radius(customRadius);//Initialize Hexbin Plugin
 	
 			function reassignPlayer(response){
 				jsonPlayer = JSON.parse(response); 
-				for (var i = 0; i < jsonPlayer.length; i+=1) { //playerShotArray contains alls the shots
+				for (var i = 0; i < jsonPlayer.length; i+=1) { //playerShotArray contains all the shots
 					playerShotArray.push([parseInt(jsonPlayer[i].LOC_X) + 250, parseInt(jsonPlayer[i].LOC_Y) + 50, parseInt(jsonPlayer[i].SHOT_MADE_FLAG), jsonPlayer[i].SHOT_DISTANCE]);
 				} //SHIFT BY 250 IN X AND 50 IN Y
 				
 				hpoints = hexbin(playerShotArray);
 				unSmoothedHexpoints = hexbin(playerShotArray);
-
-// 				for(var x in hpoints){ //For each point in the array
-// // 					console.log(hpoints[x])//~0-427 bins in hpoints
-// // 					var tempTotalShot = hpoints[x].totalShot;
-// // 					var tempTotalMade = hpoints[x].totalMade;
-	
-// 					//SMOOTH EVERYTHING HERE
-// 					//HERE IS WHERE THE SMOOTHING HAPPENS
-// // 					hpoints[x].totalShot = 0.000001;
-// // 					hpoints[x].totalMade = 0;
-
-// // 					for(var y in hpoints){
-// // 						if(hpoints[x].i == hpoints[y].i && hpoints[x].j == hpoints[y].j){
-// // 							hpoints[x].totalMade += tempTotalMade * 0.6; 
-// // 							hpoints[x].totalShot += tempTotalShot * 0.6;
-// // 						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4 ){ //30% radius
-// // 							hpoints[x].totalMade += hpoints[y].totalMade * 0.3;
-// // 							hpoints[x].totalShot += hpoints[y].totalShot * 0.3;
-// // 						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 6){ //10% radius
-// // 							hpoints[x].totalMade += hpoints[y].totalMade * 0.1;
-// // 							hpoints[x].totalShot += hpoints[y].totalShot * 0.1;
-// // 						}
-// // 					}
-// 				}
-
+/*
+ 				for(var x in hpoints){ //For each point in the array
+ 					console.log(hpoints[x])//~0-427 bins in hpoints
+ 					var tempTotalShot = hpoints[x].totalShot;
+ 					var tempTotalMade = hpoints[x].totalMade;
+ 					//SMOOTH EVERYTHING HERE
+ 					//HERE IS WHERE THE SMOOTHING HAPPENS
+ 					hpoints[x].totalShot = 0.000001;
+ 					hpoints[x].totalMade = 0;
+ 					for(var y in hpoints){
+ 						if(hpoints[x].i == hpoints[y].i && hpoints[x].j == hpoints[y].j){
+ 							hpoints[x].totalMade += tempTotalMade * 0.6; 
+ 							hpoints[x].totalShot += tempTotalShot * 0.6;
+ 						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4 ){ //30% radius
+ 							hpoints[x].totalMade += hpoints[y].totalMade * 0.3;
+							hpoints[x].totalShot += hpoints[y].totalShot * 0.3;
+ 						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 6){ //10% radius
+ 							hpoints[x].totalMade += hpoints[y].totalMade * 0.1;
+ 							hpoints[x].totalShot += hpoints[y].totalShot * 0.1;
+ 						}
+ 					}
+				}
+*/
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
 			}
-
-				var customRadius = 5;
-
-				var margin = {top: -15, right: 20, bottom: 45, left: 20}, //MARGIN
-				    width = 550 - margin.left - margin.right,
-				    height = 350 - margin.top - margin.bottom; 
-
-
-				var hexbin = d3.hexbin() //INITIALIZE HEXBIN
-				    .size([width, height])
-				    .radius(customRadius);	
 	
-	//SLIDER CONTENT
-	
+				//////////////////
+				//SLIDER VARIABLES
+				//////////////////
 				var lastPosition = [[0, 0],[0,0]];
 				var brushConditions = [1, lastPosition, 0];
 
 				var bottomPCT = 0;
 				var topPCT = 1;
 	
+				//////////////////
+				//PERCENTAGE SLIDER
+				//////////////////
 				var slider = document.getElementById("sub-container-shot1");
 	
 				if(count !== 0){ //ALL RELOADS AFTER FIRST
 					slider.noUiSlider.destroy();
 				}
 	
-					//PERCENTAGE
-					noUiSlider.create(slider, {
-						start: [0.0, 1.0],
-						step: 0.02,
-						connect: true,
-						range: {
-							'min': 0,
-							'max': 1
-						}
-					});
+				noUiSlider.create(slider, {
+					start: [0.0, 1.0],
+					step: 0.02,
+					connect: true,
+					range: {
+						'min': 0,
+						'max': 1
+					}
+				});
 	
 				slider.noUiSlider.on('slide', function(){
 					var sliderCoordinates = slider.noUiSlider.get();
@@ -120,7 +120,9 @@ function localshotchart(count){
 					render();
 				})
 				
-				//SHOT ATTEMPT SLIDER  //MAKE LOGARITHMIC IF NECESSARY
+				//////////////////
+				//SHOT VOLUME SLIDER
+				//////////////////
 				var sliderShotAttempts =  document.getElementById("sub-container-shot2");
 	
 				if(count !== 0){
@@ -128,7 +130,6 @@ function localshotchart(count){
 				}
 					noUiSlider.create(sliderShotAttempts, {
 							start: [0.0, 10000],
-						
 							snap: true,
 							connect: true,
 							range: {
@@ -153,29 +154,29 @@ function localshotchart(count){
 					var sliderCoordinates2 = sliderShotAttempts.noUiSlider.get();
 					bottomAttempts = sliderCoordinates2[0];
 					topAttempts = sliderCoordinates2[1];
-		
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
 				})
 
+				//////////////////
 				//SHOT DISTANCE SLIDER
+				//////////////////
 				var sliderShotDistance =  document.getElementById("sub-container-shot3");
 	
 				if(count !== 0){
 					sliderShotDistance.noUiSlider.destroy();
-				} //NOT TO INITIALIZE OVER
-					noUiSlider.create(sliderShotDistance, {
-							start: [0.0, 25.0],
-							step: 1,
-						
-							behaviour: "drag-tap",
-
-							connect: true,
-							range: {
-								'min': 0,
-								'max': 25
-							}
-						});
+				}
+				
+				noUiSlider.create(sliderShotDistance, {
+					start: [0.0, 25.0],
+					step: 1,
+					behaviour: "drag-tap",
+					connect: true,
+					range: {
+						'min': 0,
+						'max': 25
+					}
+				});
 
 				var bottomDistance = 0;
 				var topDistance = 25;
@@ -235,12 +236,12 @@ function localshotchart(count){
 						.attr("class", "shotChartCanvas")
 				    .attr("width", width + margin.left + margin.right)
 				    .attr("height", height + margin.top + margin.bottom)
-				  .append("g")
+				  	.append("g")
 				    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 				svg.append("clipPath")//Append clipping path
 				    .attr("id", "clip")
-				  .append("rect")
+				 		.append("rect")
 				    .attr("class", "mesh")
 				    .attr("width", width)
 				    .attr("height", height);
@@ -252,26 +253,25 @@ function localshotchart(count){
 
 				var brushObject = d3.svg.brush() //Creation of brush, but not drawing it until called later
 	            	.x(d3.scale.identity().domain([0, width]))
-			        .y(d3.scale.identity().domain([0, height]))
-			        .on("brushend", brushEnd)
-			        .on("brush", brushMove) 
-					.extent(extent);
+								.y(d3.scale.identity().domain([0, height]))
+								.on("brushend", brushEnd)
+								.on("brush", brushMove) 
+								.extent(extent);
 
 				var brushCanvas = svg.append("g") //Creates canvas for brush as <g> tag
 			      .attr("class", "brush")
-
 			      .call(brushObject); 
 
 				//Instead of SVG can put brushCanvs
 				var hexagon = svg.append("g") //Adding the hexons // Hexon variable contains all hexons (e.g. array of 428 paths)
-				    //.attr("clip-path", "url(#clip)") //Does nothing ?
+				  //.attr("clip-path", "url(#clip)") //Does nothing ?
 				  .selectAll(".hexagon")
 				    .data(hpoints) //hpoints means smoothed
 				 	.enter()
 				  	.append("path") //Actual svg hexons element tags <path>
 				    .attr("class", "hexagon")
 				    .attr("val", function(d) {return d.totalMade/d.totalShot;}) //For debugging purposes mostly
-				   // .attr("d", hexbin.hexagon())
+				    //.attr("d", hexbin.hexagon())
 				    .attr("d", function(d) {  //Draws the path
 				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
@@ -279,48 +279,39 @@ function localshotchart(count){
 				    	} else {
 				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
 				    	    }
-						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]  //ACCESS HERE
+						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				    .style("fill", function(d) {
 						
 							return colorScale(d.totalMade/d.totalShot- leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
 						})
-				  
-// 					.on("mouseover", function(d) { //REMOVE
-
-// 				       d3.select(this)
-//          				 .style("fill", "orange");
-// 				    })
-// 				    .on("mouseout", function(d) {
-// 				    	d3.select(this)
-//          				 .style("fill", function(d){ 
-//          				 	return colorScale(d.totalMade/d.totalShot- leagueShotArray[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) 
-//          				})
-
+/*
+ 					.on("mouseover", function(d) { //REMOVE
+ 				       d3.select(this)
+          				 .style("fill", "orange");
+ 				    })
+ 				    .on("mouseout", function(d) {
+ 				    	d3.select(this)
+          				 .style("fill", function(d){ 
+          				 	return colorScale(d.totalMade/d.totalShot- leagueShotArray[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) 
+          				})
+*/
 				brushCanvas.moveToFront();
-				
-// 				hexagon.on("mousedown", function(){ //Allow dragging from a hexon start point
-				
-// 						brushCanvas.moveToFront();
-
-// 						if(d3.select(this).attr("class") != "hexagon selected"){
-						
-// 							brush_elm = svg.select(".brush").node()
-// 							new_click_event = new Event('mousedown');
-// 							new_click_event.pageX = d3.event.pageX;
-// 							new_click_event.clientX = d3.event.clientX;
-// 							new_click_event.pageY = d3.event.pageY;
-// 							new_click_event.clientY = d3.event.clientY;
-// 							brush_elm.dispatchEvent(new_click_event);
-							
-// 						}
-						
-						
-// 					}
-					
-					
-// 				);
-
+/*
+ 				hexagon.on("mousedown", function(){ //Allow dragging from a hexon start point
+ 						brushCanvas.moveToFront();
+ 						if(d3.select(this).attr("class") != "hexagon selected"){
+ 							brush_elm = svg.select(".brush").node()
+ 							new_click_event = new Event('mousedown');
+ 							new_click_event.pageX = d3.event.pageX;
+ 							new_click_event.clientX = d3.event.clientX;
+ 							new_click_event.pageY = d3.event.pageY;
+ 							new_click_event.clientY = d3.event.clientY;
+							brush_elm.dispatchEvent(new_click_event);
+ 						}
+ 					}	
+ 				);
+*/
 			    function brushMove() {
 	        		var selectedMade = 0;
 	        		var selectedTotal = 0;
@@ -344,7 +335,7 @@ function localshotchart(count){
 							selectedMade += d.totalMade;
 						
 							selectedTotal += d.totalShot;
-						};
+						}
 						return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]
 						});
 
