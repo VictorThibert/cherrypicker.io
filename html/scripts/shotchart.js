@@ -305,18 +305,25 @@ function localshotchart(count){
 				    .attr("val", function(d) {return d.totalMade/d.totalShot;}) //For debugging purposes mostly
 				    //.attr("d", hexbin.hexagon())
 				    .attr("d", function(d) {  //Draws the path
+				   
+				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+				    	 
+						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
+				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+				    .style("fill", function(d) {
+							return colorScale(d.totalMade/d.totalShot- leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
+						})
+				
+				
+				hexagon.transition().duration(500).ease("quad").attr("d", function(d) {  //Draws the path
 				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
 				    		return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
 				    	} else {
 				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
 				    	    }
-						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
-				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-				    .style("fill", function(d) {
-						
-							return colorScale(d.totalMade/d.totalShot- leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
-						})
+						})  //d d
+		
 /*
  					.on("mouseover", function(d) { //REMOVE
  				       d3.select(this)

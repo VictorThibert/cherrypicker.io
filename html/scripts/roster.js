@@ -28,10 +28,10 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
         $parent.show(); 
       }
       
-      /*
       $parent.mouseenter(function(){
         var toolTipName = $(this).text();
-        console.log("asd");
+        var playerId = $parent.getAttribute("data-playerID");
+        console.log(playerId);
         $(this).append('<div id="tooltip"></div>');  
             rosterTooltip = $('#tooltip');
             rosterTooltip
@@ -58,7 +58,7 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
         rosterTooltip.remove();
         playerNameLabel.remove();
       })
-      */
+      
       
       var $text = $parent.find('text'); //SELECTS THE td ELEMENT
       $text.text( "" + teamJSON.roster[i].playerName); //FILLS ALL TEXT REGARDLESS OF GIVEN PLAYER
@@ -91,8 +91,6 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
       else {  
         $newTeamParent.show(); 
       }//REMOVE CELL FROM ROW
-      
-      
 
       var $newTeamText = $newTeamParent.find('text');
       $newTeamText.text( "" + teamJSON.roster[i].playerName);
