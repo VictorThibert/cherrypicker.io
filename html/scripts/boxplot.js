@@ -1,12 +1,12 @@
 renderBox("boxplotID", "PTS");
-// renderBox("container-AST", "AST");
-// renderBox("container-REB", "REB");
-// renderBox("container-STL", "STL");
+renderBox("boxplotID", "AST");
+renderBox("boxplotID", "REB");
+renderBox("boxplotID", "STL");
 // renderBox("container-BLK", "BLK");
 // renderBox("container-TOV", "TOV");
 // renderBox("container-FG_PCT", "FG_PCT");
 // renderBox("container-FG3_PCT", "FG3_PCT");
-// renderBox("container-FT_PCT", "FT_PCT");
+// renderBox("boxplotID", "FT_PCT");
 
 function renderBox(container, metric){
 
@@ -15,7 +15,7 @@ function renderBox(container, metric){
   var labels = true; // show the text labels beside individual boxplots?
 
   var margin = {top: 30, right: 30, bottom: 70, left: 30};
-  var width = 300 - margin.left - margin.right;
+  var width = 250 - margin.left - margin.right;
   var height = 400 - margin.top - margin.bottom;
     
   var min = Infinity,
@@ -38,7 +38,7 @@ function renderBox(container, metric){
     data[1][1] = [];
 
 
-  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610000000", function(error2, raw2) { //Put 2nd team or league average team here
+  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612739", function(error2, raw2) { //Put 2nd team or league average team here
 
       raw2.forEach(function(x) {
         if(metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT"){
@@ -161,11 +161,11 @@ function renderBox(container, metric){
       svg.append("linearGradient") //gradient
         .attr("id", "line-gradient")
         .attr("gradientUnits", "userSpaceOnUse")
-        .attr("x1", 0).attr("y1", 70)
-        .attr("x2", 0).attr("y2", 140)
+        .attr("x1", 0).attr("y1", 60)
+        .attr("x2", 0).attr("y2", 130)
         .selectAll("stop")
         .data([
-        {offset: "0%", color: "green"},
+        {offset: "0%", color: "blue"},
         {offset: "100%", color: "red"}   
         ])
         .enter().append("stop")
@@ -204,15 +204,15 @@ function renderBox(container, metric){
       // draw x axis  
       svg.append("g")
           .attr("class", "x axis")
-          .attr("transform", "translate(0," + (height  + margin.top + 10) + ")")
+          .attr("transform", "translate(0," + (height  + margin.top ) + ")")
           .call(xAxis)
         .append("text")             // text label for the x axis
-            .attr("x", (width / 2) )
+            .attr("x", (width / 2)  )
             .attr("y",  10 )
         .attr("dy", ".71em")
             .style("text-anchor", "middle")
         .style("font-size", "12px") 
-            .text("-"); 
+     
     });
   }
 

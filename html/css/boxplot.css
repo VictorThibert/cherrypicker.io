@@ -15,9 +15,9 @@
 }
 .box rect
 {
-  fill: white;                 
-  stroke: url(#line-gradient);    
-  stroke-width: 1px;      
+  fill: pink;                 
+  stroke: url(#line-gradient);   
+  stroke-width: 2px;      
 }
 .box circle {
   fill: white;
@@ -43,6 +43,7 @@
 .axis line {
   fill: none;
   stroke: #000;
+   stroke-width: 1px;    
   shape-rendering: crispEdges;
 }
 

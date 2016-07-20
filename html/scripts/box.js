@@ -5,12 +5,15 @@ d3.box = function() {
 
   var color = d3.scale.linear()
     .domain([60, 150])
-    .range(["green", "red"])
+    .range(["blue", "red"])
   var color2 = d3.interpolateLab("#008000", "#c83a22");
 
+  
+  var offsetX = 15; // here to shift entire graphics over
+  
   var width = 1,
       height = 1,
-      duration = 500,
+      duration = 2000,
       domain = null,
       value = Number,
       whiskers = boxWhiskers,
@@ -76,9 +79,9 @@ d3.box = function() {
    //vertical line
       center.enter().insert("line", "rect")
           .attr("class", "center")
-          .attr("x1", width / 2)
+          .attr("x1", width / 2 + offsetX) // + offsetX here to shift over
           .attr("y1", function(d) { return x0(d[0]); })
-          .attr("x2", width / 2)
+          .attr("x2", width / 2 + offsetX) 
           .attr("y2", function(d) { return x0(d[1]); })
           //.style("stroke", function(d){return color(x1(d[0]))}) //add gradient stroke
           .style("opacity", 1)
@@ -108,9 +111,9 @@ d3.box = function() {
 
       box.enter().append("rect")
           .attr("class", "box")
-          .attr("x", 0)
+          .attr("x", 0 + offsetX)
           .attr("y", function(d) { return x0(d[2]); })
-          .attr("width", width)
+          .attr("width", width )
           .attr("height", function(d) { return x0(d[0]) - x0(d[2]); })
           //.style("stroke", "red")
         .transition()
@@ -130,9 +133,9 @@ d3.box = function() {
 
       medianLine.enter().append("line")
           .attr("class", "median")
-          .attr("x1", 0)
+          .attr("x1", 0 + offsetX)
           .attr("y1", x0)
-          .attr("x2", width)
+          .attr("x2", width + offsetX)
           .attr("y2", x0)
         .transition()
           .duration(duration)
@@ -150,9 +153,9 @@ d3.box = function() {
 
       whisker.enter().insert("line", "circle, text")
           .attr("class", "whisker")
-          .attr("x1", 0)
+          .attr("x1", 0 + offsetX)
           .attr("y1", x0)
-          .attr("x2", 0 + width)
+          .attr("x2", 0 + width + offsetX)
           .attr("y2", x0)
           .style("opacity", 1e-6)
         .transition()
@@ -204,14 +207,17 @@ d3.box = function() {
       var format = tickFormat || x1.tickFormat(1000);
 
       // Update box ticks.
+      var ch = [0]; //REMOVE IQR TOP AND BOTTOM
+      ch[0] = quartileData[1];
+      
       var boxTick = g.selectAll("text.box")
-          .data(quartileData);
+          .data(ch);
    if(showLabels == true) {
       boxTick.enter().append("text")
           .attr("class", "box")
           .attr("dy", ".3em")
           .attr("dx", function(d, i) { return i & 1 ? 6 : -6 })
-          .attr("x", function(d, i) { return i & 1 ?  + width : 0 })
+          .attr("x", function(d, i) { return i & 1 ?  + width + offsetX : 0 + offsetX })
           .attr("y", x0)
           .attr("text-anchor", function(d, i) { return i & 1 ? "start" : "end"; })
           .text(format)
@@ -235,7 +241,7 @@ d3.box = function() {
           .attr("class", "whisker")
           .attr("dy", ".3em")
           .attr("dx", 6)
-          .attr("x", width)
+          .attr("x", width + offsetX)
           .attr("y", x0)
           .text(format)
           .style("opacity", 1e-6)

@@ -118,6 +118,16 @@ function localshotchart(count){
 					topPCT = sliderCoordinates[1];
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
+					
+					var percentContainer = document.getElementById("sub-container-label1");
+					$(percentContainer).css("font-weight", "900")
+														.css("color", "#33bdb1");
+				})
+				
+				slider.noUiSlider.on('change', function(){
+				var percentContainer = document.getElementById("sub-container-label1");
+					$(percentContainer).css("font-weight", "normal")
+														.css("color", "#555");
 				})
 				
 				//////////////////
@@ -156,8 +166,20 @@ function localshotchart(count){
 					topAttempts = sliderCoordinates2[1];
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
+					
+					var volumeContainer = document.getElementById("sub-container-label2");
+					$(volumeContainer).css("font-weight", "900")
+														.css("color", "#33bdb1");
 				})
 
+				sliderShotAttempts.noUiSlider.on('change', function(){
+					console.log("asd")
+					var volumeContainer = document.getElementById("sub-container-label2");
+					$(volumeContainer).css("font-weight", "normal")
+														.css("color", "#555");
+				})
+
+				
 				//////////////////
 				//SHOT DISTANCE SLIDER
 				//////////////////
@@ -188,6 +210,16 @@ function localshotchart(count){
 					
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
+				
+					var distanceContainer = document.getElementById("sub-container-label3");
+					$(distanceContainer).css("font-weight", "900")
+														.css("color", "#33bdb1");
+				})
+				
+				sliderShotDistance.noUiSlider.on('change', function(){
+				var percentContainer = document.getElementById("sub-container-label3");
+					$(percentContainer).css("font-weight", "normal")
+														.css("color", "#555");
 				})
 				
 			function render(){
