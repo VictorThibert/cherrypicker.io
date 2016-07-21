@@ -28,9 +28,10 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
         $parent.show(); 
       }
       
+      /*
       $parent.mouseenter(function(){
         var toolTipName = $(this).text();
-        var playerId = $parent.getAttribute("data-playerID");
+        //var playerId = $parent[i].getAttribute("data-playerID");
         console.log(playerId);
         $(this).append('<div id="tooltip"></div>');  
             rosterTooltip = $('#tooltip');
@@ -58,6 +59,7 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
         rosterTooltip.remove();
         playerNameLabel.remove();
       })
+      */
       
       
       var $text = $parent.find('text'); //SELECTS THE td ELEMENT

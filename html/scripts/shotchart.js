@@ -315,7 +315,7 @@ function localshotchart(count){
 						})
 				
 				
-				hexagon.transition().duration(500).ease("quad").attr("d", function(d) {  //Draws the path
+				hexagon.transition().duration(700).ease("bounce").attr("d", function(d) {  //Draws the path
 				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
 				    		return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
