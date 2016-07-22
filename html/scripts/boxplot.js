@@ -38,7 +38,7 @@ function renderBox(container, metric){
     data[1][1] = [];
 
 
-  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612738$1610612739$1610612740", function(error2, raw2) { //Put 30 teams or league average team here
+  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=ALLTEAMS", function(error2, raw2) { //Put 30 teams or league average team here
 
       raw2.forEach(function(x) {
         if(metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT"){
