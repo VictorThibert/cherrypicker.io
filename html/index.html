@@ -378,6 +378,7 @@
 					
 					renderCalendar(2014, 2015, currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
+					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
 				}
 				
 				//REMEMBER/ DONT UPDATE TEAM IF CALLED FROM PLAYER CHANGE i.e. YEAR or TEAM CHANGE
@@ -387,6 +388,7 @@
 					loadRoster(currentTeamID, currentYear, true);					
 					renderCalendar(2014, 2015, currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
+					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
 					$("#teamBox").select2("val", currentTeamID);
 					$("#yearBox").select3("val", currentYear);
 					changeTeamName();
