@@ -306,7 +306,12 @@ function localshotchart(count){
 				    //.attr("d", hexbin.hexagon())
 				    .attr("d", function(d) {  //Draws the path
 				   
+				    	  if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
+				    		return hexbin.hexagon(radiusScale(d.length/3), 0).dpoints;
+				    	} else {
 				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+				    	    }
 				    	 
 						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
