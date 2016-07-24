@@ -6,7 +6,7 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
     position: relative;
     display: inline-block;
 	border-radius: 4px 4px 4px 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);*/
   
   
 }
@@ -25,6 +25,7 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
           box-sizing: border-box; /* css3 */
   
   font-family: 'Roboto', sans-serif;
+	font-weight: light;
 	color: #888;
 	font-size: 17px;
 /*   background-color: rgb(255,255,255,0.3); */ /*VT Default unclicked color*/
@@ -88,7 +89,7 @@ html[dir="rtl"] .select3-container .select3-choice {
 	
   
     font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    font-weight: light;
     color: #888; /*VT text color of search bar*/
   
     text-overflow: ellipsis;

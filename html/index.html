@@ -371,6 +371,7 @@
 				}
 				
 				if(newPageLoad){
+					console.log($("#teamBox").select2("val", currentTeamID));
 					$("#teamBox").select2("val", currentTeamID);
 					$("#yearBox").select3("val", currentYear);
 					changeTeamName();
@@ -400,6 +401,7 @@
 			}
 			
 		function changeTeamName(team){ //FIX THIS
+			console.log($('#teamName').html($('#teamBox').find(":selected").text()));
 			 $('#teamName').html($('#teamBox').find(":selected").text()); //use .html(team) with dictionary later
 		}	
 			

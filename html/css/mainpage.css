@@ -5,14 +5,15 @@
 
 p {
   font-family: 'Roboto', sans-serif;
+	font-weight: light;
 	color: #222222;
 	font-size: 20px;
 }
 
 p.percentage {
-	 font-family: 'Asap', sans-serif;
+	font-family: 'Asap', sans-serif;
 	color: #33bdb1;
-	font-size: 14px;
+	font-size: 10px;
 	
 }
 
@@ -150,7 +151,7 @@ h1 {
 
 #sub-container-percentage {
 	position: absolute;
-	top: 280px;
+	top: 290px;
 	left: 15px;
 }
 
@@ -222,6 +223,7 @@ td {
 
 .card-elem{
 		font-family: Roboto;
+		font-weight: light;
 }
 
 /* Calendar hover */

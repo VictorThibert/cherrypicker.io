@@ -106,6 +106,8 @@ function localshotchart(count){
 					start: [0.0, 1.0],
 					step: 0.02,
 					connect: true,
+					behaviour: 'drag-tap',
+					margin: 0.03,
 					range: {
 						'min': 0,
 						'max': 1
@@ -120,14 +122,18 @@ function localshotchart(count){
 					render();
 					
 					var percentContainer = document.getElementById("sub-container-label1");
-					$(percentContainer).css("font-weight", "900")
-														.css("color", "#33bdb1");
+					$(percentContainer)
+						.css("font-weight", "900")
+						.css("color", "#33bdb1")
+					;
 				})
 				
 				slider.noUiSlider.on('change', function(){
 				var percentContainer = document.getElementById("sub-container-label1");
-					$(percentContainer).css("font-weight", "normal")
-														.css("color", "#555");
+					$(percentContainer)
+						.css("font-weight", "normal")
+						.css("color", "#555")
+					;
 				})
 				
 				//////////////////
@@ -142,6 +148,7 @@ function localshotchart(count){
 							start: [0.0, 10000],
 							snap: true,
 							connect: true,
+							//margin: 300,
 							range: {
 								'min': 0,
 								'10%': 1,
@@ -193,6 +200,7 @@ function localshotchart(count){
 					start: [0.0, 25.0],
 					step: 1,
 					behaviour: "drag-tap",
+					margin: 1,
 					connect: true,
 					range: {
 						'min': 0,
@@ -270,7 +278,7 @@ function localshotchart(count){
 				    .attr("height", height + margin.top + margin.bottom)
 				  	.append("g")
 				    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+				
 				svg.append("clipPath")//Append clipping path
 				    .attr("id", "clip")
 				 		.append("rect")
@@ -282,6 +290,10 @@ function localshotchart(count){
 			 	var extent = brushConditions[1]; //Last extent of brush
 			 	var lastPercentage = brushConditions[2];
 			 	var selectedPercentage = lastPercentage;
+				
+				//var defaultValue = (totalMade/totalShot);
+				
+				//$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(defaultValue*1000)/10 +  "% </p>");
 
 				var brushObject = d3.svg.brush() //Creation of brush, but not drawing it until called later
 	            	.x(d3.scale.identity().domain([0, width]))
@@ -304,14 +316,15 @@ function localshotchart(count){
 				    .attr("class", "hexagon")
 				    .attr("val", function(d) {return d.totalMade/d.totalShot;}) //For debugging purposes mostly
 				    //.attr("d", hexbin.hexagon())
-				    .attr("d", function(d) {  //Draws the path
-				   
+				    .attr("d", function(d) {  //Draws the path2
+								$("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
 				    	  if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
-				    		return hexbin.hexagon(radiusScale(d.length/3), 0).dpoints;
-				    	} else {
+				    			return hexbin.hexagon(radiusScale(d.length/3), 0).dpoints;
+				    		} 	
+								else {
 				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
-				    	    }
+				    	   }
 				    	 
 						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
@@ -383,11 +396,15 @@ function localshotchart(count){
 						return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]
 						});
 
-					selectedPercentage = selectedMade/selectedTotal;
-					brushConditions[2] = selectedPercentage;
+						selectedPercentage = selectedMade/selectedTotal;
+						brushConditions[2] = selectedPercentage;
 
-					$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
-
+						if(isNaN(selectedPercentage)){
+							//$("#sub-container-percentage").html('<p class="percentage">Percentage:' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+						}
+						else{
+							$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+						}
 			    }
 
 			    function brushEnd() {

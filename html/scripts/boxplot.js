@@ -1,16 +1,16 @@
 function renderBoxPlots(currentTeamID){
 
-  renderBox("boxplotID", "PTS", currentTeamID);
-  renderBox("boxplotID", "AST", currentTeamID);
-  renderBox("boxplotID", "REB", currentTeamID);
-  renderBox("boxplotID", "STL", currentTeamID);
+  renderBox("boxplotID", "PTS", "Points", currentTeamID);
+  renderBox("boxplotID", "AST", "Assists", currentTeamID);
+  renderBox("boxplotID", "REB", "Rebounds", currentTeamID);
+  renderBox("boxplotID", "STL", "Steals", currentTeamID);
   // renderBox("container-BLK", "BLK");
   // renderBox("container-TOV", "TOV");
   // renderBox("container-FG_PCT", "FG_PCT");
   // renderBox("container-FG3_PCT", "FG3_PCT");
   // renderBox("boxplotID", "FT_PCT");
 
-  function renderBox(container, metric, teamID){
+  function renderBox(container, metric, metricString, teamID){
 
     var divID = "#" + container;
     
@@ -29,6 +29,9 @@ function renderBoxPlots(currentTeamID){
     var data = [];
       data[0] = [];
       data[1] = [];
+    
+    var metricText = metricString;
+    var axisText = $('#teamName').text();
 
       // add more rows if your csv file has more columns
 
@@ -191,7 +194,7 @@ function renderBoxPlots(currentTeamID){
               .attr("text-anchor", "middle")  
               .style("font-size", "12px") 
               //.style("text-decoration", "underline")  
-              .text(metric);
+              .text(metricText);
 
          // draw y axis
         svg.append("g")
@@ -203,7 +206,7 @@ function renderBoxPlots(currentTeamID){
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .style("font-size", "12px") 
-            .text(metric);    
+            .text(metricText);    
 
         // draw x axis  
         svg.append("g")
