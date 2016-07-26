@@ -13,6 +13,7 @@ function localshotchart(count){
 			        reassignLeague(xmlLeagueRequest.responseText);
 			    }
 			}
+			
 			xmlLeagueRequest.open("GET", urlLeague, true);
 			xmlLeagueRequest.send();
 
@@ -247,7 +248,7 @@ function localshotchart(count){
 				    }); 
 				};
 
-				var radiusScale = d3.scale.pow().exponent(0.8)  //Create radius scale for the hexons
+				var radiusScale = d3.scale.linear()  //Create radius scale for the hexons
 				    .domain([0,0,1,2,50])
 				    .range([0,0.5,3,5.1,5.1]); 
 
@@ -318,29 +319,28 @@ function localshotchart(count){
 				    //.attr("d", hexbin.hexagon())
 				    .attr("d", function(d) {  //Draws the path2
 								$("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
-				    	  if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
-				    			return hexbin.hexagon(radiusScale(d.length/3), 0).dpoints;
-				    		} 	
-								else {
-				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
-				    	   }
-				    	 
+				    	 if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+									d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
+										return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
+								} else {
+										return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+										}
+
 						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				    .style("fill", function(d) {
 							return colorScale(d.totalMade/d.totalShot- leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
 						})
 				
-				
-				hexagon.transition().duration(700).ease("bounce").attr("d", function(d) {  //Draws the path
-				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
-				    		return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
-				    	} else {
-				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
-				    	    }
-						})  //d d
+				//transition
+// 				hexagon.transition().duration(700).ease("bounce").attr("d", function(d) {  //Draws the path
+// 				    	if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+// 				    		d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
+// 				    		return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
+// 				    	} else {
+// 				    	    return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+// 				    	    }
+// 						})  //d d
 		
 /*
  					.on("mouseover", function(d) { //REMOVE
