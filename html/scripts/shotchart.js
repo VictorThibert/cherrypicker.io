@@ -43,6 +43,7 @@ function localshotchart(count){
 			var hpoints;
 			var unSmoothedHexpoints;
 			var customRadius = 5;
+	
 
 			var margin = {top: -15, right: 20, bottom: 45, left: 20}, //MARGIN
 				  width = 550 - margin.left - margin.right,
