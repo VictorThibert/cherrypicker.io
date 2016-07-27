@@ -41,7 +41,7 @@ function localshotchart(count){
 			xmlPlayerRequest.send();
 		
 			var hpoints;
-			var unSmoothedHexpoints;
+			//var unSmoothedHexpoints;
 			var customRadius = 5;
 	
 
@@ -58,7 +58,7 @@ function localshotchart(count){
 				} //SHIFT BY 250 IN X AND 50 IN Y
 				
 				hpoints = hexbin(playerShotArray);
-				unSmoothedHexpoints = hexbin(playerShotArray);
+				//unSmoothedHexpoints = hexbin(playerShotArray);
 /*
  				for(var x in hpoints){ //For each point in the array
  					console.log(hpoints[x])//~0-427 bins in hpoints
