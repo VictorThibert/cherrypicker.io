@@ -1,4 +1,86 @@
 function localshotchart(count){
+	
+	//top out of render() to opt 
+	
+	
+		var selectedNothing ;
+		var extent;
+		var lastPercentage;
+		var selectedPercentage ;
+	var hexagon;
+	 function brushEnd() {
+		        	if (selectedNothing) {
+		        		hexagon.classed("selected", true);
+		        	}
+		        	//brushCanvas.moveToBack();
+		        }
+	
+	
+	 function brushMove() {
+					
+	        		var selectedMade = 0;
+	        		var selectedTotal = 0;
+
+						extent = d3.event.target.extent();
+						lastPosition = extent;
+						brushConditions[1] = lastPosition; 
+
+						if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED SOMETHING
+							selectedNothing = 0;
+							brushConditions[0] = selectedNothing;
+						} else { //SELECTED SOMETHING
+							selectedNothing = 1;
+							brushConditions[0] = selectedNothing;
+						}
+
+						hexagon.classed("selected", function(d) {
+
+						if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
+							d3.select(this).attr("d") != "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z") {//very important structure
+							selectedMade += d.totalMade;
+						
+							selectedTotal += d.totalShot;
+						}
+						return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]
+						});
+
+						selectedPercentage = selectedMade/selectedTotal;
+						brushConditions[2] = selectedPercentage;
+
+						if(isNaN(selectedPercentage)){
+							//$("#sub-container-percentage").html('<p class="percentage">Percentage:' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+						}
+						else{
+							$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+						}
+			    }
+
+	
+		var radiusScale = d3.scale.linear()  //Create radius scale for the hexons
+				    .domain([0,0,1,2,50])
+				    .range([0,0.5,3,5.1,5.1]); 
+
+				var colorScale = d3.scale.linear() //Create color scale for the hexons
+				    .domain([-0.4, 0, 0.4]) //Range for +- above average
+				    .range(["#35a4b1", "#eeeaea", "#ff8566"]); 
+
+				var x = d3.scale.identity() 
+				    .domain([0, width]); 
+
+				var y = d3.scale.linear()
+				    .domain([0, height])
+				    .range([height, 0]);
+
+				var xAxis = d3.svg.axis() //Axis functions
+				    .scale(x)
+				    .orient("bottom")
+				    .tickSize(6, -height);
+
+				var yAxis = d3.svg.axis()
+				    .scale(y)
+				    .orient("left")
+				    .tickSize(6, -width);
+	
 			//////////////////
 			//LEAGUE AVERAGE
 			//////////////////
@@ -58,6 +140,7 @@ function localshotchart(count){
 				} //SHIFT BY 250 IN X AND 50 IN Y
 				
 				hpoints = hexbin(playerShotArray);
+			
 				//unSmoothedHexpoints = hexbin(playerShotArray);
 /*
  				for(var x in hpoints){ //For each point in the array
@@ -249,30 +332,7 @@ function localshotchart(count){
 				    }); 
 				};
 
-				var radiusScale = d3.scale.linear()  //Create radius scale for the hexons
-				    .domain([0,0,1,2,50])
-				    .range([0,0.5,3,5.1,5.1]); 
-
-				var colorScale = d3.scale.linear() //Create color scale for the hexons
-				    .domain([-0.4, 0, 0.4]) //Range for +- above average
-				    .range(["#35a4b1", "#eeeaea", "#ff8566"]); 
-
-				var x = d3.scale.identity() 
-				    .domain([0, width]); 
-
-				var y = d3.scale.linear()
-				    .domain([0, height])
-				    .range([height, 0]);
-
-				var xAxis = d3.svg.axis() //Axis functions
-				    .scale(x)
-				    .orient("bottom")
-				    .tickSize(6, -height);
-
-				var yAxis = d3.svg.axis()
-				    .scale(y)
-				    .orient("left")
-				    .tickSize(6, -width);
+				
 
 				var svg = d3.select("#sub-container-shot").append("svg") //Create top level svg canvas
 						.attr("class", "shotChartCanvas")
@@ -288,10 +348,10 @@ function localshotchart(count){
 				    .attr("width", width)
 				    .attr("height", height);
 
-			  var selectedNothing = brushConditions[0]; //1 0 flag for selected nothing
-			 	var extent = brushConditions[1]; //Last extent of brush
-			 	var lastPercentage = brushConditions[2];
-			 	var selectedPercentage = lastPercentage;
+					 selectedNothing = brushConditions[0]; //1 0 flag for selected nothing
+			 			extent = brushConditions[1]; //Last extent of brush // test out of scope var
+			 		 lastPercentage = brushConditions[2];
+			 	 selectedPercentage = lastPercentage; ///////////
 				
 				//var defaultValue = (totalMade/totalShot);
 				
@@ -309,8 +369,7 @@ function localshotchart(count){
 			      .call(brushObject); 
 
 				//Instead of SVG can put brushCanvs
-				var hexagon = svg.append("g") //Adding the hexons // Hexon variable contains all hexons (e.g. array of 428 paths)
-				  //.attr("clip-path", "url(#clip)") //Does nothing ?
+				hexagon = svg.append("g") //Adding the hexons // Hexon variable contains all hexons (e.g. array of 428 paths)
 				  .selectAll(".hexagon")
 				    .data(hpoints) //hpoints means smoothed
 				 	.enter()
@@ -330,7 +389,7 @@ function localshotchart(count){
 						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				    .style("fill", function(d) {
-							return colorScale(d.totalMade/d.totalShot- leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
+							return colorScale(d.totalMade/d.totalShot - leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
 						})
 				
 				//transition
@@ -370,50 +429,8 @@ function localshotchart(count){
  					}	
  				);
 */
-			    function brushMove() {
-	        		var selectedMade = 0;
-	        		var selectedTotal = 0;
-
-						extent = d3.event.target.extent();
-						lastPosition = extent;
-						brushConditions[1] = lastPosition; 
-
-						if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED SOMETHING
-							selectedNothing = 0;
-							brushConditions[0] = selectedNothing;
-						} else { //SELECTED SOMETHING
-							selectedNothing = 1;
-							brushConditions[0] = selectedNothing;
-						}
-
-						hexagon.classed("selected", function(d) {
-
-						if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
-							d3.select(this).attr("d") != "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z") {//very important structure
-							selectedMade += d.totalMade;
-						
-							selectedTotal += d.totalShot;
-						}
-						return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]
-						});
-
-						selectedPercentage = selectedMade/selectedTotal;
-						brushConditions[2] = selectedPercentage;
-
-						if(isNaN(selectedPercentage)){
-							//$("#sub-container-percentage").html('<p class="percentage">Percentage:' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
-						}
-						else{
-							$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
-						}
-			    }
-
-			    function brushEnd() {
-		        	if (selectedNothing) {
-		        		hexagon.classed("selected", true);
-		        	}
-		        	//brushCanvas.moveToBack();
-		        }
+			   
+			   
 
 				brushCanvas.call(brushObject.event) //Triggers artificial brush to refresh the selected %
 						
