@@ -16,6 +16,11 @@ function localshotchart(count){
 		        }
 	
 	
+			var margin = {top: -15, right: 20, bottom: 45, left: 20}, //MARGIN
+				  width = 550 - margin.left - margin.right,
+				  height = 350 - margin.top - margin.bottom; 
+	
+	
 	 function brushMove() {
 					
 	        		var selectedMade = 0;
@@ -127,9 +132,6 @@ function localshotchart(count){
 			var customRadius = 5;
 	
 
-			var margin = {top: -15, right: 20, bottom: 45, left: 20}, //MARGIN
-				  width = 550 - margin.left - margin.right,
-				  height = 350 - margin.top - margin.bottom; 
 	
 			var hexbin = d3.hexbin().size([width, height]).radius(customRadius);//Initialize Hexbin Plugin
 	
@@ -316,6 +318,7 @@ function localshotchart(count){
 				})
 				
 			function render(){
+				console.log("RENDER CALL");
 	
 				d3.selection.prototype.moveToFront = function() {
 				  return this.each(function(){
@@ -375,9 +378,10 @@ function localshotchart(count){
 				 	.enter()
 				  	.append("path") //Actual svg hexons element tags <path>
 				    .attr("class", "hexagon")
-				    .attr("val", function(d) {return d.totalMade/d.totalShot;}) //For debugging purposes mostly
+				    //.attr("val", function(d) {return d.totalMade/d.totalShot;}) //For debugging purposes mostly
 				    //.attr("d", hexbin.hexagon())
 				    .attr("d", function(d) {  //Draws the path2
+					console.log("INNER")
 								$("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
 				    	 if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 									d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
