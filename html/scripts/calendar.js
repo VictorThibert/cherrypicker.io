@@ -143,7 +143,6 @@ function renderCalendarMonth(container, year1, year2, teamID){
           var e = d.GAME_DATE_EST; 
           
 //           var gameID = d.GAME_ID;
-//           console.log(gameID);
           
           return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
         .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].PLUS_MINUS);})
@@ -154,7 +153,6 @@ function renderCalendarMonth(container, year1, year2, teamID){
           var e = d.GAME_DATE_EST; 
           
 //           var gameID = d.GAME_ID;
-//           console.log(gameID);
           
           return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
         .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].GAME_ID);})
