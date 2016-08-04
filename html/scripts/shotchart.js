@@ -1,28 +1,24 @@
 function localshotchart(count){
 	
 	//top out of render() to opt 
-	
-	
-		var selectedNothing ;
-		var extent;
-		var lastPercentage;
-		var selectedPercentage ;
+	var selectedNothing ;
+	var extent;
+	var lastPercentage;
+	var selectedPercentage ;
 	var hexagon;
-	 function brushEnd() {
-		        	if (selectedNothing) {
-		        		hexagon.classed("selected", true);
-		        	}
-		        	//brushCanvas.moveToBack();
-		        }
 	
+	function brushEnd() {
+		if (selectedNothing) {
+			hexagon.classed("selected", true);
+		}
+		//brushCanvas.moveToBack();
+	}
 	
-			var margin = {top: -15, right: 20, bottom: 45, left: 20}, //MARGIN
-				  width = 550 - margin.left - margin.right,
-				  height = 350 - margin.top - margin.bottom; 
-	
-	
-	 function brushMove() {
-					
+	var margin = {top: -15, right: 20, bottom: 45, left: 20} //MARGIN
+	var width = 550 - margin.left - margin.right;
+	var height = 350 - margin.top - margin.bottom; 
+
+	function brushMove() {
 	        		var selectedMade = 0;
 	        		var selectedTotal = 0;
 
