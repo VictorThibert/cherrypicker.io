@@ -1,11 +1,14 @@
 function localshotchart(count){
-	
-	//top out of render() to opt 
+
+	//hexagon var declarations
 	var selectedNothing ;
 	var extent;
 	var lastPercentage;
 	var selectedPercentage ;
 	var hexagon;
+	
+	var selectedMade = 0;
+	var selectedTotal = 0;
 	
 	function brushEnd() {
 		if (selectedNothing) {
@@ -14,47 +17,47 @@ function localshotchart(count){
 		//brushCanvas.moveToBack();
 	}
 	
-	var margin = {top: -15, right: 20, bottom: 45, left: 20} //MARGIN
+	//svg size information
+	var margin = {top: -15, right: 20, bottom: 45, left: 20} 
 	var width = 550 - margin.left - margin.right;
 	var height = 350 - margin.top - margin.bottom; 
-
+	
+	//what happens when the brush moves (selection on shotchart)
 	function brushMove() {
-	        		var selectedMade = 0;
-	        		var selectedTotal = 0;
+		
+		extent = d3.event.target.extent();
+		lastPosition = extent;
+		brushConditions[1] = lastPosition; 
 
-						extent = d3.event.target.extent();
-						lastPosition = extent;
-						brushConditions[1] = lastPosition; 
+		if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED SOMETHING
+			selectedNothing = 0;
+			brushConditions[0] = selectedNothing;
+		} else { //SELECTED SOMETHING
+			selectedNothing = 1;
+			brushConditions[0] = selectedNothing;
+		}
 
-						if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED SOMETHING
-							selectedNothing = 0;
-							brushConditions[0] = selectedNothing;
-						} else { //SELECTED SOMETHING
-							selectedNothing = 1;
-							brushConditions[0] = selectedNothing;
-						}
+		hexagon.classed("selected", function(d) {
 
-						hexagon.classed("selected", function(d) {
+		if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
+			d3.select(this).attr("d") != "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z") {//very important structure
+			selectedMade += d.totalMade;
 
-						if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
-							d3.select(this).attr("d") != "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z") {//very important structure
-							selectedMade += d.totalMade;
-						
-							selectedTotal += d.totalShot;
-						}
-						return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]
-						});
+			selectedTotal += d.totalShot;
+		}
+		return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]
+		});
 
-						selectedPercentage = selectedMade/selectedTotal;
-						brushConditions[2] = selectedPercentage;
+		selectedPercentage = selectedMade/selectedTotal;
+		brushConditions[2] = selectedPercentage;
 
-						if(isNaN(selectedPercentage)){
-							//$("#sub-container-percentage").html('<p class="percentage">Percentage:' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
-						}
-						else{
-							$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
-						}
-			    }
+		if(isNaN(selectedPercentage)){
+			//$("#sub-container-percentage").html('<p class="percentage">Percentage:' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+		}
+		else{
+			$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+		}
+	}
 
 	
 		var radiusScale = d3.scale.linear()  //Create radius scale for the hexons
@@ -167,18 +170,14 @@ function localshotchart(count){
 					render();
 			}
 	
-				//////////////////
-				//SLIDER VARIABLES
-				//////////////////
+				//slider variables
 				var lastPosition = [[0, 0],[0,0]];
 				var brushConditions = [1, lastPosition, 0];
 
 				var bottomPCT = 0;
 				var topPCT = 1;
 	
-				//////////////////
-				//PERCENTAGE SLIDER
-				//////////////////
+				//percentage slider
 				var slider = document.getElementById("sub-container-shot1");
 	
 				if(count !== 0){ //ALL RELOADS AFTER FIRST
@@ -263,7 +262,6 @@ function localshotchart(count){
 				})
 
 				sliderShotAttempts.noUiSlider.on('change', function(){
-					console.log("asd")
 					var volumeContainer = document.getElementById("sub-container-label2");
 					$(volumeContainer).css("font-weight", "normal")
 														.css("color", "#555");
