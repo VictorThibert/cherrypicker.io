@@ -6,6 +6,7 @@ function localshotchart(count){
 	var lastPercentage;
 	var selectedPercentage ;
 	var hexagon;
+	var customRadius = 5;
 	
 	var selectedMade = 0;
 	var selectedTotal = 0;
@@ -60,92 +61,84 @@ function localshotchart(count){
 	}
 
 	
-		var radiusScale = d3.scale.linear()  //Create radius scale for the hexons
-				    .domain([0,0,1,2,50])
-				    .range([0,0.5,3,5.1,5.1]); 
-
-				var colorScale = d3.scale.linear() //Create color scale for the hexons
-				    .domain([-0.4, 0, 0.4]) //Range for +- above average
-				    .range(["#35a4b1", "#eeeaea", "#ff8566"]); 
-
-				var x = d3.scale.identity() 
-				    .domain([0, width]); 
-
-				var y = d3.scale.linear()
-				    .domain([0, height])
-				    .range([height, 0]);
-
-				var xAxis = d3.svg.axis() //Axis functions
-				    .scale(x)
-				    .orient("bottom")
-				    .tickSize(6, -height);
-
-				var yAxis = d3.svg.axis()
-				    .scale(y)
-				    .orient("left")
-				    .tickSize(6, -width);
+	var radiusScale = d3.scale.linear()  //Create radius scale for the hexons
+					.domain([0,0,1,2,50])
+					.range([0,0.5,3,5.1,5.1]);
 	
-			//////////////////
-			//LEAGUE AVERAGE
-			//////////////////
-			var jsonLeague = [];
-			var leagueShotArray = [];
-	
-			var xmlLeagueRequest = new XMLHttpRequest();
-			var urlLeague = "http://cherrypicker.io/php/playershotsleague.php?";
-	
-			xmlLeagueRequest.onreadystatechange=function() {
-			    if (xmlLeagueRequest.readyState == 4 && xmlLeagueRequest.status == 200) {
-			        reassignLeague(xmlLeagueRequest.responseText);
-			    }
-			}
-			
-			xmlLeagueRequest.open("GET", urlLeague, true);
-			xmlLeagueRequest.send();
+	var colorScale = d3.scale.linear() //Create color scale for the hexons
+			.domain([-0.4, 0, 0.4]) //Range for +- above average
+			.range(["#35a4b1", "#eeeaea", "#ff8566"]); 
 
-			function reassignLeague(response) {
-			    jsonLeague = JSON.parse(response); 
-			
-			    for (var i = 0; i < jsonLeague.length; i+=1) {
-						leagueShotArray.push([parseInt(jsonLeague[i].LOC_X) + 250, parseInt(jsonLeague[i].LOC_Y) + 50,  jsonLeague[i].PERCENTAGE ]);
-					} 
-			}
-	
-			//////////////////
-			//SPECIFIC PLAYERS
-			//////////////////
-			var jsonPlayer = [];
-			var playerShotArray = [];
-			var xmlPlayerRequest = new XMLHttpRequest();
-			var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
-	
-			xmlPlayerRequest.onreadystatechange=function() {
-			    if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
-			        reassignPlayer(xmlPlayerRequest.responseText);
-			    }}
-			xmlPlayerRequest.open("GET", urlPlayer, true);
-			xmlPlayerRequest.send();
+	var x = d3.scale.identity() 
+			.domain([0, width]); 
+
+	var y = d3.scale.linear()
+			.domain([0, height])
+			.range([height, 0]);
+
+	var xAxis = d3.svg.axis() //Axis functions
+			.scale(x)
+			.orient("bottom")
+			.tickSize(6, -height);
+
+	var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left")
+			.tickSize(6, -width);
+
 		
-			var hpoints;
-			//var unSmoothedHexpoints;
-			var customRadius = 5;
-	
+	//league average
+	var jsonLeague = [];
+	var leagueShotArray = [];
 
-	
-			var hexbin = d3.hexbin().size([width, height]).radius(customRadius);//Initialize Hexbin Plugin
-	
-			function reassignPlayer(response){
-				jsonPlayer = JSON.parse(response); 
-				for (var i = 0; i < jsonPlayer.length; i+=1) { //playerShotArray contains all the shots
-					playerShotArray.push([parseInt(jsonPlayer[i].LOC_X) + 250, parseInt(jsonPlayer[i].LOC_Y) + 50, parseInt(jsonPlayer[i].SHOT_MADE_FLAG), jsonPlayer[i].SHOT_DISTANCE]);
-				} //SHIFT BY 250 IN X AND 50 IN Y
-				
-				hpoints = hexbin(playerShotArray);
-			
-				//unSmoothedHexpoints = hexbin(playerShotArray);
-					d3.selectAll(".shotChartCanvas").remove();
-					render();
+	var xmlLeagueRequest = new XMLHttpRequest();
+	var urlLeague = "http://cherrypicker.io/php/playershotsleague.php?";
+
+	xmlLeagueRequest.onreadystatechange=function() {
+			if (xmlLeagueRequest.readyState == 4 && xmlLeagueRequest.status == 200) {
+					reassignLeague(xmlLeagueRequest.responseText);
 			}
+	}
+
+	xmlLeagueRequest.open("GET", urlLeague, true);
+	xmlLeagueRequest.send();
+
+	function reassignLeague(response) {
+			jsonLeague = JSON.parse(response); 
+
+			for (var i = 0; i < jsonLeague.length; i+=1) {
+				leagueShotArray.push([parseInt(jsonLeague[i].LOC_X) + 250, parseInt(jsonLeague[i].LOC_Y) + 50,  jsonLeague[i].PERCENTAGE ]);
+			} 
+	}
+	
+	//individual players
+	var jsonPlayer = [];
+	var playerShotArray = [];
+	var xmlPlayerRequest = new XMLHttpRequest();
+	var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
+
+	xmlPlayerRequest.onreadystatechange=function() {
+			if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
+					reassignPlayer(xmlPlayerRequest.responseText);
+			}}
+	xmlPlayerRequest.open("GET", urlPlayer, true);
+	xmlPlayerRequest.send();
+
+	var hpoints;
+	
+	var hexbin = d3.hexbin().size([width, height]).radius(customRadius); //Initialize Hexbin Plugin
+
+	//array the player shots
+	function reassignPlayer(response){
+		jsonPlayer = JSON.parse(response); 
+		for (var i = 0; i < jsonPlayer.length; i+=1) { //playerShotArray contains all the shots
+			playerShotArray.push([parseInt(jsonPlayer[i].LOC_X) + 250, parseInt(jsonPlayer[i].LOC_Y) + 50, parseInt(jsonPlayer[i].SHOT_MADE_FLAG), jsonPlayer[i].SHOT_DISTANCE]);
+		} //SHIFT BY 250 IN X AND 50 IN Y
+		hpoints = hexbin(playerShotArray);
+		
+		d3.selectAll(".shotChartCanvas").remove();
+		render();
+	}
 	
 				//slider variables
 				var lastPosition = [[0, 0],[0,0]];
@@ -290,13 +283,13 @@ function localshotchart(count){
 				
 			function render(){
 				console.log("RENDER CALL");
-	
+				
 				d3.selection.prototype.moveToFront = function() {
 				  return this.each(function(){
 				    this.parentNode.appendChild(this);
 				  });
 				};
-
+				
 				d3.selection.prototype.moveToBack = function() {
 				    return this.each(function() { 
 				        var firstChild = this.parentNode.firstChild; 
@@ -305,9 +298,7 @@ function localshotchart(count){
 				        } 
 				    }); 
 				};
-
 				
-
 				var svg = d3.select("#sub-container-shot").append("svg") //Create top level svg canvas
 						.attr("class", "shotChartCanvas")
 				    .attr("width", width + margin.left + margin.right)
@@ -345,15 +336,15 @@ function localshotchart(count){
 				//Instead of SVG can put brushCanvs
 				hexagon = svg.append("g") //Adding the hexons // Hexon variable contains all hexons (e.g. array of 428 paths)
 				  .selectAll(".hexagon")
-				    .data(hpoints) //hpoints means smoothed
+				    .data(hpoints) 
 				 	.enter()
 				  	.append("path") //Actual svg hexons element tags <path>
 				    .attr("class", "hexagon")
 				    //.attr("val", function(d) {return d.totalMade/d.totalShot;}) //For debugging purposes mostly
 				    //.attr("d", hexbin.hexagon())
-				    .attr("d", function(d) {  //Draws the path2
+				    .attr("d", function(d) {  //draw the path
 					console.log("INNER")
-								$("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
+// 								$("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
 				    	 if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 									d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
 										return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
@@ -412,7 +403,7 @@ function localshotchart(count){
 				hexagon.classed("selected", function(d) { 
 					if(selectedNothing){
 						return true; //Select everything
-					}else{
+					} else {
 						return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]; //Select current extent
 					}
 	         	}
