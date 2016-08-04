@@ -143,29 +143,6 @@ function localshotchart(count){
 				hpoints = hexbin(playerShotArray);
 			
 				//unSmoothedHexpoints = hexbin(playerShotArray);
-/*
- 				for(var x in hpoints){ //For each point in the array
- 					console.log(hpoints[x])//~0-427 bins in hpoints
- 					var tempTotalShot = hpoints[x].totalShot;
- 					var tempTotalMade = hpoints[x].totalMade;
- 					//SMOOTH EVERYTHING HERE
- 					//HERE IS WHERE THE SMOOTHING HAPPENS
- 					hpoints[x].totalShot = 0.000001;
- 					hpoints[x].totalMade = 0;
- 					for(var y in hpoints){
- 						if(hpoints[x].i == hpoints[y].i && hpoints[x].j == hpoints[y].j){
- 							hpoints[x].totalMade += tempTotalMade * 0.6; 
- 							hpoints[x].totalShot += tempTotalShot * 0.6;
- 						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 4 ){ //30% radius
- 							hpoints[x].totalMade += hpoints[y].totalMade * 0.3;
-							hpoints[x].totalShot += hpoints[y].totalShot * 0.3;
- 						}else if(Math.pow((hpoints[x].i - hpoints[y].i ), 2) + Math.pow((hpoints[x].j - hpoints[y].j ), 2) < 6){ //10% radius
- 							hpoints[x].totalMade += hpoints[y].totalMade * 0.1;
- 							hpoints[x].totalShot += hpoints[y].totalShot * 0.1;
- 						}
- 					}
-				}
-*/
 					d3.selectAll(".shotChartCanvas").remove();
 					render();
 			}
