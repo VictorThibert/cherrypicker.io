@@ -17,3 +17,7 @@
   fill-opacity: .1;
   shape-rendering: crispEdges;
 }
+
+.hexagon.hidden {
+  opacity: 0;
+}
