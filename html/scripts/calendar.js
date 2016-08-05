@@ -51,7 +51,7 @@ function renderCalendarMonth(container, year1, year2, teamID){
       .attr("height", height)
       .attr("class", "RdYlGn")
     .append("g")
-      .attr("transform", "translate(" + 0 + "," + (height - cellSize * 7 - 1) + ")");
+      .attr("transform", "translate(" + 0 + "," + (height - cellSize * 7 - 20) + ")");
 
 
   svg.append("text")

@@ -113,6 +113,7 @@ h1 {
 
 #row1 {
 	top: 13px;
+	height: 432px;
 	position: relative;
 }
 
@@ -147,7 +148,7 @@ h1 {
 
 #sub-container-shot {
 	position: relative;
-  height: 370px;
+  height: 400px;
 	width: 550px;
 	float: left;
 } 
@@ -180,7 +181,7 @@ h1 {
 }
 
 #roster { 
-	height: 370px;
+	height: 400px;
 	width: auto;
 	overflow:hidden;
 }
