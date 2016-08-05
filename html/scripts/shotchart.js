@@ -168,7 +168,12 @@ function localshotchart(count){
 					var sliderCoordinates = slider.noUiSlider.get();
 					bottomPCT = sliderCoordinates[0];
 					topPCT = sliderCoordinates[1];
-					d3.selectAll(".hexagon[cx='100']").classed("hidden", true);           //-------------------------------------------------------
+					
+					d3.selectAll(".hexagon")
+					.classed("hidden", function(d){
+							if(!(d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT)){return true;} else{ return false;}
+					
+						});           //-------------------------------------------------------
 // 					d3.selectAll(".shotChartCanvas").remove();
 // 					render();
 					
@@ -352,7 +357,6 @@ function localshotchart(count){
 
 						})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
 				    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-				.attr("cx", function(d){ return 100;})
 				    .style("fill", function(d) {
 							return colorScale(d.totalMade/d.totalShot - leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
 						})
