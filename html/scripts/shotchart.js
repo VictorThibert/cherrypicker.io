@@ -17,6 +17,10 @@ function localshotchart(count){
 	var brushCanvas;
 	var brushObject;
 	
+	var margin = {top: 0, right: 20, bottom: 45, left: 20} 
+	var width = 550 - margin.left - margin.right;
+	var height = 375 - margin.top - margin.bottom; 
+	
 	var radiusScale = d3.scale.linear()  //Create radius scale for the hexons
 		.domain([0,0,1,2,50])
 		.range([0,0.5,3,5.1,5.1]);
@@ -46,9 +50,7 @@ function localshotchart(count){
 	}
 	
 	//svg size information
-	var margin = {top: 0, right: 20, bottom: 45, left: 20} 
-	var width = 550 - margin.left - margin.right;
-	var height = 375 - margin.top - margin.bottom; 
+	
 	
 	//what happens when the brush moves (selection on shotchart)
 	function brushMove() {
