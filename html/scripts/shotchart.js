@@ -178,13 +178,9 @@ function renderShotchart(count, selectedPlayers){
 				.append("path") //Actual svg hexons element tags <path>
 				.attr("class", "hexagon")
 				.attr("d", function(d) {  //draw the path
-					// $("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
-					if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-							d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
+				
 							return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
-						} else {
-							return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
-						}
+						
 				})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
 				.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				.style("fill", function(d) {
