@@ -1,3 +1,5 @@
+//renders shotchart
+//count is for sliders
 function localshotchart(count){
 	
 	//hexagon var declarations
@@ -11,6 +13,7 @@ function localshotchart(count){
 	var selectedMade = 0;
 	var selectedTotal = 0;
 	
+	//brush variables
 	var lastPosition = [[0, 0],[0,0]];
 	var brushConditions = [1, lastPosition, 0];
 	
@@ -28,40 +31,25 @@ function localshotchart(count){
 	var colorScale = d3.scale.linear() //Create color scale for the hexons
 		.domain([-0.4, 0, 0.4]) //Range for +- above average
 		.range(["#35a4b1", "#eeeaea", "#ff8566"]); 
-
-	var x = d3.scale.identity() 
-		.domain([0, width]); 
-
-	var y = d3.scale.linear()
-		.domain([0, height])
-		.range([height, 0]);
-
-	var xAxis = d3.svg.axis() //Axis functions
-		.scale(x)
-
-	var yAxis = d3.svg.axis()
-		.scale(y)
 	
-	//brush end
-	function brushEnd() {
-		if (selectedNothing) {
-			hexagon.classed("selected", true);
-		}
-	}
+	//slider variables
+	var bottomPCT = 0;
+	var topPCT = 1;
+	var bottomAttempts = 0;
+	var topAttempts = 10000;
+	var bottomDistance = 0;
+	var topDistance = 500;
 	
-	//svg size information
-	
-	
-	//what happens when the brush moves (selection on shotchart)
+	//when the brush moves (selection on shotchart)
 	function brushMove() {
 		extent = d3.event.target.extent();
 		lastPosition = extent;
 		brushConditions[1] = lastPosition; 
 		
-		if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ //SELECTED SOMETHING
+		if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ 
 			selectedNothing = 0;
 			brushConditions[0] = selectedNothing;
-		} else { //SELECTED SOMETHING
+		} else { 
 			selectedNothing = 1;
 			brushConditions[0] = selectedNothing;
 		}
@@ -73,7 +61,6 @@ function localshotchart(count){
 			//only find % for viewable hexagons within the selection
 			if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
 				d3.select(this).attr("d") != "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z" && !(d3.select(this)[0][0].className.baseVal.includes("hidden") )) {
-				//very important structure
 				selectedMade += d.totalMade;
 				selectedTotal += d.totalShot;
 			}
@@ -91,11 +78,8 @@ function localshotchart(count){
 			$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
 		}
 	}
-	
 
-		
 	//league average
-	var jsonLeague = [];
 	var leagueShotArray = [];
 
 	var xmlLeagueRequest = new XMLHttpRequest();
@@ -110,10 +94,12 @@ function localshotchart(count){
 	xmlLeagueRequest.open("GET", urlLeague, true);
 	xmlLeagueRequest.send();
 
+	//push all shots to an array
 	function reassignLeague(response) {
-		jsonLeague = JSON.parse(response); 
-		for (var i = 0; i < jsonLeague.length; i+=1) {
-			leagueShotArray.push([parseInt(jsonLeague[i].LOC_X) + 250, parseInt(jsonLeague[i].LOC_Y) + 50,  jsonLeague[i].PERCENTAGE ]);
+		var tempJSONobject = [];
+		tempJSONobject = JSON.parse(response); 
+		for (var i = 0; i < tempJSONobject.length; i+=1) {
+			leagueShotArray.push([parseInt(tempJSONobject[i].LOC_X) + 250, parseInt(tempJSONobject[i].LOC_Y) + 50,  tempJSONobject[i].PERCENTAGE ]);
 		} 
 	}
 	
@@ -121,7 +107,7 @@ function localshotchart(count){
 	var jsonPlayer = [];
 	var playerShotArray = [];
 	var xmlPlayerRequest = new XMLHttpRequest();
-	var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); //(AL HORFORD: 201143) (PAUL MILLSAP: 200794)
+	var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); //selectedPlayers comes from index.html
 
 	xmlPlayerRequest.onreadystatechange=function() {
 		if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
@@ -144,167 +130,24 @@ function localshotchart(count){
 		hpoints = hexbin(playerShotArray);
 		
 		d3.selectAll(".shotChartCanvas").remove();
-		render();
+		drawShotchart();
 	}
-		
-	//slider variables
-	var bottomPCT = 0;
-	var topPCT = 1;
-	var bottomAttempts = 0;
-	var topAttempts = 10000;
-	var bottomDistance = 0;
-	var topDistance = 500;
 	
-	//percentage slider
-	var slider = document.getElementById("sub-container-shot1");
+	createSliders();
+	
+	
 
-	if(count !== 0){ //ALL RELOADS AFTER FIRST
-		slider.noUiSlider.destroy();
-	}
-
-	noUiSlider.create(slider, {
-		start: [0.0, 1.0],
-		step: 0.02,
-		connect: true,
-		behaviour: 'drag-tap',
-		margin: 0.03,
-		range: {
-			'min': 0,
-			'max': 1
+	
+	//brush end
+	function brushEnd() {
+		if (selectedNothing) {
+			hexagon.classed("selected", true);
 		}
-	});
-
-	slider.noUiSlider.on('slide', function(){
-		var sliderCoordinates = slider.noUiSlider.get();
-		bottomPCT = sliderCoordinates[0];
-		topPCT = sliderCoordinates[1];
-		
-		d3.selectAll(".hexagon")
-			.classed("hidden", function(d){
-				if(!(d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-						d.distance >= bottomDistance && d.distance <= topDistance)){
-					return true;
-				} else { 
-					return false;
-				}				
-			});      
-		
-		//send fake brush event to reset the percentage
-		brushCanvas.call(brushObject.event);
-		
-		var percentContainer = document.getElementById("sub-container-label1");
-		$(percentContainer)
-			.css("font-weight", "900")
-			.css("color", "#33bdb1");
-	})
-	
-	slider.noUiSlider.on('change', function(){
-		var percentContainer = document.getElementById("sub-container-label1");
-			$(percentContainer)
-				.css("font-weight", "normal")
-				.css("color", "#555");
-	})
-
-	//volume slider
-	var sliderShotAttempts =  document.getElementById("sub-container-shot2");
-	
-	if(count !== 0){
-		sliderShotAttempts.noUiSlider.destroy();
 	}
 	
-	noUiSlider.create(sliderShotAttempts, {
-		start: [0.0, 25],
-		step: 1,
-		connect: true,
-		//margin: 300,
-		range: {
-			'min': 0,
-			'max': 25
-		}
-	});
-
-	sliderShotAttempts.noUiSlider.on('slide', function(){
-		var sliderCoordinates2 = sliderShotAttempts.noUiSlider.get();
-		bottomAttempts = sliderCoordinates2[0];
-		topAttempts = sliderCoordinates2[1];
-		
-		d3.selectAll(".hexagon")
-			.classed("hidden", function(d){
-				if(!(d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-						d.distance >= bottomDistance && d.distance <= topDistance)){
-					return true;
-				} else { 
-					return false;
-				}				
-			});      
-		
-		//send fake brush event to reset the percentage
-		brushCanvas.call(brushObject.event);
-		
-		var volumeContainer = document.getElementById("sub-container-label2");
-		$(volumeContainer)
-			.css("font-weight", "900")
-			.css("color", "#33bdb1");
-	})
-
-	sliderShotAttempts.noUiSlider.on('change', function(){
-		var volumeContainer = document.getElementById("sub-container-label2");
-		$(volumeContainer)
-			.css("font-weight", "normal")
-			.css("color", "#555");
-	})
-	
-	//shot distance
-	var sliderShotDistance =  document.getElementById("sub-container-shot3");
-
-	if(count !== 0){
-		sliderShotDistance.noUiSlider.destroy();
-	}
-
-	noUiSlider.create(sliderShotDistance, {
-		start: [0.0, 30.0],
-		step: 0.5,
-		behaviour: "drag-tap",
-		margin: 1,
-		connect: true,
-		range: {
-			'min': 0,
-			'max': 30
-		}
-	});
-	
-	sliderShotDistance.noUiSlider.on('slide', function(){
-		var sliderCoordinates3 = sliderShotDistance.noUiSlider.get();
-		bottomDistance = sliderCoordinates3[0];
-		topDistance = parseInt(sliderCoordinates3[1]);
-		
-		d3.selectAll(".hexagon")
-			.classed("hidden", function(d){
-				if(!(d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-						d.distance >= bottomDistance && d.distance <= topDistance)){
-					return true;
-				} else { 
-					return false;
-				}				
-			});      
-		
-		//send fake brush event to reset the percentage
-		brushCanvas.call(brushObject.event);
-		
-		var distanceContainer = document.getElementById("sub-container-label3");
-		$(distanceContainer)
-			.css("font-weight", "900")
-			.css("color", "#33bdb1");
-	})
-
-	sliderShotDistance.noUiSlider.on('change', function(){
-		var percentContainer = document.getElementById("sub-container-label3");
-		$(percentContainer)
-			.css("font-weight", "normal")
-			.css("color", "#555");
-	})
-				
-	function render(){
+	//draw the shotchart
+	function drawShotchart(){
+		console.log("W")
 		
 		d3.selection.prototype.moveToFront = function() {
 			return this.each(function(){
@@ -359,8 +202,6 @@ function localshotchart(count){
 			.enter()
 				.append("path") //Actual svg hexons element tags <path>
 				.attr("class", "hexagon")
-				//.attr("val", function(d) {return d.totalMade/d.totalShot;}) //For debugging purposes mostly
-				//.attr("d", hexbin.hexagon())
 				.attr("d", function(d) {  //draw the path
 
 	// 						$("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
@@ -385,35 +226,11 @@ function localshotchart(count){
 					} else {
 							return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
 							}
-				})  //d d
+				})  
 
-	/*
-			.on("mouseover", function(d) { //REMOVE
-					 d3.select(this)
-							 .style("fill", "orange");
-				})
-				.on("mouseout", function(d) {
-					d3.select(this)
-							 .style("fill", function(d){ 
-								return colorScale(d.totalMade/d.totalShot- leagueShotArray[(Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0))][2]);}) 
-							})
-	*/
+
 		brushCanvas.moveToFront();
-	/*
-		hexagon.on("mousedown", function(){ //Allow dragging from a hexon start point
-				brushCanvas.moveToFront();
-				if(d3.select(this).attr("class") != "hexagon selected"){
-					brush_elm = svg.select(".brush").node()
-					new_click_event = new Event('mousedown');
-					new_click_event.pageX = d3.event.pageX;
-					new_click_event.clientX = d3.event.clientX;
-					new_click_event.pageY = d3.event.pageY;
-					new_click_event.clientY = d3.event.clientY;
-					brush_elm.dispatchEvent(new_click_event);
-				}
-			}	
-		);
-	*/
+
 
 
 
@@ -428,5 +245,159 @@ function localshotchart(count){
 				}
 			}
 		);
+	}
+	
+	//create sliders
+	function createSliders(){
+		
+		//slider variables
+		
+		//percentage slider
+		var slider = document.getElementById("sub-container-shot1");
+		
+		if(count !== 0){ //ALL RELOADS AFTER FIRST
+			slider.noUiSlider.destroy();
+		}
+		
+		noUiSlider.create(slider, {
+			start: [0.0, 1.0],
+			step: 0.02,
+			connect: true,
+			behaviour: 'drag-tap',
+			margin: 0.03,
+			range: {
+				'min': 0,
+				'max': 1
+			}
+		});
+		
+		slider.noUiSlider.on('slide', function(){
+			var sliderCoordinates = slider.noUiSlider.get();
+			bottomPCT = sliderCoordinates[0];
+			topPCT = sliderCoordinates[1];
+			d3.selectAll(".hexagon")
+				.classed("hidden", function(d){
+					if(!(d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+							d.distance >= bottomDistance && d.distance <= topDistance)){
+						return true;
+					} else { 
+						return false;
+					}
+				});      
+			//send fake brush event to reset the percentage
+			brushCanvas.call(brushObject.event);
+			
+			var percentContainer = document.getElementById("sub-container-label1");
+			$(percentContainer)
+				.css("font-weight", "900")
+				.css("color", "#33bdb1");
+		})
+		
+		slider.noUiSlider.on('change', function(){
+			var percentContainer = document.getElementById("sub-container-label1");
+				$(percentContainer)
+					.css("font-weight", "normal")
+					.css("color", "#555");
+		})
+		
+		//volume slider
+		var sliderShotAttempts =  document.getElementById("sub-container-shot2");
+		
+		if(count !== 0){
+			sliderShotAttempts.noUiSlider.destroy();
+		}
+		
+		noUiSlider.create(sliderShotAttempts, {
+			start: [0.0, 25],
+			step: 1,
+			connect: true,
+			//margin: 300,
+			range: {
+				'min': 0,
+				'max': 25
+			}
+		});
+		
+		sliderShotAttempts.noUiSlider.on('slide', function(){
+			var sliderCoordinates2 = sliderShotAttempts.noUiSlider.get();
+			bottomAttempts = sliderCoordinates2[0];
+			topAttempts = sliderCoordinates2[1];
+			
+			d3.selectAll(".hexagon")
+				.classed("hidden", function(d){
+					if(!(d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+							d.distance >= bottomDistance && d.distance <= topDistance)){
+						return true;
+					} else { 
+						return false;
+					}
+				});      
+			
+			//send fake brush event to reset the percentage
+			brushCanvas.call(brushObject.event);
+			
+			var volumeContainer = document.getElementById("sub-container-label2");
+			$(volumeContainer)
+				.css("font-weight", "900")
+				.css("color", "#33bdb1");
+		})
+		
+		sliderShotAttempts.noUiSlider.on('change', function(){
+			var volumeContainer = document.getElementById("sub-container-label2");
+			$(volumeContainer)
+				.css("font-weight", "normal")
+				.css("color", "#555");
+		})
+		
+		//shot distance
+		var sliderShotDistance =  document.getElementById("sub-container-shot3");
+		
+		if(count !== 0){
+			sliderShotDistance.noUiSlider.destroy();
+		}
+		
+		noUiSlider.create(sliderShotDistance, {
+			start: [0.0, 30.0],
+			step: 0.5,
+			behaviour: "drag-tap",
+			margin: 1,
+			connect: true,
+			range: {
+				'min': 0,
+				'max': 30
+			}
+		});
+		
+		sliderShotDistance.noUiSlider.on('slide', function(){
+			var sliderCoordinates3 = sliderShotDistance.noUiSlider.get();
+			bottomDistance = sliderCoordinates3[0];
+			topDistance = parseInt(sliderCoordinates3[1]);
+			
+			d3.selectAll(".hexagon")
+				.classed("hidden", function(d){
+					if(!(d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+							d.distance >= bottomDistance && d.distance <= topDistance)){
+						return true;
+					} else { 
+						return false;
+					}				
+				});      
+			
+			//send fake brush event to reset the percentage
+			brushCanvas.call(brushObject.event);
+			
+			var distanceContainer = document.getElementById("sub-container-label3");
+			$(distanceContainer)
+				.css("font-weight", "900")
+				.css("color", "#33bdb1");
+		});
+		
+		sliderShotDistance.noUiSlider.on('change', function(){
+			var percentContainer = document.getElementById("sub-container-label3");
+			$(percentContainer)
+				.css("font-weight", "normal")
+				.css("color", "#555");
+		});
+		
 	}
 }
