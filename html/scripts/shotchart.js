@@ -175,25 +175,30 @@ function renderShotchart(count, selectedPlayers){
 			.selectAll(".hexagon")
 				.data(hpoints) 
 			.enter()
-				.append("path") //Actual svg hexons element tags <path>
+				.append("path") 
 				.attr("class", "hexagon")
-				.attr("d", function(d) {  //draw the path
-				
-							return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
-						
-				})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
+				.attr("d", function(d) {  
+					//d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
+					//return nothing
+					return hexbin.hexagon(0,0).dpoints; 
+				})  
 				.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				.style("fill", function(d) {
-					return colorScale(d.totalMade/d.totalShot - leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); //MIN FUNCTION FOR SHOOTERS OUT OF BOUNDS (AHEM AUSTIN DAYE)
+					return colorScale(d.totalMade/d.totalShot - leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); 
 				})
-
+		
 		//transition
-		hexagon.transition().duration(700).ease("quad").attr("d", function(d) {  //Draws the path
-			if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-				d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
-				return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
-			} else {
-				return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+		hexagon
+			.transition()
+			.duration(700)
+			.ease("quad")
+			.attr("d", function(d) {  
+				//draw paths (see if value in between sliders)
+				if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+					d.distance >= bottomDistance && d.distance <= topDistance) { 
+					return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
+				} else {
+					return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
 				}
 		});  
 		
