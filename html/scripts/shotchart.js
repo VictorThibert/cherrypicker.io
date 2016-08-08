@@ -2,13 +2,8 @@
 //count is for sliders
 function renderShotchart(count, selectedPlayers){
 	
-	//hexagon var declarations
-	var selectedNothing ;
-	var extent;
-	var lastPercentage;
-	var selectedPercentage ;
-	var hexagon;
-	var customRadius = 5;
+	createSliders();
+	setArrays();
 	
 	var selectedMade = 0;
 	var selectedTotal = 0;
@@ -16,6 +11,9 @@ function renderShotchart(count, selectedPlayers){
 	//brush variables
 	var lastPosition = [[0, 0],[0,0]];
 	var brushConditions = [1, lastPosition, 0];
+	var selectedNothing;
+	var extent;
+	var selectedPercentage;
 	
 	var brushCanvas;
 	var brushObject;
@@ -32,6 +30,12 @@ function renderShotchart(count, selectedPlayers){
 		.domain([-0.4, 0, 0.4]) //Range for +- above average
 		.range(["#35a4b1", "#eeeaea", "#ff8566"]); 
 	
+	//hexagon variables
+	var hexagon;
+	var customRadius = 5;
+	var hpoints;
+	var hexbin = d3.hexbin().size([width, height]).radius(customRadius); 
+	
 	//slider variables
 	var bottomPCT = 0;
 	var topPCT = 1;
@@ -40,6 +44,58 @@ function renderShotchart(count, selectedPlayers){
 	var bottomDistance = 0;
 	var topDistance = 500;
 	
+	var leagueShotArray = [];
+	
+	
+	function setArrays(){
+		
+		//league average
+		var xmlLeagueRequest = new XMLHttpRequest();
+		var urlLeague = "http://cherrypicker.io/php/playershotsleague.php?";
+		xmlLeagueRequest.onreadystatechange=function() {
+			if (xmlLeagueRequest.readyState == 4 && xmlLeagueRequest.status == 200) {
+				reassignLeague(xmlLeagueRequest.responseText);
+			}
+		}
+		xmlLeagueRequest.open("GET", urlLeague, true);
+		xmlLeagueRequest.send();
+
+		//push all shots to an array
+		function reassignLeague(response) {
+			var tempJSONobject = [];
+			tempJSONobject = JSON.parse(response); 
+			for (var i = 0; i < tempJSONobject.length; i+=1) {
+				leagueShotArray.push([parseInt(tempJSONobject[i].LOC_X) + 250, parseInt(tempJSONobject[i].LOC_Y) + 50,  tempJSONobject[i].PERCENTAGE ]);
+			} 
+		}
+		
+		//individual players
+		var playerShotArray = [];
+		var xmlPlayerRequest = new XMLHttpRequest();
+		var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); 
+		
+		xmlPlayerRequest.onreadystatechange=function() {
+			if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
+				reassignPlayer(xmlPlayerRequest.responseText);
+				hpoints = hexbin(playerShotArray);
+				d3.selectAll(".shotChartCanvas").remove();
+				drawShotchart();
+			}
+		}
+		xmlPlayerRequest.open("GET", urlPlayer, true);
+		xmlPlayerRequest.send();
+		
+		//array the player shots
+		function reassignPlayer(response){
+			var tempJSONobject2 = [];
+			tempJSONobject2 = JSON.parse(response); 
+			for (var i = 0; i < tempJSONobject2.length; i+=1) { //playerShotArray contains all the shots
+				playerShotArray.push([parseInt(tempJSONobject2[i].LOC_X) + 250, parseInt(tempJSONobject2[i].LOC_Y) + 50, parseInt(tempJSONobject2[i].SHOT_MADE_FLAG), tempJSONobject2[i].SHOT_DISTANCE]);
+			} //SHIFT BY 250 IN X AND 50 IN Y
+		}
+		
+	}
+
 	//when the brush moves (selection on shotchart)
 	function brushMove() {
 		extent = d3.event.target.extent();
@@ -79,65 +135,6 @@ function renderShotchart(count, selectedPlayers){
 		}
 	}
 
-	//league average
-	var leagueShotArray = [];
-
-	var xmlLeagueRequest = new XMLHttpRequest();
-	var urlLeague = "http://cherrypicker.io/php/playershotsleague.php?";
-
-	xmlLeagueRequest.onreadystatechange=function() {
-		if (xmlLeagueRequest.readyState == 4 && xmlLeagueRequest.status == 200) {
-				reassignLeague(xmlLeagueRequest.responseText);
-		}
-	}
-
-	xmlLeagueRequest.open("GET", urlLeague, true);
-	xmlLeagueRequest.send();
-
-	//push all shots to an array
-	function reassignLeague(response) {
-		var tempJSONobject = [];
-		tempJSONobject = JSON.parse(response); 
-		for (var i = 0; i < tempJSONobject.length; i+=1) {
-			leagueShotArray.push([parseInt(tempJSONobject[i].LOC_X) + 250, parseInt(tempJSONobject[i].LOC_Y) + 50,  tempJSONobject[i].PERCENTAGE ]);
-		} 
-	}
-	
-	//individual players
-	var jsonPlayer = [];
-	var playerShotArray = [];
-	var xmlPlayerRequest = new XMLHttpRequest();
-	var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); //selectedPlayers comes from index.html
-
-	xmlPlayerRequest.onreadystatechange=function() {
-		if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
-			reassignPlayer(xmlPlayerRequest.responseText);
-		}
-	}
-	xmlPlayerRequest.open("GET", urlPlayer, true);
-	xmlPlayerRequest.send();
-
-	var hpoints;
-	
-	var hexbin = d3.hexbin().size([width, height]).radius(customRadius); //Initialize Hexbin Plugin
-
-	//array the player shots
-	function reassignPlayer(response){
-		jsonPlayer = JSON.parse(response); 
-		for (var i = 0; i < jsonPlayer.length; i+=1) { //playerShotArray contains all the shots
-			playerShotArray.push([parseInt(jsonPlayer[i].LOC_X) + 250, parseInt(jsonPlayer[i].LOC_Y) + 50, parseInt(jsonPlayer[i].SHOT_MADE_FLAG), jsonPlayer[i].SHOT_DISTANCE]);
-		} //SHIFT BY 250 IN X AND 50 IN Y
-		hpoints = hexbin(playerShotArray);
-		
-		d3.selectAll(".shotChartCanvas").remove();
-		drawShotchart();
-	}
-	
-	createSliders();
-	
-	
-
-	
 	//brush end
 	function brushEnd() {
 		if (selectedNothing) {
@@ -147,71 +144,47 @@ function renderShotchart(count, selectedPlayers){
 	
 	//draw the shotchart
 	function drawShotchart(){
-		console.log("W")
 		
-		d3.selection.prototype.moveToFront = function() {
-			return this.each(function(){
-				this.parentNode.appendChild(this);
-			});
-		};
-
-		d3.selection.prototype.moveToBack = function() {
-				return this.each(function() { 
-						var firstChild = this.parentNode.firstChild; 
-						if (firstChild) { 
-								this.parentNode.insertBefore(this, firstChild); 
-						} 
-				}); 
-		};
-
-		var svg = d3.select("#sub-container-shot").append("svg") //Create top level svg canvas
+		//top level svg canvas
+		var svg = d3.select("#sub-container-shot").append("svg") 
 			.attr("class", "shotChartCanvas")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		
-		svg.append("clipPath")//Append clipping path
-			.attr("id", "clip")
-			.append("rect")
-			.attr("class", "mesh")
-			.attr("width", width)
-			.attr("height", height);
-		
 		selectedNothing = brushConditions[0]; //1 0 flag for selected nothing
-		extent = brushConditions[1]; //Last extent of brush // test out of scope var
-		lastPercentage = brushConditions[2];
-		selectedPercentage = lastPercentage; 
+		extent = brushConditions[1]; //last extent of brush
+		selectedPercentage = brushConditions[2];
 		
-		//$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(defaultValue*1000)/10 +  "% </p>");	
-		brushObject = d3.svg.brush() //Creation of brush, but not drawing it until called later
+		//creation of brush, but not drawing it until called later
+		brushObject = d3.svg.brush() 
 			.x(d3.scale.identity().domain([0, width]))
 			.y(d3.scale.identity().domain([0, height]))
 			.on("brushend", brushEnd)
 			.on("brush", brushMove) 
 			.extent(extent);
-
-		brushCanvas = svg.append("g") //Creates canvas for brush as <g> tag
+		
+		//creates canvas for brush as <g> tag
+		brushCanvas = svg.append("g") 
 			.attr("class", "brush")
 			.call(brushObject); 
-
-		//Instead of SVG can put brushCanvs
-		hexagon = svg.append("g") //Adding the hexons // Hexon variable contains all hexons (e.g. array of 428 paths)
+		
+		//adding all the hexagons
+		hexagon = svg.append("g") 
 			.selectAll(".hexagon")
 				.data(hpoints) 
 			.enter()
 				.append("path") //Actual svg hexons element tags <path>
 				.attr("class", "hexagon")
 				.attr("d", function(d) {  //draw the path
-
-	// 						$("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
+					// $("#sub-container-percentage").html('<p class="percentage">Percentage: No shots selected</p>');
 					if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
 							d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
-								return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+							return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
 						} else {
-								return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
-								}
-
+							return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+						}
 				})  //d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
 				.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 				.style("fill", function(d) {
@@ -220,22 +193,17 @@ function renderShotchart(count, selectedPlayers){
 
 		//transition
 		hexagon.transition().duration(700).ease("quad").attr("d", function(d) {  //Draws the path
-					if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-						d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
-						return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
-					} else {
-							return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
-							}
-				})  
-
-
-		brushCanvas.moveToFront();
-
-
-
-
-		brushCanvas.call(brushObject.event) //Triggers artificial brush to refresh the selected %
-
+			if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
+				d.distance >= bottomDistance && d.distance <= topDistance) { //CHECKS IF BETWEEN SLIDER VALUES
+				return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
+			} else {
+				return hexbin.hexagon(0,0).dpoints; //RETURN NOTHING
+				}
+		});  
+		
+		//triggers artificial brush to refresh the selected %
+		brushCanvas.call(brushObject.event) 
+		
 		//which hexagons are selected by the brush
 		hexagon.classed("selected", function(d) { 
 				if(selectedNothing){
@@ -245,6 +213,25 @@ function renderShotchart(count, selectedPlayers){
 				}
 			}
 		);
+		
+		d3.selection.prototype.moveToFront = function() {
+			return this.each(function(){
+				this.parentNode.appendChild(this);
+			});
+		};
+		
+		d3.selection.prototype.moveToBack = function() {
+			return this.each(function() { 
+					var firstChild = this.parentNode.firstChild; 
+					if (firstChild) { 
+							this.parentNode.insertBefore(this, firstChild); 
+					} 
+			}); 
+		};
+		
+		brushCanvas.moveToFront();
+		
+		
 	}
 	
 	//create sliders
