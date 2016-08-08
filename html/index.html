@@ -396,7 +396,7 @@
 					changeTeamLogo(currentTeamID);
 					changeURL('#' + location.hash.slice(1,8) + "p" + selectedPlayers.join("+")); 
 				}
-					localshotchart(count);
+					renderShotchart(count, selectedPlayers);
 					count += 1;
 			}
 			

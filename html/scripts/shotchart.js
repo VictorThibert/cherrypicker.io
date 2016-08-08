@@ -1,6 +1,6 @@
 //renders shotchart
 //count is for sliders
-function localshotchart(count){
+function renderShotchart(count, selectedPlayers){
 	
 	//hexagon var declarations
 	var selectedNothing ;
