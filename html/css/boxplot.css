@@ -4,7 +4,7 @@
 @import url(https://fonts.googleapis.com/css?family=Asap);
 
 .box {
-    font-family: 'Asap', sans-serif;
+/*     font-family: 'Asap', sans-serif; */
     font-size: 12px;
  }
 
@@ -35,15 +35,15 @@
 }
 
 .axis {
-  font-family: Asap, sans-serif;
-  font-size: 12px;
+/*   font-family: Asap, sans-serif; */
+  font-size: 14px;
 }
 
 .axis path,
 .axis line {
   fill: none;
   stroke: #000;
-   stroke-width: 1px;    
+  stroke-width: 1px;    
   shape-rendering: crispEdges;
 }
 

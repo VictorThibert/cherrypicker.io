@@ -32,6 +32,11 @@
 /* ANIMATION */
 /* SHADOWS */
 /* Shadows (from mdl http://www.getmdl.io/) */
+@font-face{
+	font-family: proxima-nova;
+	src: url('../fonts/ProximaNovaRegular.otf')
+}
+
 body {
   background-color: #CCCCCC;
 }
@@ -56,7 +61,7 @@ body.inverse .card .form-control {
 }
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: 'proxima-nova', sans-serif; /*"Roboto", "Helvetica", "Arial", sans-serif;*/
   font-weight: 300;
   line-height: 1.0em;
 }

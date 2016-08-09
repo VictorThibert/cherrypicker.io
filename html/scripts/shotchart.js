@@ -18,9 +18,9 @@ function renderShotchart(count, selectedPlayers){
 	var brushCanvas;
 	var brushObject;
 	
-	var margin = {top: 0, right: 20, bottom: 45, left: 20} 
+	var margin = {top: 0, right: 20, bottom: 0, left: 20} 
 	var width = 550 - margin.left - margin.right;
-	var height = 375 - margin.top - margin.bottom; 
+	var height = 340 - margin.top - margin.bottom; 
 	
 	var radiusScale = d3.scale.linear()  //Create radius scale for the hexons
 		.domain([0,0,1,2,50])
@@ -28,7 +28,7 @@ function renderShotchart(count, selectedPlayers){
 
 	var colorScale = d3.scale.linear() //Create color scale for the hexons
 		.domain([-0.4, 0, 0.4]) //Range for +- above average
-		.range(["#35a4b1", "#eeeaea", "#ff8566"]); 
+		.range(["#2885d1", "#eeeaea", "#ff8566"]); 
 	
 	//hexagon variables
 	var hexagon;
