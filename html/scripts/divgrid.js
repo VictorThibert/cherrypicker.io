@@ -120,7 +120,7 @@ d3.divgrid = function(config) {
           ascending.map(function(x, i, ar){
               ar[i] = false;
           });
-          console.log(ascending)
+          //console.log(ascending)
           ascending[k] = temp;
       }
     }

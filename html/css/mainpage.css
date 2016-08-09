@@ -24,6 +24,7 @@ p.percentage {
 
 body{
 	
+	
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2989d8+39,2271ad+100 */
 background: #2989d8; /* Old browsers */
 background: -moz-linear-gradient(-45deg,  #2989d8 39%, #2271ad 100%); /* FF3.6-15 */
@@ -36,6 +37,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', end
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover; */
+	
+	font-family: 'proxima-nova', sans-serif;
 	
 }
 
@@ -58,6 +61,13 @@ a.neutral {
 		/* 		box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2); */
 }
 
+a.down.hover {
+	background: #EEEEEE;
+		border-radius: 5px;
+		/*     border: solid 1px  #33bdb1; */
+		fill: #2885d1;	
+	
+}
 
 a.down {
     background: #FFF;

@@ -175,32 +175,33 @@ pc.autoscale = function() {
           .rangePoints([h()+1, 1]);
       }
 			
+			var shift = 0; 
 			//specific basketball stats imp
-			if (k == 1){
+			if (k == 1 + shift){
 				extent[0] = 0;
 				extent[1] = 40;
-			} else if (k == 2) {
+			} else if (k == 2 + shift) {
 				extent[0] = 0;
 				extent[1] = 1;	
-			} else if (k == 3) {
+			} else if (k == 3 + shift) {
 				extent[0] = 0;
 				extent[1] = 1;	
-			} else if (k == 4) {
+			} else if (k == 4 + shift) {
 				extent[0] = 0;
 				extent[1] = 1;	
-			} else if (k == 5) {
+			} else if (k == 5 + shift) {
 				extent[0] = 0;
 				extent[1] = 35;	
-			} else if (k == 6) {
+			} else if (k == 6 + shift) {
 				extent[0] = 0;
 				extent[1] = 12;	
-			} else if (k == 7) {
+			} else if (k == 7 + shift) {
 				extent[0] = 0;
 				extent[1] = 15;	
-			} else if (k == 8) {
+			} else if (k == 8 + shift) {
 				extent[0] = 0;
 				extent[1] = 2.5;	
-			} else if (k == 9) {
+			} else if (k == 9 + shift) {
 				extent[0] = 0;
 				extent[1] = 2.5;	
 			}

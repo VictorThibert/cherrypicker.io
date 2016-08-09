@@ -46,7 +46,7 @@
 		
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 		-->
-		<link rel="stylesheet" type="text/css" href="../css/material-kit.css">
+
 		
 
 	</head>
@@ -320,7 +320,7 @@
 				$('a.neutral').click(function(){
 					if($(this).attr("class") == "neutral" || $(this).attr("class") == "neutral hover" ){
 						selectedPlayers.splice(selectedPlayers.indexOf($(this)[0].getAttribute("data-playerID")),1);	
-					} else if($(this).attr("class") == "neutral down"){
+					} else if($(this).attr("class") == "neutral down" || $(this).attr("class") == "neutral down hover"){
 						selectedPlayers.push($(this)[0].getAttribute("data-playerID"));	
 					}
         	$(this).toggleClass("down");
@@ -330,12 +330,12 @@
 					hashChange(true);
    			});
 				
-				//TRIGGER MOUSELAVE ON CLICK
+				//TRIGGER MOUSELEAVE ON CLICK
 				$('a.neutral')
 					.mouseenter(function(){
-					if( $(this).attr('class') != "neutral down"){ //NO GREY HOVER
+					//NO GREY HOVER
 						$(this).toggleClass("hover", true);
-					}
+					
    			})
 					.mouseleave(function(){
         	$(this).toggleClass("hover", false);
