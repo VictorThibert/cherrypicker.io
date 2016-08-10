@@ -26,6 +26,7 @@ d3.parcoords = function(config) {
     hideAxis : []
   };
 
+
   extend(__, config);
 var pc = function(selection) {
   selection = pc.selection = d3.select(selection);
@@ -579,6 +580,7 @@ function rotateLabels() {
 }
 
 function dimensionLabels(d) {
+	console.log(d);
   return d in __.dimensionTitles ? __.dimensionTitles[d] : d;  // dimension display names
 }
 
@@ -587,7 +589,7 @@ pc.createAxes = function() {
 
   // Add a group element for each dimension.
   g = pc.svg.selectAll(".dimension")
-      .data(__.dimensions, function(d) {return d; })
+      .data(__.dimensions, function(d) {console.log(d);return d; })
     .enter().append("svg:g")
       .attr("class", "dimension")
       .attr("transform", function(d) { return "translate(" + xscale(d) + ")"; });

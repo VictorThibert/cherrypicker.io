@@ -28,7 +28,7 @@ function renderShotchart(count, selectedPlayers){
 
 	var colorScale = d3.scale.linear() //Create color scale for the hexons
 		.domain([-0.4, -0.08, 0, 0.08, 0.4]) //Range for +- above average
-		.range(["#5357A1", "#6389BA", "#F9DC96", "#F0825F", "#AE2A47"]); 
+		.range(["#426AAA", "#6389BA", "#F9DC96", "#F0825F", "#d03b5c"]); 
 	
 	//hexagon variables
 	var hexagon;

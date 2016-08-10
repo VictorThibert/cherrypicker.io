@@ -27,12 +27,13 @@ function renderPara(teamID){
           return parseFloat(d).toFixed(2);
         }
         else{return d;}}) }
-    render()
+    render();
   });
 
   
 function render() {
 
+  var dimensions = { "protein": {type:"number"} };
   
   var colorScale = d3.scale.linear().domain([10,20])
     .range(["red", "blue"])
@@ -58,6 +59,7 @@ function render() {
     .color(function(d) {return colorScale(d[1]);})
    
     .brushMode("1D-axes")
+
     .render()
   
 
