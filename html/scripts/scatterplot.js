@@ -37,8 +37,8 @@ var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-// load data
-d3.csv("cereal.csv", function(error, data) {
+// load data ////////////////////LINK UP TO DATA SOURCES
+d3.csv("", function(error, data) {
 
   // change string (from CSV) into number format
   data.forEach(function(d) {
