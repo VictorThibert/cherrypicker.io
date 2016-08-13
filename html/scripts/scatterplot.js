@@ -1,4 +1,5 @@
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
+function renderScatterplot() {
+	var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -121,3 +122,4 @@ d3.csv("", function(error, data) {
       .style("text-anchor", "end")
       .text(function(d) { return d;})
 });
+}
