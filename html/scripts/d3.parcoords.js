@@ -268,7 +268,7 @@ pc.autoscale = function() {
 };
 
 pc.scale = function(d, domain) {
-	console.log("A");
+
 	yscale[d].domain(domain);
 
 	return this;
@@ -277,7 +277,7 @@ pc.scale = function(d, domain) {
 
 
 pc.commonScale = function(global, type) {
-		console.log("A");
+	
 	var t = type || "number";
 	if (typeof global === 'undefined') {
 		global = true;
@@ -297,7 +297,7 @@ pc.commonScale = function(global, type) {
 
 		scales.forEach(function(d) {
 			yscale[d].domain(extent);
-			console.log(yscale[d].domain(extent));
+			
 		});
 
 	} else {
@@ -580,7 +580,7 @@ function rotateLabels() {
 }
 
 function dimensionLabels(d) {
-	console.log(d);
+	
   return d in __.dimensionTitles ? __.dimensionTitles[d] : d;  // dimension display names
 }
 
@@ -589,7 +589,7 @@ pc.createAxes = function() {
 
   // Add a group element for each dimension.
   g = pc.svg.selectAll(".dimension")
-      .data(__.dimensions, function(d) {console.log(d);return d; })
+      .data(__.dimensions, function(d) {return d; })
     .enter().append("svg:g")
       .attr("class", "dimension")
       .attr("transform", function(d) { return "translate(" + xscale(d) + ")"; });
