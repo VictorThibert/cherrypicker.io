@@ -265,6 +265,13 @@
 					</div>
 				</div>
 			</div>
+			
+			<div id = "row4">
+				<div class ="container-card">
+					<div class="scatterplot" id = "scatterplotID">
+					</div>
+				</div>
+			</div>
 		</div>
 		
 		
@@ -366,6 +373,7 @@
 				}
 				
 				if(newPageLoad){
+					console.log("A")
 			
 					$("#teamBox").select2("val", currentTeamID);
 					$("#yearBox").select3("val", currentYear);
@@ -375,16 +383,20 @@
 					renderCalendar(2014, 2015, currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
 					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
+					renderScatterplot(1610612700 + parseInt(currentTeamID));
 				}
 				
 				//REMEMBER/ DONT UPDATE TEAM IF CALLED FROM PLAYER CHANGE i.e. YEAR or TEAM CHANGE
 				//new team
 				if(!isPlayerChange){
+					console.log("B")
+					
 					changeURL('#' + location.hash.slice(1,3) + "y" + location.hash.slice(4,8) + "p")
 					loadRoster(currentTeamID, currentYear, true);					
 					renderCalendar(2014, 2015, currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
 					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
+					renderScatterplot(1610612700 + parseInt(currentTeamID));
 					$("#teamBox").select2("val", currentTeamID);
 					$("#yearBox").select3("val", currentYear);
 					changeTeamName();

@@ -121,7 +121,7 @@ h1 {
 	width: 85%;
 	min-width: 1100px;
 	max-width: 1100px;
-	height: 1800px;
+	height: 2500px;
 	margin-bottom: 100px;
 	margin-left: auto;
 	margin-right: auto;
@@ -130,24 +130,29 @@ h1 {
 }
 
 #row0{
-	top: 13px;
+	top: 10px;
 	position: relative;
 	height: 40px;
 }
 
 #row1 {
-	top: 13px;
+	top: 10px;
 	height: 432px;
 	position: relative;
 }
 
 #row2 {
-	top: 13px;
+	top: 10px;
 	position: relative;
 }
 
 #row3 {
-	top: 13px;
+	top: 10px;
+	position: relative;
+}
+
+#row4 {
+	top: 10px;
 	position: relative;
 }
 
@@ -240,9 +245,9 @@ td {
 
 .container-card{
 	background-color: #fff;
-	margin-right: 12px;
-	margin-left: 12px;
-	margin-bottom: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-bottom: 8px;
 	padding: 1%;
 	border-radius: 5px;
 	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.03);
@@ -250,8 +255,8 @@ td {
 }
 
 .card-elem{
-		font-family: proxima-nova, sans-serif;
-		font-weight: light;
+	font-family: proxima-nova, sans-serif;
+	font-weight: light;
 }
 
 /* Calendar hover */
