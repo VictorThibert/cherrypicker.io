@@ -1,14 +1,7 @@
 function renderScatterplot() {
 	var margin = {top: 20, right: 20, bottom: 30, left: 30},
-    width = 960 - margin.left - margin.right,
+    width = 900 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
-
-/* 
- * value accessor - returns the value to encode for a given data object.
- * scale - maps value to a visual display encoding, such as a pixel position.
- * map function - maps from data value to display value
- * axis - sets up axis
- */ 
 
 // setup x 
 var xValue = function(d) { return d.Calories;}, // data -> value
