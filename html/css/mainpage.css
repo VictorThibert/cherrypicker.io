@@ -24,13 +24,12 @@ p.percentage {
 
 body{
 	
-	
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2989d8+39,2271ad+100 */
-background: #2989d8; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #2989d8 39%, #2271ad 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  #2989d8 39%,#2271ad 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  #2989d8 39%,#2271ad 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', endColorstr='#2271ad',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: #2989d8; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #2989d8 39%, #2271ad 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg,  #2989d8 39%,#2271ad 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg,  #2989d8 39%,#2271ad 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', endColorstr='#2271ad',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 /* 	background-image: url(../graphics/background.jpg);
 	-webkit-background-size: cover;
@@ -63,24 +62,23 @@ a.neutral {
 
 a.down.hover {
 	background: #EEEEEE;
-		border-radius: 5px;
-		/*     border: solid 1px  #33bdb1; */
-		fill: #2885d1;	
-	
+	border-radius: 5px;
+	/*     border: solid 1px  #33bdb1; */
+	fill: #2885d1;	
 }
 
 a.down {
-    background: #FFF;
-		border-radius: 5px;
-		/*     border: solid 1px #cdcdcd; */
-		fill: #2887d4;
+	background: #FFF;
+	border-radius: 5px;
+	/*     border: solid 1px #cdcdcd; */
+	fill: #2887d4;
 }
 
 a.hover {
-    background: #2887d4;
-		border-radius: 5px;
-		/*     border: solid 1px  #33bdb1; */
-		fill: #FFF;	
+	background: #2887d4;
+	border-radius: 5px;
+	/*     border: solid 1px  #33bdb1; */
+	fill: #FFF;	
 }
 
 h1 {
@@ -99,7 +97,6 @@ h1 {
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
-
 }
 
 #title{
