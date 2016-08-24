@@ -10,7 +10,6 @@
 
 p {
   font-family: 'proxima-nova', sans-serif;
-/* 	font-weight: light; */
 	color: #222222;
 	font-size: 20px;
 }
@@ -19,23 +18,20 @@ p.percentage {
 	font-family: 'proxima-nova', sans-serif;
 	color: #33bdb1;
 	font-size: 10px;
-	
 }
 
 body{
-	
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2989d8+39,2271ad+100 */
-	background: #2989d8; /* Old browsers */
-	background: -moz-linear-gradient(-45deg,  #2989d8 39%, #2271ad 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(-45deg,  #2989d8 39%,#2271ad 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(135deg,  #2989d8 39%,#2271ad 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', endColorstr='#2271ad',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-/* 	background-image: url(../graphics/background.jpg);
+/* 	background: #2989d8; ld browsers 
+	background: -moz-linear-gradient(-45deg,  #2989d8 39%, #2271ad 100%); 
+	background: -webkit-linear-gradient(-45deg,  #2989d8 39%,#2271ad 100%); 
+	background: linear-gradient(135deg,  #2989d8 39%,#2271ad 100%); /
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', endColorstr='#2271ad',GradientType=1 ); 
+ */
+	background-image: url(../graphics/background.jpg);
 	-webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover; */
+  background-size: cover;
 	
 	font-family: 'proxima-nova', sans-serif;
 	
