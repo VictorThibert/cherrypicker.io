@@ -1,23 +1,44 @@
 function renderScatterplot() {
-	var margin = {top: 20, right: 20, bottom: 30, left: 30},
-    width = 900 - margin.left - margin.right,
+
+	var data = [];
+	var xml = new XMLHttpRequest();
+	var url = "http://cherrypicker.io/php/getteamdata.php"
+	
+	xml.onreadystatechange = function() {
+		if (xml.readyState == 4 && xml.status == 200) {
+			var jobj = JSON.parse(xml.responseText)
+			for (var i = 0; i < jobj.length; i+=1) {
+				data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i].OFF_RATING), parseFloat(jobj[i].DEF_RATING) ]);
+			} 	
+			renderScatterplotInner(data);
+		}
+	}
+	xml.open("GET", url, true);
+	xml.send();
+	
+}
+
+function renderScatterplotInner(data) {
+	
+	console.log(data)
+	var margin = {top: 40, right: 20, bottom: 40, left: 60},
+    width = 1040 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 // setup x 
-	var xValue = function(d) { return d.Calories;}, // data -> value
+	var tValue = function(d) { return d[0];}
+	
+	var xValue = function(d) { return d[2];}, // data -> value
 			xScale = d3.scale.linear().range([0, width]), // value -> display
 			xMap = function(d) { return xScale(xValue(d));}, // data -> display
 			xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
+
 // setup y
-	var yValue = function(d) { return d["Protein (g)"];}, // data -> value
+	var yValue = function(d) { return d[1];}, // data -> value
 			yScale = d3.scale.linear().range([height, 0]), // value -> display
 			yMap = function(d) { return yScale(yValue(d));}, // data -> display
 			yAxis = d3.svg.axis().scale(yScale).orient("left");
-
-	// setup fill color
-	var cValue = function(d) { return d.Manufacturer;},
-			color = d3.scale.category10();
 
 	// add the graph canvas to the body of the webpage
 	var svg = d3.select("#scatterplotID").append("svg")
@@ -30,95 +51,57 @@ function renderScatterplot() {
 	var tooltip = d3.select("body").append("div")
 			.attr("class", "tooltip")
 			.style("opacity", 0);
-	
-	var data;
-	
-	d3.json("stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&VsConference=&VsDivision=", function (error, raw){
-		var i = 0;
-		console.log(raw)
-//     for(i = 0; i < raw.length; i += 1){
-//       data[i] = [raw[i].PLAYER_NAME,
-//                   raw[i].MIN / raw[i].GP,
-//                   raw[i].FG_PCT,
-//                   raw[i].FG3_PCT,
-//                   raw[i].FT_PCT,
-//                   raw[i].PTS/ raw[i].GP,
-//                   raw[i].AST/ raw[i].GP,
-//                   raw[i].REB/ raw[i].GP,
-//                   raw[i].STL/ raw[i].GP, //ADD TOV
-//                   raw[i].BLK/ raw[i].GP]
-//         .map(function(d){
-//         if(!isNaN(d)){ 
-//           return parseFloat(d).toFixed(2);
-//         }
-//         else{return d;}}) 
-// 		}
-	})
-	
 
-	
+  // don't want dots overlapping axis, so add in buffer to data domain
+  xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
+  yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
+  // x-axis
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("DEF_RATING");
 
-// load data ////////////////////LINK UP TO DATA SOURCES //NOT CSV
-// d3.csv("", function(error, data) {
+  // y-axis
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("OFF_RATING");
 
-//   // change string (from CSV) into number format
-//   data.forEach(function(d) {
-//     d.Calories = +d.Calories;
-//     d["Protein (g)"] = +d["Protein (g)"];
-// //    console.log(d);
-//   });
-
-//   // don't want dots overlapping axis, so add in buffer to data domain
-//   xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
-//   yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
-
-//   // x-axis
-//   svg.append("g")
-//       .attr("class", "x axis")
-//       .attr("transform", "translate(0," + height + ")")
-//       .call(xAxis)
-//     .append("text")
-//       .attr("class", "label")
-//       .attr("x", width)
-//       .attr("y", -6)
-//       .style("text-anchor", "end")
-//       .text("Calories");
-
-//   // y-axis
-//   svg.append("g")
-//       .attr("class", "y axis")
-//       .call(yAxis)
-//     .append("text")
-//       .attr("class", "label")
-//       .attr("transform", "rotate(-90)")
-//       .attr("y", 6)
-//       .attr("dy", ".71em")
-//       .style("text-anchor", "end")
-//       .text("Protein (g)");
-
-//   // draw dots
-//   svg.selectAll(".dot")
-//       .data(data)
-//     .enter().append("circle")
-//       .attr("class", "dot")
-//       .attr("r", 3.5)
-//       .attr("cx", xMap)
-//       .attr("cy", yMap)
-//       .style("fill", function(d) { return color(cValue(d));}) 
-//       .on("mouseover", function(d) {
-//           tooltip.transition()
-//                .duration(200)
-//                .style("opacity", 0.9);
-//           tooltip.html(d["Cereal Name"] + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
-//                .style("left", (d3.event.pageX + 5) + "px")
-//                .style("top", (d3.event.pageY - 28) + "px");
-//       })
-//       .on("mouseout", function(d) {
-//           tooltip.transition()
-//                .duration(500)
-//                .style("opacity", 0);
-//       });
+  // draw dots
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 3.5)
+      .attr("cx", xMap)
+      .attr("cy", yMap)
+      .style("fill", "red") 
+      .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", 0.9);
+          tooltip.html(tValue(d) + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+      });
 
 //   // draw legend
 //   var legend = svg.selectAll(".legend")
@@ -141,5 +124,5 @@ function renderScatterplot() {
 //       .attr("dy", ".35em")
 //       .style("text-anchor", "end")
 //       .text(function(d) { return d;})
-// });
+
 }
