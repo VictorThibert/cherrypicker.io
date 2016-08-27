@@ -1,4 +1,5 @@
-function renderScatterplot() {
+function renderScatterplot(teamID) {
+	d3.select("#scatterplotID").selectAll("svg").remove();
 
 	var data = [];
 	var xml = new XMLHttpRequest();
@@ -8,9 +9,9 @@ function renderScatterplot() {
 		if (xml.readyState == 4 && xml.status == 200) {
 			var jobj = JSON.parse(xml.responseText)
 			for (var i = 0; i < jobj.length; i+=1) {
-				data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i].OFF_RATING), parseFloat(jobj[i].DEF_RATING) ]);
+				data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i].OFF_RATING), parseFloat(jobj[i].DEF_RATING), parseInt(jobj[i].TEAM_ID) ]);
 			} 	
-			renderScatterplotInner(data);
+			renderScatterplotInner(data, teamID);
 		}
 	}
 	xml.open("GET", url, true);
@@ -18,7 +19,7 @@ function renderScatterplot() {
 	
 }
 
-function renderScatterplotInner(data) {
+function renderScatterplotInner(data, teamID) {
 
 		var margin = {top: 40, right: 20, bottom: 40, left: 60},
     width = 1040 - margin.left - margin.right,
@@ -86,11 +87,22 @@ function renderScatterplotInner(data) {
       .data(data)
     .enter().append("circle")
       .attr("class", "dot")
-      .attr("r", 3.5)
+      .attr("r", function(d) {
+				if(d[3] != teamID){
+					return 4;
+				} else {
+					return 6;
+				}
+			})
       .attr("cx", xMap)
       .attr("cy", yMap)
       .style("fill", function(d){
-				return colorScale(d[1] - d[2]);
+				if(d[3] != teamID){
+					return colorScale(d[1] - d[2]);
+				} else {
+					return "orange";
+				}
+				
 			}) 
       .on("mouseover", function(d) {
           tooltip.transition()
