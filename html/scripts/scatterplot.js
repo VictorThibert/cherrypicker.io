@@ -19,17 +19,18 @@ function renderScatterplot() {
 }
 
 function renderScatterplotInner(data) {
-	
-	console.log(data)
-	var margin = {top: 40, right: 20, bottom: 40, left: 60},
+
+		var margin = {top: 40, right: 20, bottom: 40, left: 60},
     width = 1040 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-// setup x 
+
+	var colorScale = d3.scale.linear().domain([-10.0,10.0]).range(["red", "blue"]);
+
 	var tValue = function(d) { return d[0];}
 	
 	var xValue = function(d) { return d[2];}, // data -> value
-			xScale = d3.scale.linear().range([0, width]), // value -> display
+			xScale = d3.scale.linear().range([width, 0]), // value -> display
 			xMap = function(d) { return xScale(xValue(d));}, // data -> display
 			xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
@@ -88,7 +89,9 @@ function renderScatterplotInner(data) {
       .attr("r", 3.5)
       .attr("cx", xMap)
       .attr("cy", yMap)
-      .style("fill", "red") 
+      .style("fill", function(d){
+				return colorScale(d[1] - d[2]);
+			}) 
       .on("mouseover", function(d) {
           tooltip.transition()
                .duration(200)
