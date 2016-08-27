@@ -4,32 +4,60 @@ function renderScatterplot() {
     height = 500 - margin.top - margin.bottom;
 
 // setup x 
-var xValue = function(d) { return d.Calories;}, // data -> value
-    xScale = d3.scale.linear().range([0, width]), // value -> display
-    xMap = function(d) { return xScale(xValue(d));}, // data -> display
-    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+	var xValue = function(d) { return d.Calories;}, // data -> value
+			xScale = d3.scale.linear().range([0, width]), // value -> display
+			xMap = function(d) { return xScale(xValue(d));}, // data -> display
+			xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
 // setup y
-var yValue = function(d) { return d["Protein (g)"];}, // data -> value
-    yScale = d3.scale.linear().range([height, 0]), // value -> display
-    yMap = function(d) { return yScale(yValue(d));}, // data -> display
-    yAxis = d3.svg.axis().scale(yScale).orient("left");
+	var yValue = function(d) { return d["Protein (g)"];}, // data -> value
+			yScale = d3.scale.linear().range([height, 0]), // value -> display
+			yMap = function(d) { return yScale(yValue(d));}, // data -> display
+			yAxis = d3.svg.axis().scale(yScale).orient("left");
 
-// setup fill color
-var cValue = function(d) { return d.Manufacturer;},
-    color = d3.scale.category10();
+	// setup fill color
+	var cValue = function(d) { return d.Manufacturer;},
+			color = d3.scale.category10();
 
-// add the graph canvas to the body of the webpage
-var svg = d3.select("#scatterplotID").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	// add the graph canvas to the body of the webpage
+	var svg = d3.select("#scatterplotID").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// add the tooltip area to the webpage
-var tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
+	// add the tooltip area to the webpage
+	var tooltip = d3.select("body").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+	
+	var data;
+	
+	d3.json("stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&VsConference=&VsDivision=", function (error, raw){
+		var i = 0;
+		console.log(raw)
+//     for(i = 0; i < raw.length; i += 1){
+//       data[i] = [raw[i].PLAYER_NAME,
+//                   raw[i].MIN / raw[i].GP,
+//                   raw[i].FG_PCT,
+//                   raw[i].FG3_PCT,
+//                   raw[i].FT_PCT,
+//                   raw[i].PTS/ raw[i].GP,
+//                   raw[i].AST/ raw[i].GP,
+//                   raw[i].REB/ raw[i].GP,
+//                   raw[i].STL/ raw[i].GP, //ADD TOV
+//                   raw[i].BLK/ raw[i].GP]
+//         .map(function(d){
+//         if(!isNaN(d)){ 
+//           return parseFloat(d).toFixed(2);
+//         }
+//         else{return d;}}) 
+// 		}
+	})
+	
+
+	
+
 
 // load data ////////////////////LINK UP TO DATA SOURCES //NOT CSV
 // d3.csv("", function(error, data) {
