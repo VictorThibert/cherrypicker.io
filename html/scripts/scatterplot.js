@@ -82,6 +82,8 @@ function renderScatterplotInner(data, teamID) {
       .style("text-anchor", "end")
       .text("OFF_RATING");
 
+	var avgX = 0;
+	var avgY = 0;
   // draw dots
   svg.selectAll(".dot")
       .data(data)
@@ -97,6 +99,8 @@ function renderScatterplotInner(data, teamID) {
       .attr("cx", xMap)
       .attr("cy", yMap)
       .style("fill", function(d){
+				avgX += d[2];
+				avgY += d[1];
 				if(d[3] != teamID){
 					return colorScale(d[1] - d[2]);
 				} else {
@@ -117,6 +121,28 @@ function renderScatterplotInner(data, teamID) {
                .duration(500)
                .style("opacity", 0);
       });
-
+	
+	avgX = avgX / 30;
+	avgY = avgY /30; 
+	
+	svg.append("line")
+		.attr("x1", xScale(avgX))
+		.attr("y1", 0)
+		.attr("x2", xScale(avgX))
+		.attr("y2", height)
+		.attr("stroke-width", 1)
+		.attr("stroke", "black")
+		.attr("opacity", 0.5)
+		.style("stroke-dasharray", ("3, 3"))
+	
+	svg.append("line")
+		.attr("x1", 0)
+		.attr("y1", yScale(avgY))
+		.attr("x2", width)
+		.attr("y2", yScale(avgY))
+		.attr("stroke-width", 1)
+		.attr("stroke", "black")
+		.attr("opacity", 0.5)
+		.style("stroke-dasharray", ("3, 3"))
 
 }

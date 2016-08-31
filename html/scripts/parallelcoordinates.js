@@ -61,13 +61,8 @@ function render() {
     .brushMode("1D-axes")
 
     .render()
-  
-
- 
-
 }
-
-
+  
 //divgrid stuff happens here
 var grid = d3.divgrid(headers);
 var data2 = [];
@@ -90,13 +85,9 @@ d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + teamID, functio
       },
       "mouseout": function(d) { 
         pc.unhighlight([d]);
-        this.style.backgroundColor = null;},     
- 
-    
+        this.style.backgroundColor = null;},
     });
   
-  
-
     pc.on("brush", function(d) {
     d3.select("#grid")
       .datum(d)
