@@ -66,11 +66,8 @@ function renderCalendarMonth(container, year1, year2, teamID){
   function fillDaysByMonth(month, year){
 
     var fillerdays = [];
-
     var daysOfMonth = d3.time.days(new Date(year, month, 1), new Date(year, month + 1, 1));
-
     var first = daysOfMonth[0];
-   
     var last = daysOfMonth[daysOfMonth.length - 1];
 
     for (var i = 0; i < first.getDay(); i += 1){
