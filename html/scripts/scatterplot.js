@@ -20,10 +20,12 @@ function renderScatterplot(teamID) {
 }
 
 function renderScatterplotInner(data, teamID) {
+		
+	var numberOfTeams = 30;
 
-		var margin = {top: 40, right: 20, bottom: 40, left: 60},
-    width = 1040 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+	var margin = {top: 40, right: 20, bottom: 40, left: 60},
+   width = 1040 - margin.left - margin.right,
+   height = 500 - margin.top - margin.bottom;
 
 
 	var colorScale = d3.scale.linear().domain([-10.0,10.0]).range(["red", "blue"]);
@@ -122,8 +124,8 @@ function renderScatterplotInner(data, teamID) {
                .style("opacity", 0);
       });
 	
-	avgX = avgX / 30;
-	avgY = avgY /30; 
+	avgX = avgX / numberOfTeams;
+	avgY = avgY / numberOfTeams; 
 	
 	svg.append("line")
 		.attr("x1", xScale(avgX))
