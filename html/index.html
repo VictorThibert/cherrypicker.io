@@ -382,8 +382,6 @@
 				//REMEMBER/ DONT UPDATE TEAM IF CALLED FROM PLAYER CHANGE i.e. YEAR or TEAM CHANGE
 				//new team
 				if(!isPlayerChange){
-					console.log("B")
-					
 					changeURL('#' + location.hash.slice(1,3) + "y" + location.hash.slice(4,8) + "p")
 					loadRoster(currentTeamID, currentYear, true);					
 					renderCalendar(2014, 2015, currentTeamID);
@@ -401,7 +399,6 @@
 			}
 			
 		function changeTeamName(team){ //FIX THIS
-			
 			 $('#teamName').html($('#teamBox').find(":selected").text()); //use .html(team) with dictionary later
 		}	
 			
