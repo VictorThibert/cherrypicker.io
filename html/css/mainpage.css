@@ -16,8 +16,8 @@ p {
 
 p.percentage {
 	font-family: 'proxima-nova', sans-serif;
-	color: #33bdb1;
-	font-size: 10px;
+	color: #2885d1;
+	font-size: 13px;
 }
 
 body {
@@ -169,7 +169,7 @@ h1 {
 
 #sub-container-percentage {
 	position: absolute;
-	top: 290px;
+	top: 315px;
 	left: 15px;
 }
 
