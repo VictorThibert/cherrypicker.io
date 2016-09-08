@@ -200,7 +200,6 @@ h1 {
 }
 
 #rosterText {
-	padding-bottom: 10px;
 	font-size: 16px;
 	color: #888;
 }
@@ -209,6 +208,8 @@ h1 {
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+	padding-top: 5px;
+	padding-bottom: 10px;
 }
 
 table {
