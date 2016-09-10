@@ -1,21 +1,21 @@
 
 function calendarHeatmap() {
   // defaults
-  var width = 750;
-  var height = 110;
+  var width = 500;
+  var height = 80;
   var legendWidth = 150;
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Oct', 'Nov', 'Dec'];
   var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   var selector = 'body';
-  var SQUARE_LENGTH = 11;
+  var SQUARE_LENGTH = 9;
   var SQUARE_PADDING = 2;
   var MONTH_LABEL_PADDING = 6;
-  var now = moment("10-01-2015", "MM-DD-YYYY").toDate();
-  var yearAgo = moment("10-01-2014", "MM-DD-YYYY").subtract(1, 'year').toDate();
+  var now = moment("06-01-2015", "MM-DD-YYYY").toDate();
+	var yearAgo = moment("10-01-2014", "MM-DD-YYYY").toDate();
   var data = [];
   var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
-  var tooltipUnit = 'contribution';
+  var tooltipUnit = 'point';
   var legendEnabled = true;
   var onClick = null;
 

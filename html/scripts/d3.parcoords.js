@@ -177,7 +177,8 @@ pc.autoscale = function() {
       }
 			
 			var shift = 0; 
-			//specific basketball stats imp
+			// tallness of axis
+			// specific basketball stats imp 
 			if (k == 1 + shift){
 				extent[0] = 0;
 				extent[1] = 40;

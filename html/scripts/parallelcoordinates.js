@@ -35,8 +35,7 @@ function render() {
 
   var dimensions = { "protein": {type:"number"} };
   
-  var colorScale = d3.scale.linear().domain([10,20])
-    .range(["red", "blue"])
+  var colorScale = d3.scale.linear().domain([2, 17, 30]).range(["#e76e5e","#f7e4ce","#4870ad"]);
  
 
   pc = d3.parcoords()("#example")
@@ -50,7 +49,7 @@ function render() {
   
   pc
     .smoothness(0.1) //REIMPLEMENT CURVATURE
-    .alpha(0.3)
+    .alpha(0.5)
   
     .composite("darken")
     .rate(60)
