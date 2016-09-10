@@ -48,7 +48,7 @@ function render() {
   
     .composite("darken")
     .rate(60)
-    .margin({ top: 25, left: 70, bottom: 10, right: 40})
+    .margin({ top: 30, left: 0, bottom: 10, right: 40})
     .autoscale()
     .color(function(d) {return colorScale(d[1]);})
    

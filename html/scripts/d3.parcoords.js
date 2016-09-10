@@ -3,6 +3,7 @@ function renderPara2(x){
 var data3 = x;
 
 d3.parcoords = function(config) {
+	
   var __ = {
     data: [],
     highlighted: [],
@@ -13,9 +14,9 @@ d3.parcoords = function(config) {
     brushed: false,
     mode: "default",
     rate: 20,
-    width: 1200,
+    width: 1220,
     height: 400,
-    margin: { top: 24, right: 0, bottom: 12, left: 0 },
+    margin: { top: 24, right: -2, bottom: 12, left: -2 },
     color: "#069",
     composite: "source-over",
     alpha: 0.7,
@@ -26,8 +27,8 @@ d3.parcoords = function(config) {
     hideAxis : []
   };
 
-
   extend(__, config);
+	
 var pc = function(selection) {
   selection = pc.selection = d3.select(selection);
 
@@ -88,21 +89,7 @@ var side_effects = d3.dispatch.apply(this,d3.keys(__))
     xscale.domain(__.dimensions);
     if (flags.interactive){pc.render().updateAxes();}
   })
-//   .on("bundleDimension", function(d) {
-// 	  if (!__.dimensions.length) pc.detectDimensions();
-// 	  if (!(__.dimensions[0] in yscale)) pc.autoscale();
-// 	  if (typeof d.value === "number") {
-// 		  if (d.value < __.dimensions.length) {
-// 			  __.bundleDimension = __.dimensions[d.value];
-// 		  } else if (d.value < __.hideAxis.length) {
-// 			  __.bundleDimension = __.hideAxis[d.value];
-// 		  }
-// 	  } else {
-// 		  __.bundleDimension = d.value;
-// 	  }
 
-// 	  __.clusterCentroids = compute_cluster_centroids(__.bundleDimension);
-//   })
   .on("hideAxis", function(d) {
 	  if (!__.dimensions.length) pc.detectDimensions();
 	  pc.dimensions(without(__.dimensions, d.value));
@@ -606,14 +593,12 @@ pc.createAxes = function() {
     .append("svg:text")
       .attr({
         "text-anchor": "middle",
-        "y": 0,
+        "y": -10,
         "transform": "translate(0,-5) rotate(" + __.dimensionTitleRotation + ")",
         "x": 0,
         "class": "label"
       })
       .text(function(d){return data3[d];})
-//       .on("dblclick", flipAxisAndUpdatePCP);
-// //       .on("wheel", rotateLabels);
 
   flags.axes= true;
   return this;
@@ -743,18 +728,14 @@ pc.reorderable = function() {
   return this;
 };
 
-// Reorder dimensions, such that the highest value (visually) is on the left and
-// the lowest on the right. Visual values are determined by the data values in
-// the given row.
+
 pc.reorder = function(rowdata) {
   var dims = __.dimensions.slice(0);
   __.dimensions.sort(function(a, b) {
     return yscale[a](rowdata[a]) - yscale[b](rowdata[b]);
   });
 
-  // NOTE: this is relatively cheap given that:
-  // number of dimensions < number of data items
-  // Thus we check equality of order to prevent rerendering when this is the case.
+
   var reordered = false;
   dims.some(function(val, index) {
     reordered = val !== __.dimensions[index];
@@ -804,11 +785,7 @@ var brush = {
   }
 };
 
-// This function can be used for 'live' updates of brushes. That is, during the
-// specification of a brush, this method can be called to update the view.
-//
-// @param newSelection - The new set of data items that is currently contained
-//                       by the brushes
+
 function brushUpdated(newSelection) {
   __.brushed = newSelection;
   events.brush.call(pc,__.brushed);
@@ -880,12 +857,6 @@ pc.brushMode = function(mode) {
     var actives = __.dimensions.filter(is_brushed),
         extents = actives.map(function(p) { return brushes[p].extent(); });
 
-    // We don't want to return the full data set when there are no axes brushed.
-    // Actually, when there are no axes brushed, by definition, no items are
-    // selected. So, let's avoid the filtering and just return false.
-    //if (actives.length === 0) return false;
-
-    // Resolves broken examples for now. They expect to get the full dataset back from empty brushes
     if (actives.length === 0) return __.data;
 
     // test if within range
@@ -1226,13 +1197,8 @@ pc.brushMode = function(mode) {
   function install() {
     var drag = d3.behavior.drag();
 
-    // Map of current strums. Strums are stored per segment of the PC. A segment,
-    // being the area between two axes. The left most area is indexed at 0.
     strums.active = undefined;
-    // Returns the width of the PC segment where currently a strum is being
-    // placed. NOTE: even though they are evenly spaced in our current
-    // implementation, we keep for when non-even spaced segments are supported as
-    // well.
+
     strums.width = function(id) {
       var strum = strums[id];
 
@@ -1331,11 +1297,6 @@ pc.brushMode = function(mode) {
   function selected() {
     var actives = __.dimensions.filter(is_brushed),
         extents = actives.map(function(p) { return brushes[p].extent(); });
-
-    // We don't want to return the full data set when there are no axes brushed.
-    // Actually, when there are no axes brushed, by definition, no items are
-    // selected. So, let's avoid the filtering and just return false.
-    //if (actives.length === 0) return false;
 
     // Resolves broken examples for now. They expect to get the full dataset back from empty brushes
     if (actives.length === 0) return __.data;
@@ -1543,6 +1504,7 @@ pc.version = "0.6.0";
   return pc;
 };
 
+	
 d3.renderQueue = (function(func) {
   var _queue = [],                  // data to be rendered
       _rate = 10,                   // number of calls per frame

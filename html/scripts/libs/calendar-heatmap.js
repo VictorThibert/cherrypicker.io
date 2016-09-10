@@ -10,8 +10,8 @@ function calendarHeatmap() {
   var SQUARE_LENGTH = 9;
   var SQUARE_PADDING = 2;
   var MONTH_LABEL_PADDING = 6;
-  var now = moment("06-01-2015", "MM-DD-YYYY").toDate();
-	var yearAgo = moment("10-01-2014", "MM-DD-YYYY").toDate();
+			var now = moment("20150601", "YYYYMMDD").toDate();
+			var yearAgo = moment("20141001", "YYYYMMDD").toDate()
   var data = [];
   var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
@@ -169,6 +169,7 @@ function calendarHeatmap() {
             var matchIndex = 0;
             dateRange.find(function (element, index) {
               matchIndex = index;
+							console.log(moment(d).isSame(element, 'month') && moment(d).isSame(element, 'year'));
               return moment(d).isSame(element, 'month') && moment(d).isSame(element, 'year');
             });
 

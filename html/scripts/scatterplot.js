@@ -73,7 +73,7 @@ function renderScatterplotInner(data, teamID) {
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
-      .text("DEF_RATING");
+      .text("Defensive Rating");
 
   // y-axis
   svg.append("g")
@@ -85,7 +85,7 @@ function renderScatterplotInner(data, teamID) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("OFF_RATING");
+      .text("Offensive Rating");
 
 	var avgX = 0;
 	var avgY = 0;

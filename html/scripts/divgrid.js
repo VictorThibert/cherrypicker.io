@@ -83,7 +83,7 @@ d3.divgrid = function(config) {
             return colorScale(d[k]);
           }
         ); 
-      pc.hideAxis(["0"])
+        pc.hideAxis(["0"])
         pc.render();
     
 
