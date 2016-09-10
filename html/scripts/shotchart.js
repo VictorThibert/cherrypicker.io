@@ -186,6 +186,7 @@ function renderShotchart(count, selectedPlayers){
 				.style("fill", function(d) {
 					return colorScale(d.totalMade/d.totalShot - leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); 
 				})
+				.style("opacity", 0.9)
 		
 		//transition
 		hexagon
