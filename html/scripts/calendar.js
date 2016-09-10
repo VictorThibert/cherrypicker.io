@@ -1,3 +1,4 @@
+/*
 var now = moment().endOf('day').toDate();
 var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
 var chartData = d3.time.days(yearAgo, now).map(function(dateElement) {
@@ -21,7 +22,7 @@ function renderCalendar() {
   calendar();
 }
 
-renderCalendar();
+renderCalendar();*/
 /*
 function renderCalendar(year1, year2, teamID){
   //renderCalendar("9", 2014, 2015, 1610612700 + parseInt(teamID)); //ADD SHORTENED OCTOBER LATER
