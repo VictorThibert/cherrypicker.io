@@ -7,6 +7,7 @@ from mysql.connector import errorcode
 season = "2014-15"
 gameIDprefix = "002140"
 seasonType = "Regular+Season"
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
 
 for i in range(1, 1231):
     gameID = gameIDprefix + str(i).zfill(4)
@@ -16,7 +17,7 @@ for i in range(1, 1231):
 
     url2 = "http://stats.nba.com/stats/boxscoresummaryv2?GameID=" + gameID + ""
 
-    response2 = requests.get(url2)
+    response2 = requests.get(url2, headers = headers)
     response2.raise_for_status()
     dates = response2.json()
 
@@ -24,7 +25,7 @@ for i in range(1, 1231):
     dateFormatted = dateUnformatted[:-7]
 
 
-    response = requests.get(url)
+    response = requests.get(url, headers = headers)
     response.raise_for_status()
     shots = response.json()
 
