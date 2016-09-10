@@ -13,6 +13,8 @@
 		<script src="../scripts/libs/jquery-3.1.0.js"></script>
 		<script src="../scripts/libs/bootstrap.min.js"></script>
 		<script src="../scripts/libs/material.min.js"></script>
+		<script src="../scripts/libs/moment.js"></script>
+		<script src="../scripts/libs/calendar-heatmap.js"></script>
 		<script src="../scripts/libs/select2/select2.js"></script>
 		<script src="../scripts/libs/select2/select3.js"></script>
     <script src="../scripts/autocomplete.js"></script>
@@ -41,6 +43,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/calendar.css">
 		<link rel="stylesheet" type="text/css" href="../css/d3.parcoords.css">
 		<link rel="stylesheet" type="text/css" href="../css/nouislider.css">
+		<link rel="stylesheet" type="text/css" href="../css/calendar-heatmap.css">
 
 	</head>
 	<body>
@@ -235,6 +238,7 @@
 					</table>
 					<h1 id="rosterText">Calendar</h1>
 						<div id = "calendar" width="500px">
+							<!--
 							<div class = "month" id = "m9"></div>
 							<div class = "month" id = "m10"></div>
 							<div class = "month" id = "m11"></div>
@@ -242,6 +246,7 @@
 							<div class = "month" id = "m1"></div>
 							<div class = "month" id = "m2"></div>
 							<div class = "month" id = "m3"></div>
+-->
 					</div>
 				</div>
 			</div>
@@ -373,7 +378,7 @@
 					changeTeamName();
 					changeTeamLogo(currentTeamID);
 					
-					renderCalendar(2014, 2015, currentTeamID);
+					//renderCalendar(2014, 2015, currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
 					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
 					renderScatterplot(1610612700 + parseInt(currentTeamID));
@@ -384,7 +389,7 @@
 				if(!isPlayerChange){
 					changeURL('#' + location.hash.slice(1,3) + "y" + location.hash.slice(4,8) + "p")
 					loadRoster(currentTeamID, currentYear, true);					
-					renderCalendar(2014, 2015, currentTeamID);
+					//renderCalendar(2014, 2015, currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
 					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
 					renderScatterplot(1610612700 + parseInt(currentTeamID));
@@ -416,6 +421,25 @@
 					alert("Browser does not support HTML5.");
 			}
 		}
+			
+			var now = moment().endOf('day').toDate();
+      var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+      var chartData = d3.time.days(yearAgo, now).map(function (dateElement) {
+        return {
+          date: dateElement,
+          count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)
+        };
+      });
+
+      var heatmap = calendarHeatmap()
+                      .data(chartData)
+                      .selector('#calendar')
+                      .tooltipEnabled(true)
+                      .colorRange(['#f4f7f7', '#79a8a9'])
+                      .onClick(function (data) {
+                        console.log('data', data);
+                      });
+      heatmap();  // render the chart
 		
 		</script>
 	</body>

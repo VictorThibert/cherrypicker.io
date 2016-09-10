@@ -1,3 +1,28 @@
+var now = moment().endOf('day').toDate();
+var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+var chartData = d3.time.days(yearAgo, now).map(function(dateElement) {
+  return {
+    date: dateElement,
+    count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)
+  };
+});
+
+console.log(yearAgo);
+console.log(now);
+
+function renderCalendar() {
+  var calendar = calendarHeatmap()
+    .data(chartData)
+    .selector('#calendar')
+    .colorRange(['#D8E6E7', '#218380'])
+    .tooltipEnabled(true)
+  ;
+  
+  calendar();
+}
+
+renderCalendar();
+/*
 function renderCalendar(year1, year2, teamID){
   //renderCalendar("9", 2014, 2015, 1610612700 + parseInt(teamID)); //ADD SHORTENED OCTOBER LATER
   renderCalendarMonth("10", year1, year2, 1610612700 + parseInt(teamID));
@@ -6,9 +31,9 @@ function renderCalendar(year1, year2, teamID){
   renderCalendarMonth("1", year1 + 1, year2 + 1, 1610612700 + parseInt(teamID));
   renderCalendarMonth("2", year1 + 1, year2 + 1, 1610612700 + parseInt(teamID));
   renderCalendarMonth("3", year1 + 1, year2 + 1, 1610612700 + parseInt(teamID));
-
 }
-
+*/
+/*
 function renderCalendarMonth(container, year1, year2, teamID){
 
   var lastDay = new Date(year1, parseInt(container) + 1, 0);
@@ -142,10 +167,10 @@ function renderCalendarMonth(container, year1, year2, teamID){
         .key(function(d) { 
           var e = d.GAME_DATE_EST; 
           
-//           var gameID = d.GAME_ID;
-          
-          return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
-        .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].PLUS_MINUS);})
+      //var gameID = d.GAME_ID; 
+      // return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
+      //.rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); 
+        return parseInt(d[0].PLUS_MINUS);})
         .map(raw);
       
       var dataGameIDs = d3.nest()
@@ -154,8 +179,9 @@ function renderCalendarMonth(container, year1, year2, teamID){
           
 //           var gameID = d.GAME_ID;
           
-          return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
-        .rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1); */return parseInt(d[0].GAME_ID);})
+         // return e.slice(0,4) + "-" + e.slice(4,6) + "-" + e.slice(6,8);})
+         //.rollup(function(d,i) {/*plusminus += parseInt(d[0].WIN * 2 - 1);
+         return parseInt(d[0].GAME_ID);})
         .map(raw);
 
 //DATA CONTAINS THE DIFFERENTIALS PAIRED WITH THE DATES
@@ -205,3 +231,4 @@ function renderCalendarMonth(container, year1, year2, teamID){
 
   d3.select(self.frameElement).style("height", "2910px");
 }
+ */

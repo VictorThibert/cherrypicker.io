@@ -1,4 +1,4 @@
-function renderBoxPlots(currentTeamID){
+function renderBoxPlots(currentTeamID) {
 
   renderBox("boxplotID", "PTS", "Points", currentTeamID);
   renderBox("boxplotID", "AST", "Assists", currentTeamID);
@@ -10,78 +10,83 @@ function renderBoxPlots(currentTeamID){
   // renderBox("container-FG3_PCT", "FG3_PCT");
   // renderBox("boxplotID", "FT_PCT");
 
-  function renderBox(container, metric, metricString, teamID){
+  function renderBox(container, metric, metricString, teamID) {
 
     var divID = "#" + container;
-    
-     d3.select(divID).select("svg").remove(); //remove old boxplots
+
+    d3.select(divID).select("svg").remove(); //remove old boxplots
 
     var labels = true; // show the text labels beside individual boxplots?
 
-    var margin = {top: 30, right: 30, bottom: 70, left: 30};
+    var margin = {
+      top: 30,
+      right: 30,
+      bottom: 70,
+      left: 30
+    };
     var width = 250 - margin.left - margin.right;
     var height = 400 - margin.top - margin.bottom;
 
     var min = Infinity,
-        max = -Infinity;
+      max = -Infinity;
 
     // parse in the data 
     var data = [];
-      data[0] = [];
-      data[1] = [];
-    
+    data[0] = [];
+    data[1] = [];
+
     var metricText = metricString;
     var axisText = $('#teamName').text();
 
-      // add more rows if your csv file has more columns
+    // add more rows if your csv file has more columns
 
-      // add here the header of the csv file
-      data[0][0] = metric;
-      data[1][0] = "League " + metric;
+    // add here the header of the csv file
+    data[0][0] = metric;
+    data[1][0] = "League " + metric;
 
-      // add more rows if your csv file has more columns
+    // add more rows if your csv file has more columns
 
-      data[0][1] = [];
-      data[1][1] = [];
+    data[0][1] = [];
+    data[1][1] = [];
 
 
     d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=ALLTEAMS", function(error2, raw2) { //Put 30 teams or league average team here
 
-        raw2.forEach(function(x) {
-          if(metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT"){
-            var v2 = x[metric];
+      raw2.forEach(function(x) {
+        if (metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT") {
+          var v2 = x[metric];
 
-            var rowMax2 = v2;
-            var rowMin2 = v2;
+          var rowMax2 = v2;
+          var rowMin2 = v2;
 
-            data[1][1].push(v2);     
-             // add more rows if your csv file has more columns
+          data[1][1].push(v2);
+          // add more rows if your csv file has more columns
 
-            if (rowMax2 > max) max = rowMax2;
-            if (rowMin2 < min) min = rowMin2; 
+          if (rowMax2 > max) max = rowMax2;
+          if (rowMin2 < min) min = rowMin2;
 
-          }else{
-            var v2 = Math.floor(x[metric]);
+        } else {
+          var v2 = Math.floor(x[metric]);
 
-            var rowMax2 = v2;
-            var rowMin2 = v2;
+          var rowMax2 = v2;
+          var rowMin2 = v2;
 
-            data[1][1].push(v2);     
-             // add more rows if your csv file has more columns
+          data[1][1].push(v2);
+          // add more rows if your csv file has more columns
 
-            if (rowMax2 > max) max = rowMax2;
-            if (rowMin2 < min) min = rowMin2; 
-          }
-        });
-
-        next();
-
+          if (rowMax2 > max) max = rowMax2;
+          if (rowMin2 < min) min = rowMin2;
+        }
       });
 
-    function next() {
-      d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=" + teamID, function(error, raw) { 
+      next();
 
-      //raw is entire array of all the objects
+    });
+
+    function next() {
+      d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=" + teamID, function(error, raw) {
+
+        //raw is entire array of all the objects
         // using an array of arrays with
         // data[n][2] 
         // where n = number of columns in the csv file 
@@ -93,12 +98,12 @@ function renderBoxPlots(currentTeamID){
 
         raw.forEach(function(x) {
 
-          if(metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT"){
+          if (metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT") {
             var v0 = x[metric];
 
-              //v1 = Math.floor(x.AST);
+            //v1 = Math.floor(x.AST);
 
-              // add more variables if your csv file has more columns
+            // add more variables if your csv file has more columns
 
             var rowMax = Math.max(v0);
             var rowMin = Math.min(v0);
@@ -106,17 +111,17 @@ function renderBoxPlots(currentTeamID){
             data[0][1].push(v0);
             //data[1][1].push(v1);
 
-             // add more rows if your csv file has more columns
+            // add more rows if your csv file has more columns
 
             if (rowMax > max) max = rowMax;
-            if (rowMin < min) min = rowMin; 
+            if (rowMin < min) min = rowMin;
 
 
-          }else{
+          } else {
             var v0 = Math.floor(x[metric]);
-              //v1 = Math.floor(x.AST);
+            //v1 = Math.floor(x.AST);
 
-              // add more variables if your csv file has more columns
+            // add more variables if your csv file has more columns
 
             var rowMax = Math.max(v0);
             var rowMin = Math.min(v0);
@@ -124,10 +129,10 @@ function renderBoxPlots(currentTeamID){
             data[0][1].push(v0);
             //data[1][1].push(v1);
 
-             // add more rows if your csv file has more columns
+            // add more rows if your csv file has more columns
 
             if (rowMax > max) max = rowMax;
-            if (rowMin < min) min = rowMin; 
+            if (rowMin < min) min = rowMin;
           }
         });
 
@@ -136,21 +141,23 @@ function renderBoxPlots(currentTeamID){
 
         var chart = d3.box()
           .whiskers(iqr(10)) //set to 1 to see outliers
-          .height(height) 
+          .height(height)
           .domain([min - boxpadding, max + boxpadding])
           .showLabels(labels);
 
         var svg = d3.select(divID).append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
-          .attr("class", "box")    
+          .attr("class", "box")
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         // the x-axis
-        var x = d3.scale.ordinal()     
-          .domain( data.map(function(d) {return d[0] } ) )     
-          .rangeRoundBands([0 , width], 0.5,0.5);    
+        var x = d3.scale.ordinal()
+          .domain(data.map(function(d) {
+            return d[0]
+          }))
+          .rangeRoundBands([0, width], 0.5, 0.5);
 
         var xAxis = d3.svg.axis()
           .scale(x)
@@ -171,54 +178,63 @@ function renderBoxPlots(currentTeamID){
           .attr("x1", 0).attr("y1", "0%")
           .attr("x2", 0).attr("y2", "100%")
           .selectAll("stop")
-          .data([
-          {offset: "0%", color: "blue"},
-          {offset: "100%", color: "red"}   
-          ])
+          .data([{
+            offset: "0%",
+            color: "blue"
+          }, {
+            offset: "100%",
+            color: "red"
+          }])
           .enter().append("stop")
-          .attr("offset", function(d) { return d.offset; })
-          .attr("stop-color", function(d) { return d.color; });
+          .attr("offset", function(d) {
+            return d.offset;
+          })
+          .attr("stop-color", function(d) {
+            return d.color;
+          });
 
         // draw the boxplots  
-        svg.selectAll(".box")    
-            .data(data)
+        svg.selectAll(".box")
+          .data(data)
           .enter().append("g")
-          .attr("transform", function(d) { return "translate(" +  x(d[0])  + "," + margin.top + ")"; } )
-            .call(chart.width(x.rangeBand() / 3));  // change width here
+          .attr("transform", function(d) {
+            return "translate(" + x(d[0]) + "," + margin.top + ")";
+          })
+          .call(chart.width(x.rangeBand() / 3)); // change width here
 
 
         // add a title
         svg.append("text")
-              .attr("x", (width / 2))             
-              .attr("y", 0 + (margin.top / 2))
-              .attr("text-anchor", "middle")  
-              .style("font-size", "12px") 
-              //.style("text-decoration", "underline")  
-              .text(metricText);
+          .attr("x", (width / 2))
+          .attr("y", 0 + (margin.top / 2))
+          .attr("text-anchor", "middle")
+          .style("font-size", "12px")
+          //.style("text-decoration", "underline")  
+          .text(metricText);
 
-         // draw y axis
+        // draw y axis
         svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis)
+          .attr("class", "y axis")
+          .call(yAxis)
           .append("text") // and text1
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .style("font-size", "12px") 
-            .text(metricText);    
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .style("font-size", "12px")
+          .text(metricText);
 
         // draw x axis  
         svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + (height  + margin.top ) + ")")
-            .call(xAxis)
-          .append("text")             // text label for the x axis
-              .attr("x", (width / 2)  )
-              .attr("y",  10 )
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + (height + margin.top) + ")")
+          .call(xAxis)
+          .append("text") // text label for the x axis
+          .attr("x", (width / 2))
+          .attr("y", 10)
           .attr("dy", ".71em")
-              .style("text-anchor", "middle")
-          .style("font-size", "12px") 
+          .style("text-anchor", "middle")
+          .style("font-size", "12px")
 
       });
     }
@@ -228,10 +244,10 @@ function renderBoxPlots(currentTeamID){
     function iqr(k) {
       return function(d, i) {
         var q1 = d.quartiles[0],
-            q3 = d.quartiles[2],
-            iqr = (q3 - q1) * k,
-            i = -1,
-            j = d.length;
+          q3 = d.quartiles[2],
+          iqr = (q3 - q1) * k,
+          i = -1,
+          j = d.length;
 
         while (d[++i] < q1 - iqr);
         while (d[--j] > q3 + iqr);
@@ -243,5 +259,5 @@ function renderBoxPlots(currentTeamID){
   }
 
 
-  
+
 }
