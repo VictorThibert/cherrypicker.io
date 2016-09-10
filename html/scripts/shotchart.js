@@ -28,7 +28,7 @@ function renderShotchart(count, selectedPlayers){
 
 	var colorScale = d3.scale.linear() //Create color scale for the hexons
 		.domain([-0.4, -0.08, 0, 0.08, 0.4]) //Range for +- above average
-		.range(["#426AAA", "#6389BA", "#F9DC96", "#F0825F", "#d03b5c"]); 
+		.range(["#426AAA", "#6389BA", "#F9DC96", "#F0825F", "#db5757"]); 
 	
 	//hexagon variables
 	var hexagon;
@@ -186,7 +186,7 @@ function renderShotchart(count, selectedPlayers){
 				.style("fill", function(d) {
 					return colorScale(d.totalMade/d.totalShot - leagueShotArray[Math.min((Math.round(d.x/10.0) * 35 + Math.round(d.y/10.0)),1749)][2]); 
 				})
-				.style("opacity", 0.9)
+				
 		
 		//transition
 		hexagon
