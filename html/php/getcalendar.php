@@ -7,6 +7,7 @@
 	$teamString = (string)$_GET['teamID'];
 	$teamIDs = array_map('strval', explode('$', $teamString));
 	
+	
 
 	$cnx = mysqli_connect($servername, $username, $password, $database);
 
@@ -14,7 +15,7 @@
 	    die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$query = "SELECT `GAME_ID`, `GAME_DATE_EST`, `HOME_TEAM_ID`, `VISITOR_TEAM_ID`, `HOME_POINTS`, `AWAY_POINTS`, `MATCHUP` FROM `2014-2015games` WHERE `HOME_TEAM_ID` IN (" . implode(',', $teamIDs) .") ";
+	$query = "SELECT `GAME_ID`, `GAME_DATE_EST`, `HOME_TEAM_ID`, `VISITOR_TEAM_ID`, `HOME_POINTS`, `AWAY_POINTS`, `MATCHUP` FROM `2014-2015games` WHERE `HOME_TEAM_ID` IN (" . implode(',', $teamIDs) .") OR `VISITOR_TEAM_ID` IN (" . implode(',', $teamIDs) .")  ";
 	
 
 
