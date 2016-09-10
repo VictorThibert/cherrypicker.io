@@ -1,7 +1,6 @@
 //data stored in 2d array. inner arrays represent path lines
 function renderPara(teamID){
 
-  // window.history.pushState(“object or string”, “Title”, “/atlanta”);
   var headers = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"]; //ADD TOV
   
   renderPara2(headers);
@@ -29,20 +28,16 @@ function renderPara(teamID){
         else{return d;}}) }
     render();
   });
-
   
 function render() {
-
-  var dimensions = { "protein": {type:"number"} };
   
   var colorScale = d3.scale.linear().domain([2, 17, 30]).range(["#e76e5e","#f7e4ce","#4870ad"]);
  
-
   pc = d3.parcoords()("#example")
-  
-  .data(data)
-  .render()
-  .createAxes();
+    .data(data)
+    .render()
+    .createAxes()
+    .hideAxis(["0"]);
 
   pc.ctx.foreground.lineWidth = 2;
   pc.ctx.foreground.globalCompositeOperation = "darken";
@@ -57,8 +52,7 @@ function render() {
     .autoscale()
     .color(function(d) {return colorScale(d[1]);})
    
-    .brushMode("1D-axes")
-
+    .brushMode("1D-axes")  
     .render()
 }
   
