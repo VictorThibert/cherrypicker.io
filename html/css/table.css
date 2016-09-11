@@ -22,7 +22,7 @@
 }
 
 .cell { 
-  float: left; overflow: hidden; white-space: nowrap; width: 100px; color: #666 
+  float: left; overflow: hidden; white-space: nowrap; width: 99px; color: #666 
 }
 
 .col-0 { 
@@ -32,7 +32,7 @@
 	width: 85px;
 }
 .col-9 {
-	width: 30px;
+	width: 33px;
 }
 
 .trad {
