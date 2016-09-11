@@ -3,10 +3,12 @@
 #grid { 
 	margin-top: 20px;
 	margin-left: 30px;
-	width: 1210px}
+	width: 1000px;
+	margin-bottom: 10px;	
+}
 
 .cell {
-	
+	font-size: 15px;
 }
 
 .row, .header, .cell { 
