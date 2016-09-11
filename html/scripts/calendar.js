@@ -37,9 +37,8 @@ function renderCalendar(teamID) {
       return moment(a).diff(moment(b))
     }
     
-    console.log(gameDates[44])
-    var now = moment("20150601", "YYYYMMDD").toDate();
-    var yearAgo = moment("20141001", "YYYYMMDD").toDate()
+    var now = moment("20150510", "YYYYMMDD").toDate();
+    var yearAgo = moment("20141015", "YYYYMMDD").toDate()
     
     var allDays = d3.time.days(yearAgo, now);
     var temp = 0;
@@ -74,7 +73,7 @@ function renderCalendar(teamID) {
       .data(chartData)
       .selector('#calendar')
       .tooltipEnabled(true)
-      .colorRange(['#f4f7f7', '#79a8a9'])
+      .colorRange(['#f4f7f7', '#6e8fb7'])
       .onClick(function(data) {
         console.log('data', data);
       });
