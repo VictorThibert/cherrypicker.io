@@ -2,16 +2,16 @@
 function calendarHeatmap() {
   // defaults
   var width = 500;
-  var height = 80;
+  var height = 120;
   var legendWidth = 150;
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Oct', 'Nov', 'Dec'];
   var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   var selector = 'body';
-  var SQUARE_LENGTH = 9;
+  var SQUARE_LENGTH = 12;
   var SQUARE_PADDING = 2;
-  var MONTH_LABEL_PADDING = 6;
-			var now = moment("20150601", "YYYYMMDD").toDate();
-			var yearAgo = moment("20141001", "YYYYMMDD").toDate()
+  var MONTH_LABEL_PADDING = 10;
+			var now = moment("20150510", "YYYYMMDD").toDate();
+			var yearAgo = moment("20141015", "YYYYMMDD").toDate()
   var data = [];
   var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
@@ -87,22 +87,23 @@ function calendarHeatmap() {
         .attr('width', width)
         .attr('class', 'calendar-heatmap')
         .attr('height', height)
-        .style('padding', '36px');
+        .style('padding', '12px')
+				.style('padding-left', "25px")
 
       dayRects = svg.selectAll('.day-cell')
         .data(dateRange);  //  array of days for the last yr
 
-      dayRects.enter().append('rect')
+      dayRects.enter().append('circle')
         .attr('class', 'day-cell')
-        .attr('width', SQUARE_LENGTH)
-        .attr('height', SQUARE_LENGTH)
+        .attr('r', SQUARE_LENGTH/2.5)
+//         .attr('height', SQUARE_LENGTH)
         .attr('fill', 'gray')
-        .attr('x', function (d, i) {
+        .attr('cx', function (d, i) {
           var cellDate = moment(d);
           var result = cellDate.week() - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
-          return result * (SQUARE_LENGTH + SQUARE_PADDING);
+          return result * (SQUARE_LENGTH + SQUARE_PADDING) + 10;
         })
-        .attr('y', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); });
+        .attr('cy', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + 10; });
 
       if (typeof onClick === 'function') {
         dayRects.on('click', function (d) {
@@ -125,36 +126,35 @@ function calendarHeatmap() {
         });
       }
 
-      if (chart.legendEnabled()) {
-        var colorRange = [color(0)];
-        for (var i = 3; i > 0; i--) {
-          colorRange.push(color(max / i));
-        }
+//       if (chart.legendEnabled()) {
+//         var colorRange = [color(0)];
+//         for (var i = 3; i > 0; i--) {
+//           colorRange.push(color(max / i));
+//         }
 
-        var legendGroup = svg.append('g');
-        legendGroup.selectAll('.calendar-heatmap-legend')
-            .data(colorRange)
-            .enter()
-          .append('rect')
-            .attr('class', 'calendar-heatmap-legend')
-            .attr('width', SQUARE_LENGTH)
-            .attr('height', SQUARE_LENGTH)
-            .attr('x', function (d, i) { return (width - legendWidth) + (i + 1) * 13; })
-            .attr('y', height + SQUARE_PADDING)
-            .attr('fill', function (d) { return d; });
+//         var legendGroup = svg.append('g');
+//         legendGroup.selectAll('.calendar-heatmap-legend')
+//             .data(colorRange)
+//             .enter()
+//           .append('circle')
+//             .attr('class', 'calendar-heatmap-legend')
+//             .attr('r', SQUARE_LENGTH/2.5)
+//             .attr('cx', function (d, i) { return (width - legendWidth) + (i + 1) * 13; })
+//             .attr('cy', height + SQUARE_PADDING + 10)
+//             .attr('fill', function (d) { return d; });
 
-        legendGroup.append('text')
-          .attr('class', 'calendar-heatmap-legend-text')
-          .attr('x', width - legendWidth - 13)
-          .attr('y', height + SQUARE_LENGTH)
-          .text('Less');
+//         legendGroup.append('text')
+//           .attr('class', 'calendar-heatmap-legend-text')
+//           .attr('x', width - legendWidth - 13)
+//           .attr('y', height + SQUARE_LENGTH)
+//           .text('Less');
 
-        legendGroup.append('text')
-          .attr('class', 'calendar-heatmap-legend-text')
-          .attr('x', (width - legendWidth + SQUARE_PADDING) + (colorRange.length + 1) * 13)
-          .attr('y', height + SQUARE_LENGTH)
-          .text('More');
-      }
+//         legendGroup.append('text')
+//           .attr('class', 'calendar-heatmap-legend-text')
+//           .attr('x', (width - legendWidth + SQUARE_PADDING) + (colorRange.length + 1) * 13)
+//           .attr('y', height + SQUARE_LENGTH)
+//           .text('More');
+//       }
 
       dayRects.exit().remove();
       var monthLabels = svg.selectAll('.month')
@@ -169,7 +169,6 @@ function calendarHeatmap() {
             var matchIndex = 0;
             dateRange.find(function (element, index) {
               matchIndex = index;
-							console.log(moment(d).isSame(element, 'month') && moment(d).isSame(element, 'year'));
               return moment(d).isSame(element, 'month') && moment(d).isSame(element, 'year');
             });
 
