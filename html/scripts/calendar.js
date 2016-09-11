@@ -24,13 +24,20 @@ function renderCalendar() {
 
 renderCalendar();*/
 
-function renderCalendar(teamURL) {
-  d3.json("http://cherrypicker.io/php/getcalendar.php?teamID=" + 1610612737, function(error, raw) {
+function renderCalendar(teamID) {
+
+  d3.json("http://cherrypicker.io/php/getcalendar.php?teamID=16106127" + teamID, function(error, raw) {
     var gameDates = [];
     for (var i = 0; i < raw.length; i++) {
       gameDates[i] = moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate();
     }
+    gameDates.sort(sorter)
     
+    function sorter(a, b){
+      return moment(a).diff(moment(b))
+    }
+    
+    console.log(gameDates[44])
     var now = moment("20150601", "YYYYMMDD").toDate();
     var yearAgo = moment("20141001", "YYYYMMDD").toDate()
     
@@ -38,8 +45,15 @@ function renderCalendar(teamURL) {
     var temp = 0;
     var chartData = d3.time.days(yearAgo, now).map(function(dateElement) {
       for (var i = temp; i < gameDates.length; i++) {
-        if (String(dateElement) == gameDates[i]) {
-          console.log(temp)
+   
+        if (temp == 81 ) {
+           return {
+            date: dateElement,
+            count: 0
+          }
+        }
+        else if (String(dateElement) == gameDates[i]) {
+          
           temp++;
           return {
             date: dateElement,
@@ -52,8 +66,9 @@ function renderCalendar(teamURL) {
           }
         }
       }
+      
+    
     });
-    console.log(chartData)
     
     var heatmap = calendarHeatmap()
       .data(chartData)
