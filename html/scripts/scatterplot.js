@@ -55,8 +55,8 @@ function renderScatterplotInner(data, teamID) {
 	var tooltip = d3.select("body").append("div")
 			.attr("class", "tooltip")
 			.style("position", "absolute")
-	.style("top", 0)
-	.style("left", 0)
+			.style("top", 0)
+			.style("left", 0)
 			.style("opacity", 0);
 
   // don't want dots overlapping axis, so add in buffer to data domain

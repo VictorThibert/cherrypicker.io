@@ -117,13 +117,13 @@ function calendarHeatmap() {
                .style("opacity", 0.9);
           tooltip.html(tooltipHTMLForDate(d))
                .style("left", (d3.event.pageX - 90) + "px")
-               .style("top", (d3.event.pageY - 30 ) + "px");
+               .style("top", (d3.event.pageY - 30) + "px");
       })
 			.on("mouseout", function(d) {
           tooltip.transition()
                .duration(500)
                .style("opacity", 0);
-      });;
+      });
 
       if (typeof onClick === 'function') {
         dayRects.on('click', function (d) {
@@ -209,9 +209,20 @@ function calendarHeatmap() {
 
     function tooltipHTMLForDate(d) {
       var dateStr = moment(d).format('ddd, MMM Do YYYY');
-      var count = countForDate(d);
-      return '<span><strong>' + (count ? count : 'No') + ' ' + tooltipUnit + (count === 1 ? '' : 's') + '</strong> on ' + dateStr + '</span>';
+      var matchup = matchupForDate(d);
+      return '<span><strong>' + matchup + '</strong> on ' + dateStr + '</span>';
     }
+		
+		function matchupForDate(d) {
+			var matchup = "N/A";
+      var match = chart.data().find(function (element, index) {
+        return moment(element.date).isSame(d, 'day');
+      });
+			if (match) {
+        matchup = match.matchup;
+      }
+      return matchup;
+		}
 
     function countForDate(d) {
       var count = 0;

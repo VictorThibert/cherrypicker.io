@@ -5,19 +5,20 @@
 
 .box {
 /*     font-family: 'Asap', sans-serif; */
-    font-size: 12px;
+    font-size: 13px;
+
  }
 
 .box line {
   fill: none;                 
   stroke: url(#line-gradient);    
-  stroke-width: 2px;      
+  stroke-width: 1px;      
 }
 .box rect
 {
-  fill: pink;                 
+  fill: url(#line-gradient2);                 
   stroke: url(#line-gradient);   
-  stroke-width: 2px;      
+  stroke-width: 1px;      
 }
 .box circle {
   fill: white;
@@ -37,13 +38,13 @@
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #444;
   stroke-width: 1px;    
   shape-rendering: crispEdges;
 }
 
 .x.axis path { 
   fill: none;
-  stroke: #000;
+  stroke: #444;
   shape-rendering: crispEdges;
 }

@@ -29,12 +29,12 @@ function renderCalendar(teamID) {
   d3.json("http://cherrypicker.io/php/getcalendar.php?teamID=16106127" + teamID, function(error, raw) {
     var gameDates = [];
     for (var i = 0; i < raw.length; i++) {
-      gameDates[i] = moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate();
+      gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP];
     }
     gameDates.sort(sorter)
     
     function sorter(a, b){
-      return moment(a).diff(moment(b))
+      return moment(a[0]).diff(moment(b[0]))
     }
     
     var now = moment("20150510", "YYYYMMDD").toDate();
@@ -51,17 +51,19 @@ function renderCalendar(teamID) {
             count: 0
           }
         }
-        else if (String(dateElement) == gameDates[i]) {
+        else if (String(dateElement) == gameDates[i][0]) {
           
           temp++;
           return {
             date: dateElement,
-            count: 10
+            count: 10,
+            matchup: gameDates[i][1]
           }
         } else {
           return {
             date: dateElement,
-            count: 0
+            count: 0,
+            matchup: "N/A"
           }
         }
       }
