@@ -279,7 +279,7 @@ function renderShotchart(count, selectedPlayers){
 			var percentContainer = document.getElementById("sub-container-label1");
 			$(percentContainer)
 				.css("font-weight", "900")
-				.css("color", "#33bdb1");
+				.css("color", "#5077b1");
 		})
 		
 		slider.noUiSlider.on('change', function(){
@@ -328,7 +328,7 @@ function renderShotchart(count, selectedPlayers){
 			var volumeContainer = document.getElementById("sub-container-label2");
 			$(volumeContainer)
 				.css("font-weight", "900")
-				.css("color", "#33bdb1");
+				.css("color", "#5077b1");
 		})
 		
 		sliderShotAttempts.noUiSlider.on('change', function(){
@@ -378,7 +378,7 @@ function renderShotchart(count, selectedPlayers){
 			var distanceContainer = document.getElementById("sub-container-label3");
 			$(distanceContainer)
 				.css("font-weight", "900")
-				.css("color", "#33bdb1");
+				.css("color", "#5077b1");
 		});
 		
 		sliderShotDistance.noUiSlider.on('change', function(){
