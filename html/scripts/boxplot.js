@@ -22,7 +22,7 @@ function renderBoxPlots(currentTeamID) {
       top: 20,
       right: 30,
       bottom: 60,
-      left: 30
+      left: 40
     };
     var width = 250 - margin.left - margin.right;
     var height = 400 - margin.top - margin.bottom;

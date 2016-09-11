@@ -96,7 +96,7 @@ function calendarHeatmap() {
       dayRects.enter().append('circle')
         .attr('class', 'day-cell')
         .attr('r', SQUARE_LENGTH/2.5)
-//         .attr('height', SQUARE_LENGTH)
+//      .attr('height', SQUARE_LENGTH)
         .attr('fill', 'gray')
         .attr('cx', function (d, i) {
           var cellDate = moment(d);

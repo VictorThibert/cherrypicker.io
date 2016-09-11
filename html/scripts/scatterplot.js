@@ -28,7 +28,7 @@ function renderScatterplotInner(data, teamID) {
    height = 500 - margin.top - margin.bottom;
 
 
-	var colorScale = d3.scale.linear().domain([-10.0,10.0]).range(["red", "blue"]);
+	var colorScale = d3.scale.linear().domain([-10.0,10.0]).range(["#ea765d", "#6e8fb7"]);
 
 	var tValue = function(d) { return d[0];}
 	
@@ -98,7 +98,7 @@ function renderScatterplotInner(data, teamID) {
 				if(d[3] != teamID){
 					return 4;
 				} else {
-					return 6;
+					return 7;
 				}
 			})
       .attr("cx", xMap)
@@ -109,7 +109,7 @@ function renderScatterplotInner(data, teamID) {
 				if(d[3] != teamID){
 					return colorScale(d[1] - d[2]);
 				} else {
-					return "orange";
+					return "#d24554";
 				}
 				
 			}) 
