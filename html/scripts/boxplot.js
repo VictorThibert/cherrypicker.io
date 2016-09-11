@@ -19,9 +19,9 @@ function renderBoxPlots(currentTeamID) {
     var labels = true; // show the text labels beside individual boxplots?
 
     var margin = {
-      top: 30,
+      top: 20,
       right: 30,
-      bottom: 70,
+      bottom: 60,
       left: 30
     };
     var width = 250 - margin.left - margin.right;
@@ -171,6 +171,7 @@ function renderBoxPlots(currentTeamID) {
         var yAxis = d3.svg.axis()
           .scale(y)
           .orient("left");
+        
 
         svg.append("linearGradient") //gradient
           .attr("id", "line-gradient")
@@ -180,10 +181,31 @@ function renderBoxPlots(currentTeamID) {
           .selectAll("stop")
           .data([{
             offset: "0%",
-            color: "blue"
+            color: '#3e66a8'
           }, {
             offset: "100%",
             color: "red"
+          }])
+          .enter().append("stop")
+          .attr("offset", function(d) {
+            return d.offset;
+          })
+          .attr("stop-color", function(d) {
+            return d.color;
+          });
+        
+        svg.append("linearGradient") //gradient
+          .attr("id", "line-gradient2")
+          .attr("gradientUnits", "userSpaceOnUse")
+          .attr("x1", 0).attr("y1", "0%")
+          .attr("x2", 0).attr("y2", "100%")
+          .selectAll("stop")
+          .data([{
+            offset: "0%",
+            color: '#b5c7e3'
+          }, {
+            offset: "100%",
+            color: "#ff8080"
           }])
           .enter().append("stop")
           .attr("offset", function(d) {
@@ -208,20 +230,26 @@ function renderBoxPlots(currentTeamID) {
           .attr("x", (width / 2))
           .attr("y", 0 + (margin.top / 2))
           .attr("text-anchor", "middle")
-          .style("font-size", "12px")
+          .style("font-size", "13px")
+          .style("fill", "#444")
+        
           //.style("text-decoration", "underline")  
           .text(metricText);
 
         // draw y axis
         svg.append("g")
           .attr("class", "y axis")
+    
           .call(yAxis)
+ 
           .append("text") // and text1
           .attr("transform", "rotate(-90)")
           .attr("y", 6)
           .attr("dy", ".71em")
+          .attr("x", -35)
           .style("text-anchor", "end")
           .style("font-size", "12px")
+          .style("fill", "#444")
           .text(metricText);
 
         // draw x axis  
@@ -235,6 +263,7 @@ function renderBoxPlots(currentTeamID) {
           .attr("dy", ".71em")
           .style("text-anchor", "middle")
           .style("font-size", "12px")
+          .style("fill", "#444")
 
       });
     }
