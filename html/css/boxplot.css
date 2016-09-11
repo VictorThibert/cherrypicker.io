@@ -34,11 +34,6 @@
   stroke: #000;
 }
 
-.axis {
-/*   font-family: Asap, sans-serif; */
-  font-size: 14px;
-}
-
 .axis path,
 .axis line {
   fill: none;
