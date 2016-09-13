@@ -4,7 +4,7 @@ function calendarHeatmap() {
   var width = 500;
   var height = 120;
   var legendWidth = 150;
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'August', 'September', '', 'Nov', 'Dec'];
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'August', 'September', 'October', 'Nov', 'Dec'];
   var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   var selector = 'body';
   var SQUARE_LENGTH = 12;
