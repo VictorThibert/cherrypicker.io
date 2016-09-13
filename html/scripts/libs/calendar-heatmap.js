@@ -129,6 +129,7 @@ function calendarHeatmap() {
 
       if (typeof onClick === 'function') {
         dayRects.on('click', function (d) {
+						location.href = "http:///stats.nba.com/game/#!/00" + getGameID(d) + "/";		
           var count = countForDate(d);
           onClick({ date: d, count: count});
         });
@@ -236,6 +237,18 @@ function calendarHeatmap() {
       }
       return count;
     }
+		
+		function getGameID(d) {
+			var gameid = 0;
+      var match = chart.data().find(function (element, index) {
+        return moment(element.date).isSame(d, 'day');
+      });
+      if (match) {
+        gameid = match.gameid;
+      }
+      return gameid;
+			
+		}
 
     var daysOfChart = chart.data().map(function (day) {
       return day.date.toDateString();

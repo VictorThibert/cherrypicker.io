@@ -1,35 +1,10 @@
-/*
-var now = moment().endOf('day').toDate();
-var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
-var chartData = d3.time.days(yearAgo, now).map(function(dateElement) {
-  return {
-    date: dateElement,
-    count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)
-  };
-});
 
-console.log(yearAgo);
-console.log(now);
-
-function renderCalendar() {
-  var calendar = calendarHeatmap()
-    .data(chartData)
-    .selector('#calendar')
-    .colorRange(['#D8E6E7', '#218380'])
-    .tooltipEnabled(true)
-  ;
-  
-  calendar();
-}
-
-renderCalendar();*/
-
-function renderCalendar(teamID) {
+function renderCalendar(teamID, year) {
 
   d3.json("http://cherrypicker.io/php/getcalendar.php?teamID=16106127" + teamID, function(error, raw) {
     var gameDates = [];
     for (var i = 0; i < raw.length; i++) {
-      gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP];
+      gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID];
     }
     gameDates.sort(sorter)
     
@@ -56,8 +31,9 @@ function renderCalendar(teamID) {
           temp++;
           return {
             date: dateElement,
-            count: 10,
-            matchup: gameDates[i][1]
+            count: 100 * Math.random(), // test with different gradients
+            matchup: gameDates[i][1],
+            gameid: gameDates[i][2]
           }
         } else {
           return {
@@ -77,7 +53,9 @@ function renderCalendar(teamID) {
       .tooltipEnabled(true)
       .colorRange(['#f4f7f7', '#6e8fb7'])
       .onClick(function(data) {
-        console.log('data', data);
+        if(data.count == 10){
+          console.log('data', data);
+        }
       });
     heatmap(); // render the chart
   });

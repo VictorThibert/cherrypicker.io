@@ -239,7 +239,7 @@ td {
 	margin-bottom: 8px;
 	padding: 1%;
 	border-radius: 5px;
-	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.03);
+	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.05);
 }
 
 .card-elem{
@@ -260,10 +260,12 @@ div.tooltip {
   height: auto;					
   padding: 6px;				
   font: 12px sans-serif;		
-  background: grey;	
+	color: #EEE;
+  background: #111;	
   border: 0px;		
-  border-radius: 3px;			
+  border-radius: 4px;			
   pointer-events: none;			
+	box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
 } 
 
 .axis {
