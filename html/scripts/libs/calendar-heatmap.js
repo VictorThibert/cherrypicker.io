@@ -128,56 +128,16 @@ function calendarHeatmap() {
       });
 
       if (typeof onClick === 'function') {
+				
         dayRects.on('click', function (d) {
+					if (countForDate(d) > 0) { //basically if a game was played that day
 						location.href = "http:///stats.nba.com/game/#!/00" + getGameID(d) + "/";		
-          var count = countForDate(d);
-          onClick({ date: d, count: count});
+					}
+						
+          
         });
       }
 
-//       if (chart.tooltipEnabled()) {
-//         dayRects.on('mouseover', function (d, i) {
-//           tooltip = d3.select(chart.selector())
-//             .append('div')
-//             .attr('class', 'day-cell-tooltip')
-//             .html(tooltipHTMLForDate(d))
-//             .style("left", (d3.event.pageX) + "px")
-//             .style("top", (d3.event.pageY) + "px");
-//         })
-//         .on('mouseout', function (d, i) {
-//           tooltip.remove();
-//         });
-//       }
-
-//       if (chart.legendEnabled()) {
-//         var colorRange = [color(0)];
-//         for (var i = 3; i > 0; i--) {
-//           colorRange.push(color(max / i));
-//         }
-
-//         var legendGroup = svg.append('g');
-//         legendGroup.selectAll('.calendar-heatmap-legend')
-//             .data(colorRange)
-//             .enter()
-//           .append('circle')
-//             .attr('class', 'calendar-heatmap-legend')
-//             .attr('r', SQUARE_LENGTH/2.5)
-//             .attr('cx', function (d, i) { return (width - legendWidth) + (i + 1) * 13; })
-//             .attr('cy', height + SQUARE_PADDING + 10)
-//             .attr('fill', function (d) { return d; });
-
-//         legendGroup.append('text')
-//           .attr('class', 'calendar-heatmap-legend-text')
-//           .attr('x', width - legendWidth - 13)
-//           .attr('y', height + SQUARE_LENGTH)
-//           .text('Less');
-
-//         legendGroup.append('text')
-//           .attr('class', 'calendar-heatmap-legend-text')
-//           .attr('x', (width - legendWidth + SQUARE_PADDING) + (colorRange.length + 1) * 13)
-//           .attr('y', height + SQUARE_LENGTH)
-//           .text('More');
-//       }
 
       dayRects.exit().remove();
       var monthLabels = svg.selectAll('.month')
