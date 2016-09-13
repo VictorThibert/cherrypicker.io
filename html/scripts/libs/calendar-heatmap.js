@@ -4,7 +4,7 @@ function calendarHeatmap() {
   var width = 500;
   var height = 120;
   var legendWidth = 150;
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'August', 'September', 'October', 'Nov', 'Dec'];
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'August', 'September', '', 'Nov', 'Dec'];
   var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   var selector = 'body';
   var SQUARE_LENGTH = 12;
@@ -111,13 +111,15 @@ function calendarHeatmap() {
           return result * (SQUARE_LENGTH + SQUARE_PADDING) + 10;
         })
         .attr('cy', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + 10; })
-			.on("mouseover", function(d) {
+			.on("mouseover", function(d, i) {
+				if(countForDate(d) > 0){
           tooltip.transition()
                .duration(200)
                .style("opacity", 0.9);
           tooltip.html(tooltipHTMLForDate(d))
                .style("left", (d3.event.pageX - 90) + "px")
                .style("top", (d3.event.pageY - 30) + "px");
+				}
       })
 			.on("mouseout", function(d) {
           tooltip.transition()
