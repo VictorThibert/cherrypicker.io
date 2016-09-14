@@ -28,3 +28,9 @@ rect.day-cell:hover {
 .calendar-heatmap {
   box-sizing: initial;
 }
+
+#calTooltip{
+  text-align: left;
+  width: 120px;
+  height: 50px;
+}

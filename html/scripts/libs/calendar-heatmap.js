@@ -13,7 +13,7 @@ function calendarHeatmap() {
 			var now = moment("20150510", "YYYYMMDD").toDate();
 			var yearAgo = moment("20141015", "YYYYMMDD").toDate()
   var data = [];
-  var colorRange = ['#D8E6E7', '#218380'];
+//   var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
   var tooltipUnit = 'point';
   var legendEnabled = true;
@@ -173,7 +173,13 @@ function calendarHeatmap() {
     function tooltipHTMLForDate(d) {
       var dateStr = moment(d).format('ddd, MMM Do YYYY');
       var matchup = matchupForDate(d);
-      return '<span><strong>' + matchup + '</strong> on ' + dateStr + '</span>';
+			var scoreString = stringForDate(d);
+			if(scoreString > 0){
+     		return '<span id = "calTooltip"><strong>' + matchup + '</strong><br>' + dateStr + '<br>' + " Win by " + scoreString +'</span>';
+			}
+			else if(scoreString < 0){
+					return '<span id = "calTooltip"><strong>' + matchup + '</strong><br>' + dateStr + '<br>' + " Loss by " + scoreString * -1 +'</span>';
+			}
     }
 		
 		function matchupForDate(d) {
@@ -197,6 +203,17 @@ function calendarHeatmap() {
       }
       return count;
     }
+		
+		function stringForDate(d){
+			var dateString = "";
+			var match = chart.data().find(function (element, index) {
+        return moment(element.date).isSame(d, 'day');
+      });
+			if (match) {
+        dateString = match.scoreString;
+      }
+      return dateString;
+		}
 		
 		function getGameID(d) {
 			var gameid = 0;
