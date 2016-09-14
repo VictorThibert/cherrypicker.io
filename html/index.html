@@ -268,10 +268,10 @@
 			<div id = "row4">
 				<div class ="container-card">
 					<div class="scatterplot" id = "scatterplotID">
-						<select id = "xAxisSelect">
+						<select id = "xSelect">
 							<option>Win Percentage</option>
-							<option>Offensive Rating</option>
-							<option selected="selected">Defensive Rating</option>
+							<option value="OFF_RATING">Offensive Rating</option>
+							<option value="DEF_RATING" selected="selected">Defensive Rating</option>
 							<option>Net Rating</option>
 							<option>Assist Percentage</option>
 							<option>Assist:Turnover Ratio</option>
@@ -281,14 +281,14 @@
 							<option>Rebound Percentage</option>
 							<option>Team Turnover Percentage</option>
 							<option>Effective FG Percentage</option>
-							<option>True Shooting Percentage</option>
+							<option value= "TS_PCT">True Shooting Percentage</option>
 							<option>Pace</option>
 							<option>PIE</option>
 						</select>
-						<select id = "yAxisSelect">
+						<select id = "ySelect">
 							<option>Win Percentage</option>
-							<option selected="selected">Offensive Rating</option>
-							<option>Defensive Rating</option>
+							<option value="OFF_RATING" selected="selected">Offensive Rating</option>
+							<option value="DEF_RATING" >Defensive Rating</option>
 							<option>Net Rating</option>
 							<option>Assist Percentage</option>
 							<option>Assist:Turnover Ratio</option>
@@ -298,7 +298,7 @@
 							<option>Rebound Percentage</option>
 							<option>Team Turnover Percentage</option>
 							<option>Effective FG Percentage</option>
-							<option>True Shooting Percentage</option>
+							<option value= "TS_PCT">True Shooting Percentage</option>
 							<option>Pace</option>
 							<option>PIE</option>
 						</select>
@@ -309,8 +309,7 @@
 		
 		
 		<script>
-			$('#xAxisSelect').select2();
-			$('#yAxisSelect').select2();
+	
 			//redirects cherrypicker.io to a sample team
 			if(window.location.href== "http://cherrypicker.io/"){
 				window.location.assign("http://cherrypicker.io/#37y2015p2594+201143");
@@ -328,6 +327,24 @@
 			
 			//document onload (gets called immediately after page has been loaded)
 			$(document).ready(function(){
+				
+				//scatterplot test / to move
+				var $xSelect = $('#xSelect').select3(); 
+				var $ySelect = $('#ySelect').select3(); 
+				var xVar = "DEF_RATING";
+				var yVar = "OFF_RATING";
+				$xSelect
+					.on("change", function(e){
+						xVar = e.val;
+						renderScatterplot(1610612700 + parseInt(currentTeamID), currentYear, xVar, yVar) ;
+					});	
+				$ySelect
+					.on("change", function(e){
+						yVar = e.val;
+						renderScatterplot(1610612700 + parseInt(currentTeamID), currentYear, xVar, yVar) ;
+					});	
+				
+				
 				//select2 dropdowns
 				var $teamSelect = $('#teamBox').select2(); 
 				var $yearSelect = $('#yearBox').select3(); 
@@ -387,6 +404,8 @@
 				
 			});
 			
+			
+			
 			//hashchange (manual back and url input)
 			window.onhashchange = function() {
 				selectedPlayers = []; 
@@ -416,7 +435,7 @@
 					renderCalendar(currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
 					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
-					renderScatterplot(1610612700 + parseInt(currentTeamID));
+					renderScatterplot(1610612700 + parseInt(currentTeamID), currentYear, "DEF_RATING", "OFF_RATING");
 				}
 				
 				//REMEMBER/ DONT UPDATE TEAM IF CALLED FROM PLAYER CHANGE i.e. YEAR or TEAM CHANGE
@@ -456,29 +475,6 @@
 					alert("Browser does not support HTML5.");
 			}
 		}
-	
-		/*
-var now = moment("06-01-2015", "MM-DD-YYYY").toDate();
-	var yearAgo = moment("10-01-2014", "MM-DD-YYYY").toDate()
-		var chartData = d3.time.days(yearAgo, now).map(function (dateElement) {
-			console.log(dateElement)
-			return {
-				date: dateElement,
-				count: Math.random() * 10
-			};
-		});
-			
-		console.log(chartData);
-		var heatmap = calendarHeatmap()
-										.data(chartData)
-										.selector('#calendar')
-										.tooltipEnabled(true)
-										.colorRange(['#f4f7f7', '#79a8a9'])
-										.onClick(function (data) {
-											console.log('data', data);
-										});
-		heatmap();  // render the chart
-		*/
 			
 		</script>
 	</body>

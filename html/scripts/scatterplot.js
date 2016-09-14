@@ -1,4 +1,5 @@
-function renderScatterplot(teamID) {
+function renderScatterplot(teamID, currentYear, x, y) {
+	
 	d3.select("#scatterplotID").selectAll("svg").remove();
 
 	var data = [];
@@ -9,9 +10,10 @@ function renderScatterplot(teamID) {
 		if (xml.readyState == 4 && xml.status == 200) {
 			var jobj = JSON.parse(xml.responseText)
 			for (var i = 0; i < jobj.length; i+=1) {
-				data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i].OFF_RATING), parseFloat(jobj[i].DEF_RATING), parseInt(jobj[i].TEAM_ID) ]);
+				console.log( y, x)
+				data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i][y]), parseFloat(jobj[i][x]), parseInt(jobj[i].TEAM_ID) ]);
 			} 	
-			renderScatterplotInner(data, teamID);
+			renderScatterplotInner(data, teamID, x , y);
 		}
 	}
 	xml.open("GET", url, true);
@@ -19,7 +21,7 @@ function renderScatterplot(teamID) {
 	
 }
 
-function renderScatterplotInner(data, teamID) {
+function renderScatterplotInner(data, teamID, x ,y) {
 		
 	var numberOfTeams = 30;
 

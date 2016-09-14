@@ -10,6 +10,16 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
   
   
 }
+#select3-chosen-2, #select3-results-2 { /* xSelect */
+	font-size: 15px;
+	width: 200px;
+}
+
+#select3-chosen-3, #select3-results-3  { /* ySelect */
+	font-size: 15px;
+	width: 200px;
+}
+
 
 .select3-container,
 .select3-drop,
@@ -25,7 +35,6 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
           box-sizing: border-box; /* css3 */
   
   font-family: 'Roboto', sans-serif;
-	font-weight: light;
 	color: #888;
 	font-size: 17px;
 /*   background-color: rgb(255,255,255,0.3); */ /*VT Default unclicked color*/
