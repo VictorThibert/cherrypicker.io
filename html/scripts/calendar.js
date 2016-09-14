@@ -4,7 +4,24 @@ function renderCalendar(teamID, year) {
   d3.json("http://cherrypicker.io/php/getcalendar.php?teamID=16106127" + teamID, function(error, raw) {
     var gameDates = [];
     for (var i = 0; i < raw.length; i++) {
-      gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID];
+      if (raw[i].HOME_TEAM_ID == "16106127" + teamID){
+          if(raw[i].HOME_POINTS > raw[i].AWAY_POINTS){
+             gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].HOME_POINTS - raw[i].AWAY_POINTS, raw[i].HOME_POINTS - raw[i].AWAY_POINTS];
+          }
+        else{
+          gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].AWAY_POINTS - raw[i].HOME_POINTS, raw[i].HOME_POINTS - raw[i].AWAY_POINTS];
+        }
+      }
+      else if(raw[i].HOME_TEAM_ID != "16106127" + teamID){
+          if(raw[i].AWAY_POINTS > raw[i].HOME_POINTS){
+             gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].HOME_POINTS - raw[i].AWAY_POINTS, raw[i].HOME_POINTS - raw[i].AWAY_POINTS];
+          }
+        else{
+           gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].AWAY_POINTS - raw[i].HOME_POINTS,raw[i].HOME_POINTS - raw[i].AWAY_POINTS];
+        }
+      }
+      
+      //gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].HOME_POINTS - raw[i].AWAY_POINTS];
     }
     gameDates.sort(sorter)
     
@@ -31,9 +48,10 @@ function renderCalendar(teamID, year) {
           temp++;
           return {
             date: dateElement,
-            count: 100 * Math.random(), // test with different gradients
+            count: gameDates[i][3], // test with different gradients
             matchup: gameDates[i][1],
-            gameid: gameDates[i][2]
+            gameid: gameDates[i][2],
+            scoreString: gameDates[i][4]
           }
         } else {
           return {
