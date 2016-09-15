@@ -10,16 +10,17 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
   
   
 }
-#select3-chosen-2, #select3-results-2 { /* xSelect */
+
+/*xSelect css*/
+#s2id_xSelect { 
 	font-size: 15px;
 	width: 200px;
 }
 
-#select3-chosen-3, #select3-results-3  { /* ySelect */
+#s2id_ySelect { 
 	font-size: 15px;
 	width: 200px;
 }
-
 
 .select3-container,
 .select3-drop,
@@ -298,14 +299,9 @@ html[dir="rtl"] .select3-search input {
 /*     border: 1px solid #5897fb; blue stroke glow */
     outline: none;
     background: #f6f6f6;
-  
-  
     border-radius: 4px 4px 0 0;
 
 }
-
-
-
 
 .select3-dropdown-open.select3-drop-above .select3-choice,
 .select3-dropdown-open.select3-drop-above .select3-choices {

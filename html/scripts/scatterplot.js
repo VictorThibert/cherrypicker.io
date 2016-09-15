@@ -1,4 +1,10 @@
 function renderScatterplot(teamID, currentYear, x, y) {
+		//scatterplot test / to move
+	var $xSelect = $('#xSelect').select3(); 
+	var $ySelect = $('#ySelect').select3(); 
+
+	var xVar = "DEF_RATING";
+	var yVar = "OFF_RATING";
 	
 	d3.select("#scatterplotID").selectAll("svg").remove();
 
