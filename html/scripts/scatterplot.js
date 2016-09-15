@@ -1,13 +1,7 @@
 function renderScatterplot(teamID, currentYear, x, y) {
-		//scatterplot test / to move
-	var $xSelect = $('#xSelect').select3(); 
-	var $ySelect = $('#ySelect').select3(); 
-
-	var xVar = "DEF_RATING";
-	var yVar = "OFF_RATING";
-	
+		
 	d3.select("#scatterplotID").selectAll("svg").remove();
-
+		
 	var data = [];
 	var xml = new XMLHttpRequest();
 	var url = "http://cherrypicker.io/php/getteamdata.php"
@@ -16,7 +10,6 @@ function renderScatterplot(teamID, currentYear, x, y) {
 		if (xml.readyState == 4 && xml.status == 200) {
 			var jobj = JSON.parse(xml.responseText)
 			for (var i = 0; i < jobj.length; i+=1) {
-				console.log( y, x)
 				data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i][y]), parseFloat(jobj[i][x]), parseInt(jobj[i].TEAM_ID) ]);
 			} 	
 			renderScatterplotInner(data, teamID, x , y);
@@ -28,27 +21,31 @@ function renderScatterplot(teamID, currentYear, x, y) {
 }
 
 function renderScatterplotInner(data, teamID, x ,y) {
-		
+	
+	var margin = {top: 40, right: 20, bottom: 40, left: 60};
+  var width = 1040 - margin.left - margin.right;
+  var height = 500 - margin.top - margin.bottom;
+	
 	var numberOfTeams = 30;
+	
+	var $xSelect = $('#xSelect').select3(); 
+	var $ySelect = $('#ySelect').select3();
 
-	var margin = {top: 40, right: 20, bottom: 40, left: 60},
-   width = 1040 - margin.left - margin.right,
-   height = 500 - margin.top - margin.bottom;
-
-
+	var xVar = "DEF_RATING";
+	var yVar = "OFF_RATING";
+	
 	var colorScale = d3.scale.linear().domain([-10.0,10.0]).range(["#ea765d", "#6e8fb7"]);
 
 	var tValue = function(d) { return d[0];}
 	
 	var xValue = function(d) { return d[2];}, // data -> value
-			xScale = d3.scale.linear().range([width, 0]), // value -> display
+			xScale = d3.scale.linear().domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]).range([width, 0]), // value -> display
 			xMap = function(d) { return xScale(xValue(d));}, // data -> display
 			xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
-
 // setup y
 	var yValue = function(d) { return d[1];}, // data -> value
-			yScale = d3.scale.linear().range([height, 0]), // value -> display
+			yScale = d3.scale.linear().domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]).range([height, 0]), // value -> display
 			yMap = function(d) { return yScale(yValue(d));}, // data -> display
 			yAxis = d3.svg.axis().scale(yScale).orient("left");
 
@@ -66,10 +63,6 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			.style("top", 0)
 			.style("left", 0)
 			.style("opacity", 0);
-
-  // don't want dots overlapping axis, so add in buffer to data domain
-  xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
-  yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
   // x-axis
   svg.append("g")
@@ -157,5 +150,91 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		.attr("stroke", "black")
 		.attr("opacity", 0.5)
 		.style("stroke-dasharray", ("3, 3"))
+	
+	
+	$xSelect
+		.on("change", function(e){
+		console.log("Change")
+			xVar = e.val;
+			//load all the data
+			var data = [];
+			var xml = new XMLHttpRequest();
+			var url = "http://cherrypicker.io/php/getteamdata.php"
+
+			xml.onreadystatechange = function() {
+				if (xml.readyState == 4 && xml.status == 200) {
+					var jobj = JSON.parse(xml.responseText)
+					for (var i = 0; i < jobj.length; i+=1) {
+						data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i][yVar]), parseFloat(jobj[i][xVar]), parseInt(jobj[i].TEAM_ID) ]);
+					} 	
+					concurrencyIssue(data, teamID, xVar, yVar)
+				}
+			}
+			xml.open("GET", url, true);
+			xml.send();
+		 
+		
+		function concurrencyIssue(data, teamID, xVar, yVar){
+			
+			xScale.domain([0, d3.max(data, xValue) ]);
+			yScale.domain([0, d3.max(data, yValue) ]);
+
+			
+		  svg.selectAll("circle")
+				.data(data)
+				.transition()
+				.duration(1000)
+// 				.each("start", function() { 
+// 					d3.select(this).attr("fill", "red")
+// 				})
+				.attr("class", "dot")
+				.attr("r", function(d) {
+					if(d[3] != teamID){
+						return 4;
+					} else {
+						return 7;
+					}
+				})
+				.attr("cx", xMap)
+				.attr("cy", yMap)
+				.style("fill", function(d){
+					avgX += d[2];
+					avgY += d[1];
+					if(d[3] != teamID){
+						return colorScale(d[1] - d[2]);
+					} else {
+						return "#d24554";
+					}
+				}) 
+// 			.each("end", function(){
+// 				d3.select(this)
+// 				.transition()
+// 				.duration(500)
+// 				.attr("fill", "black")  // Change color
+// 			})
+				.on("mouseover", function(d) {
+						tooltip.transition()
+								 .duration(200)
+								 .style("opacity", 0.9);
+						tooltip.html(tValue(d) + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
+								 .style("left", (d3.event.pageX + 5) + "px")
+								 .style("top", (d3.event.pageY - 28) + "px");
+				})
+				.on("mouseout", function(d) {
+						tooltip.transition()
+								 .duration(500)
+								 .style("opacity", 0);
+				});
+	}
+
+			
+		});	
+	
+	
+	$ySelect
+		.on("change", function(e){
+			yVar = e.val;
+			console.log(yVar)
+		});	
 
 }
