@@ -75,6 +75,17 @@ h1 {
 	margin-left:8px;
 }
 
+.info-icon{
+	overflow: visible;
+	position: relative;
+	float: right;
+	z-index: 1000;
+}
+
+.info-icon span{
+	position: relative;
+}
+
 #topbar{
 	width: 85%;
 	max-width: 1100px;

@@ -93,7 +93,7 @@ function calendarHeatmap() {
 
 		var color = d3.scale.linear()
 			.domain([-50, -10, -2, 0, 2, 10, 50])
-			.range(["#ff6666", "#ff7f7f", "#ff9999", "#F9F9F9", "#bcdbf5", "#6787bb", "#2e4a76"]);
+			.range(["#ff6666", "#ff7f7f", "#ff9999", "#ededed", "#bcdbf5", "#6787bb", "#2e4a76"]);
 
 		var tooltip;
 		var dayRects;
