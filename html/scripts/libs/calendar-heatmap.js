@@ -72,9 +72,13 @@ function calendarHeatmap() {
     var max = d3.max(chart.data(), function (d) { return d.count; }); // max data value
 
     // color range
-    var color = d3.scale.linear()
-      .range(chart.colorRange())
-      .domain([0, max]);
+    //var color = d3.scale.linear()
+    //  .range(chart.colorRange())
+    //  .domain([0, max]);
+		
+		var color = d3.scale.linear()
+		.domain([-50, -20, 0, 20, 50]) 
+		.range(["#ff6666", "#ffb2b2", "#F9F9F9", "#B7C7DB", "#6E8FB7"]); 
 
     var tooltip;
     var dayRects;
@@ -117,8 +121,8 @@ function calendarHeatmap() {
                .duration(200)
                .style("opacity", 0.9);
           tooltip.html(tooltipHTMLForDate(d))
-               .style("left", (d3.event.pageX - 90) + "px")
-               .style("top", (d3.event.pageY - 30) + "px");
+               .style("left", (d3.event.pageX) + "px")
+               .style("top", (d3.event.pageY) + "px");
 				}
       })
 			.on("mouseout", function(d) {
