@@ -87,8 +87,8 @@ h1 {
 .shotChartIcon {
 	width: 15px;
 	height: 15px;
-	background: url("../graphics/information.png");
-	background-size: cover;
+	/*background: url("../graphics/information.png");
+	background-size: cover;*/
 }
 
 #topbar{

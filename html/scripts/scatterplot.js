@@ -131,6 +131,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 	avgY = avgY / numberOfTeams; 
 	
 	svg.append("line")
+		.classed("xAverage", true)
 		.attr("x1", xScale(avgX))
 		.attr("y1", 0)
 		.attr("x2", xScale(avgX))
@@ -141,6 +142,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		.style("stroke-dasharray", ("3, 3"))
 	
 	svg.append("line")
+		.classed("yAverage", true)
 		.attr("x1", 0)
 		.attr("y1", yScale(avgY))
 		.attr("x2", width)
@@ -159,6 +161,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			var xml = new XMLHttpRequest();
 			var url = "http://cherrypicker.io/php/getteamdata.php"
 
+			console.log(xVar, yVar)
 			xml.onreadystatechange = function() {
 				if (xml.readyState == 4 && xml.status == 200) {
 					var jobj = JSON.parse(xml.responseText)
@@ -218,6 +221,9 @@ function renderScatterplotInner(data, teamID, x ,y) {
 						return "#d24554";
 					}
 				}) 
+			
+			
+
 		}	
 	});	
 	
@@ -230,7 +236,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			var data = [];
 			var xml = new XMLHttpRequest();
 			var url = "http://cherrypicker.io/php/getteamdata.php"
-
+			console.log(xVar, yVar)
 			xml.onreadystatechange = function() {
 				if (xml.readyState == 4 && xml.status == 200) {
 					var jobj = JSON.parse(xml.responseText)
@@ -245,8 +251,6 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		
 		function concurrencyIssueY(data, teamID, xVar, yVar){
 			
-
-		
 			var yValue = function(d) { return d[1];}, // data -> value
 				yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
 				yMap = function(d) { return yScale(yValue(d));}, // data -> display
@@ -258,7 +262,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			.call(yAxis);
 			
 				if((xVar == "DEF_RATING" && yVar == "OFF_RATING") || (yVar == "OFF_RATING" && xVar == "DEF_RATING")){
-				colorScale = d3.scale.linear().domain([-10, 10]).range(["#ea765d", "#6e8fb7"]);
+					colorScale = d3.scale.linear().domain([-10, 10]).range(["#ea765d", "#6e8fb7"]);
 				} else {
 					colorScale = d3.scale.linear().domain([d3.min(data, xValue) + d3.min(data, yValue), d3.max(data, xValue) + d3.max(data, yValue)]).range(["#ea765d", "#6e8fb7"]);
 				}
@@ -290,6 +294,23 @@ function renderScatterplotInner(data, teamID, x ,y) {
 						return "#d24554";
 					}
 				}) 
+			
+			avgX = avgX / 30;
+			avgY = avgY / 30; 
+	
+			svg.select(".yAverage")
+				.transition()
+				.duration(1000)
+				.attr("x1", 0)
+				.attr("y1", yScale(avgY))
+				.attr("x2", width)
+				.attr("y2", yScale(avgY))
+				.attr("stroke-width", 1)
+				.attr("stroke", "black")
+				.attr("opacity", 0.5)
+				.style("stroke-dasharray", ("3, 3"))
+				
+			
 
 		}
 	});	
