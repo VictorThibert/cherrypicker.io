@@ -76,14 +76,19 @@ h1 {
 }
 
 .info-icon{
+	width: 15px;
+	height: 15px;
 	overflow: visible;
 	position: relative;
 	float: right;
 	z-index: 1000;
 }
 
-.info-icon span{
-	position: relative;
+.shotChartIcon {
+	width: 15px;
+	height: 15px;
+	background: url("../graphics/information.png");
+	background-size: cover;
 }
 
 #topbar{

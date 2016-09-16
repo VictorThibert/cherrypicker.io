@@ -34,21 +34,20 @@ function renderScatterplotInner(data, teamID, x ,y) {
 	var xVar = "DEF_RATING";
 	var yVar = "OFF_RATING";
 	
-	var colorScale = d3.scale.linear().domain([-10.0,10.0]).range(["#ea765d", "#6e8fb7"]);
-
 	var tValue = function(d) { return d[0];}
 	
 	var xValue = function(d) { return d[2];}, // data -> value
-			xScale = d3.scale.linear().domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]).range([width, 0]), // value -> display
+			xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01]).range([width, 0]), // value -> display
 			xMap = function(d) { return xScale(xValue(d));}, // data -> display
 			xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
 // setup y
 	var yValue = function(d) { return d[1];}, // data -> value
-			yScale = d3.scale.linear().domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]).range([height, 0]), // value -> display
+			yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
 			yMap = function(d) { return yScale(yValue(d));}, // data -> display
 			yAxis = d3.svg.axis().scale(yScale).orient("left");
-
+	
+	var colorScale = d3.scale.linear().domain([-10, 10]).range(["#ea765d", "#6e8fb7"]);
 	// add the graph canvas to the body of the webpage
 	var svg = d3.select("#scatterplotID").append("svg")
 			.attr("width", width + margin.left + margin.right)
@@ -154,7 +153,6 @@ function renderScatterplotInner(data, teamID, x ,y) {
 	
 	$xSelect
 		.on("change", function(e){
-		console.log("Change")
 			xVar = e.val;
 			//load all the data
 			var data = [];
@@ -167,26 +165,36 @@ function renderScatterplotInner(data, teamID, x ,y) {
 					for (var i = 0; i < jobj.length; i+=1) {
 						data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i][yVar]), parseFloat(jobj[i][xVar]), parseInt(jobj[i].TEAM_ID) ]);
 					} 	
-					concurrencyIssue(data, teamID, xVar, yVar)
+					concurrencyIssueX(data, teamID, xVar, yVar)
 				}
 			}
 			xml.open("GET", url, true);
 			xml.send();
 		 
 		
-		function concurrencyIssue(data, teamID, xVar, yVar){
+		function concurrencyIssueX(data, teamID, xVar, yVar){
 			
-			xScale.domain([0, d3.max(data, xValue) ]);
-			yScale.domain([0, d3.max(data, yValue) ]);
-
+			var xValue = function(d) { return d[2];}, // data -> value
+				xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01] ).range([width, 0]), // value -> display
+				xMap = function(d) { return xScale(xValue(d));}, // data -> display
+			  xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+				
+			svg.select(".x")
+			.transition()
+			.duration(1000)
+			.call(xAxis);
 			
-		  svg.selectAll("circle")
+			if((xVar == "DEF_RATING" && yVar == "OFF_RATING") || (yVar == "OFF_RATING" && xVar == "DEF_RATING")){
+				colorScale = d3.scale.linear().domain([-10, 10]).range(["#ea765d", "#6e8fb7"]);
+			} else {
+				colorScale = d3.scale.linear().domain([d3.min(data, xValue) + d3.min(data, yValue), d3.max(data, xValue) + d3.max(data, yValue)]).range(["#ea765d", "#6e8fb7"]);
+			}
+			
+						
+			svg.selectAll("circle")
 				.data(data)
 				.transition()
 				.duration(1000)
-// 				.each("start", function() { 
-// 					d3.select(this).attr("fill", "red")
-// 				})
 				.attr("class", "dot")
 				.attr("r", function(d) {
 					if(d[3] != teamID){
@@ -201,40 +209,89 @@ function renderScatterplotInner(data, teamID, x ,y) {
 					avgX += d[2];
 					avgY += d[1];
 					if(d[3] != teamID){
-						return colorScale(d[1] - d[2]);
+						if((xVar == "DEF_RATING" && yVar == "OFF_RATING") || (yVar == "OFF_RATING" && xVar == "DEF_RATING")){
+							return colorScale(d[1] - d[2]);
+						} else {
+							return colorScale(d[1] + d[2]);
+						}
 					} else {
 						return "#d24554";
 					}
 				}) 
-// 			.each("end", function(){
-// 				d3.select(this)
-// 				.transition()
-// 				.duration(500)
-// 				.attr("fill", "black")  // Change color
-// 			})
-				.on("mouseover", function(d) {
-						tooltip.transition()
-								 .duration(200)
-								 .style("opacity", 0.9);
-						tooltip.html(tValue(d) + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
-								 .style("left", (d3.event.pageX + 5) + "px")
-								 .style("top", (d3.event.pageY - 28) + "px");
-				})
-				.on("mouseout", function(d) {
-						tooltip.transition()
-								 .duration(500)
-								 .style("opacity", 0);
-				});
-	}
-
-			
-		});	
+		}	
+	});	
 	
 	
 	$ySelect
 		.on("change", function(e){
+		
 			yVar = e.val;
-			console.log(yVar)
-		});	
+			//load all the data
+			var data = [];
+			var xml = new XMLHttpRequest();
+			var url = "http://cherrypicker.io/php/getteamdata.php"
+
+			xml.onreadystatechange = function() {
+				if (xml.readyState == 4 && xml.status == 200) {
+					var jobj = JSON.parse(xml.responseText)
+					for (var i = 0; i < jobj.length; i+=1) {
+						data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i][yVar]), parseFloat(jobj[i][xVar]), parseInt(jobj[i].TEAM_ID) ]);
+					} 	
+					concurrencyIssueY(data, teamID, xVar, yVar)
+				}
+			}
+			xml.open("GET", url, true);
+			xml.send();
+		
+		function concurrencyIssueY(data, teamID, xVar, yVar){
+			
+
+		
+			var yValue = function(d) { return d[1];}, // data -> value
+				yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
+				yMap = function(d) { return yScale(yValue(d));}, // data -> display
+				yAxis = d3.svg.axis().scale(yScale).orient("left");
+			
+			svg.select(".y")
+			.transition()
+			.duration(1000)
+			.call(yAxis);
+			
+				if((xVar == "DEF_RATING" && yVar == "OFF_RATING") || (yVar == "OFF_RATING" && xVar == "DEF_RATING")){
+				colorScale = d3.scale.linear().domain([-10, 10]).range(["#ea765d", "#6e8fb7"]);
+				} else {
+					colorScale = d3.scale.linear().domain([d3.min(data, xValue) + d3.min(data, yValue), d3.max(data, xValue) + d3.max(data, yValue)]).range(["#ea765d", "#6e8fb7"]);
+				}
+		
+			svg.selectAll("circle")
+				.data(data)
+				.transition()
+				.duration(1000)
+				.attr("class", "dot")
+				.attr("r", function(d) {
+					if(d[3] != teamID){
+						return 4;
+					} else {
+						return 7;
+					}
+				})
+				.attr("cx", xMap)
+				.attr("cy", yMap)
+				.style("fill", function(d){
+					avgX += d[2];
+					avgY += d[1];
+					if(d[3] != teamID){
+						if((xVar == "DEF_RATING" && yVar == "OFF_RATING") || (yVar == "OFF_RATING" && xVar == "DEF_RATING")){
+							return colorScale(d[1] - d[2]);
+						} else {
+							return colorScale(d[1] + d[2]);
+						}
+					} else {
+						return "#d24554";
+					}
+				}) 
+
+		}
+	});	
 
 }
