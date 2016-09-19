@@ -93,6 +93,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 
 	var avgX = 0;
 	var avgY = 0;
+	
   // draw dots
   svg.selectAll(".dot")
       .data(data)
@@ -159,6 +160,8 @@ function renderScatterplotInner(data, teamID, x ,y) {
 	//new x chosen
 	$xSelect
 		.on("change", function(e){
+		
+			var avgX = 0;
 			xVar = e.val;
 			//load all the data
 			var data = [];
@@ -178,24 +181,23 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			xml.open("GET", url, true);
 			xml.send();
 		 
-		
 		function concurrencyIssueX(data, teamID, xVar, yVar){
 			
 			//scale updates
 			var xValue = function(d) { return d[2];}, // data -> value
 					xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01] ).range([0, width]), // value -> display
-					xMap = function(d) { console.log(xValue(d)+ "  X " +xScale(xValue(d))); return xScale(xValue(d));}, // data -> display
+					xMap = function(d) { return xScale(xValue(d));}, // data -> display
 					xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 			
 			var yValue = function(d) { return d[1];}, // data -> value
 					yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
-					yMap = function(d) { 	console.log(yValue(d)+ "  Y " +yScale(yValue(d)));return yScale(yValue(d));}, // data -> display
+					yMap = function(d) { return yScale(yValue(d));}, // data -> display
 					yAxis = d3.svg.axis().scale(yScale).orient("left");
 			
 			//axis udpate
 			svg.select(".x")
 				.transition()
-				.duration(1000)
+				.duration(500)
 				.call(xAxis);
 			
 			//color scale updates
@@ -233,9 +235,21 @@ function renderScatterplotInner(data, teamID, x ,y) {
 					}
 				}) 
 			
+			avgX = avgX / 30;
 			
-
-		}	
+			svg.select("xAverage")
+				.transition()
+				.duration(1000)
+				.attr("x1", xScale(avgX))
+				.attr("y1", 0)
+				.attr("x2", xScale(avgX))
+				.attr("y2", height)
+				.attr("stroke-width", 1)
+				.attr("stroke", "black")
+				.attr("opacity", 0.5)
+				.style("stroke-dasharray", ("3, 3"))
+				
+			}	
 	});	
 	
 	
@@ -243,6 +257,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		.on("change", function(e){
 		
 			yVar = e.val;
+			var avgY = 0;
 		
 			//load all the data
 			var data = [];
@@ -265,20 +280,20 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			
 			var xValue = function(d) { return d[2];}, // data -> value
 					xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01] ).range([0, width]), // value -> display
-					xMap = function(d) { console.log(xValue(d)+ "  X " +xScale(xValue(d))); return xScale(xValue(d));}, // data -> display
+					xMap = function(d) { return xScale(xValue(d));}, // data -> display
 					xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 			
 			
 			var yValue = function(d) { return d[1];}, // data -> value
 					yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
-					yMap = function(d) { 	console.log(yValue(d)+ "  Y " +yScale(yValue(d)));return yScale(yValue(d));}, // data -> display
+					yMap = function(d) { return yScale(yValue(d));}, // data -> display
 					yAxis = d3.svg.axis().scale(yScale).orient("left");
 			
 		
-			
+			//rescale y axis
 			svg.select(".y")
 				.transition()
-				.duration(1000)
+				.duration(500)
 				.call(yAxis);
 			
 				if((xVar == "DEF_RATING" && yVar == "OFF_RATING") || (yVar == "OFF_RATING" && xVar == "DEF_RATING")){
@@ -315,9 +330,8 @@ function renderScatterplotInner(data, teamID, x ,y) {
 					}
 				}) 
 			
-			avgX = avgX / 30;
 			avgY = avgY / 30; 
-	
+			
 			svg.select(".yAverage")
 				.transition()
 				.duration(1000)
