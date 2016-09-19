@@ -423,7 +423,7 @@
 					renderCalendar(currentTeamID);
 					renderPara(1610612700 + parseInt(currentTeamID)); 
 					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
-					renderScatterplot(1610612700 + parseInt(currentTeamID));
+					renderScatterplot(1610612700 + parseInt(currentTeamID), currentYear, "DEF_RATING", "OFF_RATING");
 					$("#teamBox").select2("val", currentTeamID);
 					$("#yearBox").select3("val", currentYear);
 					changeTeamName();

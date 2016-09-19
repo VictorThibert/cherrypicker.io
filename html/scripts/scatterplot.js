@@ -73,7 +73,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
     .append("text")
-      .attr("class", "label")
+      .attr("class", "label xText")
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
@@ -84,7 +84,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
       .attr("class", "y axis")
       .call(yAxis)
     .append("text")
-      .attr("class", "label")
+      .attr("class", "label yText")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
@@ -237,7 +237,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			
 			avgX = avgX / 30;
 			
-			svg.select("xAverage")
+			svg.select(".xAverage")
 				.transition()
 				.duration(1000)
 				.attr("x1", xScale(avgX))
@@ -249,6 +249,13 @@ function renderScatterplotInner(data, teamID, x ,y) {
 				.attr("opacity", 0.5)
 				.style("stroke-dasharray", ("3, 3"))
 				
+			svg.select(".xText")
+				.style('opacity', 0)
+				.transition()
+				.duration(1000)
+				.text(xVar)
+				.style('opacity', 1);
+			
 			}	
 	});	
 	
@@ -343,6 +350,13 @@ function renderScatterplotInner(data, teamID, x ,y) {
 				.attr("stroke", "black")
 				.attr("opacity", 0.5)
 				.style("stroke-dasharray", ("3, 3"))
+			
+			svg.select(".yText")
+				.style('opacity', 0)
+				.transition()
+				.duration(1000)
+				.text(yVar)
+				.style('opacity', 1);
 				
 		}
 	});	
