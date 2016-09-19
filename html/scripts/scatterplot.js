@@ -1,7 +1,9 @@
 function renderScatterplot(teamID, currentYear, x, y) {
-		
+	
+	//remove exisiting scatterplot
 	d3.select("#scatterplotID").selectAll("svg").remove();
-		
+	
+	//load data
 	var data = [];
 	var xml = new XMLHttpRequest();
 	var url = "http://cherrypicker.io/php/getteamdata.php"
@@ -10,18 +12,19 @@ function renderScatterplot(teamID, currentYear, x, y) {
 		if (xml.readyState == 4 && xml.status == 200) {
 			var jobj = JSON.parse(xml.responseText)
 			for (var i = 0; i < jobj.length; i+=1) {
-				data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i][y]), parseFloat(jobj[i][x]), parseInt(jobj[i].TEAM_ID) ]);
-			} 	
+				data.push([ jobj[i].TEAM_NAME, parseFloat(jobj[i][y]), parseFloat(jobj[i][x]), parseInt(jobj[i].TEAM_ID)]);
+			}
 			renderScatterplotInner(data, teamID, x , y);
 		}
 	}
 	xml.open("GET", url, true);
 	xml.send();
-	
 }
+
 
 function renderScatterplotInner(data, teamID, x ,y) {
 	
+	//svg canvas properties
 	var margin = {top: 40, right: 20, bottom: 40, left: 60};
   var width = 1040 - margin.left - margin.right;
   var height = 500 - margin.top - margin.bottom;
@@ -36,12 +39,13 @@ function renderScatterplotInner(data, teamID, x ,y) {
 	
 	var tValue = function(d) { return d[0];}
 	
+	//setup x
 	var xValue = function(d) { return d[2];}, // data -> value
-			xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01]).range([width, 0]), // value -> display
+			xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01]).range([0, width]), // value -> display
 			xMap = function(d) { return xScale(xValue(d));}, // data -> display
 			xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
-// setup y
+	// setup y
 	var yValue = function(d) { return d[1];}, // data -> value
 			yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
 			yMap = function(d) { return yScale(yValue(d));}, // data -> display
@@ -152,7 +156,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		.attr("opacity", 0.5)
 		.style("stroke-dasharray", ("3, 3"))
 	
-	
+	//new x chosen
 	$xSelect
 		.on("change", function(e){
 			xVar = e.val;
@@ -177,23 +181,30 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		
 		function concurrencyIssueX(data, teamID, xVar, yVar){
 			
+			//scale updates
 			var xValue = function(d) { return d[2];}, // data -> value
-				xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01] ).range([width, 0]), // value -> display
-				xMap = function(d) { return xScale(xValue(d));}, // data -> display
-			  xAxis = d3.svg.axis().scale(xScale).orient("bottom");
-				
-			svg.select(".x")
-			.transition()
-			.duration(1000)
-			.call(xAxis);
+					xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01] ).range([0, width]), // value -> display
+					xMap = function(d) { console.log(xValue(d)+ "  X " +xScale(xValue(d))); return xScale(xValue(d));}, // data -> display
+					xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 			
+			var yValue = function(d) { return d[1];}, // data -> value
+					yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
+					yMap = function(d) { 	console.log(yValue(d)+ "  Y " +yScale(yValue(d)));return yScale(yValue(d));}, // data -> display
+					yAxis = d3.svg.axis().scale(yScale).orient("left");
+			
+			//axis udpate
+			svg.select(".x")
+				.transition()
+				.duration(1000)
+				.call(xAxis);
+			
+			//color scale updates
 			if((xVar == "DEF_RATING" && yVar == "OFF_RATING") || (yVar == "OFF_RATING" && xVar == "DEF_RATING")){
 				colorScale = d3.scale.linear().domain([-10, 10]).range(["#ea765d", "#6e8fb7"]);
 			} else {
 				colorScale = d3.scale.linear().domain([d3.min(data, xValue) + d3.min(data, yValue), d3.max(data, xValue) + d3.max(data, yValue)]).range(["#ea765d", "#6e8fb7"]);
 			}
 			
-						
 			svg.selectAll("circle")
 				.data(data)
 				.transition()
@@ -232,11 +243,12 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		.on("change", function(e){
 		
 			yVar = e.val;
+		
 			//load all the data
 			var data = [];
 			var xml = new XMLHttpRequest();
 			var url = "http://cherrypicker.io/php/getteamdata.php"
-			console.log(xVar, yVar)
+
 			xml.onreadystatechange = function() {
 				if (xml.readyState == 4 && xml.status == 200) {
 					var jobj = JSON.parse(xml.responseText)
@@ -251,15 +263,23 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		
 		function concurrencyIssueY(data, teamID, xVar, yVar){
 			
+			var xValue = function(d) { return d[2];}, // data -> value
+					xScale = d3.scale.linear().domain([d3.min(data, xValue) * 0.99, d3.max(data, xValue) * 1.01] ).range([0, width]), // value -> display
+					xMap = function(d) { console.log(xValue(d)+ "  X " +xScale(xValue(d))); return xScale(xValue(d));}, // data -> display
+					xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+			
+			
 			var yValue = function(d) { return d[1];}, // data -> value
-				yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
-				yMap = function(d) { return yScale(yValue(d));}, // data -> display
-				yAxis = d3.svg.axis().scale(yScale).orient("left");
+					yScale = d3.scale.linear().domain([d3.min(data, yValue) * 0.99, d3.max(data, yValue) * 1.01]).range([height, 0]), // value -> display
+					yMap = function(d) { 	console.log(yValue(d)+ "  Y " +yScale(yValue(d)));return yScale(yValue(d));}, // data -> display
+					yAxis = d3.svg.axis().scale(yScale).orient("left");
+			
+		
 			
 			svg.select(".y")
-			.transition()
-			.duration(1000)
-			.call(yAxis);
+				.transition()
+				.duration(1000)
+				.call(yAxis);
 			
 				if((xVar == "DEF_RATING" && yVar == "OFF_RATING") || (yVar == "OFF_RATING" && xVar == "DEF_RATING")){
 					colorScale = d3.scale.linear().domain([-10, 10]).range(["#ea765d", "#6e8fb7"]);
@@ -310,8 +330,6 @@ function renderScatterplotInner(data, teamID, x ,y) {
 				.attr("opacity", 0.5)
 				.style("stroke-dasharray", ("3, 3"))
 				
-			
-
 		}
 	});	
 
