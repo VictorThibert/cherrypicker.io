@@ -44,8 +44,8 @@ a {
 }
 
 a.neutral {
-	fill: #2885d1;
-	background: #e3f0fb;
+	fill: #6e93d0;
+	background: #f1f8ff;
 	cursor: pointer;
 	border-radius: 5px;
 	padding: 12px 7px 4px;    
@@ -65,7 +65,7 @@ a.down {
 }
 
 a.hover {
-	background: #2887d4;
+	background: #a2c3de;
 	border-radius: 5px;
 	fill: #FFF;	
 }
