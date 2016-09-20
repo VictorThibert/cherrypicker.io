@@ -161,6 +161,8 @@ function renderScatterplotInner(data, teamID, x ,y) {
 	$xSelect
 		.on("change", function(e){
 		
+			var xVarText = e.added.text;
+		
 			var avgX = 0;
 			xVar = e.val;
 			//load all the data
@@ -168,7 +170,6 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			var xml = new XMLHttpRequest();
 			var url = "http://cherrypicker.io/php/getteamdata.php"
 
-			console.log(xVar, yVar)
 			xml.onreadystatechange = function() {
 				if (xml.readyState == 4 && xml.status == 200) {
 					var jobj = JSON.parse(xml.responseText)
@@ -253,7 +254,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 				.style('opacity', 0)
 				.transition()
 				.duration(1000)
-				.text(xVar)
+				.text(xVarText)
 				.style('opacity', 1);
 			
 			}	
@@ -264,6 +265,8 @@ function renderScatterplotInner(data, teamID, x ,y) {
 		.on("change", function(e){
 		
 			yVar = e.val;
+		  var yVarText = e.added.text;
+		
 			var avgY = 0;
 		
 			//load all the data
@@ -355,7 +358,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 				.style('opacity', 0)
 				.transition()
 				.duration(1000)
-				.text(yVar)
+				.text(yVarText)
 				.style('opacity', 1);
 				
 		}
