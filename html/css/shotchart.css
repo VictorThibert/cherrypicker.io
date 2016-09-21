@@ -2,7 +2,8 @@
 
 .hexagon {
   opacity:  0.4;
-  shape-rendering: optimizeSpeed;
+  /*please don't turnt his back on*/
+/*   shape-rendering: crispEdges; */ 
 }
 
 .hexagon.selected:active {
