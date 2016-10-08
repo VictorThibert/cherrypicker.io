@@ -1,5 +1,3 @@
-console.log("OK")
-
 $('body').tooltip({
     items: '.neutral',
     content: 'Loading…',
