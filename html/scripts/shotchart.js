@@ -125,13 +125,14 @@ function renderShotchart(count, selectedPlayers){
 		
 		selectedPercentage = selectedMade/selectedTotal;
 		brushConditions[2] = selectedPercentage;
+		$("#sub-container-shots").html('<p class="percentage">Shots: ' + selectedTotal +  " </p>");
 		
 		//selected percentage box set html text
 		if(isNaN(selectedPercentage)){
-			$("#sub-container-percentage").html('<p class="percentage">Percentage:' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+			$("#sub-container-percentage").html('<p class="percentage">Shots: ' + selectedTotal +  ' </p><p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
 		}
 		else{
-			$("#sub-container-percentage").html('<p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+			$("#sub-container-percentage").html('<p class="percentage">Shots: ' + selectedTotal +  ' </p><p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
 		}
 	}
 
