@@ -43,3 +43,7 @@ how many times has Caron Butler gotten more than 50 assists?
 - rebounds = boards
 - PPG = points per game
 - true shooting percentage / TS%
+
+
+#categorize the phrase
+ch.5
