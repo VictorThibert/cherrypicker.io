@@ -2,16 +2,22 @@
 import nltk
 import nltk.tag, nltk.data
 
-def main():
-	print('Start')
+#tagger path
+tagger_path = '/Users/victorthibert/nltk_data/taggers/maxent_treebank_pos_tagger/english.pickle'
 
+default_tagger = nltk.data.load(tagger_path)
+tagger_model = {'game':'NN'}
+tagger = nltk.tag.UnigramTagger(model=tagger_model, backoff=default_tagger)
+
+def main():
+	
 	while True:
 		print('Enter a question. (Enter exit to exit)')
 		question = input().strip()
 		if question.lower() == 'exit':
 			break
 		tokens = nltk.word_tokenize(question)
-		tagged = nltk.pos_tag(tokens)
+		tagged = tagger.tag(tokens)
 		print(tagged)
 
 
