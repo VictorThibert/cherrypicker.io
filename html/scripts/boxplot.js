@@ -1,5 +1,6 @@
 function renderBoxPlots(currentTeamID) {
 
+  //begin coding here
   renderBox("boxplotID", "PTS", "Points", currentTeamID);
   renderBox("boxplotID", "AST", "Assists", currentTeamID);
   renderBox("boxplotID", "REB", "Rebounds", currentTeamID);
