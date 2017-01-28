@@ -1,0 +1,458 @@
+<!DOCTYPE HTML>
+<html> 
+	<head>  
+		<meta charset="UTF-8">
+		<meta HTTP-EQUIV="X-UA-COMPATIBLE" CONTENT="IE=EmulateIE9" >
+		
+		<!-- FAVICON AND TITLE-->
+		<link rel="icon" href="../graphics/logo-coloured.png" sizes="16x16">
+		<title>Cherrypicker</title>
+ 
+		<!-- LIBRARIES-->
+		<script src="../scripts/libs/d3/d3.v3.min.js"></script>
+		<script src="../scripts/libs/jquery-3.1.0.js"></script>
+		<script src="../scripts/libs/bootstrap.min.js"></script>
+		<script src="../scripts/libs/material.min.js"></script>
+		<script src="../scripts/libs/moment.js"></script>
+		<script src="../scripts/libs/calendar-heatmap.js"></script>
+		<script src="../scripts/libs/select2/select2.js"></script>
+		<script src="../scripts/libs/select2/select3.js"></script>
+    <script src="../scripts/autocomplete.js"></script>
+		<script src="../scripts/sylvester.js"></script>
+		
+		<!-- SCRIPTS-->
+		<script src="../scripts/roster.js"></script>  <!--keep roster.js high up for asyn loading of json-->
+		<script src="../scripts/calendar.js"></script>
+		<script src="../scripts/parallelcoordinates.js"></script>
+		<script src="../scripts/d3.parcoords.js"></script>
+		<script src="../scripts/divgrid.js"></script>
+		<script src="../scripts/nouislider.js"></script>
+		<script src="../scripts/hexbin.js"></script>
+		<script src="../scripts/shotchart.js"></script>
+		<script src="../scripts/boxplot.js"></script>
+		<script src="../scripts/box.js"></script>
+		<script src="../scripts/scatterplot.js"></script>
+		
+		<!-- STYLESHEETS-->
+		<link rel="stylesheet" type="text/css" href="../scripts/libs/select2/select2.css">
+		<link rel="stylesheet" type="text/css" href="../scripts/libs/select2/select3.css">
+		<link rel="stylesheet" type="text/css" href="../css/mainpage.css">
+		<link rel="stylesheet" type="text/css" href="../css/boxplot.css">
+		<link rel="stylesheet" type="text/css" href="../css/table.css">
+		<link rel="stylesheet" type="text/css" href="../css/shotchart.css">
+		<link rel="stylesheet" type="text/css" href="../css/calendar.css">
+		<link rel="stylesheet" type="text/css" href="../css/d3.parcoords.css">
+		<link rel="stylesheet" type="text/css" href="../css/nouislider.css">
+		<link rel="stylesheet" type="text/css" href="../css/calendar-heatmap.css">
+
+	</head>
+	<body>
+		
+		<div id ="topbar">
+			<a href="">
+			<img src="../graphics/logo-small.png" style="width:50px;height:50x;">
+			<img id="title" src="../graphics/Title1.png"  style="height:35px;" hspace="5">
+			</a>
+			<div id="search">
+					<select id="teamBox" style="width:250px">
+			      <optgroup label="Atlantic Division">
+			        <option value=38>Boston Celtics</option>
+			        <option value=51>Brooklyn Nets</option>
+			        <option value=52>New York Knicks</option>
+			        <option value=55>Philadelphia 76ers</option>
+			        <option value=61>Toronto Raptors</option>
+			      </optgroup>
+			      <optgroup label="Central Division">
+			        <option value=41>Chicago Bulls</option>
+			        <option value=39>Cleveland Cavaliers</option>
+			        <option value=65>Detroit Pistons</option>
+			        <option value=54>Indiana Pacers</option>
+			        <option value=49>Milwaukee Bucks</option>
+			      </optgroup>
+			      <optgroup label="Southeast Division">
+			        <option value=37>Atlanta Hawks</option>
+			        <option value=66>Charlotte Hornets</option>
+			        <option value=48>Miami Heat</option>
+			        <option value=53>Orlando Magic</option>
+			        <option value=64>Washington Wizards</option>
+			      </optgroup>
+			      <optgroup label="Northwest Division">
+			        <option value=43>Denver Nuggets</option>
+			        <option value=50>Minnesota Timberwolves</option>
+			        <option value=60>Oklahoma City Thunder</option>
+			        <option value=57>Portland Trailblazers</option>
+			        <option value=62>Utah Jazz</option>
+			      </optgroup>
+			      <optgroup label="Pacific Division">
+			        <option value=44>Golden State Warriors</option>
+			        <option value=46>Los Angeles Clippers</option>
+			        <option value=47>Los Angeles Lakers</option>
+			        <option value=56>Phoenix Suns</option>
+			        <option value=58>Sacramento Kings</option>
+			      </optgroup>
+			      <optgroup label="Southwest Division">
+			        <option value=42>Dallas Mavericks</option>
+			        <option value=45>Houston Rockets</option>
+			        <option value=63>Memphis Grizzlies</option>
+			        <option value=40>New Orleans Pelicans</option>
+			        <option value=59>San Antonio Spurs</option>
+			      </optgroup>
+			    </select>
+			</div>
+		</div>
+	
+		<div id = "main-container">
+			<div class="container-card" id ="row0">
+				<img id ="teamlogo" src="../graphics/logos/38.jpg" style="width:40px;height:40px">
+				<div class="card-elem" id = "teamName">
+					Boston Celtics
+				</div>
+				<div id="yearSearch">
+					<select id="yearBox" style="width:130px">
+			        <option value=2015>2014-2015</option>
+			        <option value=2014>2013-2014</option>
+			        <option value=2013>2012-2013</option>
+							<option value=2012>2011-2012</option>
+			    </select>
+				</div>
+			</div>
+			
+			<div id= "row1">
+				<div class= "container-card" id = "sub-container-shot">
+					<!--<div class = "info-icon">
+						<span id ="shotChartIcon">
+						</span>
+					</div>-->
+				<div id = "sub-container-percentage"></div>
+				<div id = "sub-container-sliders">
+					<div id = "sub-container-shot1"></div>
+					<div id = "sub-container-shot2"></div>
+					<div id = "sub-container-shot3"></div>
+				</div>
+				<div id = "sub-container-labels">
+					<div id = "sub-container-label1">Percentage</div>
+					<div id = "sub-container-label2">Volume</div>
+					<div id = "sub-container-label3">Distance</div>
+				</div>
+				</div>
+				
+				<div class= "container-card" id = "roster">
+					<h1 id="rosterText">Roster</h1>
+						<table id = "rosterTable">
+						<tr>
+							<td id ="Roster1"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text  alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"  >1</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster2"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"  >2</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster3"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >3</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td id ="Roster4"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >4</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster5"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >5</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster6"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >6</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td id ="Roster7"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >7</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster8"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >8</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster9"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >9</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td id ="Roster10"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >10</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster11"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >11</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster12"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >12</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td id ="Roster13"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >13</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster14"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >14</text>
+									</svg>
+								</a>
+							</td>
+							<td id ="Roster15"><a class="neutral" data-player="0" data-playerID="00">
+									<svg height="15" width="90%" >
+										 <text alignment-baseline="ideographic" x= 50% text-anchor="middle"  y="15"   >15</text>
+									</svg>
+								</a>
+							</td>
+						</tr>
+					</table>
+					<h1 id="rosterText">Calendar</h1>
+						<div id = "calendar" width="500px"></div>
+				</div>
+			</div>
+			
+			<div id = "row2">
+				<div class ="container-card">
+					<div class="parcoords" id = "example" style="width:1100px;height:320px;"></div>
+					<div id = "grid"></div>
+				</div>
+			</div>
+			
+			<div id = "row3">
+				<div class ="container-card">
+					<div class="boxplot" id = "boxplotID">
+					</div>
+				</div>
+			</div>
+			
+			<div id = "row4">
+				<div class ="container-card">
+					<div class="scatterplot" id = "scatterplotID">
+						<select id = "xSelect">
+							<option value="W_PCT">Win Percentage</option>
+							<option value="OFF_RATING">Offensive Rating</option>
+							<option value="DEF_RATING" selected="selected">Defensive Rating</option>
+							<option value="NET_RATING">Net Rating</option>
+							<option value="AST_PCT">Assist Percentage</option>
+							<option value="AST_TO">Assist:Turnover Ratio</option>
+							<option value="AST_RATIO">Assist Ratio</option>
+							<option value="OREB_PCT">Offensive Rebound Percentage</option>
+							<option value="DREB_PCT">Defensive Rebound Percentage</option>
+							<option value="REB_PCT">Rebound Percentage</option>
+							<option value="TM_TOV_PCT">Team Turnover Percentage</option>
+							<option value="EFG_PCT">Effective FG Percentage</option>
+							<option value="TS_PCT">True Shooting Percentage</option>
+							<option value="PACE">Pace</option>
+							<option value="PIE">PIE</option>
+						</select>
+						<select id = "ySelect">
+							<option value="W_PCT">Win Percentage</option>
+							<option value="OFF_RATING" selected="selected">Offensive Rating</option>
+							<option value="DEF_RATING" >Defensive Rating</option>
+							<option value="NET_RATING">Net Rating</option>
+							<option value="AST_PCT">Assist Percentage</option>
+							<option value="AST_TO">Assist:Turnover Ratio</option>
+							<option value="AST_RATIO">Assist Ratio</option>
+							<option value="OREB_PCT">Offensive Rebound Percentage</option>
+							<option value="DREB_PCT">Defensive Rebound Percentage</option>
+							<option value="REB_PCT">Rebound Percentage</option>
+							<option value="TM_TOV_PCT">Team Turnover Percentage</option>
+							<option value="EFG_PCT">Effective FG Percentage</option>
+							<option value="TS_PCT">True Shooting Percentage</option>
+							<option value="PACE">Pace</option>
+							<option value="PIE">PIE</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script>
+	
+			//redirects cherrypicker.io to a sample team
+			if(window.location.href== "http://cherrypicker.io/"){
+				window.location.assign("http://cherrypicker.io/#37y2015p2594+201143");
+				location.reload();
+			}
+			
+			//global variables
+			var selectedPlayers = []; 
+			var count;
+			var selectedTeam;
+			var selectedYear;
+			var currentTeamID;
+			var currentYear;
+			var pc; //parallel coordinates
+			
+			//document onload (gets called immediately after page has been loaded)
+			$(document).ready(function(){
+		
+				//select2 dropdowns
+				var $teamSelect = $('#teamBox').select2(); 
+				var $yearSelect = $('#yearBox').select3(); 
+				
+				$yearSelect
+					.on("change", function(e){
+						changeURL('#' + location.hash.slice(1,3) + "y" + e.val);
+						selectedPlayers = [];
+						hashChange(false, false);
+				});	
+				
+				$teamSelect
+					.on("select2-open", function(e){ //CHANGE FONT TO BLACK ON OPEN
+						$(".select2-container .select2-choice > .select2-chosen").css({"font-weight":"400", "color":"#888"}); 
+					})
+					.on("change", function(e){
+						changeURL('#' + e.val + 'y' + location.hash.slice(4,8)); 
+						selectedPlayers = [];
+						hashChange(false, false)
+					})
+					.on("select2-close", function () {
+						$(".select2-chosen").css({"font-weight":"300", "color":"#f0f0f0"}); //CHANGE FONT TO WHITE ON CLOSE
+						setTimeout(function() {
+								$('.select2-container-active').removeClass('select2-container-active');
+								$(':focus').blur();
+						}, 1); //BLUR ON DESELECT
+					});
+				
+				//" data-player="0"S FOR ROSTER SELECTION
+				$('a.neutral').click(function(){
+					if($(this).attr("class") == "neutral" || $(this).attr("class") == "neutral hover" ){
+						selectedPlayers.splice(selectedPlayers.indexOf($(this)[0].getAttribute("data-playerID")),1);	
+					} else if($(this).attr("class") == "neutral down" || $(this).attr("class") == "neutral down hover"){
+						selectedPlayers.push($(this)[0].getAttribute("data-playerID"));	
+					}
+        	$(this).toggleClass("down");
+					$(this).mouseleave();
+				
+					changeURL('#' + location.hash.slice(1,8) + "p" + selectedPlayers.join("+")); 
+					hashChange(true);
+   			});
+				
+				//TRIGGER MOUSELEAVE ON CLICK
+				$('a.neutral')
+					.mouseenter(function(){
+					//NO GREY HOVER
+						$(this).toggleClass("hover", true);
+					
+   			})
+					.mouseleave(function(){
+        	$(this).toggleClass("hover", false);
+   			});		
+				
+				selectedPlayers = [];
+				count = 0; //for shotchart
+				hashChange(true, true);
+				
+			});
+			
+			
+			
+			//hashchange (manual back and url input)
+			window.onhashchange = function() {
+				selectedPlayers = []; 
+				hashChange(true, true);	
+			}
+			
+			function hashChange(isPlayerChange, newPageLoad){
+			//stuff here gets executed each time
+				
+				currentTeamID = location.hash.slice(1,3);
+				currentYear = location.hash.slice(4,8);
+				//selectedPlayers  = location.hash.slice(9).split("+");
+				
+				//NOT NEW TEAM (GIVEN A TEAM)
+				if(isPlayerChange){
+					loadRoster(currentTeamID, currentYear, false);
+					selectedPlayers  = location.hash.slice(9).split("+");
+				}
+				
+				if(newPageLoad){
+			
+					$("#teamBox").select2("val", currentTeamID);
+					$("#yearBox").select3("val", currentYear);
+					changeTeamName();
+					changeTeamLogo(currentTeamID);
+					
+					renderCalendar(currentTeamID);
+					renderPara(1610612700 + parseInt(currentTeamID)); 
+					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
+					renderScatterplot(1610612700 + parseInt(currentTeamID), currentYear, "DEF_RATING", "OFF_RATING");
+				}
+				
+				//REMEMBER/ DONT UPDATE TEAM IF CALLED FROM PLAYER CHANGE i.e. YEAR or TEAM CHANGE
+				//new team
+				if(!isPlayerChange){
+					changeURL('#' + location.hash.slice(1,3) + "y" + location.hash.slice(4,8) + "p")
+					loadRoster(currentTeamID, currentYear, true);					
+					renderCalendar(currentTeamID);
+					renderPara(1610612700 + parseInt(currentTeamID)); 
+					renderBoxPlots(1610612700 + parseInt(currentTeamID)); 
+					renderScatterplot(1610612700 + parseInt(currentTeamID), currentYear, "DEF_RATING", "OFF_RATING");
+					$("#teamBox").select2("val", currentTeamID);
+					$("#yearBox").select3("val", currentYear);
+					changeTeamName();
+					changeTeamLogo(currentTeamID);
+					changeURL('#' + location.hash.slice(1,8) + "p" + selectedPlayers.join("+")); 
+				}
+					renderShotchart(count, selectedPlayers);
+					count += 1;
+			}
+			
+		function changeTeamName(team){ //FIX THIS
+			 $('#teamName').html($('#teamBox').find(":selected").text()); //use .html(team) with dictionary later
+		}	
+			
+		function changeTeamLogo(team) {
+			var img = document.getElementById("teamlogo");
+			img.src = "../graphics/logos/" + team + ".jpg";
+		}
+			
+		//doesn't trigger a hash change
+		function changeURL(url) {
+			if (typeof (history.pushState) != "undefined") {
+					var obj = { Title: url, Url: url };
+					history.pushState(obj, null, obj.Url);
+			} else {
+					alert("Browser does not support HTML5.");
+			}
+		}
+			
+		</script>
+	</body>
+</html>
