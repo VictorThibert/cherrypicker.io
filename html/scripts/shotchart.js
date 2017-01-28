@@ -32,6 +32,7 @@ function renderShotchart(count, selectedPlayers){
 	
 	//hexagon variables
 	var hexagon;
+	
 	var customRadius = 5;
 	var hpoints;
 	var hexbin = d3.hexbin().size([width, height]).radius(customRadius); 

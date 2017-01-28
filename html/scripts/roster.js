@@ -28,7 +28,7 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
         $parent.show(); 
       }
       
-      /*
+      
       $parent.mouseenter(function(){
         var toolTipName = $(this).text();
         //var playerId = $parent[i].getAttribute("data-playerID");
@@ -59,8 +59,7 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
         rosterTooltip.remove();
         playerNameLabel.remove();
       })
-      */
-      
+            
       
       var $text = $parent.find('text'); //SELECTS THE td ELEMENT
       $text.text( "" + teamJSON.roster[i].playerName); //FILLS ALL TEXT REGARDLESS OF GIVEN PLAYER
@@ -97,7 +96,7 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
       var $newTeamText = $newTeamParent.find('text');
       $newTeamText.text( "" + teamJSON.roster[i].playerName);
 
-       /*
+       
       $newTeamParent.mouseenter(function(){
         var tooltipNameNew = $(this).text();
         console.log("werwe");
@@ -140,7 +139,7 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
   }
 }
 
-/*
+
 function drawTooltip(){
      $(this).mouseenter(function(){
             rosterArray[i].append('<div id="tooltip' + i + '"></div>');  
