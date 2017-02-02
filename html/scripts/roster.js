@@ -29,36 +29,36 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
       }
       
       
-      $parent.mouseenter(function(){
-        var toolTipName = $(this).text();
-        //var playerId = $parent[i].getAttribute("data-playerID");
-        console.log(playerId);
-        $(this).append('<div id="tooltip"></div>');  
-            rosterTooltip = $('#tooltip');
-            rosterTooltip
-              .css("width", "300")
-              .css("height", "191")
-              .css("position", "absolute")
-              .css("top", $targetParent.position().top + "px")
-              .css("left", $targetParent.position().left - 305 + "px")
-              .css("background-color", "rgba(255,255,255, 0.8)")
-              .css("border", "1px solid #33bdb1")
-              .css("border-radius", "6px")
-              //.css("opacity", "0.7")
-            ;
-          rosterTooltip.append('<div id="playerName"></div>');
-          playerNameLabel = $('#playerName')
-          playerNameLabel
-            .css("position", "relative")
-            .css("margin", "auto")
-            .css("padding-top", "10px")
-            .text(toolTipName)
-          ;
-      })
-      .mouseleave(function(){
-        rosterTooltip.remove();
-        playerNameLabel.remove();
-      })
+      // $parent.mouseenter(function(){
+      //   var toolTipName = $(this).text();
+      //   //var playerId = $parent[i].getAttribute("data-playerID");
+      //   console.log(playerId);
+      //   $(this).append('<div id="tooltip"></div>');  
+      //       rosterTooltip = $('#tooltip');
+      //       rosterTooltip
+      //         .css("width", "300")
+      //         .css("height", "191")
+      //         .css("position", "absolute")
+      //         .css("top", $targetParent.position().top + "px")
+      //         .css("left", $targetParent.position().left - 305 + "px")
+      //         .css("background-color", "rgba(255,255,255, 0.8)")
+      //         .css("border", "1px solid #33bdb1")
+      //         .css("border-radius", "6px")
+      //         //.css("opacity", "0.7")
+      //       ;
+      //     rosterTooltip.append('<div id="playerName"></div>');
+      //     playerNameLabel = $('#playerName')
+      //     playerNameLabel
+      //       .css("position", "relative")
+      //       .css("margin", "auto")
+      //       .css("padding-top", "10px")
+      //       .text(toolTipName)
+      //     ;
+      // })
+      // .mouseleave(function(){
+      //   rosterTooltip.remove();
+      //   playerNameLabel.remove();
+      // })
             
       
       var $text = $parent.find('text'); //SELECTS THE td ELEMENT
@@ -97,35 +97,35 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
       $newTeamText.text( "" + teamJSON.roster[i].playerName);
 
        
-      $newTeamParent.mouseenter(function(){
-        var tooltipNameNew = $(this).text();
-        console.log("werwe");
-        $(this).append('<div id="tooltip"></div>');  
-            rosterTooltip = $('#tooltip');
-            rosterTooltip
-              .css("width", "300")
-              .css("height", "191")
-              .css("position", "absolute")
-              .css("top", $targetParentNew.position().top + "px")
-              .css("left", $targetParentNew.position().left - 305 + "px")
-              .css("background-color", "rgba(255,255,255, 0.8)")
-              .css("border", "1px solid #33bdb1")
-              .css("border-radius", "6px")
-              //.css("opacity", "0.7")
-            ;
-          rosterTooltip.append('<div id="playerName"></div>');
-          playerNameLabel = $('#playerName')
-          playerNameLabel
-            .css("position", "relative")
-            .css("margin", "auto")
-            .css("padding-top", "10px")
-            .text(tooltipNameNew)
-          ;
-      })
-      .mouseleave(function(){
-        rosterTooltip.remove();
-      })
-      */
+      // $newTeamParent.mouseenter(function(){
+      //   var tooltipNameNew = $(this).text();
+      //   console.log("werwe");
+      //   $(this).append('<div id="tooltip"></div>');  
+      //       rosterTooltip = $('#tooltip');
+      //       rosterTooltip
+      //         .css("width", "300")
+      //         .css("height", "191")
+      //         .css("position", "absolute")
+      //         .css("top", $targetParentNew.position().top + "px")
+      //         .css("left", $targetParentNew.position().left - 305 + "px")
+      //         .css("background-color", "rgba(255,255,255, 0.8)")
+      //         .css("border", "1px solid #33bdb1")
+      //         .css("border-radius", "6px")
+      //         //.css("opacity", "0.7")
+      //       ;
+      //     rosterTooltip.append('<div id="playerName"></div>');
+      //     playerNameLabel = $('#playerName')
+      //     playerNameLabel
+      //       .css("position", "relative")
+      //       .css("margin", "auto")
+      //       .css("padding-top", "10px")
+      //       .text(tooltipNameNew)
+      //     ;
+      // })
+      // .mouseleave(function(){
+      //   rosterTooltip.remove();
+      // })
+      
       
       if( i % 3 === 0){ //MAKES NON STARTERS GREY
          selectedPlayers.push(teamJSON.roster[i].playerID);
@@ -140,24 +140,23 @@ function loadRoster(RcurrentTeam, RcurrentYear, isNewTeam){
 }
 
 
-function drawTooltip(){
-     $(this).mouseenter(function(){
-            rosterArray[i].append('<div id="tooltip' + i + '"></div>');  
-            rosterTooltip = $('#tooltip' + i);
-            rosterTooltip
-              .css("width", "100")
-              .css("height", "300")
-              .css("position", "absolute")
-              .css("top", rosterArray[i].position().top + 20 + "px")
-              .css("left", rosterArray[i].position().left + 20 + "px")
-              .css("background-color", "red")
-              .css("z-index", "10000")
-              .text(playerName)
-            ;
-          })
-          .mouseleave(function(){
-            rosterTooltip.remove();
-          });
-    }
-}
-*/
+// function drawTooltip(){
+//      $(this).mouseenter(function(){
+//             rosterArray[i].append('<div id="tooltip' + i + '"></div>');  
+//             rosterTooltip = $('#tooltip' + i);
+//             rosterTooltip
+//               .css("width", "100")
+//               .css("height", "300")
+//               .css("position", "absolute")
+//               .css("top", rosterArray[i].position().top + 20 + "px")
+//               .css("left", rosterArray[i].position().left + 20 + "px")
+//               .css("background-color", "red")
+//               .css("z-index", "10000")
+//               .text(playerName)
+//             ;
+//           })
+//           .mouseleave(function(){
+//             rosterTooltip.remove();
+//           });
+//     }
+// }
