@@ -32,20 +32,17 @@ def get_characteristic(request):
     val = first_entity_value(entities,'intent')
     player = first_entity_value(entities, 'NBA_player')
 
-    print(context)
-    print(entities)
+    print("CONTEXT ", context)
+    print("ENTITIES ", entities)
 
+    context = {} #clear context because no need to memory right now
     if val == 'age':
-        context = {}
         context['age'] = '29'
     elif val == 'height':
-        context = {}
         context['height'] = '7 foot 5'
     elif val == 'weight':
-        context = {}
         context['weight'] = '280 pounds of pure muscle'
     else: 
-        context = {}
         print("ERROR" + val)
         #returning an empty context breaks everything
 
