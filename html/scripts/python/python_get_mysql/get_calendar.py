@@ -11,7 +11,7 @@ response = retrieve_from_db(request)
 
 print("Ran")
 
-json.dump(response, sys.stdout, indent=2)
+json.dump("ee", sys.stdout, indent=2)
 
 def retrieve_from_db(request):
     print(request)
