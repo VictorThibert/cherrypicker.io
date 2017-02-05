@@ -1,6 +1,25 @@
 
 function renderCalendar(teamID, year) {
 
+
+  //send the teamID to python script
+  function postData(input) {
+    $.ajax({
+        type: "POST",
+        url: "./python/python_get_mysql/get_calendar.py",
+        data: { param: input },
+        success: callbackFunc
+    });
+  }
+
+  function callbackFunc(response) {
+    console.log(response);
+  }
+
+  postData('data to process');
+
+  console.log("END")
+
   d3.json("http://cherrypicker.io/php/getcalendar.php?teamID=16106127" + teamID, function(error, raw) {
     var gameDates = [];
     for (var i = 0; i < raw.length; i++) {

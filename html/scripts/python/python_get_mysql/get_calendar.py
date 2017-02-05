@@ -3,7 +3,19 @@ import requests
 import mysql.connector
 from mysql.connector import errorcode
 
-#retriev calendar data from mysql db
+#retrieve calendar data from mysql db
+
+request = json.load(sys.stdin) #passed argument from js
+response = retrieve_from_db(request)
+
+
+print("Ran")
+
+json.dump(response, sys.stdout, indent=2)
+
+def retrieve_from_db(request):
+    print(request)
+    return "hello"
 
 try:
     #start connection
