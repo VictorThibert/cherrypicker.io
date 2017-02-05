@@ -13,44 +13,60 @@ access_token = sys.argv[1]
 def send(request, response):
     print(response['text'])
 
-#finds the entity's value among the entities of the request (e.g. for entity intent, the value could be height, age, etc.) 
+#finds the entity's value among the entities of the request (e.g. for entity 'characteristic', the value could be height, age, etc.) 
 def first_entity_value(entities, entity):
     if entity not in entities:
         return None
-    val = entities[entity][0]['value'] #most probable/confident
-    if not val:
+    value = entities[entity][0]['value'] #most probable/confident
+    if value == None:
         return None
-    return val['value'] if isinstance(val, dict) else val
+    return value['value'] if isinstance(value, dict) else value
 
 #------------------------------------------------------
 #custom functions
 
 def get_characteristic(request):
-    context = request['context']
+    context = {} #clear context because no need to memory right now
     entities = request['entities']
 
-    val = first_entity_value(entities,'intent')
-    player = first_entity_value(entities, 'NBA_player')
+    characteristic = first_entity_value(entities,'characteristic')
+    player = first_entity_value(entities, 'NBA_player') #extend this later for multiple players
 
-    print("CONTEXT ", context)
-    print("ENTITIES ", entities)
+    context['NBA_player'] = player
 
-    context = {} #clear context because no need to memory right now
-    if val == 'age':
+    if characteristic == 'age':
         context['age'] = '29'
-    elif val == 'height':
+    elif characteristic == 'height':
         context['height'] = '7 foot 5'
-    elif val == 'weight':
+    elif characteristic == 'weight':
         context['weight'] = '280 pounds of pure muscle'
     else: 
-        print("ERROR" + val)
+        print("ERROR" + characteristic)
         #returning an empty context breaks everything
 
     return context
 
 def generate_query(request):
-    context = request['context']
+    context = {}
     entities = request['entities']
+
+    stat = first_entity_value(entities,'NBA_stat')
+    player = first_entity_value(entities, 'NBA_player')
+    time_range = first_entity_value(entities, 'time_range')
+
+    context['NBA_player'] = player
+
+    if time_range == None:
+        if stat == 'points':
+            context['points'] = '30,000 points'
+        elif stat == 'assists':
+            context['assists'] = '10,000 assists'
+        elif stat == 'rebounds'
+    else:
+        if stat == 'points':
+            context['points'] = '30,000 points in 10 years'
+        elif stat == 'assists':
+            context['assists'] = '10,000 assists in 10 years'
 
     return context
 
