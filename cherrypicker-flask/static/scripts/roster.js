@@ -5,7 +5,8 @@ var tempSelectedPlayers;
 var rosterTooltip;
 var $parent;
 
-$.getJSON("../data/2014-2015rosters.json", function(data) {
+
+$.getJSON("../static/data/2014-2015rosters.json", function(data) {
     jqxhr = data;
 });
 
