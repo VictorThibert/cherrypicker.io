@@ -1,0 +1,476 @@
+/*
+Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
+*/
+.select3-container { /*nothing*/
+    margin: 0; 
+    position: relative;
+    display: inline-block;
+	border-radius: 4px 4px 4px 4px;
+  /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);*/
+  
+  
+}
+
+/*xSelect css*/
+#s2id_xSelect { 
+	font-size: 15px;
+	width: 200px;
+}
+
+#s2id_ySelect { 
+	font-size: 15px;
+	width: 200px;
+}
+
+.select3-container,
+.select3-drop,
+.select3-search,
+.select3-search input {
+  /*
+    Force border-box so that % widths fit the parent
+    container without overlap because of margin/padding.
+    More Info : http://www.quirksmode.org/css/box.html
+  */
+  -webkit-box-sizing: border-box; /* webkit */
+     -moz-box-sizing: border-box; /* firefox */
+          box-sizing: border-box; /* css3 */
+  
+  font-family: 'Roboto', sans-serif;
+	color: #888;
+	font-size: 17px;
+/*   background-color: rgb(255,255,255,0.3); */ /*VT Default unclicked color*/
+}
+
+.select3-container .select3-choice { /*appearance of bar*/
+    display: block;
+    height: 26px;
+    padding: 0 0 0 0px;
+    overflow: hidden;
+    position: relative;
+
+
+    border: 0px solid #aaa;
+    white-space: nowrap;
+    line-height: 26px;
+    color: #888; /*text colour */
+    text-decoration: none;
+	  text-align: center;
+
+    border-radius: 4px 4px 4px 4px;
+
+    background-clip: padding-box;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+
+/*    */
+    background-color: #f6f6f6; /*VT background when unseleced*/
+
+
+}
+
+html[dir="rtl"] .select3-container .select3-choice {
+  
+    padding: 0 8px 0 0;
+}
+
+.select3-container.select3-drop-above .select3-choice {
+    border-bottom-color: #aaa;
+  
+
+    border-radius: 0 0 4px 4px;
+
+}
+
+.select3-container.select3-allowclear .select3-choice .select3-chosen {
+
+  
+}
+
+.select3-container .select3-choice > .select3-chosen {
+  
+    display: block;
+    overflow: hidden;
+
+    white-space: nowrap;
+	
+  
+    font-family: 'Roboto', sans-serif;
+    font-weight: light;
+    color: #888; /*VT text color of search bar*/
+  
+    text-overflow: ellipsis;
+    float: none;
+    width: auto;
+}
+
+html[dir="rtl"] .select3-container .select3-choice > .select3-chosen {
+    margin-left: 26px;
+    margin-right: 0;
+}
+
+.select3-container .select3-choice abbr {
+    display: none;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    right: 24px;
+    top: 8px;
+
+    font-size: 1px;
+    text-decoration: none;
+
+    border: 0;
+/*     background: url('select3.png') right top no-repeat; */
+    cursor: pointer;
+    outline: 0;
+}
+
+.select3-container.select3-allowclear .select3-choice abbr {
+    display: inline-block;
+}
+
+.select3-container .select3-choice abbr:hover {
+    background-position: right -11px;
+    cursor: pointer;
+}
+
+.select3-drop-mask {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    width: auto;
+    opacity: 0;
+    z-index: 9998;
+    /* styles required for IE to work */
+    background-color: #faf;
+    filter: alpha(opacity=0);
+}
+
+
+.select3-drop {
+    width: 100%;
+    margin-top: 0px;
+    position: absolute;
+    z-index: 9999;
+    top: 100%;
+
+    background: #f6f6f6; /*VT: Dropdown background color*/
+    color: #888; /*VT : Less black */
+    border: 1px solid #aaa;
+    border-top: 0;
+
+    border-radius: 0 0px 4px 4px;
+
+    -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15); /*no*/
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .15); /*VT This shadow*/
+}
+
+.select3-drop.select3-drop-above {
+    margin-top: 1px;
+    border-top: 1px solid #aaa;
+    border-bottom: 0;
+	
+
+    border-radius: 4px 4px 0 0;
+
+    -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+            box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+}
+
+.select3-drop-active {/*blue stroke glow*/
+    border: 0px solid #5897fb;
+    border-top: none;
+}
+
+.select3-drop.select3-drop-above.select3-drop-active { /*blue stroke glow*/
+  
+    border-top: 0px solid #5897fb;
+}
+
+.select3-drop-auto-width {
+    border-top: 1px solid #aaa;
+    width: auto;
+}
+
+.select3-container .select3-choice .select3-arrow {
+    display: inline-block;
+    width: 18px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+		text-align: center;
+    top: 0;
+
+    border-left: 0px solid #aaa;
+    border-radius: 0 4px 4px 0;
+
+    background-clip: padding-box;
+
+    background: rgba(255,255,255,0);
+  /*  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee));
+    background-image: -webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%);
+    background-image: -moz-linear-gradient(center bottom, #ccc 0%, #eee 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#eeeeee', endColorstr = '#cccccc', GradientType = 0);
+    background-image: linear-gradient(to top, #ccc 0%, #eee 60%);*/
+}
+
+html[dir="rtl"] .select3-container .select3-choice .select3-arrow {
+    left: 0;
+    right: auto;
+
+    border-left: none;
+    border-right: 1px solid #aaa;
+    border-radius: 4px 0 0 4px;
+}
+
+.select3-container .select3-choice .select3-arrow b {
+    display: block;
+    width: 100%;
+    height: 100%;
+/*     background: url('select3.png') no-repeat 0 1px; */
+}
+
+html[dir="rtl"] .select3-container .select3-choice .select3-arrow b {
+    background-position: 2px 1px;
+}
+
+.select3-search {
+    display: inline-block;
+    width: 100%;
+    min-height: 26px;
+    margin: 0;
+    padding: 4px 4px 0 4px;
+    border-radius: 4px;
+
+    position: relative;
+    z-index: 10000;
+
+    white-space: nowrap;
+}
+
+.select3-search input {
+    width: 100%;
+    height: auto !important;
+    min-height: 26px;
+    padding: 4px 20px 4px 5px;
+    margin: 0;
+
+    outline: 0;
+    font-family: sans-serif;
+    font-size: 1em;
+
+    border: 0px solid #aaa; /*border box around typing area*/
+    border-radius: 4px;
+
+    -webkit-box-shadow: none;
+            box-shadow: none;
+
+/*     background: rgba(255,255,255,0.3) url('select3.png') no-repeat 100% -22px; */
+    /*background: url('select3.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
+    background: url('select3.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
+    background: url('select3.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
+    background: url('select3.png') no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0;*/
+}
+
+html[dir="rtl"] .select3-search input {
+    padding: 4px 5px 4px 20px;
+
+
+}
+
+.select3-search input.select3-active {
+  
+
+}
+
+
+/*HERE VT*/
+.select3-container-active {
+/*     border: 1px solid #5897fb; blue stroke glow */
+    outline: none;
+    background: #f6f6f6;
+    border-radius: 4px 4px 0 0;
+
+}
+
+.select3-dropdown-open.select3-drop-above .select3-choice,
+.select3-dropdown-open.select3-drop-above .select3-choices {
+    border: 1px solid #5897fb;
+    border-top-color: transparent;
+
+
+}
+
+.select3-dropdown-open .select3-choice .select3-arrow {
+    background: transparent;
+    border-left: none;
+    filter: none;
+}
+html[dir="rtl"] .select3-dropdown-open .select3-choice .select3-arrow {
+    border-right: none;
+}
+
+.select3-dropdown-open .select3-choice .select3-arrow b {
+    background-position: -18px 1px;
+}
+
+html[dir="rtl"] .select3-dropdown-open .select3-choice .select3-arrow b {
+    background-position: -16px 1px;
+}
+
+.select3-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/* results */
+.select3-results {
+		text-align: center;
+    max-height: 200px;
+    padding: 0 0 0 4px;
+    margin: 4px 4px 4px 0;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html[dir="rtl"] .select3-results {
+    padding: 0 4px 0 0;
+    margin: 4px 0 4px 4px;
+}
+
+.select3-results ul.select3-result-sub {
+    margin: 0;
+    padding-left: 0;
+}
+
+.select3-results li {
+    list-style: none;
+    display: list-item;
+    background-image: none;
+}
+
+.select3-results li.select3-result-with-children > .select3-result-label {
+    font-weight: bold;
+}
+
+.select3-results .select3-result-label {
+    padding: 3px 7px 4px;
+    margin: 0;
+    cursor: pointer;
+
+    min-height: 1em;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+
+.select3-results-dept-1 .select3-result-label { padding-left: 20px }
+.select3-results-dept-2 .select3-result-label { padding-left: 40px }
+.select3-results-dept-3 .select3-result-label { padding-left: 60px }
+.select3-results-dept-4 .select3-result-label { padding-left: 80px }
+.select3-results-dept-5 .select3-result-label { padding-left: 100px }
+.select3-results-dept-6 .select3-result-label { padding-left: 110px }
+.select3-results-dept-7 .select3-result-label { padding-left: 120px }
+
+.select3-results .select3-highlighted {
+    background-color: #dedede;
+  border-radius: 2px;
+}
+
+.select3-results li em {
+    background: #feffde;
+    font-style: normal;
+}
+
+.select3-results .select3-highlighted em {
+    background: transparent;
+}
+
+.select3-results .select3-highlighted ul {
+  
+    background: #fff;
+    color: #000;
+}
+
+.select3-results .select3-no-results,
+.select3-results .select3-searching,
+.select3-results .select3-ajax-error,
+.select3-results .select3-selection-limit {
+    display: list-item;
+    padding-left: 5px;
+}
+
+
+
+
+
+
+.select3-result-selectable .select3-match,
+.select3-result-unselectable .select3-match {
+    text-decoration: underline;
+}
+
+.select3-offscreen, .select3-offscreen:focus {
+    clip: rect(0 0 0 0) !important;
+    width: 1px !important;
+    height: 1px !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    outline: 0 !important;
+    left: 0px !important;
+    top: 0px !important;
+}
+
+.select3-display-none {
+    display: none;
+}
+
+.select3-measure-scrollbar {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+}
+
+/* Retina-ize icons */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx)  {
+    .select3-search input,
+    .select3-search-choice-close,
+    .select3-container .select3-choice abbr,
+    .select3-container .select3-choice .select3-arrow b {
+/*         background-image: url('select3x2.png') !important; */
+        background-repeat: no-repeat !important;
+        background-size: 60px 40px !important;
+    }
+
+    .select3-search input {
+        background-position: 100% -21px !important;
+    }
+}

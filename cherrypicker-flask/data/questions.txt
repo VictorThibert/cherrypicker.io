@@ -1,0 +1,50 @@
+#types of potential questions
+
+#translate the query into a bbref style query
+#keys
+
+1 - time frame (e.g. 2016, 2012-2014, all time) [default = Current Year]
+2 - league (e.g. NBA, 'the league', ABA, WNBA, D-League, CBA, etc.) [default = NBA]
+3 - player / players (e.g. Steph Curry, Kevin Durant and Russell Westbrook)
+4 - 'most' / 'least'
+5 - 'top' n / (top 10 shooters)
+6 - minimum requirements (with at least 10 GP)
+7 - stats (GP, points, assists, PPG, rebounder, VORP, TS%)
+8 - conjunctions (and, or, without)
+9 - team name
+10- misc (rookie)
+11- age 
+12- player measurements (weight, height, vertical, etc.)
+13- question (who, when, where)
+
+
+
+#examples
+
+who is the best {characteristic} in {league} in {year} with at least {minimum}?
+who is the best free throw shooter in the NBA in 2016 with at least 100 attempts?
+
+who are the top {n} {characteristic} in {league}
+who are the top 10 offensive rebounders of all time?
+
+who has the highest vertical in the NBA?
+
+how many times has {player} {action}?
+how many times has Caron Butler gotten more than 50 assists?
+
+
+
+
+
+#synonyms
+- GP = games played = games
+- points
+- assists = dimes
+- rebounds = boards
+- PPG = points per game
+- true shooting percentage / TS%
+
+
+#categorize the phrase
+ch.5
+- tagged tokens

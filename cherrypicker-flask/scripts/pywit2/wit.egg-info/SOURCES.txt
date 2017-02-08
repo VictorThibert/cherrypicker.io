@@ -1,0 +1,8 @@
+setup.py
+wit/__init__.py
+wit/wit.py
+wit.egg-info/PKG-INFO
+wit.egg-info/SOURCES.txt
+wit.egg-info/dependency_links.txt
+wit.egg-info/requires.txt
+wit.egg-info/top_level.txt

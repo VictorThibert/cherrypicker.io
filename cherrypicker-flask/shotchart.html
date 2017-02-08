@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8">
+<html>
+	<link rel="stylesheet" type="text/css" href="../css/nouislider.css">
+	<style>
+
+
+
+
+	.hexagon {
+	  opacity:  0.1;
+	}
+	.hexagon.selected:active {
+	  color:  #FFF;
+	}
+
+	.hexagon.selected {
+		opacity: 1;
+	}
+
+	.brush .extent {
+	  fill-opacity: .1;
+	  shape-rendering: crispEdges;
+	}
+
+	</style>
+
+	<body>
+		<div id = "sub-container-shot"></div>
+		<div id = "sub-container-shot1"></div>
+		<div id = "sub-container-shot2"></div>
+		<div id = "sub-container-shot3"></div>
+				
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+		<script src="../scripts/nouislider.js"></script>
+		<script src="../scripts/hexbin.js"></script>
+		<script src="../scripts/shotchart.js"></script>
+	
+	<script>localshotchart()</script>
+	</body>
+</html>
