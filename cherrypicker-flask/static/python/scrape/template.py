@@ -1,49 +1,35 @@
+# template file to scrape from stats.nba.com
 #
+# see:      github.com/seemethere/nba_py/wiki/stats.nba.com-Endpoint-Documentation for complete endpoint documention
+# format:   stats.nba.com/stats/{endpoint}/?{params}
+# example:  http://stats.nba.com/stats/commonallplayers/?LeagueID=00&Season=2015-16&IsOnlyCurrentSeason=0
+#
+# author: Victor Thibert
  
 import json
 import requests
+import pymongo
 
-# probably should list all the parameters for all endpoints here (template it)
-year1 = "2013"
-year2 = "14"
-playerID = "0"
-measure_type = "Base"
-
-# need this to allow scraping of NBA website, else will be blocked
+# set proper headers to allow scraping from NBA website
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
 
+# parameters for endpoints
+league_id = '00'
+season = '2015-16'
+is_only_current_season = '0'
 
-shots_url = "http://stats.nba.com/stats/leaguedashplayerstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00" \
-            "&Location=&MeasureType=" + measure_type + "&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience" \
-            "=&PlayerPosition=&Plus"+"Minus=N&Rank=N&Season="+ year1 + "-" + year2 + \
-            "&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0" \
-            "&VsConference=&VsDivision="
+# url 
+url = 'http://stats.nba.com/stats/' \
+            'commonallplayers/?' \
+            'LeagueID=' + league_id + \
+            '&Season=' + season + \
+            '&IsOnlyCurrentSeason=' +  is_only_current_season
 
-response = requests.get(shots_url, headers=headers)
+print(url)
+
+response = requests.get(url, headers=headers)
 response.raise_for_status()
+data = response.json()
 
-variable_name_here = response.json()
-
-cnx = mysql.connector.connect(user='all', password='all', host='localhost', database='2013-2014')
-cursor = cnx.cursor()
-for item in shots["resultSets"][0]["rowSet"]:
-
+for item in data:
     print(item)
-
-    add_shots = ("INSERT INTO `2013-2014leagueplayerbase` (PLAYER_ID, PLAYER_NAME, TEAM_ID, TEAM_ABBREVIATION, AGE, "
-                 "GP, W, L, W_PCT, MIN, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT, FTM, FTA, FT_PCT, OREB, "
-                 "DREB, REB, AST, TOV, STL, BLK, BLKA, PF, PFD, PTS, PLUS_MINUS, DD2, TD3) VALUES "
-                 "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s )"
-                 "ON DUPLICATE KEY UPDATE PLAYER_ID=%s, PLAYER_NAME=%s, TEAM_ID=%s, TEAM_ABBREVIATION=%s, AGE=%s,  "
-                 "GP=%s, W=%s, L=%s, W_PCT=%s, MIN=%s, FGM=%s, FGA=%s, FG_PCT=%s, FG3M=%s, FG3A=%s, FG3_PCT=%s, FTM=%s, FTA=%s, FT_PCT=%s, OREB=%s, "
-                 "DREB=%s, REB=%s, AST=%s, TOV=%s, STL=%s, BLK=%s, BLKA=%s, PF=%s, PFD=%s, PTS=%s, PLUS_MINUS=%s, DD2=%s, TD3=%s")
-
-    data = (item[0], item[1], item[2], item[3], item[4], item[5], item[6], item[7], item[8], item[9], item[10], item[11],  item[12], item[13], item[14],
-            item[15],  item[16], item[17], item[18], item[19], item[20], item[21], item[22], item[23], item[24], item[25], item[26], item[27], item[28],
-            item[29], item[30], item[31], item[32], item[0], item[1], item[2], item[3], item[4], item[5], item[6], item[7], item[8], item[9], item[10],
-            item[11], item[12], item[13], item[14], item[15],  item[16], item[17], item[18], item[19], item[20], item[21], item[22], item[23], item[24],
-            item[25], item[26], item[27], item[28], item[29], item[30], item[31], item[32])
-
-
-
-
