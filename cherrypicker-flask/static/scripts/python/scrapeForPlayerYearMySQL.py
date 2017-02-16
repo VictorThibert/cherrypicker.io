@@ -1,3 +1,5 @@
+#scrapes all player shots (x,y) coordinates for shotchart
+
 import csv
 import json
 import requests
