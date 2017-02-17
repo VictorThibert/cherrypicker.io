@@ -39,7 +39,7 @@ for item in data['resultSets'][0]['rowSet']:
     player_id = int(item[0])
     player_name = item[2]
 
-    query_result = players.update(
+    players.update(
         # condition: on player id
         {'player_id':player_id}, 
         # insert the following document
