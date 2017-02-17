@@ -26,9 +26,14 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0)
 # players currently refers to the 'players' collection
 players = mongo_connect.db.players
 
-player_id_list = players.find({},{'_id':0, 'player_id':1})
-
+# player_id_list referes to a cursor, which needs to be closed. save it into an array first
+player_id_list = players.find({},{'_id':0, 'player_id':1}) 
+player_id_list_saved = []
 for element in player_id_list:
+    player_id_list_saved.append(element)
+player_id_list.close()
+
+for element in player_id_list_saved:
     player_id = str(element['player_id'])
 
     # url endpoint
