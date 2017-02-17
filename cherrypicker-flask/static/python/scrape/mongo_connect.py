@@ -7,6 +7,6 @@ client = pymongo.MongoClient('localhost', 27017)
 
 # this is the database name
 db = client.cherrypicker
-fla = 10
+
 
 

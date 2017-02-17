@@ -1,8 +1,18 @@
-# template file for scrapers
+# scrape all player common info
 #
 # see:      github.com/seemethere/nba_py/wiki/stats.nba.com-Endpoint-Documentation for complete endpoint documention
 # format:   stats.nba.com/stats/{endpoint}/?{params}
 # example:  http://stats.nba.com/stats/commonallplayers/?LeagueID=00&Season=2015-16&IsOnlyCurrentSeason=0
+#
+# birth_date
+# school
+# country
+# height
+# weight
+# from year
+# to year
+# draft year
+# draft round / number
 
 import requests
 import mongo_connect
@@ -35,7 +45,7 @@ players = mongo_connect.db.players
 for item in data['resultSets'][0]['rowSet']:
     
     # item[0] is NBA:PERSON_ID
-    # item[2] is NBA:DISPLAY_FIRST_LAST (e.g. name of player)
+    # item[3] is NBA:DISPLAY_FIRST_LAST (e.g. name of player)
     player_id = int(item[0])
     player_name = item[2]
 
