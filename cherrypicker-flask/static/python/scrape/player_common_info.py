@@ -103,7 +103,7 @@ for element in returned_tasks:
             draft_position = {'round':int(item[27]), 'number':int(item[28])}
         else:
             draft_position = {'round':0, 'number':0}
-        print(years_active)
+    
         players.update_one(
             # condition: on player id
             {'player_id':player_id}, 
