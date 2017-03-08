@@ -5,6 +5,7 @@
 # example:  http://stats.nba.com/stats/commonallplayers/?LeagueID=00&Season=2015-16&IsOnlyCurrentSeason=0
 
 import requests
+import logging
 import mongo_connect
 
 # set proper headers to allow scraping from NBA website

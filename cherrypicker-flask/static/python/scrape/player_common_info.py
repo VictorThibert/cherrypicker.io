@@ -22,35 +22,25 @@ import mongo_helper
 import asyncio
 import async_timeout
 import aiohttp
-
-# set proper headers to allow scraping from NBA website
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
-
-@asyncio.coroutine
-def fetch_page(session, url):
-    print('Fetching player: ' + url[-4:])
-    # set timeout for longer in case of errors
-    with aiohttp.Timeout(100):
-        response = yield from session.get(url, headers=headers)
-        try:
-            return (yield from response.json())
-        finally:
-            yield from response.release()
+import async_helper
 
 # players currently refers to the 'players' collection
 players = mongo_helper.db.players
 
-# player_id_list referes to a cursor, which needs to be closed. save it into an array first
+# the find result referes to a cursor, which needs to be closed. save it into a list first
 player_id_list = list(players.find({'draft_position.number':1},{'_id':0, 'player_id':1}))
 
 loop = asyncio.get_event_loop()
+
+# returned_tasks will contain the json file for each player's http request 
 returned_tasks = []
+
 with aiohttp.ClientSession(loop=loop) as session:
-    tasks = [fetch_page(session,'http://stats.nba.com/stats/commonplayerinfo/?PlayerID=' + str(element['player_id'])) for element in player_id_list]
+    tasks = [async_helper.fetch_page(session,'http://stats.nba.com/stats/commonplayerinfo/?PlayerID=' + str(element['player_id'])) for element in player_id_list]
 
     content = loop.run_until_complete(asyncio.wait(tasks))
-    # content contains a tuple
-    returned_tasks = list(content[0])
+    # content contains a tuple with two elements. the first element is the set of all the responses from the tasks
+    returned_tasks.extend(list(content[0]))
 
 for element in returned_tasks:
     for item in element.result()['resultSets'][0]['rowSet']:
