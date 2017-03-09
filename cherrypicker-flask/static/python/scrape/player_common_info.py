@@ -28,19 +28,18 @@ import async_helper
 players = mongo_helper.db.players
 
 # the find result referes to a cursor, which needs to be closed. save it into a list first
-player_id_list = list(players.find({'draft_position.number':1},{'_id':0, 'player_id':1}))
-
-loop = asyncio.get_event_loop()
+player_id_list = list(players.find({'draft_position.number':1, 'draft_year': 2010},{'_id':0, 'player_id':1}))
 
 # returned_tasks will contain the json file for each player's http request 
-returned_tasks = []
 
-with aiohttp.ClientSession(loop=loop) as session:
-    tasks = [async_helper.fetch_page(session,'http://stats.nba.com/stats/commonplayerinfo/?PlayerID=' + str(element['player_id'])) for element in player_id_list]
+loop = asyncio.get_event_loop()
+future = asyncio.ensure_future(async_helper.run(player_id_list))
+loop.run_until_complete(future)
 
-    content = loop.run_until_complete(asyncio.wait(tasks))
-    # content contains a tuple with two elements. the first element is the set of all the responses from the tasks
-    returned_tasks.extend(list(content[0]))
+#returned_tasks = 
+#async_helper.run(player_id_list)
+returned_tasks = future
+print(returned_tasks)
 
 for element in returned_tasks:
     for item in element.result()['resultSets'][0]['rowSet']:
