@@ -32,19 +32,15 @@ player_id_list = list(players.find({'draft_position.number':1, 'draft_year': 201
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
-
 loop = asyncio.get_event_loop()
 future = asyncio.ensure_future(async_helper.run(player_id_list, memo))
 loop.run_until_complete(future)
+# returned_tasks will contain the each json file for each player's http request 
+returned_tasks = memo[0]
 
-#returned_tasks = 
-#async_helper.run(player_id_list)
-# returned_tasks will contain the json file for each player's http request 
-returned_tasks = memo
-print(returned_tasks)
-
+# insert into mongo
 for element in returned_tasks:
-    for item in element.result()['resultSets'][0]['rowSet']:
+    for item in element['resultSets'][0]['rowSet']:
         
         # item[0] is NBA:PERSON_ID
         # item[6] is NBA:BIRTHDATE

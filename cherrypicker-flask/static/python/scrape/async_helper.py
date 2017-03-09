@@ -19,11 +19,10 @@ async def run(player_id_list, memo):
     with aiohttp.ClientSession() as session:
         for element in player_id_list:
             url = 'http://stats.nba.com/stats/commonplayerinfo/?PlayerID=' + str(element['player_id'])
-            print(url)
             task = asyncio.ensure_future(bounded_fetch_page(session, url, semaphore))
             tasks.append(task)
 
-        # responses all the http responses from the tasks
+        # responses contains all the http responses from the tasks
         responses = await asyncio.gather(*tasks)
         memo[0] = list(responses)
         return 
