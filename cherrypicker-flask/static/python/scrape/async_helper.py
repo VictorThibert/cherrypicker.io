@@ -3,7 +3,6 @@
 # to write: batch function
 
 import asyncio
-import async_timeout
 import aiohttp
 
 # set proper headers to allow scraping from stats.nba.com 

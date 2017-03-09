@@ -20,8 +20,6 @@
 import requests
 import mongo_helper
 import asyncio
-import async_timeout
-import aiohttp
 import async_helper
 
 # players currently refers to the 'players' collection
