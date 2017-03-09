@@ -8,9 +8,9 @@ import aiohttp
 
 # set proper headers to allow scraping from stats.nba.com 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
-batch_size = 100
+batch_size = 500
 
-async def run(player_id_list):
+async def run(player_id_list, memo):
     tasks = []
 
     # semaphore to process batch sizes of n (don't go over 1000)
@@ -23,10 +23,10 @@ async def run(player_id_list):
             task = asyncio.ensure_future(bounded_fetch_page(session, url, semaphore))
             tasks.append(task)
 
-        # responses contains a tuple with two elements. the first element is the set of all the http responses from the tasks
+        # responses all the http responses from the tasks
         responses = await asyncio.gather(*tasks)
-        print(responses)
-        return list(responses[0])
+        memo[0] = list(responses)
+        return 
 
 async def fetch_page(session, url):
     print('Fetching player: ' + url[-4:])

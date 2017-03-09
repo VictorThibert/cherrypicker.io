@@ -30,15 +30,17 @@ players = mongo_helper.db.players
 # the find result referes to a cursor, which needs to be closed. save it into a list first
 player_id_list = list(players.find({'draft_position.number':1, 'draft_year': 2010},{'_id':0, 'player_id':1}))
 
-# returned_tasks will contain the json file for each player's http request 
+# temporary container variable to extract the result from async request (find a better way to do this)
+memo = [None]
 
 loop = asyncio.get_event_loop()
-future = asyncio.ensure_future(async_helper.run(player_id_list))
+future = asyncio.ensure_future(async_helper.run(player_id_list, memo))
 loop.run_until_complete(future)
 
 #returned_tasks = 
 #async_helper.run(player_id_list)
-returned_tasks = future
+# returned_tasks will contain the json file for each player's http request 
+returned_tasks = memo
 print(returned_tasks)
 
 for element in returned_tasks:
