@@ -1,4 +1,4 @@
-# scrape all player common info
+# scrape all player common info (async)
 #
 # see:      github.com/seemethere/nba_py/wiki/stats.nba.com-Endpoint-Documentation for complete endpoint documention
 # format:   stats.nba.com/stats/{endpoint}/?{params}
@@ -22,6 +22,8 @@ import mongo_helper
 import asyncio
 import async_helper
 
+url = 'http://stats.nba.com/stats/commonplayerinfo/?PlayerID='
+
 # players currently refers to the 'players' collection
 players = mongo_helper.db.players
 
@@ -31,7 +33,7 @@ player_id_list = list(players.find({'draft_position.number':1, 'draft_year': 201
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
 loop = asyncio.get_event_loop()
-future = asyncio.ensure_future(async_helper.run(player_id_list, memo))
+future = asyncio.ensure_future(async_helper.run(player_id_list, url, memo))
 loop.run_until_complete(future)
 # returned_tasks will contain the each json file for each player's http request 
 returned_tasks = memo[0]

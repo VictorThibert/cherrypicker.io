@@ -9,7 +9,7 @@ import aiohttp
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
 batch_size = 500
 
-async def run(player_id_list, memo):
+async def run(player_id_list, url_prefix, memo):
     tasks = []
 
     # semaphore to process batch sizes of n (don't go over 1000)
@@ -17,7 +17,7 @@ async def run(player_id_list, memo):
 
     with aiohttp.ClientSession() as session:
         for element in player_id_list:
-            url = 'http://stats.nba.com/stats/commonplayerinfo/?PlayerID=' + str(element['player_id'])
+            url = url_prefix + str(element['player_id'])
             task = asyncio.ensure_future(bounded_fetch_page(session, url, semaphore))
             tasks.append(task)
 
