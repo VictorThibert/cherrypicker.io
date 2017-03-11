@@ -45,11 +45,12 @@ for item in data['resultSets'][0]['rowSet']:
     players.update(
         # condition: on player id
         {'player_id':player_id}, 
-        # insert the following document
-        {
-            'player_id':player_id,
-            'player_name':player_name
-
+        # insert the following document (using $set to add new fields without deleting existing fields)
+        { "$set":
+            {
+                'player_id':player_id,
+                'player_name':player_name
+            }
         },
         upsert=True)
 
