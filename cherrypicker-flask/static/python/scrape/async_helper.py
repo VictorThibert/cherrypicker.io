@@ -27,7 +27,7 @@ async def run(player_id_list, url_prefix, memo):
         return 
 
 async def fetch_page(session, url):
-    print('Fetching player: ' + url[-4:])
+    print('Fetching: ' + url)
     async with session.get(url, headers=headers) as response:
         return await response.json()
 
