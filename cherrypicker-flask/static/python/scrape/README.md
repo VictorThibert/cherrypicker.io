@@ -1,8 +1,5 @@
-### LeagueID
-**NBA: 00**
-**ABA: 01**
-
-### Current Teams
+##### For scoreboard access, must set HTTP Referer as http://stats.nba.com
+### Teams
 | Team name       | TeamID           |
 | ------------- |:-------------:|
   Atlanta Hawks|          1610612737
@@ -36,8 +33,19 @@
   Utah Jazz|              1610612762
   Washington Wizards|     1610612764
 
+
+
+### GameID
+
+| 10 digit ID | Game |
+| --------------- |:-------------:|
+| 0021600001 | First game of the 2016-2017 season |
+
 ### Season:
 **NNNN-NN (eg. 1995-96)**
 
 ### SeasonType:
 **"Regular Season", "Pre Season", "Playoffs", "All-Star", "All Star", "Preseason"**
+### LeagueID
+**NBA: 00**
+**ABA: 01**
