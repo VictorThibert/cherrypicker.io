@@ -8,7 +8,7 @@
 # player_name
 
 import requests
-import mongo_connect
+import mongo_helper
 
 # set proper headers to allow scraping from NBA website
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
@@ -33,7 +33,7 @@ response.raise_for_status()
 data = response.json()
 
 # players currently refers to the 'players' collection
-players = mongo_connect.db.players
+players = mongo_helper.db.players
 
 for item in data['resultSets'][0]['rowSet']:
     
@@ -54,4 +54,4 @@ for item in data['resultSets'][0]['rowSet']:
         },
         upsert=True)
 
-mongo_connect.client.close()
+mongo_helper.client.close()
