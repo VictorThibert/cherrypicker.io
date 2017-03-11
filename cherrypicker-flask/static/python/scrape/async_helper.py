@@ -17,7 +17,7 @@ async def run(player_id_list, url_prefix, memo):
 
     with aiohttp.ClientSession() as session:
         for element in player_id_list:
-            url = url_prefix + str(element['player_id'])
+            url = url_prefix + str(element)
             task = asyncio.ensure_future(bounded_fetch_page(session, url, semaphore))
             tasks.append(task)
 

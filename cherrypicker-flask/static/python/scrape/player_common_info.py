@@ -1,4 +1,5 @@
 # scrape all player common info (async)
+# to be run after the player names have been inputted
 #
 # see:      github.com/seemethere/nba_py/wiki/stats.nba.com-Endpoint-Documentation for complete endpoint documention
 # format:   stats.nba.com/stats/{endpoint}/?{params}
@@ -27,8 +28,8 @@ url = 'http://stats.nba.com/stats/commonplayerinfo/?PlayerID='
 # players currently refers to the 'players' collection
 players = mongo_helper.db.players
 
-# the find result referes to a cursor, which needs to be closed. save it into a list first
-player_id_list = list(players.find({'draft_position.number':1, 'draft_year': 2010},{'_id':0, 'player_id':1}))
+# the find result referes to a cursor, which needs to be closed. save it into a list first and extract just the player ids
+player_id_list = [element['player_id'] for element in list(players.find({},{'_id':0, 'player_id':1}))]
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
