@@ -42,21 +42,6 @@ returned_tasks = memo[0]
 # insert into mongo
 for element in returned_tasks:
     for item in element['resultSets'][0]['rowSet']:
-        
-        # item[0] is NBA:PERSON_ID
-        # item[6] is NBA:BIRTHDATE
-        # item[7] is NBA:SCHOOL
-        # item[8] is NBA:COUNTRY 
-        # item[10] is NBA:HEIGHT 
-        # item[11] is NBA:WEIGHT 
-        # item[15] is NBA:ROSTERSTATUS 
-        # item[16] is NBA:TEAM_ID 
-        # item[17] is NBA:TEAM_NAME 
-        # item[22] is NBA:FROM_YEAR 
-        # item[23] is NBA:TO_YEAR
-        # item[26] is NBA:DRAFT_YEAR
-        # item[27] is NBA:DRAFT_ROUND
-        # item[28] is NBA:DRAFT_NUMBER
 
         player_id = int(item[0])
         birth_date = item[6]
