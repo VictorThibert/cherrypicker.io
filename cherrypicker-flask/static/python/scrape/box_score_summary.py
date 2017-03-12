@@ -36,7 +36,7 @@ def generate_game_ids(leading_from_year, leading_to_year):
 
 def int_with_none(x):
     if str(x).isdigit():
-        return x
+        return int(x)
     else:
         return 0
 
