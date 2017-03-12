@@ -41,6 +41,8 @@
 | --------------- |:-------------:|
 | 0021600001 | First game of the 2016-2017 season |
 
+First year: 1946
+
 ### Season:
 **NNNN-NN (eg. 1995-96)**
 
