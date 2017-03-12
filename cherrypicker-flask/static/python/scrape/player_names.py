@@ -35,6 +35,7 @@ data = response.json()
 # players currently refers to the 'players' collection
 players = mongo_helper.db.players
 
+# each item is a player
 for item in data['resultSets'][0]['rowSet']:
     
     # item[0] is NBA:PERSON_ID
@@ -46,7 +47,7 @@ for item in data['resultSets'][0]['rowSet']:
         # condition: on player id
         {'player_id':player_id}, 
         # insert the following document (using $set to add new fields without deleting existing fields)
-        { "$set":
+        { '$set':
             {
                 'player_id':player_id,
                 'player_name':player_name
