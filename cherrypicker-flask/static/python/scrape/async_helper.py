@@ -7,7 +7,7 @@ import aiohttp
 
 # set proper headers to allow scraping from stats.nba.com 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
-batch_size = 500
+batch_size = 1000
 
 async def run(player_id_list, url_prefix, memo):
     tasks = []
