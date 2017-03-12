@@ -40,8 +40,8 @@ loop.run_until_complete(future)
 returned_tasks = memo[0]
 
 # insert into mongo
-for element in returned_tasks:
-    for item in element['resultSets'][0]['rowSet']:
+for json_page in returned_tasks:
+    for item in json_page['resultSets'][0]['rowSet']:
 
         player_id = int(item[0])
         birth_date = item[6]
