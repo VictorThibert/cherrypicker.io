@@ -34,11 +34,16 @@ def generate_game_ids(leading_from_year, leading_to_year):
         game_id_list.extend(list(map(lambda x: '002' + leading_year + '0' + str('000' + str(x))[-4:], [x for x in range(1, 1231)])))
     return game_id_list
 
+def int_with_none(x):
+    if str(x).isdigit():
+        return x
+    else:
+        return 0
 
 url = 'http://stats.nba.com/stats/boxscoresummaryv2/?LeagueID=00&GameID='
 
 # temporary test with 2014-2015(1230 games) -----------------------------------------------------------
-game_id_list = generate_game_ids(2014,2014)
+game_id_list = generate_game_ids(2000,2016)
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
@@ -59,11 +64,11 @@ for json_page in returned_tasks:
     # result set [0] is GameSummary
     item = json_page['resultSets'][0]['rowSet'][0]
     game_date = item[0]
-    game_id = int(item[2])
-    game_status_id = int(item[3])
-    home_team_id = int(item[6])
-    visitor_team_id = int(item[7])
-    season_year = int(item[8])
+    game_id = item[2]
+    game_status_id = int_with_none(item[3])
+    home_team_id = int_with_none(item[6])
+    visitor_team_id = int_with_none(item[7])
+    season_year = int_with_none(item[8])
 
     games.update_one(
         # condition on game_id
@@ -83,15 +88,15 @@ for json_page in returned_tasks:
 
     # result set [1] is OtherStats. then [0] is first team and [1] is second team
     for item in json_page['resultSets'][1]['rowSet']:
-        team_id = int(item[1])
+        team_id = int_with_none(item[1])
         team_abbreviation = item[2]
-        pts_paint = int(item[4])
-        pts_2nd_chance = int(item[5])
-        pts_fb = int(item[6])
-        pts_off_to = int(item[13])
-        largest_lead = int(item[7])
-        lead_changes = int(item[8])
-        times_tied = int(item[9])
+        pts_paint = int_with_none(item[4])
+        pts_2nd_chance = int_with_none(item[5])
+        pts_fb = int_with_none(item[6])
+        pts_off_to = int_with_none(item[13])
+        largest_lead = int_with_none(item[7])
+        lead_changes = int_with_none(item[8])
+        times_tied = int_with_none(item[9])
 
         misc_team = 'misc_undefined_team'
         # if current team is home team
@@ -122,7 +127,7 @@ for json_page in returned_tasks:
     # result set [2] is Officials. there are multiple officials to iterate over. result set [4] is GameInfo. 
     referees = []
     for referee in json_page['resultSets'][2]['rowSet']:
-        referees.append({'referee_id':int(referee[0])})
+        referees.append({'referee_id':int_with_none(referee[0])})
     game_time = json_page['resultSets'][4]['rowSet'][0][2]
     attendance = json_page['resultSets'][4]['rowSet'][0][1]
 
@@ -139,21 +144,21 @@ for json_page in returned_tasks:
 
     # result set [5] is LineScore
     for item in json_page['resultSets'][5]['rowSet']:
-        team_id = int(item[3])
+        team_id = int_with_none(item[3])
         team_abbreviation = item[4]
-        pts_q1 = int(item[8])
-        pts_q2 = int(item[9])
-        pts_q3 = int(item[10])
-        pts_q4 = int(item[11])
-        pts_ot1 = int(item[12])
-        pts_ot2 = int(item[13])
-        pts_ot3 = int(item[14])
-        pts_ot4 = int(item[15])
-        pts_ot5 = int(item[16])
-        pts_ot6 = int(item[17])
-        pts_ot7 = int(item[18])
-        pts_ot8 = int(item[19])
-        pts_total = int(item[22])
+        pts_q1 = int_with_none(item[8])
+        pts_q2 = int_with_none(item[9])
+        pts_q3 = int_with_none(item[10])
+        pts_q4 = int_with_none(item[11])
+        pts_ot1 = int_with_none(item[12])
+        pts_ot2 = int_with_none(item[13])
+        pts_ot3 = int_with_none(item[14])
+        pts_ot4 = int_with_none(item[15])
+        pts_ot5 = int_with_none(item[16])
+        pts_ot6 = int_with_none(item[17])
+        pts_ot7 = int_with_none(item[18])
+        pts_ot8 = int_with_none(item[19])
+        pts_total = int_with_none(item[22])
 
         linescore_team = 'linescore_undefined_team'
         # if current team is home team
