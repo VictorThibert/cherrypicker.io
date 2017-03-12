@@ -81,7 +81,7 @@ for json_page in returned_tasks:
             # condition: on player id
             {'player_id':player_id}, 
             # insert the following document (using $set to add new fields without deleting existing fields)
-            { "$set":
+            { '$set':
                 {
                     'birth_date':birth_date,
                     'school':school,
