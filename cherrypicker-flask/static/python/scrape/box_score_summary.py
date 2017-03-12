@@ -37,7 +37,7 @@ def generate_game_ids(leading_from_year, leading_to_year):
 
 url = 'http://stats.nba.com/stats/boxscoresummaryv2/?LeagueID=00&GameID='
 
-# temporary test with 2014-2015(1230 games)
+# temporary test with 2014-2015(1230 games) -----------------------------------------------------------
 game_id_list = generate_game_ids(2014,2014)
 
 # temporary container variable to extract the result from async request (find a better way to do this)
@@ -57,7 +57,7 @@ games = mongo_helper.db.games
 for json_page in returned_tasks:
 
     # result set [0] is GameSummary
-    item = json_page['resultSets'][0]['rowSet'][0]:
+    item = json_page['resultSets'][0]['rowSet'][0]
     game_date = item[0]
     game_id = int(item[2])
     game_status_id = int(item[3])
@@ -166,7 +166,7 @@ for json_page in returned_tasks:
             {'game_id':game_id},
             { '$set':
                 {
-                    linescore: {
+                    linescore_team: {
                         'team_id':team_id,
                         'team_abbreviation':team_abbreviation,
                         'pts_q1':pts_q1,
