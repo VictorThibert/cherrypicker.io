@@ -7,7 +7,8 @@ import aiohttp
 
 # set proper headers to allow scraping from stats.nba.com 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'}
-batch_size = 1000
+batch_size = 1232
+timeout = 60 * 20
 
 async def run(player_id_list, url_prefix, memo):
     tasks = []
@@ -28,9 +29,10 @@ async def run(player_id_list, url_prefix, memo):
 
 async def fetch_page(session, url):
     print('Fetching: ' + url)
-    async with session.get(url, headers=headers) as response:
+    async with session.get(url, headers=headers, timeout=timeout) as response:
         return await response.json()
 
 async def bounded_fetch_page(session, url, semaphore):
-    async with semaphore:
-        return await fetch_page(session, url)
+    with aiohttp.Timeout(timeout):
+        async with semaphore:
+            return await fetch_page(session, url)

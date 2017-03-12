@@ -43,7 +43,7 @@ def int_with_none(x):
 url = 'http://stats.nba.com/stats/boxscoresummaryv2/?LeagueID=00&GameID='
 
 # temporary test with 2014-2015(1230 games) -----------------------------------------------------------
-game_id_list = generate_game_ids(2000,2016)
+game_id_list = generate_game_ids(1999,1999)
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
@@ -64,7 +64,7 @@ for json_page in returned_tasks:
     # result set [0] is GameSummary
     item = json_page['resultSets'][0]['rowSet'][0]
     game_date = item[0]
-    game_id = item[2]
+    game_id = item[2] # note, keep it in string format
     game_status_id = int_with_none(item[3])
     home_team_id = int_with_none(item[6])
     visitor_team_id = int_with_none(item[7])
