@@ -43,7 +43,7 @@ def int_with_none(x):
 url = 'http://stats.nba.com/stats/boxscoresummaryv2/?LeagueID=00&GameID='
 
 # temporary test with 2014-2015(1230 games) -----------------------------------------------------------
-game_id_list = generate_game_ids(1970,1979)
+game_id_list = generate_game_ids(1979,1979)
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
