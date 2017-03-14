@@ -22,17 +22,19 @@ p.percentage {
 }
 
 body {
-	/* 	background: #2989d8; ld browsers 
-		background: -moz-linear-gradient(-45deg,  #2989d8 39%, #2271ad 100%); 
-		background: -webkit-linear-gradient(-45deg,  #2989d8 39%,#2271ad 100%); 
-		background: linear-gradient(135deg,  #2989d8 39%,#2271ad 100%); /
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', endColorstr='#2271ad',GradientType=1 ); 
-	 */
-	background-image: url(../graphics/background.jpg);
-	-webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+ 	background: #7d9ec7; ld browsers 
+	background: -moz-linear-gradient(-45deg,  #7d9ec7 40%, #2271ad 100%); 
+	background: -webkit-linear-gradient(-45deg,  #7d9ec7 40%,#2271ad 100%); 
+	background: linear-gradient(120deg,  #7d9ec7 40%,#77609c 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d9ec7', endColorstr='#2271ad',GradientType=1 );
+ 
+	/*
+		background-image: url(../graphics/background.jpg);
+		-webkit-background-size: cover;
+ 		-moz-background-size: cover;
+  		-o-background-size: cover;
+  		background-size: cover;
+  	*/
 	font-family: 'proxima-nova', sans-serif;
 }
 
@@ -97,7 +99,7 @@ h1 {
 	max-width: 1100px;
 	border-top: 20px;
 	border-bottom: 20px;
-	margin-top:20px;
+	margin-top:42px;
 	margin-bottom: 20px;
 	min-width: 1100px;
 	margin-left: auto;
@@ -131,7 +133,7 @@ h1 {
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 3px;
-	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.1);
+	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.05);
 }
 
 #row0{
