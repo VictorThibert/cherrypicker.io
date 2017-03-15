@@ -1,4 +1,4 @@
-# scrape all box score (async)
+# scrape all box score summary (async)
 #
 # see:      github.com/seemethere/nba_py/wiki/stats.nba.com-Endpoint-Documentation for complete endpoint documention
 # format:   stats.nba.com/stats/{endpoint}/?{params}
@@ -43,7 +43,7 @@ def int_with_none(x):
 url = 'http://stats.nba.com/stats/boxscoresummaryv2/?LeagueID=00&GameID='
 
 # temporary test with 2014-2015(1230 games) -----------------------------------------------------------
-game_id_list = generate_game_ids(1973,1974)
+game_id_list = generate_game_ids(1960,1964)
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
@@ -191,7 +191,5 @@ for json_page in returned_tasks:
                 }
             }, 
             upsert=True)
-
-
 
 mongo_helper.client.close()
