@@ -87,7 +87,7 @@ for json_page in returned_tasks:
         upsert=True)
 
     # result set [1] is OtherStats. then [0] is first team and [1] is second team
-    for item in json_page['resultSets'][1]['rowSet']:
+    for item in json_page['resultSets'][1]['rowSet']: # only two elements in rowSet, one for both teams
         team_id = int_with_none(item[1])
         team_abbreviation = item[2]
         pts_paint = int_with_none(item[4])
