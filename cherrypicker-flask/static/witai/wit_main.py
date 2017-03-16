@@ -1,19 +1,19 @@
 import sys
 from wit import Wit
 
-#------------------------------------------------------
+# server token: HVAI5NNFRSFNWCDR7U3U4KBDS4FBDM25
 
+# make sure running the script with the correct parameters
 if len(sys.argv) != 2:
     print('usage: python ' + sys.argv[0] + ' <wit-token>')
     sys.exit(1)
 access_token = sys.argv[1]
 
-#------------------------------------------------------
-
+# send request
 def send(request, response):
     print(response['text'])
 
-#finds the entity's value among the entities of the request (e.g. for entity 'characteristic', the value could be height, age, etc.) 
+# finds the entity's value among the entities of the request (e.g. for entity 'characteristic', the value could be height, age, etc.) 
 def first_entity_value(entities, entity):
     if entity not in entities:
         return None
@@ -22,10 +22,10 @@ def first_entity_value(entities, entity):
         return None
     return value['value'] if isinstance(value, dict) else value
 
-#------------------------------------------------------
-#custom functions
-
+# for basic age / weight / height
 def get_characteristic(request):
+    # request contains a json witai request with all the parameters and likelihoods
+    
     context = {} #clear context because no need to memory right now
     entities = request['entities']
 
@@ -46,6 +46,7 @@ def get_characteristic(request):
 
     return context
 
+# for points and stuff
 def generate_query(request):
     context = {}
     entities = request['entities']
@@ -61,7 +62,6 @@ def generate_query(request):
             context['points'] = '30,000 points'
         elif stat == 'assists':
             context['assists'] = '10,000 assists'
-        elif stat == 'rebounds'
     else:
         if stat == 'points':
             context['points'] = '30,000 points in 10 years'
