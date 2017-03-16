@@ -1,17 +1,21 @@
 from flask import Flask, request, send_from_directory, redirect
 from blueprints.blueprints import all_blueprints
 from flask.ext.pymongo import PyMongo
+from flask_cors import CORS, cross_origin
 
-#set the project root directory as the static folder, you can set others.
+# set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='/static')
+# allows cross origin requests
+CORS(app)
 mongo = PyMongo(app)
 
-#remaps base url / to /static/index.html
+# remaps base url / to /static/index.html
 @app.route('/')
 def home_page():
 	return redirect('/static/index.html')
 
-#register all blueprints (grouped up set of routes (requests))
+
+# register all blueprints (grouped up set of routes (requests))
 for blueprint in all_blueprints:
 	app.register_blueprint(blueprint)
 
