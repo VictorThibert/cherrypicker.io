@@ -16,7 +16,7 @@ witai_blueprint = Blueprint('witai', __name__, url_prefix='/witai')
 def test():
 	return redirect('/static/witai_test.html')
 
-@witai_blueprint.route('/test/askQuery')
+@witai_blueprint.route('/test/ask_query')
 def ask_query():
     query = request.args.get('query', 0, type=str)
     print(query)
