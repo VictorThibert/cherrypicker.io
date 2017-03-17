@@ -1,7 +1,5 @@
 # async http request helper file
 
-# to write: batch function
-
 import asyncio
 import aiohttp
 
@@ -27,6 +25,17 @@ async def run(player_id_list, url_prefix, memo):
         responses = await asyncio.gather(*tasks, return_exceptions=True)
         memo[0] = list(responses)
         return 
+
+async def run_url(url_list, memo):
+    tasks = []
+    semaphore = asyncio.Semaphore(batch_size)
+    with aiohttp.ClientSession() as session:
+        for url in url_list:
+            task = asyncio.ensure_future(bounded_fetch_page(session, url, semaphore))
+            tasks.append(task)
+    responses = await asyncio.gather(*tasks, return_exceptions=True)
+    memo[0] = list(responses)
+    return
 
 async def fetch_page(session, url):
     print('Fetching: ' + url)
