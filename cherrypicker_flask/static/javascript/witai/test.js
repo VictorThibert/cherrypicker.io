@@ -9,7 +9,7 @@ function askQuery(){
 		// paramater arguments to pass
 		'query': query_text,
 	}, function(data) {
-		console.log(data);
+		document.getElementById('answer').innerHTML = data;
 	});
 }
 

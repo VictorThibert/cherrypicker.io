@@ -6,9 +6,6 @@ from datetime import timedelta
 from flask import make_response, request, current_app
 from functools import update_wrapper
 
-# relative path
-# from ..static.witai import query_mongo
-
 # temporary import measure
 sys.path.append('..')
 from static.witai import query_mongo
