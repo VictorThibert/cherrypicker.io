@@ -8,14 +8,14 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0)
 batch_size = 2000
 timeout = 60 * 10000
 
-async def run(player_id_list, url_prefix, memo):
+async def run(item_list, url_prefix, memo):
     tasks = []
 
     # semaphore to process batch sizes of n (don't go over 1000)
     semaphore = asyncio.Semaphore(batch_size)
 
     with aiohttp.ClientSession() as session:
-        for element in player_id_list:
+        for element in item_list:
             url = url_prefix + str(element)
             task = asyncio.ensure_future(bounded_fetch_page(session, url, semaphore))
             tasks.append(task)

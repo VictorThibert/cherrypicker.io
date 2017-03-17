@@ -29,7 +29,7 @@ url = 'http://stats.nba.com/stats/commonplayerinfo/?PlayerID='
 players = mongo_helper.db.players
 
 # the find result referes to a cursor, which needs to be closed. save it into a list first and extract just the player ids
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':2544},{'_id':0, 'player_id':1}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':2544}))]
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
