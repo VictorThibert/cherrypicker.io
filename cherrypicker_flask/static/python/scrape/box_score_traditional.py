@@ -39,7 +39,7 @@ url = 'http://stats.nba.com/stats/boxscoretraditionalv2/?LeagueID=00&StartPeriod
 games = mongo_helper.db.games
 
 # the find result referes to a cursor, which needs to be closed. save it into a list first and extract just the player ids
-game_id_list = [game['game_id'] for game in list(games.find({'game_id':'0021400055'}))]
+game_id_list = [game['game_id'] for game in list(games.find({'season_year':{'$in':[2010, 1946]}}))]
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]

@@ -32,7 +32,7 @@ def int_with_none(x):
 games = mongo_helper.db.games
 players = mongo_helper.db.players
 
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':1627763}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':2544}))]
 
 url_list = []
 for player_id in player_id_list:
@@ -77,7 +77,7 @@ for json_page in returned_tasks:
                 {
                     'game_log': {  
                                     'game_id':game_id, 
-                                    'game_date':player_id, 
+                                    'game_date':game_date, 
                                     'box_score_object_id':bson.ObjectId(object_id), 
                                     'wl':wl 
                                 }
