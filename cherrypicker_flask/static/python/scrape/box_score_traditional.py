@@ -96,7 +96,7 @@ for json_page in returned_tasks:
         games.update_one(
             # condition: on player id
             {'game_id':game_id}, 
-            # $addToSet pushes to array if element is new (upserts by default if field nonexistent yet)
+            # $addToSet pushes to array if element is new (upserts by default if field nonexistent)
             { '$addToSet':
                 {
                     'box_score': {  '_id': bson.ObjectId(object_id),
@@ -125,9 +125,7 @@ for json_page in returned_tasks:
                                     'plus_minus':plus_minus,
                                     'is_at_home': is_at_home
                                 }
-
                 }
-
             })
     # for the two team stats
     for item in json_page['resultSets'][1]['rowSet']:
