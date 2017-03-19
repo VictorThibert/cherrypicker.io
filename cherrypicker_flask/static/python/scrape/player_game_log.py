@@ -5,11 +5,14 @@
 # example:  http://stats.nba.com/stats/playergamelog/?SeasonType=Regular%20Season&Season=2014-15&PlayerID=2544
 #
 # returns a list of traditonal statlines for a year for a player 
+# doesn't scrape the data for the statlines but rather links players to existing boxscore items located in the games collection
 
 import requests
 import mongo_helper
 import asyncio
 import async_helper
+import bson
+import dateutil.parser as parser
 
 def format_year(year):
     year1 = str(year)
@@ -19,6 +22,11 @@ def format_year(year):
 def format_url(player_id, year):
     return 'http://stats.nba.com/stats/playergamelog/?SeasonType=Regular+Season&Season='+ year +'&PlayerID=' + str(player_id)
 
+def int_with_none(x):
+    if str(x).isdigit():
+        return int(x)
+    else:
+        return 0
 
 # refers to the respective mongo collections
 games = mongo_helper.db.games
@@ -48,6 +56,30 @@ loop.run_until_complete(future)
 returned_tasks = memo[0]
 
 
+for json_page in returned_tasks:
+    all_games = json_page['resultSets'][0]['rowSet']
+
+    for game in all_games:
+        player_id = int_with_none(game[1])
+        game_id = game[2]
+        game_date = game[3]
+        game_date = (parser.parse(game_date))
+        game_date = str(game_date.isoformat())
+        wl = game[5]
+        object_id = game_id + str('000000' + str(player_id))[-6:] + '00000000'
 
 
-
+        players.update_one(
+            # condition to correct player and ensure game not already in gamelog
+            {'player_id':player_id, 'game_log.game_id':{'$ne':game_id}}, 
+            # $addToSet pushes to array if element is new (upserts by default if field for the array doesn't exist yet)
+            { '$addToSet':
+                {
+                    'game_log': {  
+                                    'game_id':game_id, 
+                                    'game_date':player_id, 
+                                    'box_score_object_id':bson.ObjectId(object_id), 
+                                    'wl':wl 
+                                }
+                }
+            })

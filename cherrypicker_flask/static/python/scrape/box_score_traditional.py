@@ -39,7 +39,7 @@ url = 'http://stats.nba.com/stats/boxscoretraditionalv2/?LeagueID=00&StartPeriod
 games = mongo_helper.db.games
 
 # the find result referes to a cursor, which needs to be closed. save it into a list first and extract just the player ids
-game_id_list = [game['game_id'] for game in list(games.find({'season_year':{'$gte':2010, '$lte':2016}}))]
+game_id_list = [game['game_id'] for game in list(games.find({'game_id':'0021400055'}))]
 
 # temporary container variable to extract the result from async request (find a better way to do this)
 memo = [None]
@@ -94,9 +94,9 @@ for json_page in returned_tasks:
         object_id = game_id +  str('000000' + str(player_id))[-6:] + '00000000'
 
         games.update_one(
-            # condition: on player id
-            {'game_id':game_id}, 
-            # $addToSet pushes to array if element is new (upserts by default if field nonexistent)
+            # condition: on player id and ensure that boxscore does not already exist
+            {'game_id':game_id, 'box_score.player_id':{'$ne':player_id}}, 
+            # $addToSet pushes to array if element is new (upserts by default if field nonexistent) (problem with checking equality on documents)
             { '$addToSet':
                 {
                     'box_score': {  '_id': bson.ObjectId(object_id),
