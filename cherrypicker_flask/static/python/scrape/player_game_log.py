@@ -24,7 +24,7 @@ def format_url(player_id, year):
 games = mongo_helper.db.games
 players = mongo_helper.db.players
 
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':2544}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':1627763}))]
 
 url_list = []
 for player_id in player_id_list:
@@ -38,6 +38,14 @@ for player_id in player_id_list:
     year_list = [format_year(x) for x in range(*player_years)]
     for year in year_list:
         url_list.append(format_url(player_id, year))
+
+# temporary container variable to extract the result from async request (find a better way to do this)
+memo = [None]
+loop = asyncio.get_event_loop()
+future = asyncio.ensure_future(async_helper.run_url(url_list, memo))
+loop.run_until_complete(future)
+# returned_tasks will contain the each json file for each player's http request 
+returned_tasks = memo[0]
 
 
 
