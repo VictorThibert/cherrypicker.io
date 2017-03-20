@@ -2,9 +2,12 @@ import sys
 from wit import Wit
 from ..python.scrape import mongo_helper
 from wit.wit import WitError
+import dateutil.parser as parser
+
 # server token: HVAI5NNFRSFNWCDR7U3U4KBDS4FBDM25
 # client token: IRDFALXOU75Q4HBP2TYIDCSVV4LCMTFY
 players = mongo_helper.db.players
+games = mongo_helper.db.games
 
 # finds the entity's value among the entities of the request (e.g. for entity 'characteristic', the value could be height, age, etc.) 
 def first_entity_value(entities, entity):
@@ -32,22 +35,43 @@ access_token = 'IRDFALXOU75Q4HBP2TYIDCSVV4LCMTFY'
 actions = {}
 client = Wit(access_token=access_token, actions=actions)
 
+def parse_date(date_range):
+    # if no year is provided parser 'seems' to use current year
+    if 'from' in date_range:
+        date_range = date_range.split('from ',1)[1] # eliminates the from
+        date_range_from = date_range.split(' to ')[0]
+        date_range_from = (parser.parse(date_range_from)).isoformat()
+        date_range_to = date_range.split(' to ')[1]
+        date_range_to = (parser.parse(date_range_to)).isoformat()
+        return [date_range_from, date_range_to]
+    elif 'between' in date_range:
+        date_range = date_range.split('between ',1)[1] # eliminates the from
+        date_range_from = date_range.split(' and ')[0]
+        date_range_from = (parser.parse(date_range_from)).isoformat()
+        date_range_to = date_range.split(' and ')[1]
+        date_range_to = (parser.parse(date_range_to)).isoformat()
+        return [date_range_from, date_range_to]
+    else:
+        date = (parser.parse(date_range)).isoformat()
+        return [date]
+
 # run called from flask route
 def ask(query_string):
-    result = 'unknown query, sorry :('
     entities = None
 
-    default_year = 2016
+    # automate this part, hardcoded for testing purposes
+    current_year = 2016
+    current_month = 3
 
     try:
         wit_response = client.message(query_string)
         entities = wit_response['entities']
 
         if not entities:
-            return "noEntities: " + result
+            return 'noEntities'
 
     except WitError:
-        return "witError: " + result
+        return 'witError'
 
     # format of entities is like
     # {
@@ -60,18 +84,47 @@ def ask(query_string):
     print(entities)
 
     characteristic = first_entity_value(entities,'characteristic')
-    player = first_entity_metadata(entities, 'NBA_player') #extend this later for multiple players
-
     if characteristic == 'age':
         characteristic = 'birth_date'
 
-    if not player or not characteristic:
-        return result
+    player = first_entity_metadata(entities, 'NBA_player') #extend this later for multiple players
+    nba_stat = first_entity_value(entities, 'NBA_stat')
+    if not player:
+        return 'no player selected'
 
+    # not yet suited for multiple dates ranges (only works for first date_range argument)
+    date_range_1 = first_entity_value(entities, 'date_range')
+
+    query_dates = parse_date(date_range_1)
+
+    # [0] needed to retrieve form cursor
     result = list(players.find({'player_id':int(player)}))[0]
-    result = result[characteristic]
+    
+    game_log = result['game_log']
+    query_games = []
+    sum_of_stat = 0
+
+    print(query_dates)
+    for game in game_log:
+        date = game['game_date']
+        game_id = game['game_id']
+        
+        if date >= query_dates[0] and date <= query_dates[1]:
+            query_games.append(game_id)
+
+    box_scores = list(games.find({'game_id':{'$in':query_games}},{'box_score':1}))
+
+    for box_score in box_scores:
+        box_score = box_score['box_score']
+        for player_stat_line in box_score:
+            if str(player_stat_line['player_id']) == str(player):
+                sum_of_stat += player_stat_line[nba_stat]
 
 
+    if characteristic:
+        result = result[characteristic]
+
+    result = sum_of_stat
     return result
 
 mongo_helper.client.close()
