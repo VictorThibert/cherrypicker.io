@@ -51,6 +51,8 @@ def generate_query(request):
     context = {}
     entities = request['entities']
 
+    print('entities: ', entities)
+    print('--------------------------------------')
     stat = first_entity_value(entities,'NBA_stat')
     player = first_entity_value(entities, 'NBA_player')
     time_range = first_entity_value(entities, 'time_range')

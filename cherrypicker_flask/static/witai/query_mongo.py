@@ -37,14 +37,27 @@ def ask(query_string):
     result = 'unknown query, sorry :('
     entities = None
 
+    default_year = 2016
+
     try:
         wit_response = client.message(query_string)
         entities = wit_response['entities']
-    except WitError:
-        return result
 
-    if not entities:
-        return result
+        if not entities:
+            return "noEntities: " + result
+
+    except WitError:
+        return "witError: " + result
+
+    # format of entities is like
+    # {
+    #   'NBA_stat':[ {type: , value: , metadata: , confidence: ,}, {}, ...],
+    #   'NBA_player':[ {}, {}, ...],
+    #   'characteristic':[ {}, {}, ...],
+    #   ...
+    # }
+
+    print(entities)
 
     characteristic = first_entity_value(entities,'characteristic')
     player = first_entity_metadata(entities, 'NBA_player') #extend this later for multiple players
@@ -58,7 +71,6 @@ def ask(query_string):
     result = list(players.find({'player_id':int(player)}))[0]
     result = result[characteristic]
 
-    
 
     return result
 
