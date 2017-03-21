@@ -1,8 +1,13 @@
+# houses all the querying logic to wit.ai
+
 import sys
+sys.path.append('../') # temporary measure for ipython
+
 from wit import Wit
-from ..python.scrape import mongo_helper
+from python.scrape import mongo_helper
 from wit.wit import WitError
 import dateutil.parser as parser
+import calendar
 
 # server token: HVAI5NNFRSFNWCDR7U3U4KBDS4FBDM25
 # client token: IRDFALXOU75Q4HBP2TYIDCSVV4LCMTFY
@@ -30,14 +35,27 @@ def first_entity_metadata(entities, entity):
         return None
     return value['metadata'] if isinstance(value, dict) else value
 
-# witai setup
+def all_entities(entities, entity, key='value'):
+    if entity not in entities:
+        return None
+    
+    value_objects = entities[entity]
+    values = []
+    for value_object in value_objects:
+        values.append(value_object[key])
+    if values == []: # empty values
+        return None
+    return values
+
+
+# witai setup 
 access_token = 'IRDFALXOU75Q4HBP2TYIDCSVV4LCMTFY'
 actions = {}
 client = Wit(access_token=access_token, actions=actions)
 
 def parse_date(date_range):
     # if no year is provided parser 'seems' to use current year
-    if 'from' in date_range:
+    if 'from' in date_range: 
         date_range = date_range.split('from ',1)[1] # eliminates the from
         date_range_from = date_range.split(' to ')[0]
         date_range_from = (parser.parse(date_range_from)).isoformat()
@@ -51,25 +69,24 @@ def parse_date(date_range):
         date_range_to = date_range.split(' and ')[1]
         date_range_to = (parser.parse(date_range_to)).isoformat()
         return [date_range_from, date_range_to]
-    else:
+    else: # single date
         date = (parser.parse(date_range)).isoformat()
         return [date]
 
 # run called from flask route
 def ask(query_string):
-    entities = None
-
+    
     # automate this part, hardcoded for testing purposes
     current_year = 2016
     current_month = 3
 
+    entities = None
+
     try:
         wit_response = client.message(query_string)
         entities = wit_response['entities']
-
         if not entities:
             return 'noEntities'
-
     except WitError:
         return 'witError'
 
@@ -83,22 +100,32 @@ def ask(query_string):
 
     print('entities', entities)
 
+    # types of queries so far
+    # characteristic: weight, age, height, etc.
+    # nba_stat and date range (points, assists, rebounds)
+    #   sum
+    #   averages
+    #   games played
+
+    player_list = all_entities(entities, 'NBA_player', 'metadata')
+    player_1 = player_list[0]
+    print(player_list)
+    nba_stat = first_entity_value(entities, 'NBA_stat')
     characteristic = first_entity_value(entities,'characteristic')
+
     if characteristic == 'age':
         characteristic = 'birth_date'
 
-    player = first_entity_metadata(entities, 'NBA_player') #extend this later for multiple players
-    nba_stat = first_entity_value(entities, 'NBA_stat')
-    if not player:
+    
+    if not player_1:
         return 'no player selected'
 
     # not yet suited for multiple dates ranges (only works for first date_range argument)
     date_range_1 = first_entity_value(entities, 'date_range')
-
     query_dates = parse_date(date_range_1)
 
     # [0] needed to retrieve form cursor
-    result = list(players.find({'player_id':int(player)}))[0]
+    result = list(players.find({'player_id':int(player_1)}))[0]
     
     game_log = result['game_log']
     query_games = []
