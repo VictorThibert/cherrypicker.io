@@ -81,7 +81,7 @@ def ask(query_string):
     #   ...
     # }
 
-    print(entities)
+    print('entities', entities)
 
     characteristic = first_entity_value(entities,'characteristic')
     if characteristic == 'age':
@@ -124,6 +124,7 @@ def ask(query_string):
     if characteristic:
         result = result[characteristic]
 
+    # temporary, change
     result = sum_of_stat
     return result
 
