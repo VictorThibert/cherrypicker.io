@@ -1,7 +1,7 @@
 # houses all the querying logic to wit.ai
 
 import sys
-sys.path.append('../') # temporary measure for ipython
+sys.path.append('../') # temporary measure for ipython --------------
 
 from wit import Wit
 from python.scrape import mongo_helper
@@ -53,6 +53,23 @@ access_token = 'IRDFALXOU75Q4HBP2TYIDCSVV4LCMTFY'
 actions = {}
 client = Wit(access_token=access_token, actions=actions)
 
+def is_year_only(date_range):
+    date_range = date_range.strip()
+    return date_range.isdigit()
+
+def date_to_date_range(date):
+    date = date.strip()
+    custom_parser = parser.parser()
+    raw_date, skipped = custom_parser._parse(date)
+
+    date_info = {}
+    for attribute in ('day, month, year'):
+        value = getattr(raw_date, attribute, None)
+        if value is not None:
+            date_info[attribute] = value
+
+    return [None, None]
+
 def parse_date(date_range):
     # if no year is provided parser 'seems' to use current year
     if 'from' in date_range: 
@@ -69,9 +86,19 @@ def parse_date(date_range):
         date_range_to = date_range.split(' and ')[1]
         date_range_to = (parser.parse(date_range_to)).isoformat()
         return [date_range_from, date_range_to]
-    else: # single date
-        date = (parser.parse(date_range)).isoformat()
-        return [date]
+    else: # single date, single month, or single year
+        return date_to_date_range(date_range)
+
+        if is_year_only(date_range): # if it is a year, convert to beginning of year to end of year (CHANGE TO SEASON) ----------------
+            beginning_of_year = 'jan 1 '
+            end_of_year = 'dec 31 '
+            return [(parser.parse(beginning_of_year + date_range)).isoformat(), (parser.parse(end_of_year + date_range)).isoformat()]
+        elif is_month_without_day(date_range):
+            first_day_of_month = 1
+            last_day_of_month = 31
+            return []
+        else: # is exact date
+            return (parser.parse(date_range)).isoformat()
 
 # run called from flask route
 def ask(query_string):
@@ -144,7 +171,7 @@ def ask(query_string):
     for box_score in box_scores:
         box_score = box_score['box_score']
         for player_stat_line in box_score:
-            if str(player_stat_line['player_id']) == str(player):
+            if str(player_stat_line['player_id']) == str(player_1):
                 sum_of_stat += player_stat_line[nba_stat]
 
 
