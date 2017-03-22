@@ -21,7 +21,7 @@ team_blueprint = Blueprint('team', __name__, url_prefix='/team')
 @team_blueprint.route('/<team_id>')
 def blank_team(team_id):
 	print(team_id)
-	return send_from_directory('/static/html', 'team.html')
+	return send_from_directory('static/html', 'team.html')
 
 
 

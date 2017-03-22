@@ -5,8 +5,8 @@ var tempSelectedPlayers;
 var rosterTooltip;
 var $parent;
 
-
-$.getJSON("../data/2014-2015rosters.json", function(data) {
+// data folder is to be deprecated soon
+$.getJSON("./static/data/2014-2015rosters.json", function(data) {
     jqxhr = data;
 });
 

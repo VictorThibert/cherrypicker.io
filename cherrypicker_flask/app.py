@@ -11,7 +11,7 @@ CORS(app)
 # remaps base url / to /static/index.html
 @app.route('/')
 def home_page():
-	return send_file('static/html/index.html')
+	return send_from_directory('static/html', 'index.html')
 
 # register all blueprints (grouped up set of routes (requests))
 for blueprint in all_blueprints:

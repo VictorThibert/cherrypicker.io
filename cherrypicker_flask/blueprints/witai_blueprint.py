@@ -1,7 +1,7 @@
 import sys
 import flask
 from flask import Blueprint
-from flask import Flask, request, send_from_directory, redirect, jsonify
+from flask import Flask, request, send_from_directory, redirect, jsonify, send_file
 from datetime import timedelta
 from flask import make_response, request, current_app
 from functools import update_wrapper
@@ -19,8 +19,7 @@ witai_blueprint = Blueprint('witai', __name__, url_prefix='/witai')
 # temporary 
 @witai_blueprint.route('/test')
 def test():
-	print("hello------------------")
-	return send_from_directory('/static/html/', 'witai_test.html')
+	return send_from_directory('static/html/', 'witai_test.html')
 
 @witai_blueprint.route('/test/ask_query')
 def ask_query():
