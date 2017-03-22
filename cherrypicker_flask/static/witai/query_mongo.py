@@ -1,10 +1,10 @@
 # houses all the querying logic to wit.ai
 
 import sys
-sys.path.append('../') # temporary measure for ipython --------------
+#sys.path.append('../') # temporary measure for ipython --------------
 
 from wit import Wit
-from python.scrape import mongo_helper
+from ..python.scrape import mongo_helper
 from wit.wit import WitError
 import dateutil.parser as parser
 import calendar
@@ -58,17 +58,30 @@ def is_year_only(date_range):
     return date_range.isdigit()
 
 def date_to_date_range(date):
-    date = date.strip()
     custom_parser = parser.parser()
     raw_date, skipped = custom_parser._parse(date)
 
     date_info = {}
-    for attribute in ('day, month, year'):
+    for attribute in ('day', 'month', 'year'):
         value = getattr(raw_date, attribute, None)
         if value is not None:
             date_info[attribute] = value
 
-    return [None, None]
+    from_date = None
+    to_date = None
+
+    if 'day' in date_info.keys(): # if day is present
+        from_date = parser.parse(date)
+        to_date = from_date
+    elif 'month' in date_info.keys(): # month but no day
+        date_time = parser.parse(date)
+        from_date = date_time.replace(day=1)
+        to_date = date_time.replace(day=calendar.monthrange(date_time.year, date_time.month)[1]) # monthrange used to determine last day of the month
+    else: # year only
+        date_time = parser.parse(date)
+        from_date = date_time.replace(day = 1, month = 10, year = date_time.year - 1)  # replace these dates with start and end of nba seasons
+        to_date = date_time.replace(day = 1, month = 5)
+    return [from_date.isoformat(), to_date.isoformat()]
 
 def parse_date(date_range):
     # if no year is provided parser 'seems' to use current year
@@ -89,16 +102,6 @@ def parse_date(date_range):
     else: # single date, single month, or single year
         return date_to_date_range(date_range)
 
-        if is_year_only(date_range): # if it is a year, convert to beginning of year to end of year (CHANGE TO SEASON) ----------------
-            beginning_of_year = 'jan 1 '
-            end_of_year = 'dec 31 '
-            return [(parser.parse(beginning_of_year + date_range)).isoformat(), (parser.parse(end_of_year + date_range)).isoformat()]
-        elif is_month_without_day(date_range):
-            first_day_of_month = 1
-            last_day_of_month = 31
-            return []
-        else: # is exact date
-            return (parser.parse(date_range)).isoformat()
 
 # run called from flask route
 def ask(query_string):
