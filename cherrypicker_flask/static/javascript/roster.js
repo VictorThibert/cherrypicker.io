@@ -6,7 +6,7 @@ var rosterTooltip;
 var $parent;
 
 
-$.getJSON("../static/data/2014-2015rosters.json", function(data) {
+$.getJSON("../data/2014-2015rosters.json", function(data) {
     jqxhr = data;
 });
 

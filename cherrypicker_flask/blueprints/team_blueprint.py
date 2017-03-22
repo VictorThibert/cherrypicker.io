@@ -11,21 +11,24 @@ sys.path.append('..')
 from data.witai import query_mongo
 sys.path.append('blueprints')
 
+
 # see: http://flask.pocoo.org/docs/0.12/patterns/jquery/
 
 #url prefix for all witai related functions
-witai_blueprint = Blueprint('witai', __name__, url_prefix='/witai')
+team_blueprint = Blueprint('team', __name__, url_prefix='/team')
 
 # temporary 
-@witai_blueprint.route('/test')
-def test():
-	print("hello------------------")
-	return send_from_directory('/static/html/', 'witai_test.html')
+@team_blueprint.route('/<team_id>')
+def blank_team(team_id):
+	print(team_id)
+	return send_from_directory('/static/html', 'team.html')
 
-@witai_blueprint.route('/test/ask_query')
-def ask_query():
-    query = request.args.get('query', 0, type=str)
-    response = query_mongo.ask(query)
-    return jsonify(response)
+
+
+
+@team_blueprint.route('/<team_id>/json')
+def send_team_json(team_id):
+	return 'test'
+    
 
 #under add routes

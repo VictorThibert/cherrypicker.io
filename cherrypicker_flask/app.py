@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory, redirect
+from flask import Flask, request, send_from_directory, redirect, send_file
 from blueprints.blueprints import all_blueprints
 from flask_pymongo import PyMongo
 from flask_cors import CORS, cross_origin
@@ -11,8 +11,7 @@ CORS(app)
 # remaps base url / to /static/index.html
 @app.route('/')
 def home_page():
-	return redirect('/static/index.html')
-
+	return send_file('static/html/index.html')
 
 # register all blueprints (grouped up set of routes (requests))
 for blueprint in all_blueprints:

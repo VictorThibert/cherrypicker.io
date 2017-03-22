@@ -4,7 +4,7 @@ import sys
 #sys.path.append('../') # temporary measure for ipython -------------- (and remove .. from python.scrape)
 
 from wit import Wit
-from ..python.scrape import mongo_helper
+from ..scrape import mongo_helper
 from wit.wit import WitError
 import dateutil.parser as parser
 import calendar
@@ -169,7 +169,7 @@ def ask(query_string):
                 
                 if date >= query_dates[0] and date <= query_dates[1]:
                     query_games.append(game_id)
-
+                    
             box_scores = list(games.find({'box_score.player_id':int(player_1),'game_id':{'$in':query_games}},{'box_score.$':1, '_id':0}))
 
             for box_score in box_scores:

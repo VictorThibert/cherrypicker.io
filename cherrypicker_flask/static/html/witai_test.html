@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html> 
+	<head>  
+		<meta charset="UTF-8">
+		
+		<!-- FAVICON AND TITLE-->
+		<link rel="icon" href="./graphics/logo-coloured.png" sizes="16x16">
+		<title>Witai Test</title>
+ 
+		<!-- LIBRARIES-->
+		<script src="../javascript/libs/d3/d3.v3.min.js"></script>
+		<script src="../javascript/libs/jquery-3.1.0.js"></script>
+		<script src="../javascript/libs/bootstrap.min.js"></script>
+		<script src="../javascript/witai/test.js"></script>
+
+		<!-- STYLESHEETS-->
+		<link rel="stylesheet" type="text/css" href="./css/mainpage.css">
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+
+
+	</head>
+	<body style="background:#92a6d0">
+		
+		<div id = "main-container" style = "margin-top:100px">	
+			<div id = "row">
+				<div class ="container-card" style="width:1000px;height:250px;">
+					<div class="form-group">	
+					  	<div style="margin-top:5px;" class="form-group">				
+						  <input type="text" id="text"class="form-control" id="usr" onkeydown="isEnter(this)">
+						</div>
+					  	<div style="margin-top:3px;"><button type="button" class="btn btn-primary btn-block" onclick="askQuery();">Ask</button></div>
+					  	<h1 style="text-align:center" id="answer">Answer</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

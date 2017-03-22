@@ -5,52 +5,52 @@
 		<meta HTTP-EQUIV="X-UA-COMPATIBLE" CONTENT="IE=EmulateIE9" >
 		
 		<!-- FAVICON AND TITLE-->
-		<link rel="icon" href="./graphics/logo-coloured.png" sizes="16x16">
+		<link rel="icon" href="./static/graphics/logo-coloured.png" sizes="16x16">
 		<title>Cherrypicker</title>
  
 		<!-- LIBRARIES-->
-		<script src="./javascript/libs/d3/d3.v3.min.js"></script>
-		<script src="./javascript/libs/jquery-3.1.0.js"></script>
-		<script src="./javascript/libs/bootstrap.min.js"></script>
-		<script src="./javascript/libs/material.min.js"></script>
-		<script src="./javascript/libs/moment.js"></script>
-		<script src="./javascript/libs/calendar-heatmap.js"></script>
-		<script src="./javascript/libs/select2/select2.js"></script>
-		<script src="./javascript/libs/select2/select3.js"></script>
-    	<script src="./javascript/autocomplete.js"></script>
-		<script src="./javascript/sylvester.js"></script>
+		<script src="./static/javascript/libs/d3/d3.v3.min.js"></script>
+		<script src="./static/javascript/libs/jquery-3.1.0.js"></script>
+		<script src="./static/javascript/libs/bootstrap.min.js"></script>
+		<script src="./static/javascript/libs/material.min.js"></script>
+		<script src="./static/javascript/libs/moment.js"></script>
+		<script src="./static/javascript/libs/calendar-heatmap.js"></script>
+		<script src="./static/javascript/libs/select2/select2.js"></script>
+		<script src="./static/javascript/libs/select2/select3.js"></script>
+    	<script src="./static/javascript/autocomplete.js"></script>
+		<script src="./static/javascript/sylvester.js"></script>
 		
 		<!-- javascript-->
-		<script src="./javascript/roster.js"></script>  <!--keep roster.js high up for asyn loading of json-->
-		<script src="./javascript/calendar.js"></script>
-		<script src="./javascript/parallelcoordinates.js"></script>
-		<script src="./javascript/d3.parcoords.js"></script>
-		<script src="./javascript/divgrid.js"></script>
-		<script src="./javascript/nouislider.js"></script>
-		<script src="./javascript/hexbin.js"></script>
-		<script src="./javascript/shotchart.js"></script>
-		<script src="./javascript/boxplot.js"></script>
-		<script src="./javascript/box.js"></script>
-		<script src="./javascript/scatterplot.js"></script>
+		<script src="./static/javascript/roster.js"></script>  <!--keep roster.js high up for asyn loading of json-->
+		<script src="./static/javascript/calendar.js"></script>
+		<script src="./static/javascript/parallelcoordinates.js"></script>
+		<script src="./static/javascript/d3.parcoords.js"></script>
+		<script src="./static/javascript/divgrid.js"></script>
+		<script src="./static/javascript/nouislider.js"></script>
+		<script src="./static/javascript/hexbin.js"></script>
+		<script src="./static/javascript/shotchart.js"></script>
+		<script src="./static/javascript/boxplot.js"></script>
+		<script src="./static/javascript/box.js"></script>
+		<script src="./static/javascript/scatterplot.js"></script>
 		
 		<!-- STYLESHEETS-->
-		<link rel="stylesheet" type="text/css" href="./javascript/libs/select2/select2.css">
-		<link rel="stylesheet" type="text/css" href="./javascript/libs/select2/select3.css">
-		<link rel="stylesheet" type="text/css" href="./css/mainpage.css">
-		<link rel="stylesheet" type="text/css" href="./css/boxplot.css">
-		<link rel="stylesheet" type="text/css" href="./css/table.css">
-		<link rel="stylesheet" type="text/css" href="./css/shotchart.css">
-		<link rel="stylesheet" type="text/css" href="./css/calendar.css">
-		<link rel="stylesheet" type="text/css" href="./css/d3.parcoords.css">
-		<link rel="stylesheet" type="text/css" href="./css/nouislider.css">
-		<link rel="stylesheet" type="text/css" href="./css/calendar-heatmap.css">
+		<link rel="stylesheet" type="text/css" href="./static/javascript/libs/select2/select2.css">
+		<link rel="stylesheet" type="text/css" href="./static/javascript/libs/select2/select3.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/mainpage.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/boxplot.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/table.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/shotchart.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/calendar.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/d3.parcoords.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/nouislider.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/calendar-heatmap.css">
 
 	</head>
 	<body>
 		
 		<div id ="topbar">
 			<a href="">
-			<img id="title" src="./graphics/Title1.png"  style="height:35px;" hspace="5">
+			<img id="title" src="./static/graphics/Title1.png"  style="height:35px;" hspace="5">
 			</a>
 			<div id="search">
 					<select id="teamBox" style="width:250px">
@@ -102,7 +102,7 @@
 	
 		<div id = "main-container">
 			<div class="container-card" id ="row0">
-				<img id ="teamlogo" src="./graphics/logos/38.jpg" style="width:40px;height:40px">
+				<img id ="teamlogo" src="./static/graphics/logos/38.jpg" style="width:40px;height:40px">
 				<div class="card-elem" id = "teamName">
 					Boston Celtics
 				</div>
@@ -439,7 +439,7 @@
 			
 		function changeTeamLogo(team) {
 			var img = document.getElementById("teamlogo");
-			img.src = "./graphics/logos/" + team + ".jpg";
+			img.src = "./static/graphics/logos/" + team + ".jpg";
 		}
 			
 		//doesn't trigger a hash change
