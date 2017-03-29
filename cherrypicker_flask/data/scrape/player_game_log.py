@@ -32,7 +32,7 @@ def int_with_none(x):
 games = mongo_helper.db.games
 players = mongo_helper.db.players
 
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':78001, '$lte':79998000}}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':100001, '$lte':79998000}}))]
 
 url_list = []
 for player_id in player_id_list:
