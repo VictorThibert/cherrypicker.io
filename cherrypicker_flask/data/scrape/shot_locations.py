@@ -33,6 +33,30 @@ def int_with_none(x):
     else:
         return 0
 
+def populate_names(player_id_list):
+    for player_id in player_id_list:
+        # make sure that player doesn't already exist in db. this is a temporary measure to avoid duplicates in testing ---------
+        if len(list(player_shots.find({'player_id':player_id}))) < 1:
+            for game_object in list(players.find({'player_id':player_id}))[0]['game_log']:
+                game_id = game_object['game_id']
+
+                player_shots.update_one(
+                    {
+                        'player_id':player_id, 
+                    },
+                    {
+                        '$addToSet':
+                        {
+                            'games':
+                                {
+                                    'game_id':game_id, 
+                                    'shots':[]
+                                }
+                        }
+                    },
+                    upsert=True
+                )
+
 url =   'http://stats.nba.com/stats/shotchartdetail?' \
         '&ContextMeasure=FGA' \
         '&DateFrom=' \
@@ -71,27 +95,7 @@ players = mongo_helper.db.players
 games = mongo_helper.db.games
 
 player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':1627763, '$lte':1627763}}))]
-
-for player_id in player_id_list:
-    for game_object in list(players.find({'player_id':player_id}))[0]['game_log']:
-        game_id = game_object['game_id']
-
-        player_shots.update_one(
-            {
-                'player_id':player_id,
-            },
-            {
-                '$addToSet':
-                {
-                    'games':
-                        {
-                            'game_id':game_id, 
-                            'shots':[]
-                        }
-                }
-            },
-            upsert=True
-        )
+populate_names(player_id_list)
 
 url_list = []
 
@@ -137,12 +141,10 @@ for json_page in returned_tasks:
         shot_made = shot[20]
         game_date = str((parser.parse(shot[21])).isoformat())
 
-        # temporar
-
-        player_shots.update_many(
-            # condition on correct player TODO: prevent duplicate addition
-            {'player_id':player_id, 'games.game_id':game_id},
-            {'$push':
+        player_shots.update_one(
+            # condition on correct player TODO: prevent duplicate addition with $ne
+            {'player_id':player_id, 'games.game_id':game_id, 'games.shots.game_event_id':{'$ne':game_event_id}},
+            {'$addToSet':
                 {'games.$.shots':
                     {   
                         'game_id':game_id,
