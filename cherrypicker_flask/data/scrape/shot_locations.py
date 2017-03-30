@@ -94,7 +94,7 @@ player_shots = mongo_helper.db.player_shots
 players = mongo_helper.db.players
 games = mongo_helper.db.games
 
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':1627763, '$lte':1627763}}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':301, '$lte':400}}))]
 populate_names(player_id_list)
 
 url_list = []
@@ -118,8 +118,11 @@ future = asyncio.ensure_future(async_helper.run_url(url_list, memo))
 loop.run_until_complete(future)
 # returned_tasks will contain the each json file for each player's http request 
 returned_tasks = memo[0]
+
+print("-------------Mongo Entry-------------")
         
 for json_page in returned_tasks:
+    print(json_page['parameters']['PlayerID'], json_page['parameters']['Season'] )
     all_shots = json_page['resultSets'][0]['rowSet']
 
     for shot in all_shots:
