@@ -13,6 +13,11 @@ CORS(app)
 def home_page():
 	return send_from_directory('static/html', 'index.html')
 
+# for testing purposes for react 
+@app.route('/react')
+def react_page():
+	return send_from_directory('static/html', 'react.html')
+
 # register all blueprints (grouped up set of routes (requests))
 for blueprint in all_blueprints:
 	app.register_blueprint(blueprint)
