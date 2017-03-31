@@ -83,3 +83,5 @@ for json_page in returned_tasks:
                                 }
                 }
             })
+
+mongo_helper.client.close()

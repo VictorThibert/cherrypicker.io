@@ -94,7 +94,7 @@ player_shots = mongo_helper.db.player_shots
 players = mongo_helper.db.players
 games = mongo_helper.db.games
 
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':701, '$lte':800}}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':708, '$lte':708}}))]
 populate_names(player_id_list)
 
 url_list = []
@@ -125,6 +125,9 @@ for json_page in returned_tasks:
     print(json_page['parameters']['PlayerID'], json_page['parameters']['Season'] )
     all_shots = json_page['resultSets'][0]['rowSet']
 
+    current_game_id = '0'
+    shots = [] # array which contains all shots
+
     for shot in all_shots:
         game_id = str(shot[1])
         game_event_id = shot[2] # used as unique identifier within a game
@@ -144,41 +147,46 @@ for json_page in returned_tasks:
         shot_made = shot[20]
         game_date = str((parser.parse(shot[21])).isoformat())
 
-        player_shots.update_one(
-            # condition on correct player TODO: prevent duplicate addition with $ne
-            {'player_id':player_id, 'games.game_id':game_id, 'games.shots.game_event_id':{'$ne':game_event_id}},
-            {'$addToSet':
-                {'games.$.shots':
-                    {   
-                        'game_id':game_id,
-                        'game_event_id':game_event_id,
-                        'period':period,
-                        'minutes_remaining':minutes_remaining,
-                        'seconds_remaining':seconds_remaining,
-                        'shot_description':shot_description,
-                        'fg_type':fg_type,
-                        'shot_zone_area':shot_zone_area,
-                        'loc_x':loc_x,
-                        'loc_y':loc_y,
-                        'shot_made':shot_made
+        if current_game_id == '0':
+            current_game_id = game_id
+
+        if current_game_id != game_id: # when a new game occurs, update mongo to update older game
+            # send batch update operation
+
+            player_shots.update_one(
+                {'player_id':player_id, 'games.game_id':current_game_id},
+                {'$set':
+                    {
+                        'player_id':player_id,
+                        'player_name':player_name,
+                        'games.$.game_id':game_id,
+                        'games.$.team_id':team_id,
+                        'games.$.team_name':team_name,
+                        'games.$.game_date':game_date,
+                        'games.$.shots':shots
                     }
-
-                },
-            
-            '$set':
-                {   
-                    'player_id':player_id,
-                    'player_name':player_name,
-                    'games.$.game_id':game_id,
-                    'games.$.team_id':team_id,
-                    'games.$.team_name':team_name,
-                    'games.$.game_date':game_date
                 }
+            )
+            shots = [] # empty
+            current_game_id = game_id
 
-            }
+       
+        shots.append(
+            {   
+                'game_id':game_id,
+                'game_event_id':game_event_id,
+                'period':period,
+                'minutes_remaining':minutes_remaining,
+                'seconds_remaining':seconds_remaining,
+                'shot_description':shot_description,
+                'fg_type':fg_type,
+                'shot_zone_area':shot_zone_area,
+                'loc_x':loc_x,
+                'loc_y':loc_y,
+                'shot_made':shot_made
+            }   
+        )   
 
-            
-            
-        )
+mongo_helper.client.close()
 
 
