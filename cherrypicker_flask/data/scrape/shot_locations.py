@@ -94,13 +94,14 @@ player_shots = mongo_helper.db.player_shots
 players = mongo_helper.db.players
 games = mongo_helper.db.games
 
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':708, '$lte':708}}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':1501, '$lte':2000}}))]
 populate_names(player_id_list)
 
 url_list = []
 
 for player_id in player_id_list:
-    # find out first player year and last player year (only want to generate valid urls for years that players have played in)
+    # find out first player year and last player year (only want to generate valid urls for years that players have played in) 
+    # after this needs to updated daily, only perform current year, and even consider doing date from in url 
     player_years = (
         int(list(players.find({'player_id':player_id}))[0]['years_active']['from']), # from year
         int(list(players.find({'player_id':player_id}))[0]['years_active']['to']) + 1 # to year + 1
@@ -119,7 +120,6 @@ loop.run_until_complete(future)
 # returned_tasks will contain the each json file for each player's http request 
 returned_tasks = memo[0]
 
-print("-------------Mongo Entry-------------")
         
 for json_page in returned_tasks:
     print(json_page['parameters']['PlayerID'], json_page['parameters']['Season'] )
@@ -151,8 +151,8 @@ for json_page in returned_tasks:
             current_game_id = game_id
 
         if current_game_id != game_id: # when a new game occurs, update mongo to update older game
-            # send batch update operation
-
+        
+            # this operation does an overwrite
             player_shots.update_one(
                 {'player_id':player_id, 'games.game_id':current_game_id},
                 {'$set':
