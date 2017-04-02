@@ -37,6 +37,7 @@ def populate_names(player_id_list):
     for player_id in player_id_list:
         # make sure that player doesn't already exist in db. this is a temporary measure to avoid duplicates in testing ---------
         if len(list(player_shots.find({'player_id':player_id}))) < 1:
+            print(player_id)
             for game_object in list(players.find({'player_id':player_id}))[0]['game_log']:
                 game_id = game_object['game_id']
 
@@ -94,7 +95,7 @@ player_shots = mongo_helper.db.player_shots
 players = mongo_helper.db.players
 games = mongo_helper.db.games
 
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':1501, '$lte':2000}}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':77001, '$lte':78000}}))]
 populate_names(player_id_list)
 
 url_list = []
