@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Appexport from './App';
+import Playground from
 import './index.css';
 
 ReactDOM.render(
-  <Appexport />,
-  document.getElementById('root')
+    <div>
+        <Appexport />
+    </div>,
+    document.getElementById('root')
 );
