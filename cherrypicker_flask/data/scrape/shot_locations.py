@@ -95,7 +95,7 @@ player_shots = mongo_helper.db.player_shots
 players = mongo_helper.db.players
 games = mongo_helper.db.games
 
-player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':78001, '$lte':210000}}))]
+player_id_list = [element['player_id'] for element in list(players.find({'player_id':{'$gte':210001, '$lte':2100000}}))]
 populate_names(player_id_list)
 
 url_list = []
