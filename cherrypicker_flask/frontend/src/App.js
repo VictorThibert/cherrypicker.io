@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom'
 import './App.css';
 
+/* eslint-disable */
+
 class App extends Component {
   render() {
     return (
