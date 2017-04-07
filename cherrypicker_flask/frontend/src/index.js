@@ -1,13 +1,20 @@
+/* eslint-disable */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Appexport from './App';
-import Playground from './Playground'
-import './index.css';
 
-ReactDOM.render(
-    <div>
-        <Appexport />
-        <Playground />
-    </div>,
-    document.getElementById('root')
-);
+import Chart from './components/chart'
+
+
+const mountingPoint = document.createElement('div');
+mountingPoint.className = 'react-app';
+document.body.appendChild(mountingPoint);
+ReactDOM.render(<Chart/>, mountingPoint);
+
+
+// ReactDOM.render(
+//     <div>
+//         <Chart/>
+//     </div>,
+//     document.getElementById('root')
+// );
