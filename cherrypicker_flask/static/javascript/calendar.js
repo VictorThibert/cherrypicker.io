@@ -26,7 +26,7 @@ function renderCalendar(teamID, year) {
         gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].HOME_POINTS - raw[i].AWAY_POINTS];
       }
       else if(raw[i].HOME_TEAM_ID != "16106127" + teamID){
-gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].AWAY_POINTS - raw[i].HOME_POINTS];
+        gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].AWAY_POINTS - raw[i].HOME_POINTS];
       }
       
       //gameDates[i] = [moment(raw[i].GAME_DATE_EST, "YYYYMMDD").toDate(), raw[i].MATCHUP, raw[i].GAME_ID, raw[i].HOME_POINTS - raw[i].AWAY_POINTS];

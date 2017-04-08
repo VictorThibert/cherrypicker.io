@@ -7,7 +7,7 @@ function renderPara(teamID){
   
   var data = [];
   
-  d3.select("#example").selectAll("svg").remove();
+  // d3.select("#example").selectAll("svg").remove();
   d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + teamID, function(error, raw){
     var i = 0;
     for(i = 0; i < raw.length; i += 1){

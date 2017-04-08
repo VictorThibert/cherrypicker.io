@@ -1,10 +1,10 @@
+/* eslint-disable */
 import React        from 'react';
 import d3           from 'd3';
-// import DataCircles  from './data-circles';
+import DataCircles  from './data-circles';
+import XYAxis       from './x-y-axis';
 
 // Returns the largest X coordinate from the data set
-
-console.log(d3)
 const xMax   = (data)  => d3.max(data, (d) => d[0]);
 
 // Returns the highest Y coordinate from the data set
@@ -24,12 +24,14 @@ const yScale = (props) => {
     .range([props.height - props.padding, props.padding]);
 };
 
-export default (props) => {
+const Scatterplot = (props) => {
   const scales = { xScale: xScale(props), yScale: yScale(props) };
   return (
     <svg width={props.width} height={props.height}>
-      <rect x="400" y="100" width="400" height="200" fill="yellow" stroke="navy" strokeWidth="10"  />
-      {/*<DataCircles {...props} {...scales} />*/}
+      <DataCircles {...props} {...scales} />
+      <XYAxis {...props} {...scales} />
     </svg>
   )
 }
+
+export default Scatterplot

@@ -1,50 +1,26 @@
-import React       from 'react';
-import ScatterPlot from './scatter-plot';
+import React from 'react';
+import Parallelcoordinates from './Parallelcoordinates.js';
+import rd3 from 'react-d3-library';
+import '../css/parallelcoordinates.css';
+import '../css/mainpage.css'
 
-const styles = {
-  width   : 500,
-  height  : 300,
-  padding : 30,
-};
+const RD3Component = rd3.Component;
 
-// The number of data points for the chart.
-const numDataPoints = 50;
+export default React.createClass({
 
-// A function that returns a random number from 0 to 1000
-const randomNum     = () => Math.floor(Math.random() * 1000);
+  getInitialState: function() {
+    return {d3: Parallelcoordinates}
+  },
 
-// A function that creates an array of 50 elements of (x, y) coordinates.
-const randomDataSet = () => {
-  return Array.apply(null, {length: numDataPoints}).map(() => [randomNum(), randomNum()]);
-}
+  componentDidMount: function() {
+    this.setState({d3: Parallelcoordinates});
+  },
 
-class Chart extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = { data: randomDataSet() };
-  }
-
-  randomizeData() {
-    console.log("These are the props:");
-    console.log(this.props);
-    console.log("This the current state:");
-    console.log(this.state);
-    this.setState({ data: randomDataSet() });
-  }
-
-  render() {
+  render: function() {
     return (
-        <div>
-            <h1>Playing With React and D3</h1>
-            <ScatterPlot {...this.state} {...styles} />
-            <div className="controls">
-                <button className="btn randomize" onClick={() => this.randomizeData()}>
-                    Randomize Data
-                </button>
-            </div>
-        </div>
+      <div>
+        <RD3Component data={this.state.d3} />
+      </div>
     )
   }
-}
-
-export default Chart
+});
