@@ -1,0 +1,13 @@
+/* CSS for calendar */
+.month {
+  display: inline-block;
+}
+
+.day {
+  fill: #FFF;
+}
+
+.fillerday {
+  fill: #FFF;
+}
+
