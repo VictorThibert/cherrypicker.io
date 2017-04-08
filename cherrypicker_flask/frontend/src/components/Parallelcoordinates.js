@@ -13,7 +13,6 @@ node.style.width = "1100px"
 const teamID = "1610612737";
 var headers = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"]; //ADD TOV
 
-//renderPara2(headers);
 
 var data = [];
 
@@ -109,9 +108,6 @@ function render() {
     
   //   });
 }
-
-
-
 
 
 module.exports = node

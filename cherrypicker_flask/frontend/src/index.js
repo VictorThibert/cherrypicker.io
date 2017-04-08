@@ -18,7 +18,7 @@ ReactDOM.render(
 
         <div id="row1">
         <div className="container-card" id="sub-container-shot">
-            <Shotchart/>
+            {/*<Shotchart/>*/}
             <div id="sub-container-percentage"></div>
             <div id="sub-container-sliders">
                 <div id="sub-container-shot1"></div>
@@ -32,9 +32,9 @@ ReactDOM.render(
             </div>
             </div>
             
-            {/*<div className="container-card" id="roster">
+            <div className="container-card" id="roster">
                 <h1 id="rosterText">Roster</h1>
-                    <table id = "rosterTable">
+                    {/*<table id = "rosterTable">
                     <tr>
                         <td id ="Roster1"><a className="neutral" data-player="0" data-playerID="00">
                                 <svg height="15" width="90%" >
@@ -135,10 +135,10 @@ ReactDOM.render(
                             </a>
                         </td>
                     </tr>
-                </table>
+                </table>*/}
                 <h1 id="rosterText">Calendar</h1>
                     <div id="calendar" width="500px"></div>
-            </div>*/}
+            </div>
         </div>
 
         <div id = "row2">

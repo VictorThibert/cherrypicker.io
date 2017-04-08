@@ -1,6 +1,6 @@
 import React from 'react';
 import rd3 from 'react-d3-library';
-import Parallelcoordinates from './Parallelcoordinates.js';
+import ParallelCoordinates from './ParallelCoordinates.js';
 
 const RD3Component = rd3.Component;
 
@@ -11,7 +11,7 @@ export default React.createClass({
   },
 
   componentDidMount: function() {
-    this.setState({d3: Parallelcoordinates});
+    this.setState({d3: ParallelCoordinates});
   },
 
   render: function() {
