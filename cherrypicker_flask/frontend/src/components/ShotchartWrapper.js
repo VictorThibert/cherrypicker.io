@@ -16,9 +16,9 @@ export default React.createClass({
 
   render: function() {
     return (
-      
+        <div>
         <RD3Component data={this.state.d3} />
-  
+        </div>
     )
   }
 });

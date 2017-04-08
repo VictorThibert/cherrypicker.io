@@ -44,7 +44,7 @@ function render() {
 
   var colorScale = d3.scale.linear().domain([2, 17, 30]).range(["#e76e5e","#f7e4ce","#4870ad"]);
 
-  let pc = parcoords()("#example")
+  let pc = parcoords()('#' + node.getAttribute('id'))
     .data(data)
     .render()
     .createAxes()
@@ -108,7 +108,6 @@ function render() {
     
   //   });
 }
-
 
 module.exports = node
 

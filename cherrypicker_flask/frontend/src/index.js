@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -18,7 +16,7 @@ ReactDOM.render(
 
         <div id="row1">
         <div className="container-card" id="sub-container-shot">
-            {/*<Shotchart/>*/}
+            <Shotchart/>
             <div id="sub-container-percentage"></div>
             <div id="sub-container-sliders">
                 <div id="sub-container-shot1"></div>
@@ -141,7 +139,7 @@ ReactDOM.render(
             </div>
         </div>
 
-        <div id = "row2">
+        <div id="row2">
             <div className="container-card">
                 <ParallelCoordinates/>
                 <div id="grid"></div>

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import d3 from 'd3';
 
 (function() {
@@ -8,8 +10,8 @@ d3.hexbin = function() {
       r,
       x = function(d) { return d[0]; },
       y = function(d) { return d[1]; },
-      made = function(d) { return d[2]; }, //added function for third var
-      distance = function(d) { return d[3]; }, //added function for distance var
+      made = function(d) { return d[2]; }, // added function for third var
+      distance = function(d) { return d[3]; }, // added function for distance var
       dx,
       dy,
       d3_hexbinAngles = d3.range(0, 2 * Math.PI, Math.PI / 3);
@@ -22,11 +24,11 @@ d3.hexbin = function() {
           pj = Math.round(py), //call function y on point,i with hexbin as owner //cycles through all 
           px = x.call(hexbin, point) / dx - (pj & 1 ? .5 : 0), 
           pi = Math.round(px),
-          pmade = parseInt(made.call(hexbin, point)),///fix this
-          pdistance = parseInt(distance.call(hexbin, point)),
+          pmade = parseInt(made.call(hexbin, point),10),///fix this
+          pdistance = parseInt(distance.call(hexbin, point),10),
           py1 = py - pj;
 
-      if (Math.abs(py1) * 3 > 1) { //Setting the boundary conditions
+      if (Math.abs(py1) * 3 > 1) { // setting the boundary conditions
         var px1 = px - pi,
             pi2 = pi + (px < pi ? -1 : 1) / 2,
             pj2 = pj + (py < pj ? -1 : 1),
@@ -37,12 +39,12 @@ d3.hexbin = function() {
 
       var id = pi + "-" + pj, 
           bin = binsById[id];
-      if (bin) { //push points for that bin, and update global bin properties
+      if (bin) { // push points for that bin, and update global bin properties
         bin.push(point);
         bin.totalShot++;
         bin.totalMade = bin.totalMade + pmade;
-        bin.distance = pdistance; //NEED TO AVERAGE OUT ALL THE DISTANCES INSTEAD OF USING MOST RECENT
-      } else { //if bin didn't exist already, create new one //set bin properties
+        bin.distance = pdistance; // NEED TO AVERAGE OUT ALL THE DISTANCES INSTEAD OF USING MOST RECENT
+      } else { // if bin didn't exist already, create new one //set bin properties
         bin = binsById[id] = [point];
         bin.i = pi;
         bin.j = pj;

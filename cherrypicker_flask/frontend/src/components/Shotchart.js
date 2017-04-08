@@ -1,8 +1,10 @@
 import d3 from 'd3';
-import Hexbin from './Hexbin'
-let selectedPlayers = "203935$202340$202323$101138$203092";
+import './Hexbin'
 
-setArrays();
+let node = document.createElement('div');
+node.setAttribute("id", "example2")
+
+let selectedPlayers = "203935$202340$202323$101138$203092";
 
 var selectedMade = 0;
 var selectedTotal = 0;
@@ -46,55 +48,52 @@ var topDistance = 500;
 
 var leagueShotArray = [];
 
-
-function setArrays(){
 	
-	// league average
-	var xmlLeagueRequest = new XMLHttpRequest();
-	var urlLeague = "http://cherrypicker.io/php/playershotsleague.php?";
-	xmlLeagueRequest.onreadystatechange=function() {
-		if (xmlLeagueRequest.readyState == 4 && xmlLeagueRequest.status == 200) {
-			reassignLeague(xmlLeagueRequest.responseText);
-		}
+// league average
+var xmlLeagueRequest = new XMLHttpRequest();
+var urlLeague = "http://cherrypicker.io/php/playershotsleague.php?";
+xmlLeagueRequest.onreadystatechange=function() {
+	if (xmlLeagueRequest.readyState === 4 && xmlLeagueRequest.status === 200) {
+		reassignLeague(xmlLeagueRequest.responseText);
 	}
-	xmlLeagueRequest.open("GET", urlLeague, true);
-	xmlLeagueRequest.send();
-
-	// push all shots to an array
-	function reassignLeague(response) {
-		var tempJSONobject = [];
-		tempJSONobject = JSON.parse(response); 
-		for (var i = 0; i < tempJSONobject.length; i+=1) {
-			leagueShotArray.push([parseInt(tempJSONobject[i].LOC_X) + 250, parseInt(tempJSONobject[i].LOC_Y) + 50,  tempJSONobject[i].PERCENTAGE ]);
-		} 
-	}
-	
-	// individual players
-	var playerShotArray = [];
-	var xmlPlayerRequest = new XMLHttpRequest();
-	var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers; 
-	
-	xmlPlayerRequest.onreadystatechange=function() {
-		if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
-			reassignPlayer(xmlPlayerRequest.responseText);
-			hpoints = hexbin(playerShotArray);
-			d3.selectAll(".shotChartCanvas").remove();
-			drawShotchart();
-		}
-	}
-	xmlPlayerRequest.open("GET", urlPlayer, true);
-	xmlPlayerRequest.send();
-	
-	// array the player shots
-	function reassignPlayer(response){
-		var tempJSONobject2 = [];
-		tempJSONobject2 = JSON.parse(response); 
-		for (var i = 0; i < tempJSONobject2.length; i+=1) { // playerShotArray contains all the shots
-			playerShotArray.push([parseInt(tempJSONobject2[i].LOC_X) + 250, parseInt(tempJSONobject2[i].LOC_Y) + 50, parseInt(tempJSONobject2[i].SHOT_MADE_FLAG), tempJSONobject2[i].SHOT_DISTANCE]);
-		} // SHIFT BY 250 IN X AND 50 IN Y
-	}
-	
 }
+xmlLeagueRequest.open("GET", urlLeague, true);
+xmlLeagueRequest.send();
+
+// push all shots to an array
+function reassignLeague(response) {
+	var tempJSONobject = [];
+	tempJSONobject = JSON.parse(response); 
+	for (var i = 0; i < tempJSONobject.length; i+=1) {
+		leagueShotArray.push([parseInt(tempJSONobject[i].LOC_X, 10) + 250, parseInt(tempJSONobject[i].LOC_Y, 10) + 50,  tempJSONobject[i].PERCENTAGE ]);
+	} 
+}
+
+// individual players
+var playerShotArray = [];
+var xmlPlayerRequest = new XMLHttpRequest();
+var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers; 
+
+xmlPlayerRequest.onreadystatechange=function() {
+	if (xmlPlayerRequest.readyState === 4 && xmlPlayerRequest.status === 200) {
+		reassignPlayer(xmlPlayerRequest.responseText);
+		hpoints = hexbin(playerShotArray);
+		d3.selectAll(".shotChartCanvas").remove();
+		drawShotchart();
+	}
+}
+xmlPlayerRequest.open("GET", urlPlayer, true);
+xmlPlayerRequest.send();
+
+// array the player shots
+function reassignPlayer(response){
+	var tempJSONobject2 = [];
+	tempJSONobject2 = JSON.parse(response); 
+	for (var i = 0; i < tempJSONobject2.length; i+=1) { // playerShotArray contains all the shots
+		playerShotArray.push([parseInt(tempJSONobject2[i].LOC_X, 10) + 250, parseInt(tempJSONobject2[i].LOC_Y, 10) + 50, parseInt(tempJSONobject2[i].SHOT_MADE_FLAG, 10), tempJSONobject2[i].SHOT_DISTANCE]);
+	} // SHIFT BY 250 IN X AND 50 IN Y
+}
+
 
 // when the brush moves (selection on shotchart)
 function brushMove() {
@@ -102,7 +101,7 @@ function brushMove() {
 	lastPosition = extent;
 	brushConditions[1] = lastPosition; 
 	
-	if(extent[0][0] != extent[1][0] || extent[0][1] != extent[1][1]){ 
+	if(extent[0][0] !== extent[1][0] || extent[0][1] !== extent[1][1]){ 
 		selectedNothing = 0;
 		brushConditions[0] = selectedNothing;
 	} else { 
@@ -116,7 +115,7 @@ function brushMove() {
 	hexagon.classed("selected", function(d) {
 		// only find % for viewable hexagons within the selection
 		if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
-			d3.select(this).attr("d") != "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z" && !(d3.select(this)[0][0].className.baseVal.includes("hidden") )) {
+			d3.select(this).attr("d") !== "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z" && !(d3.select(this)[0][0].className.baseVal.includes("hidden") )) {
 			selectedMade += d.totalMade;
 			selectedTotal += d.totalShot;
 		}
@@ -146,7 +145,7 @@ function brushEnd() {
 function drawShotchart(){
 	
 	// top level svg canvas
-	var svg = d3.select("#sub-container-shot").append("svg") 
+	var svg = d3.select("#example2").append("svg") 
 		.attr("class", "shotChartCanvas")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
@@ -234,4 +233,4 @@ function drawShotchart(){
 	brushCanvas.moveToFront();
 	
 }
-
+module.exports = node;
