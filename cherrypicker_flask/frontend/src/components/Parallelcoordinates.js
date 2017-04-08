@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import d3 from 'd3'
 import parcoords from './Parcoords.js';
 
@@ -6,7 +8,7 @@ let node = document.createElement('div');
 node.setAttribute("id", "example");
 node.className="parcoords"
 node.style.height = "320px"
-node.style.width = "1000px"
+node.style.width = "1100px"
 
 const teamID = "1610612737";
 var headers = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"]; //ADD TOV
@@ -18,7 +20,7 @@ var data = [];
 d3.select(node).selectAll("svg").remove();
 
 d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + teamID, function(error, raw){
-  console.log(raw)
+  
   var i = 0;
   for(i = 0; i < raw.length; i += 1){
     data[i] = [raw[i].PLAYER_NAME,
@@ -58,9 +60,9 @@ function render() {
 
     .composite("darken")
     .rate(60)
-    .margin({ top: 30, left: 0, bottom: 10, right: 40})
+    .margin({ top: 30, left: 10, bottom: 10, right: 40})
     .autoscale()
-    .color(function(d) {console.log("OOO");return colorScale(d[1]);})
+    .color(function(d) {return colorScale(d[1]);})
    
     .brushMode("1D-axes")  
     .render()

@@ -1,11 +1,11 @@
+/* eslint-disable */
+
 import d3 from 'd3';
 import $V from './Sylvester.js'
 
 var data3 = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"];
 
 export default d3.parcoords = function(config) {
-
-  console.log("PARCOORDS ")
 	
   var __ = {  
     data: [],
@@ -33,7 +33,7 @@ export default d3.parcoords = function(config) {
   extend(__, config);
 	
 var pc = function(selection) {
-  console.log(selection)
+  
   selection = pc.selection = d3.select(selection);
 
   __.width = selection[0][0].clientWidth;
@@ -336,7 +336,7 @@ pc.detectDimensionTypes = function(data) {
   return types;
 };
 pc.render = function() {
-  console.log("RENDERSß ")
+  
   // try to autodetect dimensions and create scales
   if (!__.dimensions.length) pc.detectDimensions();
   if (!(__.dimensions[0] in yscale)) pc.autoscale();
