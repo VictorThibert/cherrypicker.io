@@ -1,45 +1,97 @@
 import React from 'react'
 import ReactDataGrid from 'react-data-grid'
 
+let headers = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"];
+
+
 const Datagrid = React.createClass({
   getInitialState() {
     this._columns = [
       {
-        key: 'player',
+        key: 'Player',
         width: 200,
-        name: 'Player'
+        name: 'Player',
+        sortable: true
       },
       {
-        key: 'minutes',
-        width: 200,
-        name: 'Minutes'
+        key: 'Minutes',
+        name: 'Minutes',
+        sortable: true
       },
       {
-        key: 'title',
-        width: 200,
-        name: 'Title'
+        key: 'FG%',
+        name: 'FG%',
+        sortable: true
       },
       {
-        key: 'count',
-  
-        name: 'Count'
+        key: '3P%',
+        name: '3P%',
+        sortable: true
+      },
+      {
+        key: 'PPG',
+        name: 'PPG',
+        sortable: true
+      },
+      {
+        key: 'APG',
+        name: 'APG',
+        sortable: true
+      },
+      {
+        key: 'RPG',
+        name: 'RPG',
+        sortable: true
+      },
+      {
+        key: 'SPG',
+        name: 'SPG',
+        sortable: true
+      },
+      {
+        key: 'BPG',
+        name: 'BPG',
+        sortable: true
       }
     ];
 
-    return { rows: this.createRows(15) };
+    let originalRows = this.createRows(15)
+    let rows = originalRows.slice(0);
+
+    return { rows: rows, originalRows: originalRows };
   },
 
   createRows(val) {
     let rows = [];
     for (let i = 1; i < val; i++) {
       rows.push({
-        player: 'Bob',
-        minutes: i * 5,
-        count: i * val,
+        Player: i * 100,
+        Minutes: Math.random(),
+        'FG%': 'temp',
+        '3P%': 'temp',
+        PPG: 'temp',
+        APG: 'temp',
+        RPG: 'temp',
+        SPG: 'temp',
+        BPG: 'temp',
         isSelected: false,
       });
     }
     return rows;
+  },
+
+  handleGridSort(sortColumn, sortDirection) {
+    const comparer = (a, b) => {
+      if (sortDirection === 'ASC') {
+        return (a[sortColumn] > b[sortColumn]) ? 1 : -1;
+      } else if (sortDirection === 'DESC') {
+        return (a[sortColumn] < b[sortColumn]) ? 1 : -1;
+      }
+    };
+
+    const rows = sortDirection === 'NONE' ? this.state.originalRows.slice(0) : this.state.rows.sort(comparer);
+
+    this.setState({ rows });
   },
 
   rowGetter(i) {
@@ -47,7 +99,11 @@ const Datagrid = React.createClass({
   },
 
   onRowClick(rowIdx, row) {
+    if (rowIdx < 0) { // prevent breaking when select the header row, which would return a -1 as rowIdx
+      return;
+    }
     let rows = this.state.rows;
+
     rows[rowIdx] = Object.assign({}, row, {isSelected: !row.isSelected});
     this.setState({ rows });
   },
@@ -72,7 +128,7 @@ const Datagrid = React.createClass({
         columns={this._columns}
         rowGetter={this.rowGetter}
         rowsCount={this.state.rows.length}
-        minHeight={500}
+        /*minHeight={500}*/
         rowSelection={{
           showCheckbox: false,
           selectBy: {
@@ -81,6 +137,7 @@ const Datagrid = React.createClass({
         }}
         onRowClick={this.onRowClick}
         onGridKeyDown={this.onKeyDown} 
+        onGridSort={this.handleGridSort}
         rowHeight={32}
         />
 

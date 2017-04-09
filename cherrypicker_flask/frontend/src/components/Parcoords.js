@@ -3,7 +3,7 @@
 import d3 from 'd3';
 import $V from './Sylvester.js'
 
-var data3 = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"];
+let headers = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"];
 
 export default d3.parcoords = function(config) {
 	
@@ -603,7 +603,7 @@ pc.createAxes = function() {
         "x": 0,
         "class": "label"
       })
-      .text(function(d){return data3[d];})
+      .text(function(d){return headers[d];})
 
   flags.axes= true;
   return this;

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import d3 from 'd3';
 
 d3.divgrid = function(config, pc) {

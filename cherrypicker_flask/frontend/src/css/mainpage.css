@@ -300,22 +300,42 @@ div.tooltip {
 #parallel_coordinates {
 	margin: 10px;
 	margin-top: 35px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+
 }
 
 #datagrid {
-	margin: 50px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	margin-left: 53px;
+	margin-right: 55px;
 }
 
 .react-grid-HeaderRow{
 	overflow-y: hidden;
 	overflow-x: hidden;
 }
+
 .react-grid-Main{
 	border: 0px;
 	outline: 0px;
-	border-radius: 30px;
 }
 
+/* colour of row when selected */
+.react-grid-Row.row-selected .react-grid-Cell {
+	background-color: #e9effc;
+
+}
+
+/* look of entirety of table */
+.react-grid-Grid {
+	border-radius: 3px;
+	border-color: #ddd;
+}
+
+.react-grid-HeaderCell {
+	font-weight: 600;
+	color: #555;
+}
 
 

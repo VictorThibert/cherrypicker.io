@@ -2,7 +2,7 @@
 
 import d3 from 'd3'
 import parcoords from './Parcoords.js';
-import divgrid from './Divgrid.js'
+import divgrid from './Divgrid.js';
 
 let node = document.createElement('div');
 node.setAttribute("id", "parallel_coordinates");
@@ -66,7 +66,7 @@ function render(data) {
 // let grid = divgrid(headers, pc);
 // let data2 = [];
 
-// d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=" + teamID, function(error, raw){
+// d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=1610612737", function(error, raw){
 
 //   for(let i = 0; i < raw.length; i += 1){
 //     data2[i] = [raw[i].PLAYER_NAME, raw[i].MIN / raw[i].GP, raw[i].FG_PCT, raw[i].FG3_PCT, raw[i].FT_PCT, raw[i].PTS/ raw[i].GP, raw[i].AST/ raw[i].GP, raw[i].REB/ raw[i].GP, raw[i].STL/ raw[i].GP, raw[i].BLK/ raw[i].GP].map(function(d){if(!isNaN(d)){ return parseFloat(d).toFixed(2);}else{return d;}})
@@ -103,6 +103,5 @@ function render(data) {
 //     })
 // })
 
-
-export default node
+export default node 
 
