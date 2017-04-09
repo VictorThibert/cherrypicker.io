@@ -17,7 +17,7 @@ export default React.createClass({
   render: function() {
     return (
         <div>
-        <RD3Component data={this.state.d3} />
+          <RD3Component data={this.state.d3} test-prop={10}/>
         </div>
     )
   }

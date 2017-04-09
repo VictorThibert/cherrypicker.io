@@ -233,4 +233,5 @@ function drawShotchart(){
 	brushCanvas.moveToFront();
 	
 }
-module.exports = node;
+
+export default node;

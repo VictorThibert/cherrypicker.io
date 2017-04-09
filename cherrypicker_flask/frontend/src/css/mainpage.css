@@ -22,12 +22,11 @@ p.percentage {
 }
 
 body {
-/*  background: #7d9ec7; ld browsers  */
-/* 	background: -moz-linear-gradient(-45deg,  #7d9ec7 40%, #2271ad 100%);  */
-/* 	background: -webkit-linear-gradient(-45deg,  #7d9ec7 40%,#2271ad 100%);  */
+	/*  background: #7d9ec7; ld browsers  */
+	/* 	background: -moz-linear-gradient(-45deg,  #7d9ec7 40%, #2271ad 100%);  */
+	/* 	background: -webkit-linear-gradient(-45deg,  #7d9ec7 40%,#2271ad 100%);  */
 	background: linear-gradient(120deg,  #92a6d0 30%,#8775a5 90%); 
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d9ec7', endColorstr='#2271ad',GradientType=1 );
- 
 	/*
 		background-image: url(../graphics/background.jpg);
 		-webkit-background-size: cover;
@@ -292,5 +291,31 @@ div.tooltip {
   font-size: 14px;
   opacity: 0.9
 }
+
+
+/* --------------------------------------------- */
+/* Parallel coordinatse and associated data grid */
+/* --------------------------------------------- */
+
+#parallel_coordinates {
+	margin: 10px;
+	margin-top: 35px;
+	margin-bottom: 20px;
+}
+
+#datagrid {
+	margin: 50px;
+}
+
+.react-grid-HeaderRow{
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+.react-grid-Main{
+	border: 0px;
+	outline: 0px;
+	border-radius: 30px;
+}
+
 
 
