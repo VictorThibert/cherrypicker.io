@@ -42,7 +42,7 @@ ReactDOM.render(
 
         <div id="row2">
             <div className="container-card">
-                <ParallelCoordinates/>
+                <ParallelCoordinates testprop={1235}/>
                 <div id="datagrid">
                     <Datagrid/>
                 </div>

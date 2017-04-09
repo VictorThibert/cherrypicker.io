@@ -4,21 +4,35 @@ import ParallelCoordinates from './ParallelCoordinates.js';
 
 const RD3Component = rd3.Component;
 
-export default React.createClass({
 
-  getInitialState: function() {
-    return {d3: ''}
-  },
+class PCWrapper extends React.Component {
 
-  componentDidMount: function() {
-    this.setState({d3: ParallelCoordinates});
-  },
+  constructor(props){
+    console.log("PCWrapper props:", props);
+    super(props);
+    this.state = {d3: ''};
+  }
 
-  render: function() {
+  componentDidMount() {
+    this.setState({d3: ParallelCoordinates().node});
+  }
+
+  randomize(){
+    let rand = Math.floor((Math.random() * 10) );
+    this.setState({d3: ParallelCoordinates("161061274" + rand).node});
+  }
+
+  render(){ 
+    console.log("State before render: ", this.state.d3)
     return (
       <div>
+        <button onClick={() => this.randomize()}>Randomize this shit + {Math.random()}</button>
         <RD3Component data={this.state.d3} />
       </div>
     )
   }
-});
+
+}
+
+
+export default PCWrapper
