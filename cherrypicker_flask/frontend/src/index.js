@@ -4,7 +4,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory } from 'react-router'
 
-import Datagrid from './components/Datagrid'
 import ParallelCoordinates from './components/ParallelCoordinatesWrapper'
 import Shotchart from './components/ShotchartWrapper'
 
@@ -27,25 +26,22 @@ ReactDOM.render(
                 <div id="sub-container-shot2"></div>
                 <div id="sub-container-shot3"></div>
             </div>
-            <div id="sub-container-labels">
-                <div id="sub-container-label1">Percentage</div>
-                <div id="sub-container-label2">Volume</div>
-                <div id="sub-container-label3">Distance</div>
+            <div id="container-labels">
+                <div className="shot-labels">Percentage</div>
+                <div className="shot-labels">Volume</div>
+                <div className="shot-labels">Distance</div>
             </div>
             </div>
             
             <div className="container-card" id="roster">
                 <h1 id="rosterText">Calendar</h1>
-                    <div id="calendar" width="500px"></div>
+                <div id="calendar" width="500px"></div>
             </div>
         </div>
 
         <div id="row2">
             <div className="container-card">
                 <ParallelCoordinates testprop={1235}/>
-                <div id="datagrid">
-                    <Datagrid/>
-                </div>
             </div>
         </div>        
         

@@ -14,8 +14,6 @@ let capsule = function(teamID = "1610612737"){
   node.style.height = "320px";
   node.style.width = "1070px";
 
-  console.log(Math.random(), teamID)
-
   let headers = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "SPG", "BPG"]; // add turnovers
   let pc;
 
@@ -61,7 +59,7 @@ let capsule = function(teamID = "1610612737"){
       .alpha(0.5)
       .composite("darken")
       .rate(60)
-      .margin({ top: 30, left: 10, bottom: 10, right: 0})
+      .margin({ top: 30, left: 0, bottom: 10, right: 0})
       .autoscale()
       .color(function(d) {return colorScale(d[1]);})
       .brushMode("1D-axes")  
@@ -70,6 +68,7 @@ let capsule = function(teamID = "1610612737"){
 
   return {
     node: node,
+    pc: pc
   }
 
 }

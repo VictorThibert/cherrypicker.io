@@ -3,6 +3,7 @@
 # dependencies
 node_modules/*
 !node_modules/react-data-grid/
+!node_modules/rc-slider/
 # testing
 /coverage
 

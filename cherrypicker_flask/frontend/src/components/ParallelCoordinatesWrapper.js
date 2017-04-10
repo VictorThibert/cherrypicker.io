@@ -1,9 +1,9 @@
 import React from 'react';
 import rd3 from 'react-d3-library';
 import ParallelCoordinates from './ParallelCoordinates.js';
+import Datagrid from './Datagrid.js'
 
 const RD3Component = rd3.Component;
-
 
 class PCWrapper extends React.Component {
 
@@ -26,8 +26,11 @@ class PCWrapper extends React.Component {
     console.log("State before render: ", this.state.d3)
     return (
       <div>
-        <button onClick={() => this.randomize()}>Randomize this shit + {Math.random()}</button>
+        <button onClick={() => this.randomize()}>Randomize this shit + {Math.floor(10*Math.random())}</button>
         <RD3Component data={this.state.d3} />
+        <div id="datagrid">
+          <Datagrid/>
+        </div>
       </div>
     )
   }

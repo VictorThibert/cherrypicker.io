@@ -57,10 +57,9 @@ const Datagrid = React.createClass({
       }
     ];
 
-    let originalRows = this.createRows(15)
-    let rows = originalRows.slice(0);
+    let rows = this.createRows(15)
 
-    return { rows: rows, originalRows: originalRows };
+    return { rows: rows };
   },
 
   createRows(val) {
@@ -68,7 +67,7 @@ const Datagrid = React.createClass({
     for (let i = 1; i < val; i++) {
       rows.push({
         Player: i * 100,
-        Minutes: Math.random(),
+        Minutes: Math.floor(Math.random() * 100),
         'FG%': 'temp',
         '3P%': 'temp',
         PPG: 'temp',
@@ -91,7 +90,7 @@ const Datagrid = React.createClass({
       }
     };
 
-    const rows = sortDirection === 'NONE' ? this.state.originalRows.slice(0) : this.state.rows.sort(comparer);
+    const rows = this.state.rows.sort(comparer);
 
     this.setState({ rows });
   },
@@ -111,6 +110,7 @@ const Datagrid = React.createClass({
   },
 
   onKeyDown(e) {
+    console.log('See props for datagrid: ', this.props)
     if (e.ctrlKey && e.keyCode === 65) {
       e.preventDefault();
 
@@ -124,13 +124,14 @@ const Datagrid = React.createClass({
   },
 
   render() {
+    let rowHeight = 32;
     return  (
       <ReactDataGrid
         rowKey="id"
         columns={this._columns}
         rowGetter={this.rowGetter}
         rowsCount={this.state.rows.length}
-        /*minHeight={500}*/
+        minHeight={rowHeight * this.state.rows.length}
         rowSelection={{
           showCheckbox: false,
           selectBy: {
@@ -140,7 +141,7 @@ const Datagrid = React.createClass({
         onRowClick={this.onRowClick}
         onGridKeyDown={this.onKeyDown} 
         onGridSort={this.handleGridSort}
-        rowHeight={32}
+        rowHeight={rowHeight}
         />
 
       );

@@ -180,9 +180,13 @@ h1 {
   transform: translateY(-50%);
 }
 
+/* ---------------------- */
+/* Shot chart and sliders */
+/* ---------------------- */
+
 #sub-container-shot {
 	position: relative;
-  height: 400px;
+ 	height: 400px;
 	width: 550px;
 	float: left;
 } 
@@ -193,7 +197,7 @@ h1 {
 	left: 15px;
 }
 
-#sub-container-sliders {
+#shot-sliders {
 	position: absolute;
 	width: 78%;
 	margin-right: 25px;
@@ -203,15 +207,25 @@ h1 {
 	right: 0;
 }
 
-#sub-container-labels {
-	font-family: 'Asap';
+.shot-labels {
 	font-size: 11pt;
-	position: absolute;
-	width: 20%;
-	color: #555;
-	bottom: 16px;
-	left: 15px;
+	margin-top: 2px; /* this determines vertical spread of the shot labels */
 }
+
+#container-labels {
+	position: absolute;
+	width: 14%;
+	color: #555;
+	bottom: 12px; /* this determines how far from the bottom the shot labels are */
+	left: 17px;
+}
+
+.shot-sliders {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+
 
 #roster { 
 	height: 400px;
@@ -321,8 +335,13 @@ div.tooltip {
 	outline: 0px;
 }
 
+.react-grid-Cell, .react-grid-HeaderCell {
+	border-top: 1px solid #eee;
+}
+
+
 /* colour of row when selected */
-.react-grid-Row.row-selected .react-grid-Cell {
+.react-grid-Row.row-selected {
 	background-color: #e9effc;
 
 }
