@@ -113,5 +113,5 @@ let capsule = function(teamID = "1610612737"){
 //     })
 // })
 
-module.exports = capsule
+export default capsule
 

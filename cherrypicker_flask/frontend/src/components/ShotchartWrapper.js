@@ -1,31 +1,43 @@
 import React from 'react';
 import rd3 from 'react-d3-library';
 import Shotchart from './Shotchart.js';
-import ReactDOM from 'react-dom';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import ChildTest from './ChildTest'
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
-let Range = createSliderWithTooltip(Slider.Range);
+const Range = createSliderWithTooltip(Slider.Range);
 const RD3Component = rd3.Component;
+let ref;
 
-export default React.createClass({
+class SCWrapper extends React.Component {
 
-  getInitialState: function() {
-    return {d3: ''}
-  },
+  constructor(props) {
+    super(props);
+    this.state = {d3: ''};
+    this.updateChild = this.updateChild.bind(this);
+  }
 
-  componentDidMount: function() {
-    this.setState({d3: Shotchart});
-  },
+  componentDidMount() {
+    this.setState({d3: Shotchart().node});
+  }
 
-  render: function() {
+  updateChild() {
+    // Explicitly updateChild the text input using the raw DOM API
+    console.log(this.containerForRef)
+    console.log(this.containerForRef2)
+    this.containerForRef.randomFunction();
+  }
+
+  render() {
     return (
         <div>
-          <RD3Component data={this.state.d3} test-prop={10}/>
+
+          <ChildTest ref={(input) => { this.containerForRef2 = input; }}/>
+          <RD3Component data={this.state.d3} test-prop={10} ref={(input) => { this.containerForRef = input; }}/>
           <div id="shot-sliders">
             <div className="shot-sliders">
-              <Range defaultValue={[3, 30]}/>
+              <Range defaultValue={[3, 30]} onChange={this.updateChild}/>
             </div>
             <div className="shot-sliders">
               <Range defaultValue={[3, 78]}/>
@@ -37,4 +49,6 @@ export default React.createClass({
         </div>
     )
   }
-});
+}
+
+export default SCWrapper;
