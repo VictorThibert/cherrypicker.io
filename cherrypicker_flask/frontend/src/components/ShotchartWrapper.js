@@ -1,9 +1,10 @@
+/* eslint-disable */
+
 import React from 'react';
 import rd3 from 'react-d3-library';
 import Shotchart from './Shotchart.js';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import ChildTest from './ChildTest'
 import d3 from 'd3'
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
@@ -41,7 +42,7 @@ class SCWrapper extends React.Component {
         break;
     }
     
-    this.state.brushRefresh() // triggers the selection % to refresh as sliders move 
+    
     d3.selectAll(".hexagon")
       .classed("hidden", (d) => {
         return !( // hide if not in between the ranges
@@ -50,6 +51,7 @@ class SCWrapper extends React.Component {
             d.distance >= this.slider_ranges.distance[0] && d.distance <= this.slider_ranges.distance[1]
           ) 
       });  
+    this.state.brushRefresh() // triggers the selection % to refresh as sliders move 
   }    
 
 

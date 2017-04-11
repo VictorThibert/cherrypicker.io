@@ -8,12 +8,6 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
   let node = document.createElement('div');
   node.setAttribute("id", "shotchart")
 
-  let selectedMade = 0;
-  let selectedTotal = 0;
-
-  let brushConditions = [1, [[0, 0],[0,0]], 0];
-  let selectedNothing, extent, selectedPercentage, brushCanvas, brushObject, hexagon, hpoints;
-
   // size of graphic
   let margin = {top: 0, right: 20, bottom: 0, left: 20} 
   let width = 550 - margin.left - margin.right;
@@ -21,51 +15,37 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
 
   // radius scale for hexagons
   let radiusScale = d3.scale.linear()  
-  	.domain([0,0,1,2,50])
-  	.range([0,0.5,3,5.1,5.1]);
+    .domain([0,0,1,2,50])
+    .range([0,0.5,3,5.1,5.1]);
 
   // colour scale for hexagons
   let colorScale = d3.scale.linear() 
-  	.domain([-0.4, -0.08, 0, 0.08, 0.4]) // range for +- above average
-  	.range(["#426AAA", "#6389BA", "#F9DC96", "#F0825F", "#db5757"]); 
+    .domain([-0.4, -0.08, 0, 0.08, 0.4]) // range for +- above average
+    .range(["#426AAA", "#6389BA", "#F9DC96", "#F0825F", "#db5757"]); 
 
   let customRadius = 5;
   let hexbin = d3.hexbin().size([width, height]).radius(customRadius); 
 
-  // slider letiables
-  let bottomPCT = 0;
-  let topPCT = 1;
-  let bottomAttempts = 0;
-  let topAttempts = 10000;
-  let bottomDistance = 0;
-  let topDistance = 500;
-
+  let brushConditions = [1, [[0, 0],[0,0]], 0];
+  let selectedNothing, extent, selectedPercentage, brushCanvas, brushObject, hexagon, hpoints;
   	
   // league average
   let leagueShotArray = [];
   let xmlLeagueRequest = new XMLHttpRequest();
-  let urlLeague = "http://cherrypicker.io/php/playershotsleague.php?";
+  // individual players
+  let playerShotArray = [];
+  let xmlPlayerRequest = new XMLHttpRequest();
+  
+  // for league
   xmlLeagueRequest.onreadystatechange=function() {
   	if (xmlLeagueRequest.readyState === 4 && xmlLeagueRequest.status === 200) {
   		reassignLeague(xmlLeagueRequest.responseText);
   	}
   }
-  xmlLeagueRequest.open("GET", urlLeague, true);
+  xmlLeagueRequest.open("GET", "http://cherrypicker.io/php/playershotsleague.php?", true);
   xmlLeagueRequest.send();
 
-  // push all shots to an array
-  function reassignLeague(response) {
-  	let tempJSONobject = JSON.parse(response); 
-  	for (let i = 0; i < tempJSONobject.length; i+=1) {
-  		leagueShotArray.push([parseInt(tempJSONobject[i].LOC_X, 10) + 250, parseInt(tempJSONobject[i].LOC_Y, 10) + 50,  tempJSONobject[i].PERCENTAGE ]);
-  	} 
-  }
-
-  // individual players
-  let playerShotArray = [];
-  let xmlPlayerRequest = new XMLHttpRequest();
-  let urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers; 
-
+  // for players
   xmlPlayerRequest.onreadystatechange=function() {
   	if (xmlPlayerRequest.readyState === 4 && xmlPlayerRequest.status === 200) {
   		reassignPlayer(xmlPlayerRequest.responseText);
@@ -74,10 +54,16 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
   		drawShotchart();
   	}
   }
-  xmlPlayerRequest.open("GET", urlPlayer, true);
+  xmlPlayerRequest.open("GET", "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers, true);
   xmlPlayerRequest.send();
 
-  // array the player shots
+  function reassignLeague(response) {
+    let tempJSONobject = JSON.parse(response); 
+    for (let i = 0; i < tempJSONobject.length; i+=1) {
+      leagueShotArray.push([parseInt(tempJSONobject[i].LOC_X, 10) + 250, parseInt(tempJSONobject[i].LOC_Y, 10) + 50,  tempJSONobject[i].PERCENTAGE ]);
+    } 
+  }
+
   function reassignPlayer(response){
   	let tempJSONobject2 = JSON.parse(response); 
   	for (let i = 0; i < tempJSONobject2.length; i+=1) { // playerShotArray contains all the shots
@@ -99,40 +85,50 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
   		brushConditions[0] = selectedNothing;
   	}
   	
-  	selectedMade = 0;
-  	selectedTotal = 0;
+  	let selectedMade = 0;
+  	let selectedTotal = 0;
   	
-  	hexagon.classed("selected", function(d) {
-  		// only find % for viewable hexagons within the selection
-  		if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
-  			d3.select(this).attr("d") !== "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z" && !(d3.select(this)[0][0].className.baseVal.includes("hidden") )) {
-  			selectedMade += d.totalMade;
-  			selectedTotal += d.totalShot;
-  		}
-  		return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]
-  	});
+    if(selectedNothing){
+
+      hexagon.each(function(d){
+        if(!(d3.select(this)[0][0].className.baseVal.includes("hidden"))){
+          selectedMade += d.totalMade;
+          selectedTotal += d.totalShot;
+
+        }
+      })
+
+    } else {
+
+      hexagon.classed("selected", function(d) {
+      // only find % for viewable hexagons within the selection
+        if(extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1] &&
+          d3.select(this).attr("d") !== "m0,0l0,0l0,0l0,0l0,0l0,0l0,0z" && !(d3.select(this)[0][0].className.baseVal.includes("hidden") )) {
+          selectedMade += d.totalMade;
+          selectedTotal += d.totalShot;
+        }
+        return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]
+      });
+
+    }
   	
   	selectedPercentage = selectedMade/selectedTotal;
   	brushConditions[2] = selectedPercentage;
   	
-    if(isNaN(selectedPercentage)){
-    	d3.select("#container-percentage").html('<p class="percentage">Shots: ' + selectedTotal +  ' </p><p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
-    } else {
-    	d3.select("#container-percentage").html('<p class="percentage">Shots: ' + selectedTotal +  ' </p><p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
-    }
+    d3.select("#container-percentage").html('<p class="percentage">Shots: ' + selectedTotal +  ' </p><p class="percentage">Percentage: ' + Math.round(selectedPercentage*1000)/10 +  "% </p>");
+    
   }
 
   // brush end
   function brushEnd() {
   	if (selectedNothing) {
-  		hexagon.classed("selected", true);
+  		hexagon.classed("selected", true); // un greys out the chart
   	}
   }
 
   // draw the shotchart
   function drawShotchart(){
   	
-  	// top level svg canvas
   	let svg = d3.select("#shotchart").append("svg") 
   		.attr("class", "shotChartCanvas")
   		.attr("width", width + margin.left + margin.right)
@@ -166,7 +162,6 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
   			.attr("class", "hexagon")
   			.attr("d", function(d) {  
   				// d data element is the data contained in hexon (hexbin) [ [x,y,made], [x,y,made] ]
-  				// return nothing
   				return hexbin.hexagon(0,0).dpoints; 
   			})  
   			.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
@@ -182,12 +177,9 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
   		.ease("quad")
   		.attr("d", function(d) {  
   			// draw paths (see if value in between sliders)
-  			if (d.totalMade/d.totalShot >= bottomPCT && d.totalMade/d.totalShot <= topPCT && d.totalShot >= bottomAttempts && d.totalShot <= topAttempts &&
-  				d.distance >= bottomDistance && d.distance <= topDistance) { 
+
   				return hexbin.hexagon(radiusScale(d.length), 0).dpoints;
-  			} else {
-  				return hexbin.hexagon(0,0).dpoints; // RETURN NOTHING
-  			}
+  			
   	});  
   	
   	// triggers artificial brush to refresh the selected %
@@ -196,7 +188,7 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
   	// which hexagons are selected by the brush
   	hexagon.classed("selected", function(d) { 
   			if(selectedNothing){
-  				return true; // Select everything
+  				return true; //  select everything
   			} else {
   				return extent[0][0] <= d.x && d.x < extent[1][0] && extent[0][1] <= d.y && d.y < extent[1][1]; // Select current extent
   			}
@@ -221,13 +213,12 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
     function refresh(){
       brushCanvas.call(brushObject.event);
     }
-
   	brushCanvas.moveToFront();
+
   	return refresh
   }
 
-
-  return {node:node, brush:drawShotchart()}
+  return {node:node, brush:drawShotchart()} // puts the refresh function into brush object to pass to upwards
 
 }
 export default capsule;
