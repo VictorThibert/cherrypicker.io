@@ -184,14 +184,14 @@ h1 {
 /* Shot chart and sliders */
 /* ---------------------- */
 
-#sub-container-shot {
+#container-shot {
 	position: relative;
  	height: 400px;
 	width: 550px;
 	float: left;
 } 
 
-#sub-container-percentage {
+#container-percentage {
 	position: absolute;
 	top: 315px;
 	left: 15px;
@@ -214,7 +214,7 @@ h1 {
 
 #container-labels {
 	position: absolute;
-	width: 14%;
+	width: 1%;
 	color: #555;
 	bottom: 12px; /* this determines how far from the bottom the shot labels are */
 	left: 17px;

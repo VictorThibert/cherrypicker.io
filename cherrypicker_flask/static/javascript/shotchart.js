@@ -126,6 +126,7 @@ function renderShotchart(count, selectedPlayers){
 		
 		selectedPercentage = selectedMade/selectedTotal;
 		brushConditions[2] = selectedPercentage;
+		
 		$("#sub-container-shots").html('<p class="percentage">Shots: ' + selectedTotal +  " </p>");
 		
 		//selected percentage box set html text
