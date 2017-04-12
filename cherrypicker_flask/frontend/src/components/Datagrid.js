@@ -123,6 +123,10 @@ const Datagrid = React.createClass({
     }
   },
 
+  onMouseEnter(rowIdx, row){
+    console.log(rowIdx, row)
+  },
+
   render() {
     let rowHeight = 32;
     return  (
@@ -142,6 +146,7 @@ const Datagrid = React.createClass({
         onGridKeyDown={this.onKeyDown} 
         onGridSort={this.handleGridSort}
         rowHeight={rowHeight}
+        onMouseEnter={this.onMouseEnter}
         />
 
       );

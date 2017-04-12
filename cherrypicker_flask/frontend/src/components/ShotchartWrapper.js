@@ -69,12 +69,12 @@ class SCWrapper extends React.Component {
               <Range min={0} max={30} defaultValue={[0, 30]} onChange={this.slide.bind(this, "distance")}/>
             </div>
           </div>
-            <div id="container-percentage"></div>
-            <div id="container-labels">
-              <div className="shot-labels">Percentage</div>
-              <div className="shot-labels">Attempts</div>
-              <div className="shot-labels">Distance</div>
-            </div>
+          <div id="container-percentage"></div>
+          <div id="container-labels">
+            <div className="shot-labels">Percentage</div>
+            <div className="shot-labels">Attempts</div>
+            <div className="shot-labels">Distance</div>
+          </div>
         </div>
 
     )
