@@ -89,15 +89,12 @@ let capsule = function(selectedPlayers = "203935$202340$202323$101138$203092"){
   	let selectedTotal = 0;
   	
     if(selectedNothing){
-
       hexagon.each(function(d){
         if(!(d3.select(this)[0][0].className.baseVal.includes("hidden"))){
           selectedMade += d.totalMade;
           selectedTotal += d.totalShot;
-
         }
       })
-
     } else {
 
       hexagon.classed("selected", function(d) {

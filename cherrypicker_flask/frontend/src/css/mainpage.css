@@ -193,9 +193,15 @@ h1 {
 
 #container-percentage {
 	position: absolute;
-	top: 315px;
-	left: 15px;
+	/*margin-top: 50px;*/
+	left: 17px;
+	background: aliceblue;
+    font-size: 20px;
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.3);
 }
+
 
 #shot-sliders {
 	position: absolute;
@@ -336,20 +342,23 @@ div.tooltip {
 }
 
 .react-grid-Cell, .react-grid-HeaderCell {
-	border-top: 1px solid #eee;
+	/*border-top: 1px solid #eee;*/
+	padding-left: 15px;
 }
 
 
 /* colour of row when selected */
 .react-grid-Row.row-selected {
-	background-color: #e9effc;
+	background-color: aliceblue;
 
 }
 
 /* look of entirety of table */
 .react-grid-Grid {
-	border-radius: 3px;
-	border-color: #ddd;
+	border-radius: 5px;
+	border: 0px solid;
+	/*border-color: #ddd;*/
+	box-shadow:  0.5px 1px 1.2px 1px rgba(0,0,0,0.1);
 }
 
 .react-grid-HeaderCell {

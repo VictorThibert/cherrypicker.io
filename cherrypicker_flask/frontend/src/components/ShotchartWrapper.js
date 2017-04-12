@@ -22,7 +22,6 @@ class SCWrapper extends React.Component {
 
   componentDidMount() {
     let capsule = Shotchart()
-    console.log("CAPSULE:",capsule)
     this.setState({d3: capsule.node, brushRefresh:capsule.brush});
   }
   
@@ -53,8 +52,6 @@ class SCWrapper extends React.Component {
       });  
     this.state.brushRefresh() // triggers the selection % to refresh as sliders move 
   }    
-
-
   
 
   render() {
@@ -66,7 +63,7 @@ class SCWrapper extends React.Component {
               <Range min={0.0} max={1.0} defaultValue={[0.0, 1.0]} step={0.01} onChange={this.slide.bind(this, "percentage")}/>
             </div>
             <div className="shot-sliders">
-              <Range min={0} max={120} defaultValue={[0, 120]} onChange={this.slide.bind(this, "shot_attempts")}/>
+              <Range min={0} max={120} defaultValue={[0, 150]} onChange={this.slide.bind(this, "shot_attempts")}/>
             </div>
             <div className="shot-sliders">
               <Range min={0} max={30} defaultValue={[0, 30]} onChange={this.slide.bind(this, "distance")}/>
