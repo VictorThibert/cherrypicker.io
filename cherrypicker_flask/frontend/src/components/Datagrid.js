@@ -8,6 +8,7 @@ let headers = ["Player", "Minutes", "FG%", "3P%", "FT%", "PPG", "APG", "RPG", "S
 
 const Datagrid = React.createClass({
   getInitialState() {
+
     this._columns = [
       {
         key: 'Player',
@@ -123,9 +124,7 @@ const Datagrid = React.createClass({
     }
   },
 
-  onMouseEnter(rowIdx, row){
-    console.log(rowIdx, row)
-  },
+  
 
   render() {
     let rowHeight = 32;
@@ -146,7 +145,7 @@ const Datagrid = React.createClass({
         onGridKeyDown={this.onKeyDown} 
         onGridSort={this.handleGridSort}
         rowHeight={rowHeight}
-        onMouseEnter={this.onMouseEnter}
+        onMouseEnter={this.props.onMouseEnter}
         />
 
       );

@@ -359,7 +359,7 @@ div.tooltip {
 	border-radius: 5px;
 	border: 0px solid;
 	/*border-color: #ddd;*/
-	box-shadow:  0.4px 0.8px 0.9px 0.5px rgba(0,0,0,0.2);
+	box-shadow: 0.7px 0.9px 1.5px 0.9px rgba(0,0,0,0.2);
 }
 
 .react-grid-HeaderCell {
