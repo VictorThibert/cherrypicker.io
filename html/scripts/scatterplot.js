@@ -6,7 +6,7 @@ function renderScatterplot(teamID, currentYear, x, y) {
 	//load data
 	var data = [];
 	var xml = new XMLHttpRequest();
-	var url = "http://cherrypicker.io/php/getteamdata.php"
+	var url = "https://cherrypicker.io/php/getteamdata.php"
 	
 	xml.onreadystatechange = function() {
 		if (xml.readyState == 4 && xml.status == 200) {
@@ -168,7 +168,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			//load all the data
 			var data = [];
 			var xml = new XMLHttpRequest();
-			var url = "http://cherrypicker.io/php/getteamdata.php"
+			var url = "https://cherrypicker.io/php/getteamdata.php"
 
 			xml.onreadystatechange = function() {
 				if (xml.readyState == 4 && xml.status == 200) {
@@ -272,7 +272,7 @@ function renderScatterplotInner(data, teamID, x ,y) {
 			//load all the data
 			var data = [];
 			var xml = new XMLHttpRequest();
-			var url = "http://cherrypicker.io/php/getteamdata.php"
+			var url = "https://cherrypicker.io/php/getteamdata.php"
 
 			xml.onreadystatechange = function() {
 				if (xml.readyState == 4 && xml.status == 200) {

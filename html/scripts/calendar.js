@@ -20,7 +20,7 @@ function renderCalendar(teamID, year) {
 
   console.log("END")
 
-  d3.json("http://cherrypicker.io/php/getcalendar.php?teamID=16106127" + teamID, function(error, raw) {
+  d3.json("https://cherrypicker.io/php/getcalendar.php?teamID=16106127" + teamID, function(error, raw) {
     var gameDates = [];
     for (var i = 0; i < raw.length; i++) {
       if (raw[i].HOME_TEAM_ID == "16106127" + teamID){

@@ -3,7 +3,7 @@ function sankeyRender(){
 var dataB = [];
 var id = 37;
 
-d3.json("http://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, function(error, raw){
+d3.json("https://cherrypicker.io/php/getplayerbase.php?teamID=16106127" + id, function(error, raw){
   var i = 0;
   for(i = 0; i < raw.length; i += 1){
     dataB[i] = [

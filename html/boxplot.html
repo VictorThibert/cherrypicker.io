@@ -52,7 +52,7 @@
     data[1][1] = [];
 
 
-  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1600000000", function(error2, raw2) {
+  d3.json("https://cherrypicker.io/php/getgamedata.php?teamID=1600000000", function(error2, raw2) {
 
       raw2.forEach(function(x) {
         if(metric == "FG_PCT" || metric == "FG3_PCT" || metric == "FT_PCT"){
@@ -86,7 +86,7 @@
     });
 
   function next() {
-  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw) {
+  d3.json("https://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw) {
 
   //raw is entire array of all the objects
     // using an array of arrays with
