@@ -1,6 +1,6 @@
 var dataStats = [];
 
-d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error,raw){
+d3.json("https://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error,raw){
     var i = 0;
     for(i = 0; i < raw.length; i += 1){
         dataStats[i] = [

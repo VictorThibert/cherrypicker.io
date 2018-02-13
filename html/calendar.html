@@ -151,7 +151,7 @@ function renderCalendar(container, year1, year2){
   var plusminus = 0;
   var count = 0;
 
-  d3.json("http://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw){
+  d3.json("https://cherrypicker.io/php/getgamedata.php?teamID=1610612737", function(error, raw){
     if (error){
       throw error;
     }
