@@ -52,7 +52,7 @@ function renderShotchart(count, selectedPlayers){
 		
 		//league average
 		var xmlLeagueRequest = new XMLHttpRequest();
-		var urlLeague = "http://cherrypicker.io/php/playershotsleague.php?";
+		var urlLeague = "https://cherrypicker.io/php/playershotsleague.php?";
 		xmlLeagueRequest.onreadystatechange=function() {
 			if (xmlLeagueRequest.readyState == 4 && xmlLeagueRequest.status == 200) {
 				reassignLeague(xmlLeagueRequest.responseText);
@@ -73,7 +73,7 @@ function renderShotchart(count, selectedPlayers){
 		//individual players
 		var playerShotArray = [];
 		var xmlPlayerRequest = new XMLHttpRequest();
-		var urlPlayer = "http://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); 
+		var urlPlayer = "https://cherrypicker.io/php/playershots.php?playerID=" + selectedPlayers.join("$"); 
 		
 		xmlPlayerRequest.onreadystatechange=function() {
 			if (xmlPlayerRequest.readyState == 4 && xmlPlayerRequest.status == 200) {
